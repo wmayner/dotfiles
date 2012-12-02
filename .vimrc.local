@@ -1,5 +1,5 @@
 " Modeline and Notes {{{
-" vim: set foldmarker={{{,}}} foldlevel=0 foldmethod=marker
+" vim: set foldmarker={{{,}}} foldlevel=20 foldmethod=marker
 "
 "   This is the personal .vimrc.local file of Will Mayner.
 "   Find me at www.willmayner.com.
@@ -74,7 +74,7 @@
     " default code folding (excludes help files) {{{
 
       if !(&ft=='help')
-        setlocal foldlevel=0        " file opens with everything folded
+        setlocal foldlevel=20       " file opens with everything folded
         setlocal foldmethod=marker  " fold using markers
         setlocal foldmarker={{{,}}} " fold things in triple braces
       endif
@@ -82,7 +82,7 @@
       " " attempt at using foldexpr for default folding {{{
 
       " if !(&ft=='tex' || &ft=='txt' || &ft=='help')
-      "   setlocal foldlevel=0        " file opens with everything folded
+      "   setlocal foldlevel=20       " file opens with everything folded
       "   setlocal foldmethod=expr  " fold using markers
       "   setlocal foldexpr=GetDefaultFold(v:lnum)     " fold things in braces
       " endif
@@ -117,7 +117,6 @@
     " TeX {{{
 
       if &ft=='tex'
-        setlocal foldlevel=0        " file opens with everything folded
         setlocal foldmethod=marker  " fold using markers
         setlocal foldmarker=[{[,]}] " fold things in commented triple braces
       endif
@@ -132,7 +131,7 @@
 
       " if &ft=='tex'
 
-      "   setlocal foldlevel=0                  " file opens with everything folded
+      "   setlocal foldlevel=20                 " file opens with everything folded
       "   setlocal foldmethod=expr              " fold using expressions
       "   setlocal foldexpr=GetTeXFold(v:lnum)  " use function below to determine the fold expression
 
@@ -175,7 +174,7 @@
     " spf13 .vimrc {{{
 
       " spf13 uses single braces for folding, so make a special case for that
-      autocmd BufNewFile,BufReadPost *.vimrc setl foldmethod=marker foldmarker={,} foldlevel=0
+      autocmd BufNewFile,BufReadPost *.vimrc setl foldmethod=marker foldmarker={,}
 
     " }}}
 
@@ -189,8 +188,8 @@
 
   " Solarized {{{
 
-    " let g:solarized_termcolors=16 " use proper solarized palette
-    " set t_Co=256
+    let g:solarized_termcolors=16 " use proper solarized palette
+    set t_Co=256
     let g:solarized_contrast="normal"
     let g:solarized_visibility="normal"
 
