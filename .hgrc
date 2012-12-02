@@ -1,0 +1,12 @@
+[ui]
+username = Will Mayner <wmayner@gmail.com>
+editor = vim
+[extensions]
+color =
+[color]
+status.modified = magenta bold
+status.added = green bold
+status.removed = red bold
+status.deleted = cyan bold
+status.unknown = blue bold
+status.ignored = black bold

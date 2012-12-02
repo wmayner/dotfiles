@@ -1,0 +1,498 @@
+" Modeline and Notes {{{
+" vim: set foldmarker={{{,}}} foldlevel=0 foldmethod=marker
+"
+"   This is the personal .vimrc.local file of Will Mayner.
+"   Find me at www.willmayner.com.
+"
+"   It is meant to be used on top of Steve Francia's spf13-vim
+"   distribution, at https://github.com/spf13/spf13-vim.
+"
+" }}}
+
+" Environment {{{
+
+  " use aliases when running shell commands within vim
+  set shell=/bin/bash\ --rcfile\ ~/.bash_profile\ -i
+
+  "spf13 bundles
+  let g:spf13_bundle_groups=['general', 'neocomplcache', 'programming', 'php', 'javascript', 'html', 'misc',]
+
+" }}}
+
+" General {{{
+
+  " automatically load file if it's changed externally
+  set autoread
+
+  " switch to existing tab if buffer is open, otherwise create new one
+  set switchbuf=usetab,newtab
+
+  set wrapscan " searches wrap around the end of the file
+
+  set ai       " automatically set the indent of a new line (local to buffer)
+
+  " for .tex files, autowrite if switching buffer or quitting
+  autocmd FileType tex set autowrite
+
+" }}}
+
+" Vim UI {{{
+
+  " if editing TeX, automatically write file upon leaving insert mode
+  au InsertLeave *.tex if &mod && expand('%')!=''|write|endif
+
+  " set filetype to 'tex' for .tex files
+  autocmd BufNewFile,BufRead *.tex set filetype=tex
+
+  " Code folding {{{
+
+  "   " helper functions for foldexpr {{{
+  "     " for an explanation of these helper functions, see
+  "     " http://learnvimscriptthehardway.stevelosh.com/chapters/49.html#expr-folding
+
+  "   function! NextNonBlankLine(lnum)
+  "     let numlines = line('$')
+  "     let current = a:lnum + 1
+
+  "     while current <= numlines
+  "       if getline(current) =~? '\v\S'
+  "         return current
+  "       endif
+
+  "       let current += 1
+  "     endwhile
+
+  "     return -2
+  "   endfunction
+
+  "   function! IndentLevel(lnum)
+  "     return indent(a:lnum) / &shiftwidth
+  "   endfunction
+
+  "   " }}}
+
+    " default code folding (excludes help files) {{{
+
+      if !(&ft=='help')
+        setlocal foldlevel=0        " file opens with everything folded
+        setlocal foldmethod=marker  " fold using markers
+        setlocal foldmarker={{{,}}} " fold things in triple braces
+      endif
+
+      " " attempt at using foldexpr for default folding {{{
+
+      " if !(&ft=='tex' || &ft=='txt' || &ft=='help')
+      "   setlocal foldlevel=0        " file opens with everything folded
+      "   setlocal foldmethod=expr  " fold using markers
+      "   setlocal foldexpr=GetDefaultFold(v:lnum)     " fold things in braces
+      " endif
+
+      " function! GetDefaultFold(lnum)
+      "   if getline(a:lnum) =~? '\v^\s*$'
+      "     return '-1'
+      "   endif
+      "   if getline(a:lnum) =~? '\v.*\{\{\{'
+      "     return 'a1'
+      "   endif
+      "   if getline(a:lnum) =~? '\v.*}\}\}'
+      "     return 's1'
+      "   endif
+
+      "   let this_indent = IndentLevel(a:lnum)
+      "   let next_indent = IndentLevel(NextNonBlankLine(a:lnum))
+
+      "   if next_indent == this_indent
+      "     return this_indent
+      "   elseif next_indent < this_indent
+      "     return this_indent
+      "   elseif next_indent > this_indent
+      "     return '>' . next_indent
+      "   endif
+      " endfunction
+
+      " " }}}
+
+    " }}}
+
+    " TeX {{{
+
+      if &ft=='tex'
+        setlocal foldlevel=0        " file opens with everything folded
+        setlocal foldmethod=marker  " fold using markers
+        setlocal foldmarker=[{[,]}] " fold things in commented triple braces
+      endif
+
+      " insert fold markers
+      nnoremap ,,,,,,,  O[{[<Esc>
+      nnoremap ,,,,,,,, o]}]<Esc>
+      nmap [f ,,,,,,,,cc
+      nmap ]f ,,,,,,,,,cc
+
+    " attempt at using foldexpr {{{
+
+      " if &ft=='tex'
+
+      "   setlocal foldlevel=0                  " file opens with everything folded
+      "   setlocal foldmethod=expr              " fold using expressions
+      "   setlocal foldexpr=GetTeXFold(v:lnum)  " use function below to determine the fold expression
+
+      "   " fold anything in in %{ %} and inside environments
+      "   function! GetTeXFold(lnum)
+      "     if getline(a:lnum) =~? '\v^\s*$'  " if we're on a blank line...
+      "       return '-1'                     " ...the fold level is undefined
+      "     endif
+      "     if getline(a:lnum) =~? '\v^\s*\\begin\{.*\}' " if the first thing on the line is \begin{<env>}...
+      "       return 'a1'                                " ...'add 1' to fold level
+      "     endif
+      "     if getline(a:lnum) =~? '\v^\s*\\end\{.*\}'   " if the last thing on the line is \end{<env>}...
+      "       return 's1'                                " ...'add 1' to fold level
+      "     endif
+      "     if getline(a:lnum) =~? '\v^.*\%\{$' " if the last thing on the line is %{
+      "       return 'a1'                       " ...'add 1' to fold level
+      "     endif
+      "     if getline(a:lnum) =~? '\v^.*\%\}$' " if the last thing on the line is %}
+      "       return 's1'                       " ...'subtract 1' to fold level
+      "     endif
+      "     return '=' " otherwise the fold level is inherited from previous line
+      "   endfunction
+
+      " endif
+
+      " }}}
+
+  " }}}
+
+    " CoffeeScript {{{
+
+      " code folding (delete nofoldenable to enable folding by default)
+      autocmd BufNewFile,BufReadPost *.coffee setl foldmethod=indent "nofoldenable
+
+      " always use 2-space tabs
+      autocmd BufNewFile,BufReadPost *.coffee setl shiftwidth=2 expandtab
+
+    " }}}
+
+    " spf13 .vimrc {{{
+
+      " spf13 uses single braces for folding, so make a special case for that
+      autocmd BufNewFile,BufReadPost *.vimrc setl foldmethod=marker foldmarker={,} foldlevel=0
+
+    " }}}
+
+  " " }}}
+
+  set vb           " stop vim from beeping all the damn time
+
+  set cursorcolumn " highlight the column the cursor is on
+
+  set showmatch    " show matching parens
+
+  " Solarized {{{
+
+    " let g:solarized_termcolors=16 " use proper solarized palette
+    " set t_Co=256
+    let g:solarized_contrast="normal"
+    let g:solarized_visibility="normal"
+
+  " }}}
+
+" }}}
+
+" GUI Vim {{{
+
+  set guifont=Inconsolata-dz:h16 " use Inconsolata-dz font
+
+  " enable shift-select-replace movement with arrow keys
+  if has("gui_macvim")
+    let macvim_hig_shift_movement = 1
+  endif
+
+" }}}
+
+" Formatting {{{
+
+  set shiftwidth=2  " use indents of 2 spaces
+  set tabstop=2     " an indentation every 2 columns
+  set softtabstop=2 " let backspace delete indent
+
+" }}}
+
+" Plugins {{{
+
+  " Tabularize {{{
+
+    " tabularize for LaTeX tables
+    nnoremap <Leader>a& :Tabularize /&<CR>
+    vnoremap <Leader>a& :Tabularize /&<CR>
+
+    " tabularize for LaTeX comments
+    nnoremap <Leader>a% :Tabularize /%<CR>
+    vnoremap <Leader>a% :Tabularize /%<CR>
+
+    " tabularize for css
+    nnoremap <Leader>a: :Tabularize /:/l0c1<CR>
+    vnoremap <Leader>a: :Tabularize /:/l0c1<CR>
+
+  " }}}
+
+  " MiniBufExplorer {{{
+
+    let g:miniBufExplMapWindowNavVim=1
+    let g:miniBufExplMapWindowNavArrows=1
+    let g:miniBufExplMapCTabSwitchBufs=1
+    let g:miniBufExplModSelTarget=1
+
+  " }}}
+
+  " indent_guides {{{
+
+    " disable by default (press <Leader>ig to activate)
+    let g:indent_guides_enable_on_vim_startup=0
+
+  " }}}
+
+  " ctrlp {{{
+
+    " use ctrlp but keep <C-t> mapping
+    let g:ctrlp_map='<C-t>'
+
+  " }}}
+
+  " Gundo {{{
+
+    " Gundo shortcut
+    nnoremap ,u :GundoToggle<CR>
+
+  " }}}
+
+  " vim-surround {{{
+
+    " type cs"- to change "text" to ``text'' (for LaTeX ligatures)
+    autocmd FileType tex let b:surround_45="``\r''""'"
+  " }}}
+
+  " LaTeX-Suite {{{
+
+    " override <C-j>, the 'next placeholder' binding
+    map <C-j> <C-i>
+
+    " override <Leader>lv
+    nnoremap <Leader>lv :silent !open expand("%:r") . '.pdf'<CR>:echo worked!<CR>
+
+    " IMPORTANT- grep will sometimes skip displaying the file name if you
+    " search in a singe file. This will confuse Latex-Suite. Set your grep
+    " program to always generate a file-name."
+    set grepprg=grep\ -nH\ $*
+
+    " compile to pdf and use preview
+    let g:Tex_DefaultTargetFormat='pdf'
+
+    " pdf compile and view settings
+    " let g:Tex_ViewRule_pdf='Skim'
+    let g:Tex_CompileRule_pdf='latexmk -pdf'
+
+    " dvi compile and view settings
+    let g:Tex_ViewRule_dvi="Skim"
+    let g:Tex_CompileRule_dvi='latex -src -specials -interaction=nonstopmode $*'
+
+    " ignore all warnings below level 4
+    let g:TCLevel=4
+
+    " go to first error after pressing \ll
+    let g:Tex_GotoError=1
+
+    " one last thing for latex
+    let g:tex_flavor='latex'
+
+    " disable conceal for tex files
+    if (&ft=='tex')
+      set conceallevel=0
+    end
+  " }}}
+
+  " " LaTeX-Box {{{
+
+  "   " set latexmk options to 'preview continuously' and -pdfps (from  http://stackoverflow.com/questions/3723493/latex-and-vim-usage)
+  "   let g:LatexBox_latexmk_options='-pvc'
+
+  "   " view output with Skim
+  "   let g:LatexBox_viewer='open -a Skim'
+
+  "   " automatically jump to position in pdf
+  "   let g:LatexBox_autojump=1
+
+  "   " use SyncTex with Skim viewer
+  "   noremap <silent> <Leader>ls :silent !/Applications/Skim.app/Contents/SharedSupport/displayline\ <C-R>=line('.')<CR> "<C-R>=LatexBox_GetOutputFile()<CR>" "%:p" <CR>
+
+  "   " View output
+  "   noremap <Leader>lv :LatexView<CR>
+
+  "   " Compile with latexmk in background.
+  "   noremap <Leader>ll :Latexmk<CR>
+
+  "   " Force compilation with latexmk in background.
+  "   noremap <Leader>lL :LatexmkForce<CR>
+
+  "   " Clean temporary output from LaTeX.
+  "   noremap <Leader>lc :LatexmkClean<CR>
+
+  "   " Clean all output from LaTeX.
+  "   noremap <Leader>lC :LatexmkCleanAll<CR>
+
+  "   " Stop latexmk if it is running.
+  "   noremap <Leader>lk :LatexmkStop<CR>
+
+  "   " Show the running status of latexmk for the current buffer.
+  "   noremap <Leader>lg :LatexmkStatus<CR>
+
+  "   " Show the running status of latexmk for all buffers with process group ID's.
+  "   noremap <LocalLeader>lG :LatexmkStatusDetailed<CR>
+
+  "   " Load the log file for the current document and jump to the first error.
+  "   noremap <Leader>le :LatexErrors<CR>
+
+  " " }}}
+
+  " vim-unimpaired {{{
+
+    " remap some mappings that don't seem to work for some reason
+    nnoremap [a :previous<CR>
+    nnoremap ]a :next<CR>
+    nnoremap [A :first<CR>
+    nnoremap ]A :last<CR>
+    nnoremap [b :bprevious<CR>
+    nnoremap ]b :bnext<CR>
+    nnoremap [B :bfirst<CR>
+    nnoremap ]B :blast<CR>
+    nnoremap [l :lprevious<CR>
+    nnoremap ]l :lnext<CR>
+    nnoremap [L :lfirst<CR>
+    nnoremap ]L :llast<CR>
+    nnoremap [q :cprevious<CR>
+    nnoremap ]q :cnext<CR>
+    nnoremap [Q :cfirst<CR>
+    nnoremap ]Q :clast<CR>
+    nnoremap [t :tprevious<CR>
+    nnoremap ]t :tnext<CR>
+    nnoremap [T :tfirst<CR>
+    nnoremap ]T :tlast<CR>
+
+  " }}}
+
+  " restore_view {{{
+
+    set viewoptions=cursor,folds,slash,unix 
+    " let g:skipview_files = ['*\.vim'] 
+
+  " }}}
+
+  " Matchit {{{
+
+    runtime macros/matchit.vim
+
+  " }}}
+
+" }}}
+
+" Key (re)mappings {{{
+
+  " fast saving
+  nnoremap \w :w<CR>
+
+  " if editing TeX, automatically write and compile when pressing escape in normal/insert
+  autocmd FileType tex noremap <silent><buffer> <Esc> <Esc>:w<CR>
+  autocmd FileType tex nnoremap <silent><buffer> \ll :w<CR>:!latexmk -pdf<CR>:<BS>
+  autocmd FileType tex nnoremap <silent><buffer> \lv :w<CR>:!latexmk -pdf -pv<CR>:<BS>
+
+  " <Leader>vs splits in 2 and sets scrollbind
+  nnoremap <silent> <Leader>vs :<C-u>let @z=&so<CR>:set so=0 noscb<CR>:bo vs<CR>Ljzt:setl scb<CR><C-w>p:setl scb<CR>:let &so=@z<CR>
+
+  " copy word to clipboard
+  nnoremap ,d "*yiw
+
+  " clear search highlighting with enter key
+  nnoremap <silent> <CR> :noh<CR>
+
+  " clear search buffer
+  nnoremap \cc :let @/ =""<CR>:<backspace>
+
+  " always do very magic search
+  " (special characters don't need to be escaped with a '\')
+  nnoremap / /\v
+  cmap s/ s/\v
+
+  " loads current directory into MAMP's local php environment
+  " IMPORTANT: this destroys the existing one!
+  nnoremap ,p :!rm\ -r\ /Applications/MAMP/htdocs/*\ \|\|\ cp\ -r\ ./* /Applications/MAMP/htdocs<CR>
+
+  " window navigation and resizing {{{
+    noremap <C-h> <C-w>h
+    noremap <C-j> <C-w>j
+    noremap <C-k> <C-w>k
+    noremap <C-l> <C-w>l
+    " horizontal shrink
+    nnoremap <silent> ,= :exe "resize " . (winheight(0) * 3/2)<CR>
+    " horizontal expand
+    nnoremap <silent> ,- :exe "resize " . (winheight(0) * 2/3)<CR>
+    " vertical shrink
+    nnoremap <silent> \= :exe "vertical resize" . (winwidth(0) * 3/2)<CR>
+    " vertical expand
+    nnoremap <silent> \- :exe "vertical resize" . (winwidth(0) * 2/3)<CR>
+  " }}}
+
+  " move line down and match indentation in all modes
+  " NOTE: those strange symbols are CLI Vim for <M-j> and <M-k>, respectively.
+  "       to see them, enter insert mode, then press <C-v>, then type <M-k>
+  noremap ∆ :m .+1<CR>==
+  " move line up and match indentation in all modes
+  noremap ˚ :m .-2<CR>==
+
+  " help help navigation
+  autocmd FileType help nnoremap <buffer> <CR> <C-]>
+  autocmd FileType help nnoremap <buffer> <BS> <C-O>
+  autocmd FileType help nnoremap <buffer> o /'\l\{2,\}'<CR>
+  autocmd FileType help nnoremap <buffer> O ?'\l\{2,\}'<CR>
+  autocmd FileType help nnoremap <buffer> s /\|\zs\S\+\ze\|<CR>
+  autocmd FileType help nnoremap <buffer> S ?\|\zs\S\+\ze\|<CR>
+
+  " edit this file
+  nnoremap \v :e ~/.vimrc.local<CR>
+
+  " reload this file
+  nnoremap \s :source ~/.vimrc.local<CR>
+
+  " edit .vimrc
+  if !exists("VRC_command_loaded")
+    let VRC_command_loaded=1
+    command VRC e ~/.vimrc
+  endif
+
+  " reload this .vimrc
+  if !exists("SVRC_command_loaded")
+    let SVRC_command_loaded=1
+    command SVRC source ~/.vimrc
+  endif
+
+  " edit local bundles
+  if !exists("EB_command_loaded")
+    let EB_command_loaded=1
+    command EB e ~/.vimrc.bundles.local
+  endif
+
+  " swap : and ;
+  nnoremap ; :
+  nnoremap : ;
+  vnoremap ; :
+  vnoremap : ;
+
+  " space will toggle folds if on one, otherwise move right (default behavior)
+  " in visual mode, it will create a manual fold for the highlighted text
+  nnoremap <silent> <Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
+  vnoremap <Space> zf
+
+  " search mappings: these will make it so that going to the next one in a
+  " search will center on the line it's found in.
+  noremap N Nzz
+  noremap n nzz
+
+" }}}

@@ -1,0 +1,28 @@
+[alias]
+  co = checkout
+  b = branch
+  ba = branch -a
+  com = commit
+  d = diff
+  dc = diff --cached
+  gr = log --graph
+  lo = log --graph --pretty=oneline --abbrev-commit
+  s = status
+  mt = mergetool
+	unstage = reset HEAD --
+[color]
+	ui = true
+[user]
+	name = Will Mayner
+	email = william_mayner@brown.edu
+[core]
+	excludesfile = /Users/will/.gitignore_global
+	autocrlf = input
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path = 
+[mergetool "sourcetree"]
+	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
+[gui]
+	recentrepo = /Users/will/Dropbox/jobs-internships-etc/web-resume
