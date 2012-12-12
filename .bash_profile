@@ -3,16 +3,15 @@
 # use vi to edit commands
 set -o vi
 
-# cd looks in school and dev directory
-export CDPATH=$CDPATH:$HOME/Dropbox/school/semester-7:$HOME/Dropbox/dev/
-
- #}}}
+#}}}
 
 # ALIASES {{{
 
   # Config {{{
 
-    # use MacVim as gvim 
+    # use servers with vim
+    alias vim='/Applications/MacVim.app/Contents/MacOS/Vim --servername VIM'
+    # use MacVim as gvim
     alias gvim="open -a MacVim"
     # edit bash profile (this file)
     alias vbp="vim ~/.bash_profile"
@@ -43,7 +42,7 @@ export CDPATH=$CDPATH:$HOME/Dropbox/school/semester-7:$HOME/Dropbox/dev/
     # compile to pdf
     # 'preview continuously'
     # run despite erros
-    alias ltx="latexmk -pdf -pvc -f"
+    alias ltx="latexmk -pdf -pvc"
 
     # vim the .tex files in the current directory
     alias vtex="find . -iname "*.tex" -exec vim {} \;"
@@ -127,5 +126,16 @@ export CDPATH=$CDPATH:$HOME/Dropbox/school/semester-7:$HOME/Dropbox/dev/
 export PATH="/usr/local/heroku/bin:$PATH"
 # dont let MacVim fork another process from the parent
 export VISUAL='mvim -f'
+
+##
+# Your previous /Users/will/.bash_profile file was backed up as /Users/will/.bash_profile.macports-saved_2012-12-03_at_22:17:57
+##
+
+# MacPorts Installer addition on 2012-12-03_at_22:17:57: adding an appropriate PATH variable for use with MacPorts.
+export PATH=/opt/local/bin:/opt/local/sbin:$PATH
+# Finished adapting your PATH environment variable for use with MacPorts.
+
+# Put /usr/local/bin/ back at beginning of $PATH
+export PATH=usr/local/bin:$PATH
 
 # }}}

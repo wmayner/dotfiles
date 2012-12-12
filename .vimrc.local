@@ -1,5 +1,5 @@
 " Modeline and Notes {{{
-" vim: set foldmarker={{{,}}} foldlevel=20 foldmethod=marker
+" vim: set foldmarker={{{,}}} foldlevel=0  foldmethod=marker
 "
 "   This is the personal .vimrc.local file of Will Mayner.
 "   Find me at www.willmayner.com.
@@ -31,58 +31,34 @@
 
   set ai       " automatically set the indent of a new line (local to buffer)
 
-  " for .tex files, autowrite if switching buffer or quitting
-  autocmd FileType tex set autowrite
-
 " }}}
 
 " Vim UI {{{
-
-  " if editing TeX, automatically write file upon leaving insert mode
-  au InsertLeave *.tex if &mod && expand('%')!=''|write|endif
 
   " set filetype to 'tex' for .tex files
   autocmd BufNewFile,BufRead *.tex set filetype=tex
 
   " Code folding {{{
 
-  "   " helper functions for foldexpr {{{
-  "     " for an explanation of these helper functions, see
-  "     " http://learnvimscriptthehardway.stevelosh.com/chapters/49.html#expr-folding
-
-  "   function! NextNonBlankLine(lnum)
-  "     let numlines = line('$')
-  "     let current = a:lnum + 1
-
-  "     while current <= numlines
-  "       if getline(current) =~? '\v\S'
-  "         return current
-  "       endif
-
-  "       let current += 1
-  "     endwhile
-
-  "     return -2
-  "   endfunction
-
-  "   function! IndentLevel(lnum)
-  "     return indent(a:lnum) / &shiftwidth
-  "   endfunction
-
-  "   " }}}
-
     " default code folding (excludes help files) {{{
 
       if !(&ft=='help')
-        setlocal foldlevel=20       " file opens with everything folded
-        setlocal foldmethod=marker  " fold using markers
         setlocal foldmarker={{{,}}} " fold things in triple braces
+        setlocal foldlevel=0        " file opens with everything folded
+        setlocal foldmethod=marker  " fold using markers
+        " insert commented fold markers before and after with [f and ]f
+        nnoremap ,,,,,,,  O{{{<Esc>
+        nnoremap ,,,,,,,, o}}}<Esc>
+        " nmap [f ,,,,,,,,cc
+        " nmap ]f ,,,,,,,,,cc
+        nmap [f ,,,,,,,\\\
+        nmap ]f ,,,,,,,,\\\
       endif
 
       " " attempt at using foldexpr for default folding {{{
 
       " if !(&ft=='tex' || &ft=='txt' || &ft=='help')
-      "   setlocal foldlevel=20       " file opens with everything folded
+      "   setlocal foldlevel=0        " file opens with everything folded
       "   setlocal foldmethod=expr  " fold using markers
       "   setlocal foldexpr=GetDefaultFold(v:lnum)     " fold things in braces
       " endif
@@ -117,21 +93,46 @@
     " TeX {{{
 
       if &ft=='tex'
-        setlocal foldmethod=marker  " fold using markers
         setlocal foldmarker=[{[,]}] " fold things in commented triple braces
+        setlocal foldlevel=0        " file opens with everything folded
+        setlocal foldmethod=marker  " fold using markers
+        " insert fold markers
+        nnoremap ,,,,,,,  O[{[<Esc>
+        nnoremap ,,,,,,,, o]}]<Esc>
+        nmap [f ,,,,,,,,cc
+        nmap ]f ,,,,,,,,,cc
       endif
 
-      " insert fold markers
-      nnoremap ,,,,,,,  O[{[<Esc>
-      nnoremap ,,,,,,,, o]}]<Esc>
-      nmap [f ,,,,,,,,cc
-      nmap ]f ,,,,,,,,,cc
+  "   " helper functions for foldexpr {{{
+  "     " for an explanation of these helper functions, see
+  "     " http://learnvimscriptthehardway.stevelosh.com/chapters/49.html#expr-folding
+
+  "   function! NextNonBlankLine(lnum)
+  "     let numlines = line('$')
+  "     let current = a:lnum + 1
+
+  "     while current <= numlines
+  "       if getline(current) =~? '\v\S'
+  "         return current
+  "       endif
+
+  "       let current += 1
+  "     endwhile
+
+  "     return -2
+  "   endfunction
+
+  "   function! IndentLevel(lnum)
+  "     return indent(a:lnum) / &shiftwidth
+  "   endfunction
+
+  "   " }}}
 
     " attempt at using foldexpr {{{
 
       " if &ft=='tex'
 
-      "   setlocal foldlevel=20                 " file opens with everything folded
+      "   setlocal foldlevel=0                  " file opens with everything folded
       "   setlocal foldmethod=expr              " fold using expressions
       "   setlocal foldexpr=GetTeXFold(v:lnum)  " use function below to determine the fold expression
 
@@ -180,6 +181,20 @@
 
   " " }}}
 
+  " Line wrapping {{{
+
+    " This will get Vim to wrap existing text as desired. wrap tells Vim to word wrap visually (as opposed to changing the text in the buffer), and linebreak tells Vim to only wrap at a character in the breakat option (by default, this includes " ^I!@*-+;:,./?" (note the inclusion of " " and that ^I is the control character for Tab)).
+    set wrap
+    set linebreak
+    set nolist  " list disables linebreak
+    " In addition, you will need to prevent Vim from automatically inserting line breaks in newly entered text. The easiest way to do this is:
+    set textwidth=0
+    set wrapmargin=0
+    " If you want to keep your existing 'textwidth' settings for most lines in your file, but not have Vim automatically reformat when typing on existing lines, you can do this with:
+    set formatoptions+=l
+
+  " }}}
+
   set vb           " stop vim from beeping all the damn time
 
   set cursorcolumn " highlight the column the cursor is on
@@ -220,17 +235,25 @@
 
   " Tabularize {{{
 
-    " tabularize for LaTeX tables
+    " tabularize on ampersand (for LaTeX tables)
     nnoremap <Leader>a& :Tabularize /&<CR>
     vnoremap <Leader>a& :Tabularize /&<CR>
 
-    " tabularize for LaTeX comments
+    " tabularize on percent (for LaTeX comments)
     nnoremap <Leader>a% :Tabularize /%<CR>
     vnoremap <Leader>a% :Tabularize /%<CR>
 
-    " tabularize for css
+    " tabularize on colon
     nnoremap <Leader>a: :Tabularize /:/l0c1<CR>
     vnoremap <Leader>a: :Tabularize /:/l0c1<CR>
+
+    " tabularize on equal
+    nnoremap <Leader>a= :Tabularize /=<CR>
+    vnoremap <Leader>a= :Tabularize /#<CR>
+
+    " tabularize on hash (for bash and CoffeeScript comments)
+    nnoremap <Leader>a# :Tabularize /#<CR>
+    vnoremap <Leader>a# :Tabularize /#<CR>
 
   " }}}
 
@@ -255,6 +278,8 @@
     " use ctrlp but keep <C-t> mapping
     let g:ctrlp_map='<C-t>'
 
+    let g:ctrlp_working_path_mode = 'ra'
+
   " }}}
 
   " Gundo {{{
@@ -269,88 +294,6 @@
     " type cs"- to change "text" to ``text'' (for LaTeX ligatures)
     autocmd FileType tex let b:surround_45="``\r''""'"
   " }}}
-
-  " LaTeX-Suite {{{
-
-    " override <C-j>, the 'next placeholder' binding
-    map <C-j> <C-i>
-
-    " override <Leader>lv
-    nnoremap <Leader>lv :silent !open expand("%:r") . '.pdf'<CR>:echo worked!<CR>
-
-    " IMPORTANT- grep will sometimes skip displaying the file name if you
-    " search in a singe file. This will confuse Latex-Suite. Set your grep
-    " program to always generate a file-name."
-    set grepprg=grep\ -nH\ $*
-
-    " compile to pdf and use preview
-    let g:Tex_DefaultTargetFormat='pdf'
-
-    " pdf compile and view settings
-    " let g:Tex_ViewRule_pdf='Skim'
-    let g:Tex_CompileRule_pdf='latexmk -pdf'
-
-    " dvi compile and view settings
-    let g:Tex_ViewRule_dvi="Skim"
-    let g:Tex_CompileRule_dvi='latex -src -specials -interaction=nonstopmode $*'
-
-    " ignore all warnings below level 4
-    let g:TCLevel=4
-
-    " go to first error after pressing \ll
-    let g:Tex_GotoError=1
-
-    " one last thing for latex
-    let g:tex_flavor='latex'
-
-    " disable conceal for tex files
-    if (&ft=='tex')
-      set conceallevel=0
-    end
-  " }}}
-
-  " " LaTeX-Box {{{
-
-  "   " set latexmk options to 'preview continuously' and -pdfps (from  http://stackoverflow.com/questions/3723493/latex-and-vim-usage)
-  "   let g:LatexBox_latexmk_options='-pvc'
-
-  "   " view output with Skim
-  "   let g:LatexBox_viewer='open -a Skim'
-
-  "   " automatically jump to position in pdf
-  "   let g:LatexBox_autojump=1
-
-  "   " use SyncTex with Skim viewer
-  "   noremap <silent> <Leader>ls :silent !/Applications/Skim.app/Contents/SharedSupport/displayline\ <C-R>=line('.')<CR> "<C-R>=LatexBox_GetOutputFile()<CR>" "%:p" <CR>
-
-  "   " View output
-  "   noremap <Leader>lv :LatexView<CR>
-
-  "   " Compile with latexmk in background.
-  "   noremap <Leader>ll :Latexmk<CR>
-
-  "   " Force compilation with latexmk in background.
-  "   noremap <Leader>lL :LatexmkForce<CR>
-
-  "   " Clean temporary output from LaTeX.
-  "   noremap <Leader>lc :LatexmkClean<CR>
-
-  "   " Clean all output from LaTeX.
-  "   noremap <Leader>lC :LatexmkCleanAll<CR>
-
-  "   " Stop latexmk if it is running.
-  "   noremap <Leader>lk :LatexmkStop<CR>
-
-  "   " Show the running status of latexmk for the current buffer.
-  "   noremap <Leader>lg :LatexmkStatus<CR>
-
-  "   " Show the running status of latexmk for all buffers with process group ID's.
-  "   noremap <LocalLeader>lG :LatexmkStatusDetailed<CR>
-
-  "   " Load the log file for the current document and jump to the first error.
-  "   noremap <Leader>le :LatexErrors<CR>
-
-  " " }}}
 
   " vim-unimpaired {{{
 
@@ -391,17 +334,19 @@
 
   " }}}
 
+  " vim-coffee-script {{{
+
+    " use coffeelint.json to configure coffeelint
+    let g:coffee_lint_options = '-f coffeelint.json'
+
+  " }}}
+
 " }}}
 
 " Key (re)mappings {{{
 
   " fast saving
   nnoremap \w :w<CR>
-
-  " if editing TeX, automatically write and compile when pressing escape in normal/insert
-  autocmd FileType tex noremap <silent><buffer> <Esc> <Esc>:w<CR>
-  autocmd FileType tex nnoremap <silent><buffer> \ll :w<CR>:!latexmk -pdf<CR>:<BS>
-  autocmd FileType tex nnoremap <silent><buffer> \lv :w<CR>:!latexmk -pdf -pv<CR>:<BS>
 
   " <Leader>vs splits in 2 and sets scrollbind
   nnoremap <silent> <Leader>vs :<C-u>let @z=&so<CR>:set so=0 noscb<CR>:bo vs<CR>Ljzt:setl scb<CR><C-w>p:setl scb<CR>:let &so=@z<CR>
@@ -485,8 +430,8 @@
   vnoremap : ;
 
   " space will toggle folds if on one, otherwise move right (default behavior)
-  " in visual mode, it will create a manual fold for the highlighted text
   nnoremap <silent> <Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
+  " in visual mode, it will create a manual fold for the highlighted text
   vnoremap <Space> zf
 
   " search mappings: these will make it so that going to the next one in a
@@ -495,3 +440,98 @@
   noremap n nzz
 
 " }}}
+
+  " TeX {{{
+
+    " automatically write file upon leaving insert mode (if modified)
+    au InsertLeave *.tex if(&mod && expand('%')!='') | write | execute 'Latexmk' | execute 'LatexErrors' | endif
+
+    " shortcut for write, compile with latexmk in background, and view errors (if any)
+    au FileType tex noremap \w :w<CR>:Latexmk<CR>:LatexErrors<CR>
+
+    " disable conceal for tex files
+    if (&ft=='tex')
+      set conceallevel=0
+    end
+
+  " LaTeX-Box {{{
+
+    " set latexmk options to 'preview continuously' and -pdfps (from  http://stackoverflow.com/questions/3723493/latex-and-vim-usage)
+    " let g:LatexBox_latexmk_options='-pvc'
+
+    " view output with Skim
+    let g:LatexBox_viewer='open -a Skim'
+
+    " automatically jump to position in pdf
+    let g:LatexBox_autojump=1
+
+    " use SyncTex with Skim viewer
+    noremap <silent> <Leader>ls :silent !/Applications/Skim.app/Contents/SharedSupport/displayline\ <C-R>=line('.')<CR> "<C-R>=LatexBox_GetOutputFile()<CR>" "%:p" <CR>
+
+    " View output
+    noremap <Leader>lv :LatexView<CR>
+
+    " Write, compile with latexmk in background, and view errors (if any)
+    noremap <Leader>ll :w<CR>:Latexmk<CR>:LatexErrors<CR>
+
+    " Write, force compilation with latexmk in background, and view errors (if any)
+    noremap <Leader>ll :w<CR>:Latexmk<CR>:LatexErrors<CR>
+    noremap <Leader>lL :w<CR>:LatexmkForce<CR>:LatexErrors<CR>
+
+    " Clean temporary output from LaTeX.
+    noremap <Leader>lc :LatexmkClean<CR>
+
+    " Clean all output from LaTeX.
+    noremap <Leader>lC :LatexmkCleanAll<CR>
+
+    " Stop latexmk if it is running.
+    noremap <Leader>lk :LatexmkStop<CR>
+
+    " Show the running status of latexmk for the current buffer.
+    noremap <Leader>lg :LatexmkStatus<CR>
+
+    " Show the running status of latexmk for all buffers with process group ID's.
+    noremap <LocalLeader>lG :LatexmkStatusDetailed<CR>
+
+    " Load the log file for the current document and jump to the first error.
+    noremap <Leader>le :LatexErrors<CR>
+
+  " }}}
+
+  " " LaTeX-Suite {{{
+
+  "   " override <C-j>, the 'next placeholder' binding
+  "   imap <C-g> <Plug>IMAP_JumpForward
+  "   nmap <C-g> <Plug>IMAP_JumpForward
+
+  "   " override <Leader>lv
+  "   " nnoremap <Leader>lv :silent !open expand("%:r") . '.pdf'<CR>:echo worked!<CR>
+
+  "   " IMPORTANT: grep will sometimes skip displaying the file name if you
+  "   " search in a singe file. This will confuse Latex-Suite. Set your grep
+  "   " program to always generate a file-name."
+  "   set grepprg=grep\ -nH\ $*
+
+  "   " compile to pdf
+  "   let g:Tex_DefaultTargetFormat='pdf'
+
+  "   " pdf compile and view settings
+  "   " let g:Tex_ViewRule_pdf='Skim'
+  "   let g:Tex_CompileRule_pdf='latexmk -pdf'
+
+  "   " dvi compile and view settings
+  "   let g:Tex_ViewRule_dvi="Skim"
+  "   let g:Tex_CompileRule_dvi='latex -src -specials -interaction=nonstopmode $*'
+
+  "   " ignore all warnings below level 4
+  "   let g:TCLevel=4
+
+  "   " go to first error after pressing \ll
+  "   let g:Tex_GotoError=1
+
+  "   " one last thing for latex
+  "   let g:tex_flavor='latex'
+
+  " " }}}
+
+  " }}}
