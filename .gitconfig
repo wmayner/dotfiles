@@ -14,7 +14,7 @@
 	ui = true
 [user]
 	name = Will Mayner
-	email = william_mayner@brown.edu
+	email = wmayner@gmail.com
 [core]
 	excludesfile = /Users/will/.gitignore_global
 	autocrlf = input
