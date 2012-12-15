@@ -249,7 +249,7 @@
 
     " tabularize on equal
     nnoremap <Leader>a= :Tabularize /=<CR>
-    vnoremap <Leader>a= :Tabularize /#<CR>
+    vnoremap <Leader>a= :Tabularize /=<CR>
 
     " tabularize on hash (for bash and CoffeeScript comments)
     nnoremap <Leader>a# :Tabularize /#<CR>
