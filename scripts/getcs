@@ -1,1 +1,3 @@
+#!/bin/sh
+
 scp -r wmayner@ssh.cs.brown.edu:$@ ./

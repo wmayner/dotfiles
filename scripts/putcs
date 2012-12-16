@@ -1,1 +1,3 @@
+#!/bin/bash
+
 scp -r $@ wmayner@ssh.cs.brown.edu:~/course/temp/
