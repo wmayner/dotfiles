@@ -128,7 +128,7 @@ PROMPT='%{%f%b%k%}$(build_prompt) '
 
 # (from kennethreitz.zsh-theme)
 # put the pwd string on the right:
-RPS1='%{$fg[$blue]%}%~%{$reset_color%}'
+RPS1='%{$fg[blue]%}%~%{$reset_color%}'
 
 # change end separator color depending on vi mode
 autoload -U colors
