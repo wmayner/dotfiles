@@ -15,9 +15,9 @@ rake install
 ```
 
 Files you'll want to personalize right away:
- - `zsh/zshrc.symlink` and `env.symlink` - set up your own path variables
- - `aliases.symlink` - create your own aliases
- - `git/gitconfig.symlink` - commit as yourself
+ - `zsh/zshrc.symlink` and `env.symlink`: set up your own path variables
+ - `aliases.symlink`: create your own aliases
+ - `git/gitconfig.symlink`: commit as yourself
 
 Components
 ----------
@@ -60,9 +60,10 @@ Dependencies
 Thanks
 ------
 
-The structure and content of this repo is inspired by @holman/dotfiles; the Rakefile is entirely his, and so are parts of this README.
-As mentioned above, @spf13/spf13-vim and @robbyrussell/oh-my-zsh form the basis of my vim and shell configuration.
+The structure and content of this repo is inspired by @holman's [dotfiles][3]; the Rakefile is entirely his, and so are parts of this README.
+As mentioned above, [spf13-vim][1] and [oh-my-zsh][2] form the basis of my vim and shell configuration.
 Thanks to all the people involved in these excellent projects for making programming feel like skiing in powder.
 
 [1]: https://github.com/spf13/spf13-vim "spf13-vim"
 [2]: https://github.com/spf13/spf13-vi://github.com/robbyrussell/oh-my-zsh "oh-my-zsh"
+[3]: https://github.com/holman/dotfiles "holman/dotfiles"
