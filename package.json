@@ -1,9 +1,0 @@
-{
-  "name": "wmayner-dotfiles",
-  "version": "0.0.1",
-  "private": true,
-  "dependencies": {
-    "glob": "x",
-    "path": "x"
-  }
-}

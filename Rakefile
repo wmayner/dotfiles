@@ -4,7 +4,7 @@ require 'rake'
 
 desc "Hook our dotfiles into system-standard positions."
 task :install do
-  linkables = Dir.glob('*/**{.symlink}')
+  linkables = Dir.glob('**/**{.symlink}')
   puts linkables
 
   skip_all = false
