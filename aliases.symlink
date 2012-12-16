@@ -114,3 +114,5 @@
   alias cdpres="cd ~/Dropbox/jobs-internships-etc/resumes/"
 
 # }}}
+
+# vim:foldmethod=marker:foldmarker={{{,}}}:foldlevel=0:ft=sh
