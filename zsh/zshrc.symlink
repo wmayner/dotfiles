@@ -11,7 +11,7 @@ ZSH_CUSTOM=$DOTFILES/zsh
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-ZSH_THEME="agnoster"
+ZSH_THEME="my-agnoster"
 
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
@@ -65,3 +65,6 @@ source $ZSH/oh-my-zsh.sh
 
 # Source every .zsh file in this repo
 for config_file ($DOTFILES/**/*.zsh) source $config_file
+
+# Use vi mode
+bindkey -v
