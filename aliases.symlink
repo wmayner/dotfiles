@@ -2,6 +2,9 @@
 
 # Config {{{
 
+  # shortcut for clearing screen
+  alias c='clear'
+  # edit aliases
   alias valias='vim $ALIASES'
   # use servers with vim
   alias vim='/Applications/MacVim.app/Contents/MacOS/Vim --servername VIM'
