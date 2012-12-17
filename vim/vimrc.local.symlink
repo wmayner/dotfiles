@@ -172,6 +172,16 @@
 
     " }}}
 
+    " Jade {{{
+
+      " code folding (delete nofoldenable to enable folding by default)
+      autocmd BufNewFile,BufReadPost *.jade setl foldmethod=indent "nofoldenable
+
+      " always use 2-space tabs
+      autocmd BufNewFile,BufReadPost *.jade setl shiftwidth=2 expandtab
+
+    " }}}
+
     " spf13 .vimrc {{{
 
       " spf13 uses single braces for folding, so make a special case for that
