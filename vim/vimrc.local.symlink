@@ -370,10 +370,18 @@
   nnoremap ,p :!rm\ -r\ /Applications/MAMP/htdocs/*\ \|\|\ cp\ -r\ ./* /Applications/MAMP/htdocs<CR>
 
   " window navigation and resizing {{{
-    noremap <C-h> <C-w>h
-    noremap <C-j> <C-w>j
-    noremap <C-k> <C-w>k
-    noremap <C-l> <C-w>l
+    nnoremap <C-h> <C-w>h
+    nnoremap <C-j> <C-w>j
+    nnoremap <C-k> <C-w>k
+    nnoremap <C-l> <C-w>l
+    inoremap <C-h> <C-w>h
+    inoremap <C-j> <C-w>j
+    inoremap <C-k> <C-w>k
+    inoremap <C-l> <C-w>l
+    vnoremap <C-h> <C-w>h
+    vnoremap <C-j> <C-w>j
+    vnoremap <C-k> <C-w>k
+    vnoremap <C-l> <C-w>l
     " horizontal shrink
     nnoremap <silent> ,= :exe "resize " . (winheight(0) * 3/2)<CR>
     " horizontal expand
