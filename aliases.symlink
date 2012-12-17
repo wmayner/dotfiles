@@ -2,6 +2,8 @@
 
 # Config {{{
 
+  # shortcut to trash (safe rm)
+  alias t="trash"
   # shortcut for clearing screen
   alias c='clear'
   # edit aliases
