@@ -19,7 +19,7 @@
   # edit local vim bundles for vundle
   alias vbun="vim ~/.vimrc.bundles.local"
   # cd scripts
-  alias cdscripts="cd ~/.bash_scripts/my_scripts"
+  alias cdscripts="cd $DOTFILES/scripts"
   # make sudo check if the next command is an alias
   alias sudo="sudo "
   # edit .slate
@@ -47,6 +47,25 @@
 
 # }}}
 
+# Dev {{{
+
+  # fast git status
+  alias g='git status'
+  # edit .gitconfig
+  alias vgrc="vim ~/.gitconfig"
+  # edit .hgrc
+  alias vhgrc="vim ~/.hgrc"
+  # cd dev
+  alias cdd="cd $DEV"
+  # copy current directory to htdocs to run php server locally with MAMP
+  alias pphp="sudo rm -r /Applications/MAMP/htdocs; mkdir /Applications/MAMP/htdocs; cp -r ~/Dropbox/jobs-internships-etc/web-resume/ /Applications/MAMP/htdocs"
+  # edit app.coffee
+  alias vsp="vim $PROJECTS/fairdiv/src/app.coffee"
+  # cd splitr
+  alias cdsp="cd $PROJECTS/fairdiv/"
+
+# }}}
+
 # Latex {{{
 
   # run latexmk with following options:
@@ -59,25 +78,6 @@
   alias vtex="find . -iname '*.tex' -exec vim {} \;"
   # mvim the .tex files in the current directory
   alias mtex="find . -iname '*.tex' -exec mvim {} \;"
-
-# }}}
-
-# Dev {{{
-
-  # fast git status
-  alias g='git status'
-  # edit .gitconfig
-  alias vgrc="vim ~/.gitconfig"
-  # edit .hgrc
-  alias vhgrc="vim ~/.hgrc"
-  # cd dev
-  alias cdd="cd ~/Dropbox/dev/"
-  # copy current directory to htdocs to run php server locally with MAMP
-  alias pphp="sudo rm -r /Applications/MAMP/htdocs; mkdir /Applications/MAMP/htdocs; cp -r ~/Dropbox/jobs-internships-etc/web-resume/ /Applications/MAMP/htdocs"
-  # edit app.coffee
-  alias vsp="vim ~/Dropbox/dev/coffeescript/fairdiv/src/app.coffee"
-  # cd splitr
-  alias cdsp="cd ~/Dropbox/dev/coffeescript/fairdiv/"
 
 # }}}
 
@@ -108,9 +108,9 @@
 # Resume {{{
 
   # cd web-resume
-  alias cdres="cd ~/Dropbox/jobs-internships-etc/web-resume/"
+  alias cdres="cd $PROJECTS/web-resume"
   # edit index.php
-  alias vres="vim ~/Dropbox/jobs-internships-etc/web-resume/index.php"
+  alias vres="vim $PROJECTS/web-resume/index.php"
   # edit paper resume
   alias vpres="gvim ~/Dropbox/jobs-internships-etc/resumes/resume.tex"
   # cd paper resume
