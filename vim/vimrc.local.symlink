@@ -165,10 +165,10 @@
     " CoffeeScript {{{
 
       " code folding (delete nofoldenable to enable folding by default)
-      autocmd BufNewFile,BufReadPost *.coffee setl foldmethod=indent "nofoldenable
+      autocmd BufNewFile,BufReadPost \(*.coffee\|Cakefile\) setl foldmethod=indent "nofoldenable
 
       " always use 2-space tabs
-      autocmd BufNewFile,BufReadPost *.coffee setl shiftwidth=2 expandtab
+      autocmd BufNewFile,BufReadPost \(*.coffee\|Cakefile\) setl shiftwidth=2 expandtab
 
     " }}}
 
@@ -264,6 +264,10 @@
     " tabularize on hash (for bash and CoffeeScript comments)
     nnoremap <Leader>a# :Tabularize /#<CR>
     vnoremap <Leader>a# :Tabularize /#<CR>
+
+    " tabularize on comma (for bash and CoffeeScript comments)
+    nnoremap <Leader>a, :Tabularize /,/l0c1<CR>
+    vnoremap <Leader>a, :Tabularize /,/l0c1<CR>
 
   " }}}
 
@@ -384,10 +388,10 @@
     nnoremap <C-j> <C-w>j
     nnoremap <C-k> <C-w>k
     nnoremap <C-l> <C-w>l
-    inoremap <C-h> <C-w>h
-    inoremap <C-j> <C-w>j
-    inoremap <C-k> <C-w>k
-    inoremap <C-l> <C-w>l
+    inoremap <C-h> <C-o><C-w>h
+    inoremap <C-j> <C-o><C-w>j
+    inoremap <C-k> <C-o><C-w>k
+    inoremap <C-l> <C-o><C-w>l
     vnoremap <C-h> <C-w>h
     vnoremap <C-j> <C-w>j
     vnoremap <C-k> <C-w>k
