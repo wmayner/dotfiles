@@ -110,9 +110,9 @@
 # Resume {{{
 
   # cd web-resume
-  alias cdres="cd $PROJECTS/web-resume"
+  alias cdres="cd $PROJECTS/resume"
   # edit index.php
-  alias vres="vim $PROJECTS/web-resume/index.php"
+  alias vres="vim $PROJECTS/resume"
   # edit paper resume
   alias vpres="gvim ~/Dropbox/jobs-internships-etc/resumes/resume.tex"
   # cd paper resume

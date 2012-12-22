@@ -15,6 +15,7 @@ Bundle 'kien/ctrlp.vim'
 Bundle 'LaTeX-Box-Team/LaTeX-Box'
 Bundle 'tpope/vim-haml'
 Bundle 'djoshea/vim-matlab-fold'
+Bundle 'xolox/vim-session'
 " Bundle 'mbadran/headlights'
 
 " vim-scripts repos
