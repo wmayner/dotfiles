@@ -466,7 +466,7 @@
   " TeX {{{
 
     " automatically write file upon leaving insert mode (if modified)
-    au InsertLeave *.tex if(&mod && expand('%')!='') | write | execute 'Latexmk' | execute 'LatexErrors' | endif
+    " au InsertLeave *.tex if(&mod && expand('%')!='') | write | execute 'Latexmk' | execute 'LatexErrors' | endif
 
     " shortcut for write, compile with latexmk in background, and view errors (if any)
     au FileType tex noremap \w :w<CR>:Latexmk<CR>:LatexErrors<CR>

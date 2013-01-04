@@ -38,26 +38,7 @@ COMPLETION_WAITING_DOTS="true"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(brew)
-plugins=(battery)
-plugins=(coffee)
-plugins=(command-not-found)
-plugins=(cp)
-plugins=(gem)
-plugins=(git-flow)
-plugins=(git-hubflow)
-plugins=(git-remote-branch)
-plugins=(git)
-plugins=(gitfast)
-plugins=(git-remote-branch)
-plugins=(git-remote-branch)
-plugins=(heroku)
-plugins=(last-working-dir)
-plugins=(macports)
-plugins=(mercurial)
-plugins=(npm)
-plugins=(osx)
-plugins=(rake)
+plugins=(brew battery coffee command-not-found cp gem git-flow git-hubflow git-remote-branch git gitfast git-remote-branch git-remote-branch heroku last-working-dir macports mercurial npm osx rake history-substring-search)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -68,3 +49,6 @@ for config_file ($DOTFILES/**/*.zsh) source $config_file
 
 # Use vi mode
 bindkey -v
+
+# Source history-substring-search plugin since the plugin function doesn't seem to work
+source $ZSH/plugins/history-substring-search/history-substring-search.zsh

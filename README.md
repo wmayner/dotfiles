@@ -1,7 +1,7 @@
 dotfiles
 ========
 
-My environment. This is here mainly so I can pull it if I need to work on another machine for a few days for some reason, but you should check it out in case there's something you can use. It uses a Rakefile for install and uninstall, so you can try out the whole setup pretty easily.
+My environment. This is here mainly so I can pull it if I need to work on another machine for a few days for some reason, but you should check it out in case there's something you can use. It uses a Rakefile for install and uninstall, so you can try out the whole setup pretty easily. It's for Mac OSX, but many parts of it will work on Linux too.
 
 Install
 -------
@@ -55,6 +55,11 @@ Dependencies
 
  - zsh configuration depends on [oh-my-zsh][2]. Make sure you set `$ZSH` to point to it.
  - Running the Rakefile depends on `rake`, which you can install by running `sudo gem install rake`.
+ - I use iTerm2 rather than terminal; it's more customizable.
+   * The colorscheme is Solarized, the same one used in Vim by spf13. See the link for details on how to set it up for iTerm2.
+   * In order for the zsh prompt to render properly, you need to set up iTerm2 to use a powerline-enabled font.
+     I've included Inconsolata-dz-powerline, which is nice for programming.
+     Open it in Finder to install it and then set it as the font in iTerm2 > Preferences > Profiles > Text.
 
 Thanks
 ------
