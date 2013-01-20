@@ -55,18 +55,25 @@ config focusCheckWidthMax 6000
     # Current Monitor {{{
 
       # Quarter-screens {{{
-          alias c-bl    move screenOriginX;screenOriginY+screenSizeY/2                  screenSizeX/2;screenSizeY/2
-          alias c-br    move screenOriginX+screenSizeX/2;screenOriginY+screenSizeY/2    screenSizeX/2;screenSizeY/2
-          alias c-tl    move screenOriginX;screenOriginY                                screenSizeX/2;screenSizeY/2
-          alias c-tr    move screenOriginX+screenSizeX/2;screenOriginY                  screenSizeX/2;screenSizeY/2
-          alias c-max   move screenOriginX;screenOriginY                                screenSizeX;screenSizeY
+          alias c-bl    move screenOriginX;screenOriginY+screenSizeY/2                screenSizeX/2;screenSizeY/2
+          alias c-br    move screenOriginX+screenSizeX/2;screenOriginY+screenSizeY/2  screenSizeX/2;screenSizeY/2
+          alias c-tl    move screenOriginX;screenOriginY                              screenSizeX/2;screenSizeY/2
+          alias c-tr    move screenOriginX+screenSizeX/2;screenOriginY                screenSizeX/2;screenSizeY/2
+          alias c-max   move screenOriginX;screenOriginY                              screenSizeX;screenSizeY
       # }}}
 
       # Chat {{{
-          alias c-rbar  move screenOriginX+4*screenSizeX/5;screenOriginY                screenSizeX/5;screenSizeY
-          alias c-lbar  move screenOriginX;screenOriginY                                screenSizeX/5;screenSizeY
-          alias c-lmain move screenOriginX;screenOriginY                                4*screenSizeX/5;screenSizeY
-          alias c-rmain move screenOriginX+screenSizeX/5;screenOriginY                  4*screenSizeX/5;screenSizeY
+          alias c-rbar  move screenOriginX+4*screenSizeX/5;screenOriginY  screenSizeX/5;screenSizeY
+          alias c-lbar  move screenOriginX;screenOriginY                  screenSizeX/5;screenSizeY
+          alias c-lmain move screenOriginX;screenOriginY                  4*screenSizeX/5;screenSizeY
+          alias c-rmain move screenOriginX+screenSizeX/5;screenOriginY    4*screenSizeX/5;screenSizeY
+      # }}}
+
+      # Background Process {{{
+          alias c-rsmall  move screenOriginX+screenSizeX/2;screenOriginY+3*screenSizeY/4  screenSizeX/2;screenSizeY/4
+          alias c-rbig    move screenOriginX+screenSizeX/2;screenOriginY                  screenSizeX/2;3*screenSizeY/4
+          alias c-lsmall  move screenOriginX;screenOriginY+3*screenSizeY/4                screenSizeX/2;screenSizeY/4
+          alias c-lbig    move screenOriginX;screenOriginY                                screenSizeX/2;3*screenSizeY/4
       # }}}
 
     # }}}
@@ -163,6 +170,13 @@ config focusCheckWidthMax 6000
         bind p:ctrl,alt,cmd     ${n-br}
         bind i:shift,alt,cmd    ${n-tl}
         bind p:shift,alt,cmd    ${n-tr}
+    # }}}
+
+    # Background processes {{{
+        bind i:ctrl,cmd     ${c-lsmall}
+        bind p:ctrl,cmd     ${c-rsmall}
+        bind i:shift,cmd    ${c-lbig}
+        bind p:shift,cmd    ${c-rbig}
     # }}}
 
   # }}}
