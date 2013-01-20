@@ -10,6 +10,8 @@
   s = status
   mt = mergetool
 	unstage = reset HEAD --
+  undo = reset --soft HEAD^
+  nuke = reset --hard HEAD^
 [color]
 	ui = true
 [user]
