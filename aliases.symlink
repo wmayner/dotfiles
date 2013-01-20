@@ -1,19 +1,28 @@
 # TODO: use environment variables where possible
 
-# Config {{{
+# Util {{{
 
   # shortcut to trash (safe rm)
   alias t="trash"
   # shortcut for clearing screen
   alias c='clear'
+  # shortcut for clearing screen and dispalying dir contents
+  alias cl='clear && l'
+  # move up one directory
+  alias ..="cd .."
+  # cd to dropbox
+  alias ~~="cd ~/Dropbox/"
+
+# }}}
+
+# Config {{{
+
   # edit aliases
   alias valias='vim $ALIASES'
   # use servers with vim
   alias vim='/Applications/MacVim.app/Contents/MacOS/Vim --servername VIM'
   # use MacVim as gvim
   alias gvim="open -a MacVim"
-  # move up one directory
-  alias ..="cd .."
   # edit local .vimrc
   alias vrc="vim ~/.vimrc.local"
   # edit .vimrc
@@ -26,8 +35,6 @@
   alias sudo="sudo "
   # edit .slate
   alias vslate="vim ~/.slate"
-  # cd to dropbox
-  alias ~~="cd ~/Dropbox/"
 
   # zsh {{{
 
@@ -60,7 +67,7 @@
   # cd dev
   alias cdd="cd $DEV"
   # copy current directory to htdocs to run php server locally with MAMP
-  alias pphp="sudo rm -r /Applications/MAMP/htdocs; mkdir /Applications/MAMP/htdocs; cp -r ~/Dropbox/jobs-internships-etc/web-resume/ /Applications/MAMP/htdocs"
+  alias pphp="sudo rm -r /Applications/MAMP/htdocs && mkdir /Applications/MAMP/htdocs && cp -r ./* /Applications/MAMP/htdocs"
   # edit app.coffee
   alias vsp="vim $PROJECTS/fairdiv/src/app.coffee"
   # cd splitr
