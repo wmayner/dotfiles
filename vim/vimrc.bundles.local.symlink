@@ -16,6 +16,8 @@ Bundle 'LaTeX-Box-Team/LaTeX-Box'
 Bundle 'tpope/vim-haml'
 Bundle 'djoshea/vim-matlab-fold'
 Bundle 'xolox/vim-session'
+Bundle 'tpope/vim-fugitive'
+Bundle 'nelstrom/vim-quargs'
 " Bundle 'mbadran/headlights'
 
 " vim-scripts repos
@@ -27,3 +29,4 @@ Bundle 'argtextobj.vim'
 Bundle 'vim-indent-object'
 Bundle 'restore_view.vim'
 Bundle 'sudo.vim'
+Bundle 'VimIncr'
