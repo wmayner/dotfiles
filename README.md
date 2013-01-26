@@ -15,9 +15,9 @@ rake install
 ```
 
 Files you'll want to personalize right away:
-- _`zsh/zshrc.symlink`_ and `env.symlink`: set up your own path variables
-- _`aliases.symlink`_: create your own aliases
-- _`git/gitconfig.symlink`_: commit as yourself
+- **zsh/zshrc.symlink** and `env.symlink`: set up your own path variables
+- **aliases.symlink**: create your own aliases
+- **git/gitconfig.symlink**: commit as yourself
 
 Components
 ----------
