@@ -172,6 +172,13 @@
 
     " }}}
 
+    " JSON {{{
+
+      " code folding (delete nofoldenable to enable folding by default)
+      autocmd BufNewFile,BufReadPost \(*.coffee\|Cakefile\) setl foldmethod=marker foldmarker={,} "nofoldenable
+
+    " }}}
+
     " Jade {{{
 
       " code folding (delete nofoldenable to enable folding by default)
