@@ -221,6 +221,8 @@ config focusCheckWidthMax 6000
     bind 6:ctrl,alt,cmd     snapshot 2-displays-space-6 save-to-disk
     bind 7:ctrl,alt,cmd     snapshot 2-displays-space-7 save-to-disk
     bind 8:ctrl,alt,cmd     snapshot 2-displays-space-8 save-to-disk
+    bind 9:ctrl,alt,cmd     snapshot 2-displays-space-9 save-to-disk
+    bind 0:ctrl,alt,cmd     snapshot 2-displays-space-0 save-to-disk
 
     bind 1:ctrl,alt,shift   activate-snapshot 2-displays-space-1
     bind 2:ctrl,alt,shift   activate-snapshot 2-displays-space-2
@@ -230,6 +232,8 @@ config focusCheckWidthMax 6000
     bind 6:ctrl,alt,shift   activate-snapshot 2-displays-space-6
     bind 7:ctrl,alt,shift   activate-snapshot 2-displays-space-7
     bind 8:ctrl,alt,shift   activate-snapshot 2-displays-space-8
+    bind 9:ctrl,alt,shift   activate-snapshot 2-displays-space-9
+    bind 0:ctrl,alt,shift   activate-snapshot 2-displays-space-0
 
     bind f1:ctrl,alt,cmd    snapshot 1-display-space-1 save-to-disk
     bind f2:ctrl,alt,cmd    snapshot 1-display-space-2 save-to-disk
@@ -239,6 +243,8 @@ config focusCheckWidthMax 6000
     bind f6:ctrl,alt,cmd    snapshot 1-display-space-6 save-to-disk
     bind f7:ctrl,alt,cmd    snapshot 1-display-space-7 save-to-disk
     bind f8:ctrl,alt,cmd    snapshot 1-display-space-8 save-to-disk
+    bind f9:ctrl,alt,cmd    snapshot 1-display-space-9 save-to-disk
+    bind f0:ctrl,alt,cmd    snapshot 1-display-space-0 save-to-disk
 
     bind f1:ctrl,alt,shift  activate-snapshot 1-display-space-1
     bind f2:ctrl,alt,shift  activate-snapshot 1-display-space-2
@@ -248,6 +254,8 @@ config focusCheckWidthMax 6000
     bind f6:ctrl,alt,shift  activate-snapshot 1-display-space-6
     bind f7:ctrl,alt,shift  activate-snapshot 1-display-space-7
     bind f8:ctrl,alt,shift  activate-snapshot 1-display-space-8
+    bind f9:ctrl,alt,shift  activate-snapshot 1-display-space-9
+    bind f0:ctrl,alt,shift  activate-snapshot 1-display-space-0
 
   # }}}
 
