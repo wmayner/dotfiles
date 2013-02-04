@@ -14,6 +14,8 @@ cd ~/dotfiles
 rake install
 ```
 
+Don't forget to follow the prompts and backup everything!
+
 Files you'll want to personalize right away:
 
 - `zsh/zshrc.symlink` and `env.symlink`: set up your own path variables
