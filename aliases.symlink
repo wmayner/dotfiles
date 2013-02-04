@@ -94,14 +94,8 @@
 
   # ssh to brown cs
   alias sshcs="ssh wmayner@ssh.cs.brown.edu"
-  # cd multicore
-  alias cdcs="cd ~/Dropbox/school/semester-7/multicore/"
-  # cd crypto
-  alias cdcrypto="cd ~/Dropbox/school/semester-7/crypto/"
-  # cd incompleteness
-  alias cdinc="cd ~/Dropbox/school/semester-7/incompleteness/exercises1"
-  # edit exercises1
-  alias vex1="gvim ~/Dropbox/school/semester-7/incompleteness/exercises1/exercises1-handin.tex"
+  # cd to current project
+  alias cdproj="cd ~/Dropbox/dev/projects/school/willmayner.com/"
 
 # }}}
 
