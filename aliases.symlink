@@ -96,6 +96,14 @@
   alias sshcs="ssh wmayner@ssh.cs.brown.edu"
   # cd to current project
   alias cdproj="cd ~/Dropbox/dev/projects/school/willmayner.com/"
+  # cd ai
+  alias cdai="cd ~/Dropbox/school/semester-8/ai-cs141/"
+  # cd webapps
+  alias cdweb="cd ~/Dropbox/school/semester-8/webapps-cs132/"
+  # cd consciousness
+  alias cdcon="cd ~/Dropbox/school/semester-8/consciousness-phil1520/"
+  # cd paradox
+  alias cdpar="cd ~/Dropbox/school/semester-8/paradox-phil0990T/"
 
 # }}}
 
@@ -112,8 +120,6 @@
 
   # cd web-resume
   alias cdres="cd $PROJECTS/resume"
-  # edit index.php
-  alias vres="vim $PROJECTS/resume"
   # edit paper resume
   alias vpres="gvim ~/Dropbox/jobs-internships-etc/resumes/resume.tex"
   # cd paper resume
