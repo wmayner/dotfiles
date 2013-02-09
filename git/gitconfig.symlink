@@ -2,11 +2,12 @@
   co = checkout
   b = branch
   ba = branch -a
-  com = commit
+  c = commit -m 
+  ca = commit -am 
   d = diff
   dc = diff --cached
-  gr = log --graph
-  lo = log --graph --pretty=oneline --abbrev-commit
+  g = log --graph
+  l = log --graph --pretty=oneline --abbrev-commit
   s = status
   mt = mergetool
 	unstage = reset HEAD --
