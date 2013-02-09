@@ -3,6 +3,8 @@
 # Util {{{
 
   # shortcut to trash (safe rm)
+  alias v="vim"
+  # shortcut to trash (safe rm)
   alias t="trash"
   # shortcut for clearing screen
   alias c='clear'
@@ -92,10 +94,10 @@
 
 # School {{{
 
+  # cd to current project
+  alias cdproj="cd ~/Dropbox/dev/projects/school/pacman/"
   # ssh to brown cs
   alias sshcs="ssh wmayner@ssh.cs.brown.edu"
-  # cd to current project
-  alias cdproj="cd ~/Dropbox/dev/projects/school/willmayner.com/"
   # cd ai
   alias cdai="cd ~/Dropbox/school/semester-8/ai-cs141/"
   # cd webapps
@@ -116,7 +118,7 @@
 
 # }}}
 
-# Resume {{{
+# Webdev {{{
 
   # cd web-resume
   alias cdres="cd $PROJECTS/resume"
@@ -124,6 +126,10 @@
   alias vpres="gvim ~/Dropbox/jobs-internships-etc/resumes/resume.tex"
   # cd paper resume
   alias cdpres="cd ~/Dropbox/jobs-internships-etc/resumes/"
+  # cd liz website
+  alias cdliz="cd ~/Dropbox/dev/projects/liz/liz-website/"
+  # cd my website
+  alias cdsite="cd ~/Dropbox/dev/projects/willmayner.com/"
 
 # }}}
 
