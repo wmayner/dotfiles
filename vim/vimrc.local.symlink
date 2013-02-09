@@ -362,6 +362,10 @@
 
   " }}}
 
+  " ropevim {{{
+      let g:pymode_rope_global_prefix='<C-r> p'
+  " }}}
+
 " }}}
 
 " Key (re)mappings {{{
