@@ -13,6 +13,7 @@
 	unstage = reset HEAD --
   undo = reset --soft HEAD^
   nuke = reset --hard HEAD^
+  blast = reset --hard HEAD
 [color]
 	ui = true
 [user]
