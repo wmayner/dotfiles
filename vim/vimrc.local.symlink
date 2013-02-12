@@ -35,6 +35,11 @@
 
 " Vim UI {{{
 
+  " automatically source vimrc after writing it
+  if has("autocmd")
+    autocmd BufWritePost .vimrc.local source $MYVIMRC
+  endif
+
   " set filetype to 'tex' for .tex files
   autocmd BufNewFile,BufRead *.tex set filetype=tex
 
@@ -245,6 +250,22 @@
   set shiftwidth=2  " use indents of 2 spaces
   set tabstop=2     " an indentation every 2 columns
   set softtabstop=2 " let backspace delete indent
+  autocmd FileType python set shiftwidth=2 tabstop=2 softtabstop=2
+
+  function! <SID>StripTrailingWhitespaces()
+      " Preparation: save last search, and cursor position.
+      let _s=@/
+      let l = line(".")
+      let c = col(".")
+      " Do the business:
+      %s/\s\+$//e
+      " Clean up: restore previous search history, and cursor position
+      let @/=_s
+      call cursor(l, c)
+  endfunction
+
+  " automatically strip trailing whitespace in python, js, and coffee upon write
+  autocmd BufWritePre *.py,*.js,*.coffee :call <SID>StripTrailingWhitespaces()
 
 " }}}
 
@@ -433,15 +454,15 @@
   autocmd FileType help nnoremap <buffer> S ?\|\zs\S\+\ze\|<CR>
 
   " edit this file
-  nnoremap \v :e ~/.vimrc.local<CR>
+  nnoremap \v :tabedit ~/.vimrc.local<CR>
 
-  " reload this file
-  nnoremap \s :source ~/.vimrc.local<CR>
+  " reload .vimrc
+  nnoremap \s :source $MYVIMRC<CR>
 
   " edit .vimrc
   if !exists("VRC_command_loaded")
     let VRC_command_loaded=1
-    command VRC e ~/.vimrc
+    command VRC tabedit ~/.vimrc
   endif
 
   " reload this .vimrc
@@ -453,7 +474,7 @@
   " edit local bundles
   if !exists("EB_command_loaded")
     let EB_command_loaded=1
-    command EB e ~/.vimrc.bundles.local
+    command EB tabedit ~/.vimrc.bundles.local
   endif
 
   " swap : and ;
