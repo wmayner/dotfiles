@@ -6,13 +6,14 @@ My environment. This is here mainly so I can pull it if I need to work on anothe
 Install
 -------
 
-Run this:
-
 ```sh
+cd ~
 git clone https://github.com/wmayner/dotfiles.git ~/dotfiles
 cd ~/dotfiles
 rake install
 ```
+
+*Note*: In your path, set `$DOTFILES = <path to this repo>`.
 
 Don't forget to follow the prompts and backup everything!
 

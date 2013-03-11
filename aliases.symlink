@@ -1,8 +1,13 @@
 # TODO: use environment variables where possible
 
 # Util {{{
-
-  # shortcut to trash (safe rm)
+  # list dir contents (all with human-readable size)
+  alias l='ls -lA1h'
+  alias la='ls -lAh'
+  alias ll='ls -lh'
+  alias ls='ls -Gh'
+  alias lsa='ls -lah'
+  # shortcut for vim
   alias v="vim"
   # shortcut to trash (safe rm)
   alias t="trash"
@@ -94,8 +99,10 @@
 
 # School {{{
 
+  # cd to school projects
+  alias cdschool="cd ~/Dropbox/dev/projects/school"
   # cd to current project
-  alias cdproj="cd ~/Dropbox/dev/projects/school/pacman/"
+  alias cdproj="cd ~/Dropbox/dev/projects/school/picross"
   # ssh to brown cs
   alias sshcs="ssh wmayner@ssh.cs.brown.edu"
   # cd ai
@@ -120,6 +127,8 @@
 
 # Webdev {{{
 
+  # cd tickt.me
+  alias cdt="cd $PROJECTS/ticktme"
   # cd web-resume
   alias cdres="cd $PROJECTS/resume"
   # edit paper resume
