@@ -102,7 +102,7 @@
   # cd to school projects
   alias cdschool="cd ~/Dropbox/dev/projects/school"
   # cd to current project
-  alias cdproj="cd ~/Dropbox/dev/projects/school/picross"
+  alias cdproj="cd ~/Dropbox/dev/projects/school/chatroom"
   # ssh to brown cs
   alias sshcs="ssh wmayner@ssh.cs.brown.edu"
   # cd ai
@@ -128,7 +128,7 @@
 # Webdev {{{
 
   # cd tickt.me
-  alias cdt="cd $PROJECTS/ticktme"
+  alias cdt="cd $PROJECTS/ticktme/repo"
   # cd web-resume
   alias cdres="cd $PROJECTS/resume"
   # edit paper resume
