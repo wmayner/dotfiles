@@ -35,6 +35,13 @@
 
 " }
 
+" Bundles {
+
+  " Choose bundle groups from spf13:
+  let g:spf13_bundle_groups=['general', 'neocomplcache', 'programming', 'python', 'javascript', 'html', 'misc']
+
+" }
+
 " Vim UI {
 
   " no spellchecking
@@ -416,9 +423,29 @@
     let g:pymode_lint_checker="" " syntax checking handled by syntastic
 
   " }
+
+" SnipMate {
+
+  let g:snips_author = 'Steve Francia <steve.francia@gmail.com>'
+
+" }
+
+" Session.vim {
+
+  let g:session_autoload = 'yes'
+  let g:session_autosave = 'yes'
+  let g:session_default_to_last = 'yes'
+
+" }
+
 " }
 
 " Key (re)mappings {
+
+  " also switch tabs with Alt+Command+Arrows, for consistency with Chrome and
+  " iTerm2
+  nnoremap <A-D-Right> :tabn<CR>
+  nnoremap <A-D-Left> :tabp<CR>
 
   " fast quit
   nnoremap \q :q<CR> 
