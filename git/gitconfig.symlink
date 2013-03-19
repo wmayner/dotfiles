@@ -3,6 +3,7 @@
   b = branch
   ba = branch -a
   c = commit -m 
+  com = commit -m
   ca = commit -am 
   d = diff
   dc = diff --cached
