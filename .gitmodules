@@ -1,3 +1,3 @@
-[submodule "z"]
-	path = z
+[submodule "submodules/z"]
+	path = submodules/z
 	url = git://github.com/rupa/z.git
