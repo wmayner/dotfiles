@@ -142,4 +142,19 @@
 
 # }}}
 
+# z {{{
+
+  # restrict matches to subdirectories of the current directory.
+  alias jc="j -c"
+  # show a brief help message
+  alias jh="j -h"
+  # list only
+  alias jl="j -l"
+  # match by rank only
+  alias jr="j -r"
+  # match by recent access only
+  alias jt="j -t"
+
+# }}}
+
 # vim:foldmethod=marker:foldmarker={{{,}}}:foldlevel=0:ft=sh
