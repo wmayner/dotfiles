@@ -426,7 +426,11 @@
 
 " SnipMate {
 
-  let g:snips_author = 'Steve Francia <steve.francia@gmail.com>'
+  let g:snips_author = 'Will Mayner <wmayner@gmail.com>'
+  " diable snippets temporarily
+  let g:loaded_snipmate = 1
+  let g:loaded_neocomplcache = 1
+  let g:loaded_neosnippet = 1
 
 " }
 
@@ -435,6 +439,22 @@
   let g:session_autoload = 'yes'
   let g:session_autosave = 'yes'
   let g:session_default_to_last = 'yes'
+
+" }
+
+" NERDTree {
+
+  " don't open NERDTree on gvim/macvim startup
+  let g:nerdtree_tabs_open_on_gui_startup = 0
+
+  " don't open NERDTree on console vim startup
+  let g:nerdtree_tabs_open_on_console_startup = 0
+
+  " don't open NERDTree if vim starts in diff mode
+  let g:nerdtree_tabs_no_startup_for_diff = 1
+
+  " don't open NERDTree on new tab creation (if NERDTree was globally opened by :NERDTreeTabsToggle)
+  let g:nerdtree_tabs_open_on_new_tab = 0
 
 " }
 
@@ -460,7 +480,8 @@
   nnoremap ,d "*yiw
 
   " clear search highlighting with enter key
-  nnoremap <silent> <CR> :noh<CR>
+  " second enter is for triggering quickfix jumps and the like
+  nnoremap <silent> <CR> :noh<CR><CR>
 
   " clear search buffer
   nnoremap \cc :let @/ =""<CR>:<backspace>
@@ -557,60 +578,58 @@
 
   " TeX {
 
-    " automatically write file upon leaving insert mode (if modified)
-    " au InsertLeave *.tex if(&mod && expand('%')!='') | write | execute 'Latexmk' | execute 'LatexErrors' | endif
-
-    " shortcut for write, compile with latexmk in background, and view errors (if any)
-    au FileType tex noremap \w :w<CR>:Latexmk<CR>:LatexErrors<CR>
-
     " disable conceal for tex files
-    if (&ft=='tex')
-      set conceallevel=0
-    end
+    autocmd BufNewFile,BufRead *.tex set cole=0
 
-  " LaTeX-Box {
+    " LaTeX-Box {
 
-    " set latexmk options to 'preview continuously' and -pdfps (from  http://stackoverflow.com/questions/3723493/latex-and-vim-usage)
-    " let g:LatexBox_latexmk_options='-pvc'
+      " set latexmk options to 'preview continuously' and -pdfps (from  http://stackoverflow.com/questions/3723493/latex-and-vim-usage)
+      " let g:LatexBox_latexmk_options='-pvc'
 
-    " view output with Skim
-    let g:LatexBox_viewer='open -a Skim'
+      " view output with Skim
+      let g:LatexBox_viewer='open -a Skim'
 
-    " automatically jump to position in pdf
-    let g:LatexBox_autojump=1
+      " automatically jump to position in pdf
+      let g:LatexBox_autojump=1
 
-    " use SyncTex with Skim viewer
-    noremap <silent> <Leader>ls :silent !/Applications/Skim.app/Contents/SharedSupport/displayline\ <C-R>=line('.')<CR> "<C-R>=LatexBox_GetOutputFile()<CR>" "%:p" <CR>
+      " use SyncTex with Skim viewer
+      noremap <silent> <Leader>ls :silent !/Applications/Skim.app/Contents/SharedSupport/displayline\ <C-R>=line('.')<CR> "<C-R>=LatexBox_GetOutputFile()<CR>" "%:p" <CR>
 
-    " View output
-    noremap <Leader>lv :LatexView<CR>
+      " automatically write file upon leaving insert mode (if modified)
+      " au InsertLeave *.tex if(&mod && expand('%')!='') | write | execute 'Latexmk' | execute 'LatexErrors' | endif
 
-    " Write, compile with latexmk in background, and view errors (if any)
-    noremap <Leader>ll :w<CR>:Latexmk<CR>:LatexErrors<CR>
+      " shortcut for write, compile with latexmk in background, and view errors (if any)
+      " au FileType tex noremap \w :w<CR>:Latexmk<CR>
+      autocmd BufNewFile,BufRead *.tex noremap \w :w<CR>:silent Latexmk<CR>
 
-    " Write, force compilation with latexmk in background, and view errors (if any)
-    noremap <Leader>ll :w<CR>:Latexmk<CR>:LatexErrors<CR>
-    noremap <Leader>lL :w<CR>:LatexmkForce<CR>:LatexErrors<CR>
+      " Write, compilation with latexmk in background
+      noremap <Leader>ll :w<CR>:Latexmk<CR>
 
-    " Clean temporary output from LaTeX.
-    noremap <Leader>lc :LatexmkClean<CR>
+      " Write, compilation with latexmk in background, view errors
+      noremap <Leader>LL :w<CR>:Latexmk<CR>:LatexErrors<CR>
 
-    " Clean all output from LaTeX.
-    noremap <Leader>lC :LatexmkCleanAll<CR>
+      " View output
+      noremap <Leader>lv :LatexView<CR>
 
-    " Stop latexmk if it is running.
-    noremap <Leader>lk :LatexmkStop<CR>
+      " Clean temporary output from LaTeX.
+      noremap <Leader>lc :LatexmkClean<CR>
 
-    " Show the running status of latexmk for the current buffer.
-    noremap <Leader>lg :LatexmkStatus<CR>
+      " Clean all output from LaTeX.
+      noremap <Leader>lC :LatexmkCleanAll<CR>
 
-    " Show the running status of latexmk for all buffers with process group ID's.
-    noremap <LocalLeader>lG :LatexmkStatusDetailed<CR>
+      " Stop latexmk if it is running.
+      noremap <Leader>lk :LatexmkStop<CR>
 
-    " Load the log file for the current document and jump to the first error.
-    noremap <Leader>le :LatexErrors<CR>
+      " Show the running status of latexmk for the current buffer.
+      noremap <Leader>lg :LatexmkStatus<CR>
 
-  " }
+      " Show the running status of latexmk for all buffers with process group ID's.
+      noremap <LocalLeader>lG :LatexmkStatusDetailed<CR>
+
+      " Load the log file for the current document and jump to the first error.
+      noremap <Leader>le :LatexErrors<CR>
+
+    " }
 
   " " LaTeX-Suite {
 

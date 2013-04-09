@@ -1,6 +1,7 @@
 # TODO: use environment variables where possible
 
 # Util {{{
+
   # list dir contents (all with human-readable size)
   alias l='ls -lA1h'
   alias la='ls -lAh'
@@ -29,7 +30,7 @@
   # use servers with vim
   alias vim='/Applications/MacVim.app/Contents/MacOS/Vim --servername VIM'
   # use MacVim as gvim
-  alias gvim="open -a MacVim"
+  # alias gvim="mvim"
   # edit local .vimrc
   alias vrc="vim ~/.vimrc.local"
   # edit .vimrc
@@ -65,6 +66,8 @@
 
 # Dev {{{
 
+  # git flow
+  alias f='git flow'
   # fast git status
   alias g='git status'
   # edit .gitconfig
@@ -100,9 +103,9 @@
 # School {{{
 
   # cd to school projects
-  alias cdschool="cd ~/Dropbox/dev/projects/school"
+  alias cdschool="cd $CODE/school"
   # cd to current project
-  alias cdproj="cd ~/Dropbox/dev/projects/school/chatroom"
+  alias cdproj="cd $CODE/school/wumpus"
   # ssh to brown cs
   alias sshcs="ssh wmayner@ssh.cs.brown.edu"
   # cd ai
@@ -128,17 +131,17 @@
 # Webdev {{{
 
   # cd tickt.me
-  alias cdt="cd $PROJECTS/ticktme/repo"
+  alias cdt="cd $CODE/ticktme/repo"
   # cd web-resume
-  alias cdres="cd $PROJECTS/resume"
+  alias cdres="cd $CODE/resume"
   # edit paper resume
   alias vpres="gvim ~/Dropbox/jobs-internships-etc/resumes/resume.tex"
   # cd paper resume
   alias cdpres="cd ~/Dropbox/jobs-internships-etc/resumes/"
   # cd liz website
-  alias cdliz="cd ~/Dropbox/dev/projects/liz/liz-website/"
+  alias cdliz="cd $CODE/liz/liz-website/"
   # cd my website
-  alias cdsite="cd ~/Dropbox/dev/projects/willmayner.com/"
+  alias cdsite="cd $CODE/willmayner.com/"
 
 # }}}
 

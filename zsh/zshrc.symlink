@@ -52,3 +52,5 @@ bindkey -v
 
 # Source history-substring-search plugin since the plugin function doesn't seem to work
 source $ZSH/plugins/history-substring-search/history-substring-search.zsh
+
+PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting

@@ -1,6 +1,3 @@
 # This file is for bash-specific aliases.
 # Aliases that can be used by multiple shells
 # should go in $ALIASES (default is ~/.aliases).
-
-# safe rm (moves to trash)
-alias rm='mv \!* ~/.Trash/'
