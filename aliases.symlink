@@ -2,6 +2,8 @@
 
 # Util {{{
 
+  # use brew python (`brew link --overwrite` doesn't seem to work)
+  alias python="/usr/local/Cellar/python/2.7.4/bin/python"
   # list dir contents (all with human-readable size)
   alias l='ls -lA1h'
   alias la='ls -lAh'
@@ -30,7 +32,7 @@
   # use servers with vim
   alias vim='/Applications/MacVim.app/Contents/MacOS/Vim --servername VIM'
   # use MacVim as gvim
-  # alias gvim="mvim"
+  alias gvim="mvim"
   # edit local .vimrc
   alias vrc="vim ~/.vimrc.local"
   # edit .vimrc
@@ -66,6 +68,8 @@
 
 # Dev {{{
 
+  # git log
+  alias gl='git l'
   # git flow
   alias f='git flow'
   # fast git status

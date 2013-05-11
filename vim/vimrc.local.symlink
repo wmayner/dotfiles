@@ -31,7 +31,7 @@
 
   set ai       " automatically set the indent of a new line (local to buffer)
 
-  au BufWrite .vimrc.local source ~/.vimrc.local
+  set fileencodings=utf-8
 
 " }
 
@@ -329,6 +329,23 @@
 
   " }
 
+  " CtrlP {
+
+    let ctrlp_promt_mappings = {
+    \ 'AcceptSelection("e")': ['<c-t>'],
+    \ 'AcceptSelection("h")': ['<c-x>', '<c-cr>', '<c-s>'],
+    \ 'AcceptSelection("t")': ['<cr>', '<2-LeftMouse>'],
+    \ 'AcceptSelection("v")': ['<c-v>', '<RightMouse>'],
+    \ }
+
+  " }
+
+  " GitGutter {
+
+    let g:gitgutter_eager=0
+
+  " }
+
   " MiniBufExplorer {
 
     let g:miniBufExplMapWindowNavVim=1
@@ -348,7 +365,7 @@
   " ctrlp {
 
     " use ctrlp but keep <C-t> mapping
-    let g:ctrlp_map='<C-t>'
+    let g:ctrlp_map='<C-p>'
 
     " persist index info in cache between sessions
     let g:ctrlp_clear_cache_on_exit = 0
@@ -461,6 +478,10 @@
 " }
 
 " Key (re)mappings {
+
+  " unmap <esc> from spf13's 'fixing end and home keys'
+  iunmap <esc>[H
+  iunmap <esc>[F
 
   " also switch tabs with Alt+Command+Arrows, for consistency with Chrome and
   " iTerm2
@@ -703,4 +724,5 @@
         update
       endfor
     endfunction
+
   " }
