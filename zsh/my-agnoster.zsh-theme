@@ -145,3 +145,4 @@ zle-line-init () {
   zle -K viins
 }
 zle -N zle-line-init # replace default function with this one
+bindkey -v # activate vi mode

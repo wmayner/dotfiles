@@ -28,23 +28,21 @@
 # Config {{{
 
   # edit aliases
-  alias valias='vim $ALIASES'
-  # use servers with vim
-  alias vim='/Applications/MacVim.app/Contents/MacOS/Vim --servername VIM'
+  alias valias='mvim $ALIASES'
   # use MacVim as gvim
   alias gvim="mvim"
   # edit local .vimrc
-  alias vrc="vim ~/.vimrc.local"
+  alias vrc="mvim ~/.vimrc.local"
   # edit .vimrc
-  alias vrcreal="vim ~/.vimrc"
+  alias vrcreal="mvim ~/.vimrc"
   # edit local vim bundles for vundle
-  alias vbun="vim ~/.vimrc.bundles.local"
+  alias vbun="mvim ~/.vimrc.bundles.local"
   # cd scripts
   alias cdscripts="cd $DOTFILES/scripts"
   # make sudo check if the next command is an alias
   alias sudo="sudo "
   # edit .slate
-  alias vslate="vim ~/.slate"
+  alias vslate="mvim ~/.slate"
 
   # zsh {{{
 
@@ -106,6 +104,8 @@
 
 # School {{{
 
+  # cd to school
+  alias cdsch="cd ~/Dropbox/school/semester-8/"
   # cd to school projects
   alias cdschool="cd $CODE/school"
   # cd to current project
@@ -135,7 +135,7 @@
 # Webdev {{{
 
   # cd tickt.me
-  alias cdt="cd $CODE/ticktme/repo"
+  alias cdc="cd $CODE/crowdsurf"
   # cd web-resume
   alias cdres="cd $CODE/resume"
   # edit paper resume
