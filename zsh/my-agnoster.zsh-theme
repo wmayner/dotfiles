@@ -31,7 +31,8 @@
 
 CURRENT_BG='NONE'
 END_FG='NONE'
-SEGMENT_SEPARATOR='⮀'
+SEGMENT_SEPARATOR='⮀' #
+
 
 # Begin a segment
 # Takes two arguments, background and foreground. Both can be omitted,

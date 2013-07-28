@@ -140,6 +140,7 @@ Bundle 'djoshea/vim-matlab-fold'
 Bundle 'xolox/vim-session'
 Bundle 'tpope/vim-fugitive'
 Bundle 'SuperTab'
+Bundle 'vim-misc'
 
 " vim-scripts repos
 " Bundle 'ZoomWin'

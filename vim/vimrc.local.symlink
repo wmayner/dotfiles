@@ -266,7 +266,8 @@
 
 " GUI Vim {
 
-  set guifont=Inconsolata-dz:h16 " use Inconsolata-dz font
+  set guifont=Droid\ Sans\ Mono\ for\ Powerline:h16 " use Drois Sans Mono powerline font
+  " set guifont=Inconsolata-dz\ for\ Powerline:h16 " use Inconsolatd-dz font
 
   " enable shift-select-replace movement with arrow keys
   if has("gui_macvim")
@@ -337,6 +338,7 @@
     \ 'AcceptSelection("t")': ['<cr>', '<2-LeftMouse>'],
     \ 'AcceptSelection("v")': ['<c-v>', '<RightMouse>'],
     \ }
+    let g:ctrlp_show_hidden = 1
 
   " }
 
@@ -428,8 +430,12 @@
 
   " vim-coffee-script {
 
+    " open the scratch buffer vertically by default
+    let coffee_compile_vert = 1
     " use coffeelint.json to configure coffeelint
     let g:coffee_lint_options = '-f coffeelint.json'
+    vnoremap <leader>f <esc>:'<,'>:CoffeeCompile<CR>
+    noremap <leader>f :CoffeeCompile<CR>
 
   " }
 
@@ -453,9 +459,10 @@
 
 " Session.vim {
 
-  let g:session_autoload = 'yes'
-  let g:session_autosave = 'yes'
-  let g:session_default_to_last = 'yes'
+  let g:session_autoload = 1
+  let g:session_autosave = 1
+  let g:session_default_to_last = 1
+  let g:session_default_overwrite = 1
 
 " }
 
@@ -472,6 +479,13 @@
 
   " don't open NERDTree on new tab creation (if NERDTree was globally opened by :NERDTreeTabsToggle)
   let g:nerdtree_tabs_open_on_new_tab = 0
+
+" }
+
+" Airline {
+
+  " user powerline-fonts in airline
+  let g:airline_powerline_fonts = 1
 
 " }
 
