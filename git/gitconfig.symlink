@@ -5,8 +5,8 @@
   c = commit -m 
   com = commit -m
   ca = commit -am 
-  d = diff
-  dc = diff --cached
+  d = diff --word-diff
+  dc = diff --word-diff --cached
   g = log --graph
   l = log --graph --pretty=oneline --abbrev-commit
   s = status
@@ -28,7 +28,7 @@
 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
 	path = 
 [mergetool "sourcetree"]
-	cmd = /Users/will/Library/Application Support/SourceTree/SourceTree 1.5.6/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
 	trustExitCode = true
 [gui]
 	recentrepo = /Users/will/Dropbox/jobs-internships-etc/web-resume
@@ -40,3 +40,7 @@
   path = "/Applications/kdiff3.app/Contents/MacOS/kdiff3"
 [push]
 	default = simple
+[help]
+	autocorrect = 1
+[rerere]
+	enabled = 1
