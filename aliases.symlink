@@ -66,6 +66,8 @@
 
 # Dev {{{
 
+  # git diff
+  alias gd='git d'
   # git log
   alias gl='git l'
   # git flow
