@@ -141,6 +141,9 @@ Bundle 'xolox/vim-session'
 Bundle 'tpope/vim-fugitive'
 Bundle 'SuperTab'
 Bundle 'vim-misc'
+Bundle 'vim-stylus'
+Bundle 'operator-camelize'
+Bundle 'operator-user'
 
 " vim-scripts repos
 " Bundle 'ZoomWin'

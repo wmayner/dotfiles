@@ -9,9 +9,10 @@
   dc = diff --word-diff --cached
   g = log --graph
   l = log --graph --pretty=oneline --abbrev-commit
+  gr = log --graph --full-history --date=short --all --color --pretty=format:"%x1b[31m%h%x09%x1b[32m%d%x1b[0m%x20%s%x20%x1b[33m(%an)%x1b[0m"
   s = status
   mt = mergetool
-	unstage = reset HEAD --
+  unstage = reset HEAD --
   undo = reset --soft HEAD^
   nuke = reset --hard HEAD^
   blast = reset --hard HEAD
@@ -19,30 +20,38 @@
   amend = commit --amend -C HEAD
   contrib = shortlog -sn
 [color]
-	ui = 1
+  ui = 1
+[color "branch"]
+  current = cyan
+  local = green
+  remote = yellow
+[color "diff"]
+  meta = cyan
+  frag = yellow reverse
+  old = red
+  new = green
+[color "status"]
+  added = green
+  changed = yellow
+  untracked = cyan
 [user]
-	name = Will Mayner
-	email = wmayner@gmail.com
+  name = Will Mayner
+  email = wmayner@gmail.com
 [core]
-	excludesfile = /Users/will/.gitignore_global
-	autocrlf = input
-[difftool "sourcetree"]
-	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-	path = 
-[mergetool "sourcetree"]
-	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
-	trustExitCode = true
+  excludesfile = /Users/will/.gitignore_global
+  autocrlf = input
 [gui]
-	recentrepo = /Users/will/Dropbox/jobs-internships-etc/web-resume
+  recentrepo = /Users/will/Dropbox/jobs-internships-etc/web-resume
 [credential]
-	helper = osxkeychain
+  helper = osxkeychain
 [merge]
-  tool = "kdiff3"
-[mergetool "kdiff3"]
-  path = "/Applications/kdiff3.app/Contents/MacOS/kdiff3"
+	tool = vimdiff
+  conflictstyle = diff3
 [push]
-	default = simple
+	default = current
 [help]
-	autocorrect = 1
+  autocorrect = 1
 [rerere]
-	enabled = 1
+  enabled = 1
+[diff]
+	tool = vimdiff

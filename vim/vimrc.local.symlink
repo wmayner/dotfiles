@@ -262,6 +262,9 @@
 
   set showmatch    " show matching parens
 
+  " fixes syntax highlighting for stylus
+  autocmd BufNewFile,BufRead *.styl set filetype=stylus
+
 " }
 
 " GUI Vim {
@@ -364,15 +367,19 @@
 
   " }
 
-  " ctrlp {
+  " CtrlP {
 
     " use ctrlp but keep <C-t> mapping
     let g:ctrlp_map='<C-p>'
 
     " persist index info in cache between sessions
-    let g:ctrlp_clear_cache_on_exit = 0
+    let g:ctrlp_clear_cache_on_exit = 1
 
     let g:ctrlp_working_path_mode = 'ra'
+
+    " sane ignore for ctrlp
+    unlet g:ctrlp_custom_ignore
+    let g:ctrlp_custom_ignore = 'node_modules'
 
   " }
 
@@ -463,7 +470,7 @@
 " Session.vim {
 
   let g:session_autoload = 1
-  let g:session_autosave = 1
+  let g:session_autosave = 0
   let g:session_default_to_last = 1
   let g:session_default_overwrite = 1
 
@@ -489,6 +496,13 @@
 
   " user powerline-fonts in airline
   let g:airline_powerline_fonts = 1
+
+" }
+
+" operator-camelize {
+
+  " <Leader>m toggles camelCase
+  map <Leader>m <Plug>(operator-camelize-toggle)
 
 " }
 
