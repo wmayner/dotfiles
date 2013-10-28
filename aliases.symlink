@@ -57,7 +57,7 @@
 
     # edit bash profile (this file)
     alias vbp="vim ~/.bash_profile"
-    # source bash profile
+    source bash profile
     alias sbp="source ~/.bash_profile"
 
   # }}}
@@ -66,6 +66,8 @@
 
 # Dev {{{
 
+  # use GitHub's CLI git wrapper
+  alias git='hub'
   # git diff
   alias gd='git d'
   # git log
