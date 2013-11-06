@@ -45,13 +45,13 @@
 [credential]
   helper = osxkeychain
 [merge]
-	tool = vimdiff
+  tool = vimdiff
   conflictstyle = diff3
 [push]
-	default = current
+  default = current
 [help]
   autocorrect = 1
 [rerere]
   enabled = 1
 [diff]
-	tool = vimdiff
+  tool = vimdiff
