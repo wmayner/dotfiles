@@ -38,7 +38,7 @@ COMPLETION_WAITING_DOTS="true"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-# plugins=(brew battery coffee cake command-not-found cp gem github git-flow git-hubflow git-remote-branch git gitfast git-remote-branch git-remote-branch heroku last-working-dir mercurial npm osx rake history-substring-search bower heroku node pip python sublime vundle vi-mode)
+plugins=(grunt brew battery coffee cake command-not-found cp gem github git-flow git-hubflow git-remote-branch git gitfast git-remote-branch git-remote-branch heroku last-working-dir mercurial npm osx rake history-substring-search bower heroku node pip python sublime vundle vi-mode)
 
 source $ZSH/oh-my-zsh.sh
 

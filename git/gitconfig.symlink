@@ -8,15 +8,14 @@
   d = diff --word-diff
   dc = diff --word-diff --cached
   g = log --graph
-  l = log --graph --pretty=oneline --abbrev-commit
-  gr = log --graph --full-history --date=short --all --color --pretty=format:"%x1b[31m%h%x09%x1b[32m%d%x1b[0m%x20%s%x20%x1b[33m(%an)%x1b[0m"
+  gr = log --graph --pretty=oneline --abbrev-commit
+  l = log --graph --full-history --date=short --all --color --pretty=format:"%x1b[31m%h%x09%x1b[32m%d%x1b[0m%x20%s%x20%x1b[33m(%an)%x1b[0m"
   s = status
   mt = mergetool
   unstage = reset HEAD --
   undo = reset --soft HEAD^
   nuke = reset --hard HEAD^
   blast = reset --hard HEAD
-  gr = log --graph --full-history --date=short --all --color --pretty=format:"%x1b[31m%h%x09%x1b[32m%d%x1b[0m%x20%s%x20%x1b[33m(%an)%x1b[0m"
   amend = commit --amend -C HEAD
   contrib = shortlog -sn
 [color]
@@ -45,7 +44,7 @@
 [credential]
   helper = osxkeychain
 [merge]
-  tool = vimdiff
+  tool = gvimdiff
   conflictstyle = diff3
 [push]
   default = current

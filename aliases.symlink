@@ -71,20 +71,30 @@
   alias gd='git d'
   # git log
   alias gl='git l'
+  # git branch
+  alias gb='git branch'
+  # git branch delete
+  alias gbd='git branch -d'
   # git flow
-  alias f='git flow'
+  alias gf='git flow'
+  # git flow feature
+  alias gff='git flow feature'
+  # git flow release
+  alias gfr='git flow release'
+  # git flow hotfix
+  alias gfh='git flow hotfix'
   # fast git status
   alias g='git status'
   # edit .gitconfig
-  alias vgrc="vim ~/.gitconfig"
+  alias vgrc="mvim ~/.gitconfig"
   # edit .hgrc
-  alias vhgrc="vim ~/.hgrc"
+  alias vhgrc="mvim ~/.hgrc"
   # cd dev
   alias cdd="cd $DEV"
   # copy current directory to htdocs to run php server locally with MAMP
   alias pphp="sudo rm -r /Applications/MAMP/htdocs && mkdir /Applications/MAMP/htdocs && cp -r ./* /Applications/MAMP/htdocs"
   # edit app.coffee
-  alias vsp="vim $PROJECTS/fairdiv/src/app.coffee"
+  alias vsp="mvim $PROJECTS/fairdiv/src/app.coffee"
   # cd splitr
   alias cdsp="cd $PROJECTS/fairdiv/"
 

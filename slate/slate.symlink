@@ -166,10 +166,10 @@ config focusCheckWidthMax 6000
   # Next screen (ALT + CMD [+ SHIFT/CTRL]) {{{
 
     # Background processes {{{
-        bind i:ctrl,alt,cmd     ${c-bl}
-        bind p:ctrl,alt,cmd     ${c-br}
-        bind i:shift,alt,cmd    ${c-tl}
-        bind p:shift,alt,cmd    ${c-tr}
+        bind i:ctrl,alt,cmd     ${n-bl}
+        bind p:ctrl,alt,cmd     ${n-br}
+        bind i:shift,alt,cmd    ${n-tl}
+        bind p:shift,alt,cmd    ${n-tr}
     # }}}
 
   # }}}
