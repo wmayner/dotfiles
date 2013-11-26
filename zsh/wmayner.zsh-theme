@@ -1,13 +1,18 @@
-# vim:ft=zsh ts=2 sw=2 sts=2
+# # wmayner.zsh-theme
+# 
+# Forked from [@agnoster's zsh theme](https://gist.github.com/agnoster/3712874).
+# Incorporates changes from 
+# [@smileart's fork](https://gist.github.com/smileart/3750104).
 #
-# This is a modification of agnoster's Theme that right-aligns the context
-# This is nice for long paths.
-# It can be found in https://github.com/wmayner/dotfiles.
+# ## Modifications in this fork: ##
+# * The current path is right aligned, so it's out of the way
+#   when working in deeply nested directories. The main,
+#   left-aligned prompt only the current directory's name.
+# * If you're working in a git repo with untracked files, the git portion of
+#   the prompt will be red (a clean repo is still green, and a dirty repo with
+#   no untracked files is still yellow).
 #
-# agnoster's Theme - https://gist.github.com/3712874
-# A Powerline-inspired theme for ZSH
-#
-# # README
+# ## README ##
 #
 # In order for this theme to render correctly, you will need a
 # [Powerline-patched font](https://gist.github.com/1595572).
@@ -17,22 +22,21 @@
 # using it on Mac OS X, [iTerm 2](http://www.iterm2.com/) over Terminal.app -
 # it has significantly better color fidelity.
 #
-# # Goals
+# ## Goals ##
 #
 # The aim of this theme is to only show you *relevant* information. Like most
 # prompts, it will only show git information when in a git working directory.
-# However, it goes a step further: everything from the current user and
+# However, it goes a step furthjer: everything from the current user and
 # hostname to whether the last call exited with an error to whether background
 # jobs are running in this shell will all be displayed automatically when
 # appropriate.
 
-### Segment drawing
+# ### Segment drawing ###
 # A few utility functions to make it easy and re-usable to draw segmented prompts
 
 CURRENT_BG='NONE'
 END_FG='NONE'
-SEGMENT_SEPARATOR='⮀' #
-
+SEGMENT_SEPARATOR='⮀'
 
 # Begin a segment
 # Takes two arguments, background and foreground. Both can be omitted,
@@ -53,8 +57,8 @@ prompt_segment() {
 # End the prompt, closing any open segments
 prompt_end() {
   if [[ -n $CURRENT_BG ]]; then
-    # use END_FG if it's been set 
-    # (for coloring last separator based on vim mode)
+    # Use END_FG if it's been set (for coloring last separator based on current
+    # vi mode)
     if [[ $END_FG != 'NONE' ]]; then
       echo -n " %{%k%F{$END_FG}%}$SEGMENT_SEPARATOR"
     else
@@ -67,13 +71,13 @@ prompt_end() {
   CURRENT_BG=''
 }
 
-### Prompt components
+# ### Prompt components ###
 # Each component will draw itself, and hide itself if no information needs to be shown
 
 # Context: user@hostname (who am I and where am I)
 prompt_context() {
   local user=`whoami`
-
+  # Only display user if not the default
   if [[ "$user" != "$DEFAULT_USER" || -n "$SSH_CLIENT" ]]; then
     prompt_segment black default "%(!.%{%F{yellow}%}.)$user@%m"
   fi
@@ -86,7 +90,9 @@ prompt_git() {
     ZSH_THEME_GIT_PROMPT_DIRTY='±'
     dirty=$(parse_git_dirty)
     ref=$(git symbolic-ref HEAD 2> /dev/null) || ref="➦ $(git show-ref --head -s --abbrev |head -n1 2> /dev/null)"
-    if [[ -n $dirty ]]; then
+    if [[ ! -z $(git ls-files --other --exclude-standard 2> /dev/null) ]]; then
+      prompt_segment red black
+    elif [[ -n $dirty ]]; then
       prompt_segment yellow black
     else
       prompt_segment green black
@@ -97,7 +103,7 @@ prompt_git() {
 
 # Dir: current working directory
 prompt_dir() {
-  # use the name of the current directory (not the full path)
+  # Use just the name of the current directory (not the full path)
   prompt_segment blue black '%c'
 }
 
@@ -108,14 +114,14 @@ prompt_dir() {
 prompt_status() {
   local symbols
   symbols=()
-  [[ $RETVAL -ne 0 ]] && symbols+="%{%F{red}%}$RETVAL"
+  [[ $RETVAL -ne 0 ]] && symbols+="%{%F{red}%}✘"
   [[ $UID -eq 0 ]] && symbols+="%{%F{yellow}%}⚡"
   [[ $(jobs -l | wc -l) -gt 0 ]] && symbols+="%{%F{cyan}%}⚙"
 
   [[ -n "$symbols" ]] && prompt_segment black default "$symbols"
 }
 
-## Main prompt
+# ## Build the prompt ##
 build_prompt() {
   RETVAL=$?
   prompt_status
@@ -125,25 +131,38 @@ build_prompt() {
   prompt_end
 }
 
+# Set the main prompt
 PROMPT='%{%f%b%k%}$(build_prompt) '
 
+# Put the full path of the current directory on the right
 # (from kennethreitz.zsh-theme)
-# put the pwd string on the right:
 RPS1='%{$fg[blue]%}%~%{$reset_color%}'
 
-# change end separator color depending on vi mode
+# ### Change end separator color depending on current vi mode ###
 autoload -U colors
-zle-keymap-select () { # called whenever $KEYMAP is changed
-  if [[ $KEYMAP = vicmd ]]; then # if we're in vi command mode,
-    END_FG='red'                 # make the last separator red
+# This is called whenever $KEYMAP is changed
+zle-keymap-select () {
+  # If we're in vi command mode, make the last separator red
+  if [[ $KEYMAP = vicmd ]]; then
+    END_FG='cyan'
+  # Otherwise don't do anything
   else
-    END_FG='NONE' # otherwise don't do anything
+    END_FG='NONE'
   fi
-  zle reset-prompt # redraw the prompt once we've changed the color
+  # Redraw the prompt once we've changed the color
+  zle reset-prompt
 }
-zle -N zle-keymap-select # replace default function with this one
+# Replace default zle-keymap-select with ours
+zle -N zle-keymap-select
+
 zle-line-init () {
   zle -K viins
 }
-zle -N zle-line-init # replace default function with this one
-bindkey -v # activate vi mode
+# Replace default zle-line-init with ours
+zle -N zle-line-init
+
+# Activate vi mod
+bindkey -v
+
+# Vim modeline:
+# vim:ft=zsh ts=2 sw=2 sts=2

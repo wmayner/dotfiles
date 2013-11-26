@@ -25,8 +25,8 @@
   local = green
   remote = yellow
 [color "diff"]
-  meta = cyan
-  frag = yellow reverse
+  meta = reverse
+  frag = cyan reverse
   old = red
   new = green
 [color "status"]
@@ -49,7 +49,7 @@
 [push]
   default = current
 [help]
-  autocorrect = 1
+  autocorrect = 0
 [rerere]
   enabled = 1
 [diff]
