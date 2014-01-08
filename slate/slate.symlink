@@ -60,13 +60,14 @@ config focusCheckWidthMax 6000
           alias c-tl    move screenOriginX;screenOriginY                              screenSizeX/2;screenSizeY/2
           alias c-tr    move screenOriginX+screenSizeX/2;screenOriginY                screenSizeX/2;screenSizeY/2
           alias c-max   move screenOriginX;screenOriginY                              screenSizeX;screenSizeY
+          alias c-small move screenSizeX-900;screenOriginY                            900;screenSizeY
       # }}}
 
       # Chat {{{
-          alias c-rbar  move screenOriginX+4*screenSizeX/5;screenOriginY  screenSizeX/5;screenSizeY
-          alias c-lbar  move screenOriginX;screenOriginY                  screenSizeX/5;screenSizeY
-          alias c-lmain move screenOriginX;screenOriginY                  4*screenSizeX/5;screenSizeY
-          alias c-rmain move screenOriginX+screenSizeX/5;screenOriginY    4*screenSizeX/5;screenSizeY
+          alias c-rbar  move screenSizeX-320;screenOriginY    320;screenSizeY
+          alias c-lbar  move screenOriginX;screenOriginY      320;screenSizeY
+          alias c-lmain move screenOriginX;screenOriginY      screenSizeX-320;screenSizeY
+          alias c-rmain move screenOriginX+320;screenOriginY  screenSizeX-320;screenSizeY
       # }}}
 
       # Background Process {{{
@@ -107,6 +108,7 @@ config focusCheckWidthMax 6000
 
     # Full screen {{{
         bind o:ctrl,cmd      ${c-max}
+        bind w:ctrl,cmd      ${c-max}
       # }}}
 
     # Half screen {{{
@@ -258,7 +260,9 @@ config focusCheckWidthMax 6000
         bind y:ctrl,alt,cmd   ${c-lbar}
         bind u:ctrl,alt,cmd   ${c-rmain}
         bind ]:ctrl,alt,cmd   ${c-rbar}
+        bind x:ctrl,cmd       ${c-rbar}
         bind [:ctrl,alt,cmd   ${c-lmain}
+        bind s:ctrl,cmd       ${c-small}
     # }}}
 
   # }}}
