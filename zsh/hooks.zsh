@@ -1,5 +1,3 @@
-# get environment
-source ~/.env
 # get aliases
 source $ALIASES
 

@@ -9,7 +9,7 @@
 #   when working in deeply nested directories. The main,
 #   left-aligned prompt only the current directory's name.
 # * If you're working in a git repo with untracked files, the git portion of
-#   the prompt will be red (a clean repo is still green, and a dirty repo with
+#   the prompt will be white (a clean repo is still green, and a dirty repo with
 #   no untracked files is still yellow).
 #
 # ## README ##
@@ -91,7 +91,7 @@ prompt_git() {
     dirty=$(parse_git_dirty)
     ref=$(git symbolic-ref HEAD 2> /dev/null) || ref="➦ $(git show-ref --head -s --abbrev |head -n1 2> /dev/null)"
     if [[ ! -z $(git ls-files --other --exclude-standard 2> /dev/null) ]]; then
-      prompt_segment red black
+      prompt_segment white black
     elif [[ -n $dirty ]]; then
       prompt_segment yellow black
     else
@@ -136,13 +136,13 @@ PROMPT='%{%f%b%k%}$(build_prompt) '
 
 # Put the full path of the current directory on the right
 # (from kennethreitz.zsh-theme)
-RPS1='%{$fg[blue]%}%~%{$reset_color%}'
+RPS1='%{$fg[blue]%}%~ %T%{$reset_color%}'
 
 # ### Change end separator color depending on current vi mode ###
 autoload -U colors
 # This is called whenever $KEYMAP is changed
 zle-keymap-select () {
-  # If we're in vi command mode, make the last separator red
+  # If we're in vi command mode, make the last separator cyan
   if [[ $KEYMAP = vicmd ]]; then
     END_FG='cyan'
   # Otherwise don't do anything

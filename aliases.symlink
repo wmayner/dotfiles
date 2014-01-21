@@ -2,8 +2,6 @@
 
 # Util {{{
 
-  # use brew python (`brew link --overwrite` doesn't seem to work)
-  alias python="/usr/local/Cellar/python/2.7.4/bin/python"
   # list dir contents (all with human-readable size)
   alias l='ls -lA1h'
   alias la='ls -lAh'
@@ -22,6 +20,14 @@
   alias ..="cd .."
   # cd to dropbox
   alias ~~="cd ~/Dropbox/"
+  # cd to current project
+  alias cur="cd ~/dev/projects/iit/cyphi"
+
+# }}}
+
+# Git {{{
+
+  alias gc="git commit -m"
 
 # }}}
 
@@ -115,28 +121,14 @@
 
 # }}}
 
-# School {{{
+# Work {{{
 
-  # cd to school
-  alias cdsch="cd ~/Dropbox/school/semester-8/"
-  # cd to school projects
-  alias cdschool="cd $CODE/school"
-  # cd to current project
-  alias cdproj="cd $CODE/school/wumpus"
-  # ssh to brown cs
-  alias sshcs="ssh wmayner@ssh.cs.brown.edu"
-  # cd ai
-  alias cdai="cd ~/Dropbox/school/semester-8/ai-cs141/"
-  # cd webapps
-  alias cdweb="cd ~/Dropbox/school/semester-8/webapps-cs132/"
-  # cd consciousness
-  alias cdcon="cd ~/Dropbox/school/semester-8/consciousness-phil1520/"
-  # cd paradox
-  alias cdpar="cd ~/Dropbox/school/semester-8/paradox-phil0990T/"
+  # cd iit
+  alias iit="cd ~/Dropbox/iit/"
 
 # }}}
 
-# Summerwork {{{
+# IIT REU {{{
 
   # cd summerwork
   alias cdpaper="cd ~/Dropbox/iit-reu/repos/summerwork/research\ paper/"
@@ -174,6 +166,13 @@
   alias jr="j -r"
   # match by recent access only
   alias jt="j -t"
+
+# }}}
+
+# Python {{{
+
+  # remove dot from py.test executable
+  alias pytest="py.test"
 
 # }}}
 

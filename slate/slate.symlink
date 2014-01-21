@@ -90,7 +90,7 @@ config focusCheckWidthMax 6000
       # }}}
 
       # Chat {{{
-          alias n-rbar  move screenOriginX+4*screenSizeX/5;screenOriginY                screenSizeX/5;screenSizeY       next
+          alias n-rbar  move screenSizeX-320;screenOriginY                              320;screenSizeY                 next
           alias n-lbar  move screenOriginX;screenOriginY                                screenSizeX/5;screenSizeY       next
           alias n-lmain move screenOriginX;screenOriginY                                4*screenSizeX/5;screenSizeY     next
           alias n-rmain move screenOriginX+screenSizeX/5;screenOriginY                  4*screenSizeX/5;screenSizeY     next
@@ -208,49 +208,49 @@ config focusCheckWidthMax 6000
     bind `:ctrl,alt,cmd,shift   snapshot 2displays save-to-disk;stack
     bind `:ctrl,cmd,shift       activate-snapshot 2displays delete
 
-    bind 1:ctrl,alt,cmd     snapshot 2-displays-space-1 save-to-disk
-    bind 2:ctrl,alt,cmd     snapshot 2-displays-space-2 save-to-disk
-    bind 3:ctrl,alt,cmd     snapshot 2-displays-space-3 save-to-disk
-    bind 4:ctrl,alt,cmd     snapshot 2-displays-space-4 save-to-disk
-    bind 5:ctrl,alt,cmd     snapshot 2-displays-space-5 save-to-disk
-    bind 6:ctrl,alt,cmd     snapshot 2-displays-space-6 save-to-disk
-    bind 7:ctrl,alt,cmd     snapshot 2-displays-space-7 save-to-disk
-    bind 8:ctrl,alt,cmd     snapshot 2-displays-space-8 save-to-disk
-    bind 9:ctrl,alt,cmd     snapshot 2-displays-space-9 save-to-disk
-    bind 0:ctrl,alt,cmd     snapshot 2-displays-space-0 save-to-disk
+    bind 1:ctrl,alt,cmd     snapshot layout-1-space-1 save-to-disk
+    bind 2:ctrl,alt,cmd     snapshot layout-1-space-2 save-to-disk
+    bind 3:ctrl,alt,cmd     snapshot layout-1-space-3 save-to-disk
+    bind 4:ctrl,alt,cmd     snapshot layout-1-space-4 save-to-disk
+    bind 5:ctrl,alt,cmd     snapshot layout-1-space-5 save-to-disk
+    bind 6:ctrl,alt,cmd     snapshot layout-1-space-6 save-to-disk
+    bind 7:ctrl,alt,cmd     snapshot layout-1-space-7 save-to-disk
+    bind 8:ctrl,alt,cmd     snapshot layout-1-space-8 save-to-disk
+    bind 9:ctrl,alt,cmd     snapshot layout-1-space-9 save-to-disk
+    bind 0:ctrl,alt,cmd     snapshot layout-1-space-0 save-to-disk
 
-    bind 1:ctrl,alt,shift   activate-snapshot 2-displays-space-1
-    bind 2:ctrl,alt,shift   activate-snapshot 2-displays-space-2
-    bind 3:ctrl,alt,shift   activate-snapshot 2-displays-space-3
-    bind 4:ctrl,alt,shift   activate-snapshot 2-displays-space-4
-    bind 5:ctrl,alt,shift   activate-snapshot 2-displays-space-5
-    bind 6:ctrl,alt,shift   activate-snapshot 2-displays-space-6
-    bind 7:ctrl,alt,shift   activate-snapshot 2-displays-space-7
-    bind 8:ctrl,alt,shift   activate-snapshot 2-displays-space-8
-    bind 9:ctrl,alt,shift   activate-snapshot 2-displays-space-9
-    bind 0:ctrl,alt,shift   activate-snapshot 2-displays-space-0
+    bind 1:ctrl,alt,shift   activate-snapshot layout-1-space-1
+    bind 2:ctrl,alt,shift   activate-snapshot layout-1-space-2
+    bind 3:ctrl,alt,shift   activate-snapshot layout-1-space-3
+    bind 4:ctrl,alt,shift   activate-snapshot layout-1-space-4
+    bind 5:ctrl,alt,shift   activate-snapshot layout-1-space-5
+    bind 6:ctrl,alt,shift   activate-snapshot layout-1-space-6
+    bind 7:ctrl,alt,shift   activate-snapshot layout-1-space-7
+    bind 8:ctrl,alt,shift   activate-snapshot layout-1-space-8
+    bind 9:ctrl,alt,shift   activate-snapshot layout-1-space-9
+    bind 0:ctrl,alt,shift   activate-snapshot layout-1-space-0
 
-    bind f1:ctrl,alt,cmd    snapshot 1-display-space-1 save-to-disk
-    bind f2:ctrl,alt,cmd    snapshot 1-display-space-2 save-to-disk
-    bind f3:ctrl,alt,cmd    snapshot 1-display-space-3 save-to-disk
-    bind f4:ctrl,alt,cmd    snapshot 1-display-space-4 save-to-disk
-    bind f5:ctrl,alt,cmd    snapshot 1-display-space-5 save-to-disk
-    bind f6:ctrl,alt,cmd    snapshot 1-display-space-6 save-to-disk
-    bind f7:ctrl,alt,cmd    snapshot 1-display-space-7 save-to-disk
-    bind f8:ctrl,alt,cmd    snapshot 1-display-space-8 save-to-disk
-    bind f9:ctrl,alt,cmd    snapshot 1-display-space-9 save-to-disk
-    bind f10:ctrl,alt,cmd    snapshot 1-display-space-0 save-to-disk
+    bind f1:ctrl,alt,cmd    snapshot layout-2-space-1 save-to-disk
+    bind f2:ctrl,alt,cmd    snapshot layout-2-space-2 save-to-disk
+    bind f3:ctrl,alt,cmd    snapshot layout-2-space-3 save-to-disk
+    bind f4:ctrl,alt,cmd    snapshot layout-2-space-4 save-to-disk
+    bind f5:ctrl,alt,cmd    snapshot layout-2-space-5 save-to-disk
+    bind f6:ctrl,alt,cmd    snapshot layout-2-space-6 save-to-disk
+    bind f7:ctrl,alt,cmd    snapshot layout-2-space-7 save-to-disk
+    bind f8:ctrl,alt,cmd    snapshot layout-2-space-8 save-to-disk
+    bind f9:ctrl,alt,cmd    snapshot layout-2-space-9 save-to-disk
+    bind f10:ctrl,alt,cmd   snapshot layout-2-space-0 save-to-disk
 
-    bind f1:ctrl,alt,shift  activate-snapshot 1-display-space-1
-    bind f2:ctrl,alt,shift  activate-snapshot 1-display-space-2
-    bind f3:ctrl,alt,shift  activate-snapshot 1-display-space-3
-    bind f4:ctrl,alt,shift  activate-snapshot 1-display-space-4
-    bind f5:ctrl,alt,shift  activate-snapshot 1-display-space-5
-    bind f6:ctrl,alt,shift  activate-snapshot 1-display-space-6
-    bind f7:ctrl,alt,shift  activate-snapshot 1-display-space-7
-    bind f8:ctrl,alt,shift  activate-snapshot 1-display-space-8
-    bind f9:ctrl,alt,shift  activate-snapshot 1-display-space-9
-    bind f10:ctrl,alt,shift  activate-snapshot 1-display-space-0
+    bind f1:ctrl,alt,shift  activate-snapshot layout-2-space-1
+    bind f2:ctrl,alt,shift  activate-snapshot layout-2-space-2
+    bind f3:ctrl,alt,shift  activate-snapshot layout-2-space-3
+    bind f4:ctrl,alt,shift  activate-snapshot layout-2-space-4
+    bind f5:ctrl,alt,shift  activate-snapshot layout-2-space-5
+    bind f6:ctrl,alt,shift  activate-snapshot layout-2-space-6
+    bind f7:ctrl,alt,shift  activate-snapshot layout-2-space-7
+    bind f8:ctrl,alt,shift  activate-snapshot layout-2-space-8
+    bind f9:ctrl,alt,shift  activate-snapshot layout-2-space-9
+    bind f10:ctrl,alt,shift activate-snapshot layout-2-space-0
 
   # }}}
 

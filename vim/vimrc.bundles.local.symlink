@@ -1,4 +1,46 @@
 " vim: set foldmethod=marker foldmarker={,} foldlevel=0
+
+""""""""""""""
+" MY BUNDLES "
+""""""""""""""
+" original github repos
+Bundle 'wincent/Command-T'
+Bundle 'sjl/gundo.vim'
+Bundle 'tpope/vim-abolish'
+Bundle 'tpope/vim-commentary'
+Bundle 'digitaltoad/vim-jade'
+Bundle 'tpope/vim-repeat'
+Bundle 'tpope/vim-speeddating'
+Bundle 'tpope/vim-unimpaired'
+Bundle 'kchmck/vim-coffee-script'
+Bundle 'scrooloose/syntastic'
+Bundle 'chrisbra/NrrwRgn'
+Bundle 'majutsushi/tagbar'
+Bundle 'kien/ctrlp.vim'
+Bundle 'LaTeX-Box-Team/LaTeX-Box'
+Bundle 'tpope/vim-haml'
+Bundle 'djoshea/vim-matlab-fold'
+Bundle 'xolox/vim-session'
+Bundle 'tpope/vim-fugitive'
+Bundle 'SuperTab'
+Bundle 'vim-misc'
+Bundle 'vim-stylus'
+Bundle 'operator-camelize'
+Bundle 'operator-user'
+Bundle 'mbadran/headlights'
+Bundle 'vim-cython'
+
+" vim-scripts repos
+" Bundle 'ZoomWin'
+Bundle 'camelcasemotion'
+Bundle 'SyntaxMotion.vim'
+Bundle 'argtextobj.vim'
+" Bundle 'LaTeX-Suite-aka-Vim-LaTeX'
+Bundle 'vim-indent-object'
+Bundle 'restore_view.vim'
+Bundle 'sudo.vim'
+Bundle 'Rename'
+
 " let g:override_spf13_bundles='1'
 " " spf13 {
 " Bundle 'scrooloose/nerdtree'
@@ -114,44 +156,3 @@
 " Bundle 'beyondwords/vim-twig'
 
 " " }
-
-" Choose spf13 bundle groups:
-let g:spf13_bundle_groups=['general', 'neocomplcache', 'programming', 'php', 'python', 'javascript', 'html', 'misc']
-""""""""""""""
-" MY BUNDLES "
-""""""""""""""
-" original github repos
-Bundle 'wincent/Command-T'
-Bundle 'sjl/gundo.vim'
-Bundle 'tpope/vim-abolish'
-Bundle 'tpope/vim-commentary'
-Bundle 'digitaltoad/vim-jade'
-Bundle 'tpope/vim-repeat'
-Bundle 'tpope/vim-speeddating'
-Bundle 'tpope/vim-unimpaired'
-Bundle 'kchmck/vim-coffee-script'
-Bundle 'scrooloose/syntastic'
-Bundle 'chrisbra/NrrwRgn'
-Bundle 'majutsushi/tagbar'
-Bundle 'kien/ctrlp.vim'
-Bundle 'LaTeX-Box-Team/LaTeX-Box'
-Bundle 'tpope/vim-haml'
-Bundle 'djoshea/vim-matlab-fold'
-Bundle 'xolox/vim-session'
-Bundle 'tpope/vim-fugitive'
-Bundle 'SuperTab'
-Bundle 'vim-misc'
-Bundle 'vim-stylus'
-Bundle 'operator-camelize'
-Bundle 'operator-user'
-
-" vim-scripts repos
-" Bundle 'ZoomWin'
-Bundle 'camelcasemotion'
-Bundle 'SyntaxMotion.vim'
-Bundle 'argtextobj.vim'
-" Bundle 'LaTeX-Suite-aka-Vim-LaTeX'
-Bundle 'vim-indent-object'
-Bundle 'restore_view.vim'
-Bundle 'sudo.vim'
-Bundle 'Rename'
