@@ -27,25 +27,45 @@
 # Git {{{
 
   alias gc="git commit -m"
+  # use GitHub's CLI git wrapper
+  # alias git='hub'
+  # git diff
+  alias gd='git d'
+  # git log
+  alias gl='git l'
+  # git branch
+  alias gb='git branch'
+  # git branch delete
+  alias gbd='git branch -d'
+  # git flow
+  alias gf='git flow'
+  # git flow feature
+  alias gff='git flow feature'
+  # git flow release
+  alias gfr='git flow release'
+  # git flow hotfix
+  alias gfh='git flow hotfix'
+  # fast git status
+  alias g='git status'
+  # edit .gitconfig
+  alias vgrc="vim ~/.gitconfig"
 
 # }}}
 
 # Config {{{
 
   # edit aliases
-  alias valias='mvim $ALIASES'
-  # use MacVim as gvim
-  alias gvim="mvim"
+  alias valias='vim $ALIASES'
   # edit local .vimrc
-  alias vrc="mvim ~/.vimrc.local"
+  alias vrc="vim ~/.vimrc.local"
   # edit .vimrc
-  alias vrcreal="mvim ~/.vimrc"
+  alias vrcreal="vim ~/.vimrc"
   # edit local vim bundles for vundle
-  alias vbun="mvim ~/.vimrc.bundles.local"
+  alias vbun="vim ~/.vimrc.bundles.local"
   # cd scripts
   alias cdscripts="cd $DOTFILES/scripts"
   # edit .slate
-  alias vslate="mvim ~/.slate"
+  alias vslate="vim ~/.slate"
 
   # zsh {{{
 
@@ -68,36 +88,14 @@
 
 # Dev {{{
 
-  # use GitHub's CLI git wrapper
-  alias git='hub'
-  # git diff
-  alias gd='git d'
-  # git log
-  alias gl='git l'
-  # git branch
-  alias gb='git branch'
-  # git branch delete
-  alias gbd='git branch -d'
-  # git flow
-  alias gf='git flow'
-  # git flow feature
-  alias gff='git flow feature'
-  # git flow release
-  alias gfr='git flow release'
-  # git flow hotfix
-  alias gfh='git flow hotfix'
-  # fast git status
-  alias g='git status'
-  # edit .gitconfig
-  alias vgrc="mvim ~/.gitconfig"
   # edit .hgrc
-  alias vhgrc="mvim ~/.hgrc"
+  alias vhgrc="vim ~/.hgrc"
   # cd dev
   alias cdd="cd $DEV"
   # copy current directory to htdocs to run php server locally with MAMP
   alias pphp="sudo rm -r /Applications/MAMP/htdocs && mkdir /Applications/MAMP/htdocs && cp -r ./* /Applications/MAMP/htdocs"
   # edit app.coffee
-  alias vsp="mvim $PROJECTS/fairdiv/src/app.coffee"
+  alias vsp="vim $PROJECTS/fairdiv/src/app.coffee"
   # cd splitr
   alias cdsp="cd $PROJECTS/fairdiv/"
 
@@ -114,8 +112,8 @@
 
   # vim the .tex files in the current directory
   alias vtex="find . -iname '*.tex' -exec vim {} \;"
-  # mvim the .tex files in the current directory
-  alias mtex="find . -iname '*.tex' -exec mvim {} \;"
+  # vim the .tex files in the current directory
+  alias mtex="find . -iname '*.tex' -exec vim {} \;"
 
 # }}}
 

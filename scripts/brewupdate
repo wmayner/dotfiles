@@ -1,1 +1,0 @@
-terminal-notifier -title "Updated Homebrew" -message "`/usr/local/bin/brew update && /usr/local/bin/brew upgrade`"

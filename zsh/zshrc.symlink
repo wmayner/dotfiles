@@ -71,3 +71,9 @@ alias sudo="nocorrect sudo "
 __git_files () { 
     _wanted files expl 'local files' _files     
 }
+
+# Use powerline
+if [[ -r
+  /usr/local/lib/python2.7/dist-packages/powerline/bindings/zsh/powerline.zsh ]]; then source
+  /usr/local/lib/python2.7/dist-packages/powerline/bindings/zsh/powerline.zsh
+fi
