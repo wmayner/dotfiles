@@ -1,0 +1,19 @@
+" Options that determine spf13 behavior
+
+" Bundles {
+
+  " Choose bundle groups from spf13:
+  let g:spf13_bundle_groups=['general', 'youcompleteme', 'python', 'programming', 'javascript', 'html', 'misc']
+
+" }
+
+" Plugins {
+
+  " Airline {
+
+    " Use fancy symbols in airline
+    let g:airline_powerline_fonts=1
+
+  " }
+
+" }

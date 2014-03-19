@@ -3,11 +3,10 @@
 # Util {{{
 
   # list dir contents (all with human-readable size)
-  alias l='ls -lA1h'
-  alias la='ls -lAh'
-  alias ll='ls -lh'
+  alias l='ls -AhG1'
+  alias ll='ls -lAhG'
   alias ls='ls -Gh'
-  alias lsa='ls -lah'
+  alias lsa='ls -AhG'
   # shortcut for vim
   alias v="vim"
   # shortcut to trash (safe rm)
@@ -45,8 +44,6 @@
   alias vbun="mvim ~/.vimrc.bundles.local"
   # cd scripts
   alias cdscripts="cd $DOTFILES/scripts"
-  # make sudo check if the next command is an alias
-  alias sudo="sudo "
   # edit .slate
   alias vslate="mvim ~/.slate"
 
@@ -112,7 +109,8 @@
   # compile to pdf
   # 'preview continuously'
   # run despite erros
-  alias ltx="latexmk -pdf -pvc"
+  alias latexmk="latexmk -pdf -pvc"
+  alias ltx="latexmk"
 
   # vim the .tex files in the current directory
   alias vtex="find . -iname '*.tex' -exec vim {} \;"
@@ -140,7 +138,7 @@
 # Webdev {{{
 
   # cd tickt.me
-  alias cdc="cd $CODE/crowdsurf"
+  alias cdc="cd $CODE/cyphi"
   # cd web-resume
   alias cdres="cd $CODE/resume"
   # edit paper resume

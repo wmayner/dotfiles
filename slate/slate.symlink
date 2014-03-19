@@ -252,6 +252,28 @@ config focusCheckWidthMax 6000
     bind f9:ctrl,alt,shift  activate-snapshot layout-2-space-9
     bind f10:ctrl,alt,shift activate-snapshot layout-2-space-0
 
+    bind 1:ctrl,alt,cmd,shift    snapshot layout-2-space-1 save-to-disk
+    bind 2:ctrl,alt,cmd,shift    snapshot layout-2-space-2 save-to-disk
+    bind 3:ctrl,alt,cmd,shift    snapshot layout-2-space-3 save-to-disk
+    bind 4:ctrl,alt,cmd,shift    snapshot layout-2-space-4 save-to-disk
+    bind 5:ctrl,alt,cmd,shift    snapshot layout-2-space-5 save-to-disk
+    bind 6:ctrl,alt,cmd,shift    snapshot layout-2-space-6 save-to-disk
+    bind 7:ctrl,alt,cmd,shift    snapshot layout-2-space-7 save-to-disk
+    bind 8:ctrl,alt,cmd,shift    snapshot layout-2-space-8 save-to-disk
+    bind 9:ctrl,alt,cmd,shift    snapshot layout-2-space-9 save-to-disk
+    bind 0:ctrl,alt,cmd,shift   snapshot layout-2-space-0 save-to-disk
+
+    bind f1:ctrl,alt,cmd,shift  activate-snapshot layout-2-space-1
+    bind f2:ctrl,alt,cmd,shift  activate-snapshot layout-2-space-2
+    bind f3:ctrl,alt,cmd,shift  activate-snapshot layout-2-space-3
+    bind f4:ctrl,alt,cmd,shift  activate-snapshot layout-2-space-4
+    bind f5:ctrl,alt,cmd,shift  activate-snapshot layout-2-space-5
+    bind f6:ctrl,alt,cmd,shift  activate-snapshot layout-2-space-6
+    bind f7:ctrl,alt,cmd,shift  activate-snapshot layout-2-space-7
+    bind f8:ctrl,alt,cmd,shift  activate-snapshot layout-2-space-8
+    bind f9:ctrl,alt,cmd,shift  activate-snapshot layout-2-space-9
+    bind f10:ctrl,alt,cmd,shift activate-snapshot layout-2-space-0
+
   # }}}
 
   # Current screen (CTRL + ALT + CMD) {{{

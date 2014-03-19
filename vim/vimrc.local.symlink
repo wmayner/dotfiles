@@ -14,8 +14,8 @@
   " use aliases when running shell commands within vim
   set shell=/bin/bash\ --rcfile\ ~/.bash_profile\ -i
 
-  "spf13 bundles
-  let g:spf13_bundle_groups=['general', 'neocomplcache', 'programming', 'php', 'javascript', 'html', 'misc',]
+  " don't need usr/include in path as far as I can tell; just slows completion
+  set path-=.,,
 
 " }
 
@@ -35,14 +35,10 @@
 
 " }
 
-" Bundles {
-
-  " Choose bundle groups from spf13:
-  let g:spf13_bundle_groups=['general', 'neocomplcache', 'programming', 'javascript', 'html', 'misc']
-
-" }
-
 " Vim UI {
+
+  " relative line numbering
+  set relativenumber
 
   " no spellchecking
   set nospell
@@ -304,31 +300,69 @@
 
 " Plugins {
 
+  " Wipeout {
+
+    " wipeout.vim - Destroy all buffers that are not open in any tabs or windows.
+    "
+    " Adapted from the following StackOverflow answer:
+    " http://stackoverflow.com/questions/1534835
+    "
+    " Author: Artem Nezvigin <artem@artnez.com>
+
+    command! -bang Wipeout :call Wipeout(<bang>0)
+
+    function! Wipeout(bang)
+      " figure out which buffers are visible in any tab
+      let visible = {}
+      for t in range(1, tabpagenr('$'))
+        for b in tabpagebuflist(t)
+          let visible[b] = 1
+        endfor
+      endfor
+      " close any buffer that are loaded and not visible
+      let l:tally = 0
+      let l:cmd = 'bw'
+      if a:bang
+        let l:cmd .= '!'
+      endif
+      for b in range(1, bufnr('$'))
+        if buflisted(b) && !has_key(visible, b)
+          let l:tally += 1
+          exe l:cmd . ' ' . b
+        endif
+      endfor
+      echon "Deleted " . l:tally . " buffers"
+    endfun
+
+  " }
+
   " Tabularize {
 
-    " tabularize on ampersand (for LaTeX tables)
-    nnoremap <Leader>a& :Tabularize /&<CR>
-    vnoremap <Leader>a& :Tabularize /&<CR>
+    " These are actually in spf13
 
-    " tabularize on percent (for LaTeX comments)
-    nnoremap <Leader>a% :Tabularize /%<CR>
-    vnoremap <Leader>a% :Tabularize /%<CR>
+    " " tabularize on ampersand (for LaTeX tables)
+    " nnoremap <Leader>a& :Tabularize /&<CR>
+    " vnoremap <Leader>a& :Tabularize /&<CR>
 
-    " tabularize on colon
-    nnoremap <Leader>a: :Tabularize /:/l0c1<CR>
-    vnoremap <Leader>a: :Tabularize /:/l0c1<CR>
+    " " tabularize on percent (for LaTeX comments)
+    " nnoremap <Leader>a% :Tabularize /%<CR>
+    " vnoremap <Leader>a% :Tabularize /%<CR>
 
-    " tabularize on equal
-    nnoremap <Leader>a= :Tabularize /=<CR>
-    vnoremap <Leader>a= :Tabularize /=<CR>
+    " " tabularize on colon
+    " nnoremap <Leader>a: :Tabularize /:/l0c1<CR>
+    " vnoremap <Leader>a: :Tabularize /:/l0c1<CR>
 
-    " tabularize on hash (for bash and CoffeeScript comments)
-    nnoremap <Leader>a# :Tabularize /#<CR>
-    vnoremap <Leader>a# :Tabularize /#<CR>
+    " " tabularize on equal
+    " nnoremap <Leader>a= :Tabularize /=<CR>
+    " vnoremap <Leader>a= :Tabularize /=<CR>
 
-    " tabularize on comma (for bash and CoffeeScript comments)
-    nnoremap <Leader>a, :Tabularize /,/l0c1<CR>
-    vnoremap <Leader>a, :Tabularize /,/l0c1<CR>
+    " " tabularize on hash (for bash and CoffeeScript comments)
+    " nnoremap <Leader>a# :Tabularize /#<CR>
+    " vnoremap <Leader>a# :Tabularize /#<CR>
+
+    " " tabularize on comma (for bash and CoffeeScript comments)
+    " nnoremap <Leader>a, :Tabularize /,/l0c1<CR>
+    " vnoremap <Leader>a, :Tabularize /,/l0c1<CR>
 
   " }
 
@@ -452,7 +486,7 @@
 
     " TODO: use PythonMode more
 
-    let g:pymode_rope_global_prefix = '<C-r> p'
+    " let g:pymode_rope_global_prefix = '<C-r>'
     " Don't use the 'run this selection/buffer' script
     " let g:pymode_run = 0
     " " Use linting
@@ -460,15 +494,15 @@
     " " Lint on write
     " let g:pymode_lint_write = 1
     " " Choose lint checkers
-    " let g:pymode_lint_checkers = ['pyflakes', 'pep8', 'mccabe']
+    let g:pymode_lint_checkers = ['pyflakes', 'pep8', 'mccabe']
+    let g:pymode_rope_complete_on_dot = 0
     " Ignore these pep8 errors"
     " let g:pymode_lint_ignore=""
 
   " }
-  
+
   " Syntastic {
 
-    
     " let PythonMode's syntax-checker take over in python files
     let g:syntastic_mode_map = { 'mode': 'active',
                                \ 'active_filetypes': [],
@@ -483,7 +517,6 @@
     let g:snips_author = 'Will Mayner <wmayner@gmail.com>'
     " diable snippets temporarily
     let g:loaded_snipmate = 1
-    let g:loaded_neocomplcache = 1
     let g:loaded_neosnippet = 1
 
   " }
@@ -517,6 +550,7 @@
 
     " user powerline-fonts in airline
     let g:airline_powerline_fonts = 1
+    let g:airline_theme = 'solarized'
 
   " }
 
@@ -524,6 +558,28 @@
 
     " <Leader>m toggles camelCase
     map <Leader>m <Plug>(operator-camelize-toggle)
+
+  " }
+
+  " EasyMotion {
+
+    " ensure prefix is single leader
+    map <Leader> <Plug>(easymotion-prefix)
+
+  " }
+
+  " CamelCaseMotion {
+
+    " override prefix to be double leader"
+    map <Leader><Leader>w <Plug>CamelCaseMotion_w
+    map <Leader><Leader>b <Plug>CamelCaseMotion_b
+    map <Leader><Leader>e <Plug>CamelCaseMotion_e
+    omap <Leader><Leader>iw <Plug>CamelCaseMotion_iw
+    xmap <Leader><Leader>iw <Plug>CamelCaseMotion_iw
+    omap <Leader><Leader>ib <Plug>CamelCaseMotion_ib
+    xmap <Leader><Leader>ib <Plug>CamelCaseMotion_ib
+    omap <Leader><Leader>ie <Plug>CamelCaseMotion_ie
+    xmap <Leader><Leader>ie <Plug>CamelCaseMotion_ie
 
   " }
 
@@ -557,7 +613,7 @@
 
   " always do very magic search
   " (special characters don't need to be escaped with a '\')
-  " nnoremap / /\v
+  nnoremap / /\v
 
   " loads current directory into MAMP's local php environment
   " IMPORTANT: this destroys the existing one!
@@ -655,84 +711,88 @@
       " set latexmk options to 'preview continuously' and -pdfps (from  http://stackoverflow.com/questions/3723493/latex-and-vim-usage)
       " let g:LatexBox_latexmk_options='-pvc'
 
-      " view output with Skim
-      let g:LatexBox_viewer='open -a Skim'
+      " " view output with Skim
+      " let g:LatexBox_viewer='open -a Skim'
 
-      " automatically jump to position in pdf
-      let g:LatexBox_autojump=1
+      " " automatically jump to position in pdf
+      " let g:LatexBox_autojump=1
 
-      " use SyncTex with Skim viewer
-      noremap <silent> <Leader>ls :silent !/Applications/Skim.app/Contents/SharedSupport/displayline\ <C-R>=line('.')<CR> "<C-R>=LatexBox_GetOutputFile()<CR>" "%:p" <CR>
+      " let g:LatexBox_latexmk_async=1
 
-      " automatically write file upon leaving insert mode (if modified)
-      " au InsertLeave *.tex if(&mod && expand('%')!='') | write | execute 'Latexmk' | execute 'LatexErrors' | endif
+      " let g:LatexBox_latexmk_preview_continuously=1
 
-      " shortcut for write, compile with latexmk in background, and view errors (if any)
-      " au FileType tex noremap \w :w<CR>:Latexmk<CR>
-      autocmd BufNewFile,BufRead *.tex noremap \w :w<CR>:silent Latexmk<CR>
+      " " use SyncTex with Skim viewer
+      " noremap <silent> <Leader>ls :silent !/Applications/Skim.app/Contents/SharedSupport/displayline\ <C-R>=line('.')<CR> "<C-R>=LatexBox_GetOutputFile()<CR>" "%:p" <CR>
 
-      " Write, compilation with latexmk in background
-      noremap <Leader>ll :w<CR>:Latexmk<CR>
+      " " automatically write file upon leaving insert mode (if modified)
+      " " au InsertLeave *.tex if(&mod && expand('%')!='') | write | execute 'Latexmk' | execute 'LatexErrors' | endif
 
-      " Write, compilation with latexmk in background, view errors
-      noremap <Leader>LL :w<CR>:Latexmk<CR>:LatexErrors<CR>
+      " " shortcut for write, compile with latexmk in background, and view errors (if any)
+      " " au FileType tex noremap \w :w<CR>:Latexmk<CR>
+      " autocmd BufNewFile,BufRead *.tex noremap \w :w<CR>:silent Latexmk<CR>
 
-      " View output
-      noremap <Leader>lv :LatexView<CR>
+      " " Write, compilation with latexmk in background
+      " noremap <Leader>ll :w<CR>:Latexmk<CR>
 
-      " Clean temporary output from LaTeX.
-      noremap <Leader>lc :LatexmkClean<CR>
+      " " Write, compilation with latexmk in background, view errors
+      " noremap <Leader>LL :w<CR>:Latexmk<CR>:LatexErrors<CR>
 
-      " Clean all output from LaTeX.
-      noremap <Leader>lC :LatexmkCleanAll<CR>
+      " " View output
+      " noremap <Leader>lv :LatexView<CR>
 
-      " Stop latexmk if it is running.
-      noremap <Leader>lk :LatexmkStop<CR>
+      " " Clean temporary output from LaTeX.
+      " noremap <Leader>lc :LatexmkClean<CR>
 
-      " Show the running status of latexmk for the current buffer.
-      noremap <Leader>lg :LatexmkStatus<CR>
+      " " Clean all output from LaTeX.
+      " noremap <Leader>lC :LatexmkCleanAll<CR>
 
-      " Show the running status of latexmk for all buffers with process group ID's.
-      noremap <LocalLeader>lG :LatexmkStatusDetailed<CR>
+      " " Stop latexmk if it is running.
+      " noremap <Leader>lk :LatexmkStop<CR>
 
-      " Load the log file for the current document and jump to the first error.
-      noremap <Leader>le :LatexErrors<CR>
+      " " Show the running status of latexmk for the current buffer.
+      " noremap <Leader>lg :LatexmkStatus<CR>
+
+      " " Show the running status of latexmk for all buffers with process group ID's.
+      " noremap <LocalLeader>lG :LatexmkStatusDetailed<CR>
+
+      " " Load the log file for the current document and jump to the first error.
+      " noremap <Leader>le :LatexErrors<CR>
 
     " }
 
   " " LaTeX-Suite {
 
-  "   " override <C-j>, the 'next placeholder' binding
-  "   imap <C-g> <Plug>IMAP_JumpForward
-  "   nmap <C-g> <Plug>IMAP_JumpForward
+    " override <C-j>, the 'next placeholder' binding
+    imap <C-g> <Plug>IMAP_JumpForward
+    nmap <C-g> <Plug>IMAP_JumpForward
 
-  "   " override <Leader>lv
-  "   " nnoremap <Leader>lv :silent !open expand("%:r") . '.pdf'<CR>:echo worked!<CR>
+    " override <Leader>lv
+    " nnoremap <Leader>lv :silent !open expand("%:r") . '.pdf'<CR>:echo worked!<CR>
 
-  "   " IMPORTANT: grep will sometimes skip displaying the file name if you
-  "   " search in a singe file. This will confuse Latex-Suite. Set your grep
-  "   " program to always generate a file-name."
-  "   set grepprg=grep\ -nH\ $*
+    " IMPORTANT: grep will sometimes skip displaying the file name if you
+    " search in a singe file. This will confuse Latex-Suite. Set your grep
+    " program to always generate a file-name."
+    set grepprg=grep\ -nH\ $*
 
-  "   " compile to pdf
-  "   let g:Tex_DefaultTargetFormat='pdf'
+    " compile to pdf
+    let g:Tex_DefaultTargetFormat='pdf'
 
-  "   " pdf compile and view settings
-  "   " let g:Tex_ViewRule_pdf='Skim'
-  "   let g:Tex_CompileRule_pdf='latexmk -pdf'
+    " pdf compile and view settings
+    " let g:Tex_ViewRule_pdf='Skim'
+    let g:Tex_CompileRule_pdf='latexmk -pdf'
 
-  "   " dvi compile and view settings
-  "   let g:Tex_ViewRule_dvi="Skim"
-  "   let g:Tex_CompileRule_dvi='latex -src -specials -interaction=nonstopmode $*'
+    " dvi compile and view settings
+    let g:Tex_ViewRule_dvi="Skim"
+    let g:Tex_CompileRule_dvi='latex -src -specials -interaction=nonstopmode $*'
 
-  "   " ignore all warnings below level 4
-  "   let g:TCLevel=4
+    " ignore all warnings below level 4
+    let g:TCLevel=4
 
-  "   " go to first error after pressing \ll
-  "   let g:Tex_GotoError=1
+    " go to first error after pressing \ll
+    let g:Tex_GotoError=0
 
-  "   " one last thing for latex
-  "   let g:tex_flavor='latex'
+    " one last thing for latex
+    let g:tex_flavor='latex'
 
   " " }
 

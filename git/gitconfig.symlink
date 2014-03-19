@@ -5,7 +5,8 @@
   c = commit -m 
   com = commit -m
   ca = commit -am 
-  d = diff --word-diff
+  d = diff
+  wd = diff --word-diff
   dc = diff --word-diff --cached
   g = log --graph
   gr = log --graph --pretty=oneline --abbrev-commit
@@ -25,8 +26,8 @@
   local = green
   remote = yellow
 [color "diff"]
-  meta = reverse
-  frag = cyan reverse
+  meta = cyan reverse
+  frag = reverse
   old = red
   new = green
 [color "status"]

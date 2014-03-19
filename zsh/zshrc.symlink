@@ -38,7 +38,7 @@ COMPLETION_WAITING_DOTS="true"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(grunt brew coffee cake command-not-found github git-flow git-extras git-hubflow rake history-substring-search bower vundle git npm fasd osx heroku)
+plugins=(grunt brew coffee cake command-not-found github git-flow git-extras git-hubflow rake history-substring-search bower vundle git npm fasd osx heroku virtualenvwrapper terminalapp python pip per-directory-history lol)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -65,7 +65,7 @@ export GREP_COLOR='1;32'
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 
 # Don't treat `sudo` as a separate command (so don't use autocorrect)
-alias sudo="nocorrect sudo"
+alias sudo="nocorrect sudo "
 
 # Fix slow git tab completion
 __git_files () { 

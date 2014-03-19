@@ -1,4 +1,5 @@
 # virtualenvwrapper configuation:
-export VIRTUALENVWRAPPER_PYTHON="/usr/local/bin/python3"
-export WORKON_HOME="~/.virtualenvs"
-source /usr/local/bin/virtualenvwrapper.sh
+export VIRTUALENVWRAPPER_PYTHON="/usr/local/bin/python"
+export WORKON_HOME="$HOME/.virtualenvs"
+export PROJECT_HOME=$CODE
+source "/usr/local/bin/virtualenvwrapper.sh"

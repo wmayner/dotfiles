@@ -1,158 +1,37 @@
 " vim: set foldmethod=marker foldmarker={,} foldlevel=0
 
-""""""""""""""
-" MY BUNDLES "
-""""""""""""""
-" original github repos
+Bundle 'camelcasemotion'
 Bundle 'wincent/Command-T'
 Bundle 'sjl/gundo.vim'
-Bundle 'tpope/vim-abolish'
 Bundle 'tpope/vim-commentary'
 Bundle 'digitaltoad/vim-jade'
 Bundle 'tpope/vim-repeat'
 Bundle 'tpope/vim-speeddating'
 Bundle 'tpope/vim-unimpaired'
 Bundle 'kchmck/vim-coffee-script'
-Bundle 'scrooloose/syntastic'
 Bundle 'chrisbra/NrrwRgn'
 Bundle 'majutsushi/tagbar'
-Bundle 'kien/ctrlp.vim'
-Bundle 'LaTeX-Box-Team/LaTeX-Box'
 Bundle 'tpope/vim-haml'
 Bundle 'djoshea/vim-matlab-fold'
 Bundle 'xolox/vim-session'
 Bundle 'tpope/vim-fugitive'
-Bundle 'SuperTab'
+Bundle 'mbadran/headlights'
+Bundle 'https://github.com/tshirtman/vim-cython.git'
 Bundle 'vim-misc'
 Bundle 'vim-stylus'
 Bundle 'operator-camelize'
 Bundle 'operator-user'
-Bundle 'mbadran/headlights'
-Bundle 'vim-cython'
-
-" vim-scripts repos
-" Bundle 'ZoomWin'
-Bundle 'camelcasemotion'
 Bundle 'SyntaxMotion.vim'
 Bundle 'argtextobj.vim'
-" Bundle 'LaTeX-Suite-aka-Vim-LaTeX'
 Bundle 'vim-indent-object'
-Bundle 'restore_view.vim'
 Bundle 'sudo.vim'
 Bundle 'Rename'
+Bundle 'pyrex.vim'
 
-" let g:override_spf13_bundles='1'
-" " spf13 {
-" Bundle 'scrooloose/nerdtree'
-" Bundle 'altercation/vim-colors-solarized'
-" Bundle 'spf13/vim-colors'
-" Bundle 'tpope/vim-surround'
+" Disabled
+" ========
+" Bundle 'LaTeX-Suite-aka-Vim-LaTeX'
+
+" Already in spf13
+" ================
 " Bundle 'kien/ctrlp.vim'
-" Bundle 'vim-scripts/sessionman.vim'
-" Bundle 'matchit.zip'
-" Bundle 'Lokaltog/vim-powerline'
-" Bundle 'Lokaltog/vim-easymotion'
-" Bundle 'godlygeek/csapprox'
-" Bundle 'jistr/vim-nerdtree-tabs'
-" Bundle 'flazz/vim-colorschemes'
-" Bundle 'mbbill/undotree'
-" Bundle 'myusuf3/numbers.vim'
-" Bundle 'nathanaelkane/vim-indent-guides'
-" Bundle 'vim-scripts/restore_view.vim'
-
-" Bundle 'scrooloose/syntastic'
-" Bundle 'tpope/vim-fugitive'
-" Bundle 'mattn/webapi-vim'
-" Bundle 'mattn/gist-vim'
-" Bundle 'scrooloose/nerdcommenter'
-" Bundle 'godlygeek/tabular'
-
-" Bundle 'garbas/vim-snipmate'
-" Bundle 'Shougo/neocomplcache'
-" Bundle 'Shougo/neosnippet'
-" Bundle 'honza/snipmate-snippets'
-
-" " Bundle 'klen/python-mode'
-" Bundle 'python.vim'
-" Bundle 'python_match.vim'
-" Bundle 'pythoncomplete'
-
-" " General
-" Bundle 'scrooloose/nerdtree'
-" Bundle 'altercation/vim-colors-solarized'
-" Bundle 'spf13/vim-colors'
-" Bundle 'tpope/vim-surround'
-" Bundle 'kien/ctrlp.vim'
-" Bundle 'vim-scripts/sessionman.vim'
-" Bundle 'matchit.zip'
-" Bundle 'Lokaltog/vim-powerline'
-" Bundle 'Lokaltog/vim-easymotion'
-" Bundle 'godlygeek/csapprox'
-" Bundle 'jistr/vim-nerdtree-tabs'
-" Bundle 'flazz/vim-colorschemes'
-" " Bundle 'corntrace/bufexplorer'
-" Bundle 'mbbill/undotree'
-" Bundle 'myusuf3/numbers.vim'
-" Bundle 'nathanaelkane/vim-indent-guides'
-" Bundle 'vim-scripts/restore_view.vim'
-
-" " General Programming
-" " Pick one of the checksyntax, jslint, or syntastic
-" Bundle 'scrooloose/syntastic'
-" Bundle 'tpope/vim-fugitive'
-" Bundle 'mattn/webapi-vim'
-" Bundle 'mattn/gist-vim'
-" Bundle 'scrooloose/nerdcommenter'
-" Bundle 'godlygeek/tabular'
-
-" " Snippets & AutoComplete
-" Bundle 'garbas/vim-snipmate'
-" Bundle 'honza/snipmate-snippets'
-" " Source support_function.vim to support snipmate-snippets.
-" if filereadable(expand("~/.vim/bundle/snipmate-snippets/snippets/support_functions.vim"))
-"   source ~/.vim/bundle/snipmate-snippets/snippets/support_functions.vim
-" endif
-" Bundle 'Shougo/neocomplcache'
-" Bundle 'Shougo/neosnippet'
-" Bundle 'honza/snipmate-snippets'
-
-" " PHP
-" Bundle 'spf13/PIV'
-
-" " Python
-" " Pick either python-mode or pyflakes & pydoc
-" " Bundle 'klen/python-mode'
-" Bundle 'python.vim'
-" Bundle 'python_match.vim'
-" Bundle 'pythoncomplete'
-
-" " Javascript
-" Bundle 'leshill/vim-json'
-" Bundle 'groenewege/vim-less'
-" Bundle 'pangloss/vim-javascript'
-" Bundle 'briancollins/vim-jst'
-
-" " Java
-" Bundle 'derekwyatt/vim-scala'
-" Bundle 'derekwyatt/vim-sbt'
-
-" " HTML
-" Bundle 'amirh/HTML-AutoCloseTag'
-" Bundle 'hail2u/vim-css3-syntax'
-
-" " Ruby
-" Bundle 'tpope/vim-rails'
-" let g:rubycomplete_buffer_loading = 1
-" "let g:rubycomplete_classes_in_global = 1
-" "let g:rubycomplete_rails = 1
-
-" " Misc
-" Bundle 'tpope/vim-markdown'
-" Bundle 'tpope/vim-cucumber'
-" Bundle 'quentindecock/vim-cucumber-align-pipes'
-" Bundle 'Puppet-Syntax-Highlighting'
-
-" " Twig
-" Bundle 'beyondwords/vim-twig'
-
-" " }
