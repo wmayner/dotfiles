@@ -43,7 +43,7 @@
 [gui]
   recentrepo = /Users/will/Dropbox/jobs-internships-etc/web-resume
 [credential]
-  helper = osxkeychain
+  helper = cache --timeout=3600
 [merge]
   tool = gvimdiff
   conflictstyle = diff3

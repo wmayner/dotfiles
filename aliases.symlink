@@ -1,5 +1,11 @@
 # TODO: use environment variables where possible
 
+# Linux {{{
+
+  alias linstall="sudo apt-get install"
+
+# }}}
+
 # Util {{{
 
   # list dir contents (all with human-readable size)
@@ -9,8 +15,10 @@
   alias lsa='ls -AhG'
   # shortcut for vim
   alias v="vim"
-  # shortcut to trash (safe rm)
-  alias t="trash"
+  # move file to trash
+  alias t="trash-put"
+  # safe rm
+  alias rm="trash-put"
   # shortcut for clearing screen
   alias c='clear'
   # shortcut for clearing screen and dispalying dir contents

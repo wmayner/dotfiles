@@ -65,7 +65,7 @@ export GREP_COLOR='1;32'
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 
 # Don't treat `sudo` as a separate command (so don't use autocorrect)
-alias sudo="nocorrect sudo "
+alias sudo="nocorrect sudo"
 
 # Fix slow git tab completion
 __git_files () { 
@@ -73,7 +73,6 @@ __git_files () {
 }
 
 # Use powerline
-if [[ -r
-  /usr/local/lib/python2.7/dist-packages/powerline/bindings/zsh/powerline.zsh ]]; then source
-  /usr/local/lib/python2.7/dist-packages/powerline/bindings/zsh/powerline.zsh
-fi
+# if [[ -r /usr/local/lib/python2.7/dist-packages/powerline/bindings/zsh/powerline.zsh ]];
+#   then source /usr/local/lib/python2.7/dist-packages/powerline/bindings/zsh/powerline.zsh
+# fi
