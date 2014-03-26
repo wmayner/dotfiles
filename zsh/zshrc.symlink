@@ -43,10 +43,6 @@ plugins=(grunt brew coffee cake command-not-found github git-flow git-extras git
 source $ZSH/oh-my-zsh.sh
 
 # Customize to your needs...
-
-# Source every .zsh file in this repo
-for config_file ($DOTFILES/**/*.zsh) source $config_file
-
 source $ZSH/plugins/history-substring-search/history-substring-search.zsh
 
 autoload colors; colors;
@@ -71,3 +67,6 @@ alias sudo="nocorrect sudo "
 __git_files () { 
     _wanted files expl 'local files' _files     
 }
+
+# Source every .zsh file in this repo
+# for config_file ($DOTFILES/**/*.zsh) source $config_file
