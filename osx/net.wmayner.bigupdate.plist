@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
   <key>Label</key>
-  <string>net.wmayner.brewupdate</string>
+  <string>net.wmayner.bigupdate</string>
 
   <key>EnvironmentVariables</key>
   <dict>
@@ -14,15 +14,15 @@
   <key>ProgramArguments</key>
   <array>
     <string>/bin/sh</string>
-    <string>/Users/will/dotfiles/scripts/brewupdate</string>
+    <string>/Users/will/dotfiles/scripts/bigupdate</string>
   </array>
 
   <key>StartCalendarInterval</key>
   <dict>
     <key>Hour</key>
-    <integer>11</integer>
+    <integer>12</integer>
     <key>Minute</key>
-    <integer>00</integer>
+    <integer>09</integer>
   </dict>
 </dict>
 </plist>

@@ -1,0 +1,3 @@
+#!/bin/bash
+
+cd /usr/local/texlive/2013/bin/x86_64-darwin/ && sudo ./tlmgr update --all

@@ -1,0 +1,16 @@
+#!/bin/bash
+
+echo 'Updating Homebrew...' &&
+brew update && 
+brew upgrade && 
+echo 'Finished.' &&
+echo 'Updating npm...' &&
+sudo npm update -g && 
+echo 'Finished.' &&
+echo 'Updating Vim...' &&
+vim +BundleUpdate +qa > /dev/tty && 
+echo 'Finished.' &&
+echo 'Updating TeXLive...' &&
+sh ~/dotfiles/scripts/texlive_update && 
+echo 'Finished.' &&
+echo 'Updated Homebrew, global npm packages, Vim plugins, and TeXLive packages!'
