@@ -1,5 +1,6 @@
 " vim: set foldmethod=marker foldmarker={,} foldlevel=0
 
+Bundle 'rking/ag.vim'
 Bundle 'camelcasemotion'
 Bundle 'wincent/Command-T'
 Bundle 'sjl/gundo.vim'

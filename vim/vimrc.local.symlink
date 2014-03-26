@@ -56,7 +56,103 @@
   " set filetype to 'tex' for .tex files
   autocmd BufNewFile,BufRead *.tex set filetype=tex
 
+  " Solarized {
+
+    let g:solarized_termcolors=16 " use proper solarized palette
+    let g:solarized_contrast="normal"
+    let g:solarized_visibility="normal"
+
+  " }
+
+  " Line wrapping {
+
+    " This will get Vim to wrap existing text as desired. wrap tells Vim to word wrap visually (as opposed to changing the text in the buffer), and linebreak tells Vim to only wrap at a character in the breakat option (by default, this includes " ^I!@*-+;:,./?" (note the inclusion of " " and that ^I is the control character for Tab)).
+    set wrap
+    set linebreak
+    set nolist  " list disables linebreak
+    " In addition, you will need to prevent Vim from automatically inserting line breaks in newly entered text. The easiest way to do this is:
+    set textwidth=0
+    set wrapmargin=0
+    " If you want to keep your existing 'textwidth' settings for most lines in your file, but not have Vim automatically reformat when typing on existing lines, you can do this with:
+    set formatoptions+=l
+
+  " }
+
+ " Tab completion {
+
+      noremap <expr> <C-n> pumvisible() ? '<C-n>' :
+        \ '<C-n><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
+      " keep menu item always highlighted by simulating <Up> on pu visible
+      inoremap <expr> <C-p> pumvisible() ? '<C-p>' :
+        \ '<C-p><C-r>=pumvisible() ? "\<lt>Up>" : ""<CR>'
+
+      function! CleverTab()
+      if pumvisible() 
+        return "\<C-N>"
+      endif
+      if strpart( getline('.'), 0, col('.')-1 ) =~ '^\s*$'
+        return "\<Tab>"
+      elseif exists('&omnifunc') && &omnifunc != ''
+        return "\<C-X>\<C-O>"
+      else
+        return "\<C-N>"
+      endif
+    endfunction
+    inoremap <Tab> <C-R>=CleverTab()<CR>
+
+  " }
+
+  set vb           " stop vim from beeping all the damn time
+
+  set cursorcolumn " highlight the column the cursor is on
+
+  set showmatch    " show matching parens
+
+  " fixes syntax highlighting for stylus
+  autocmd BufNewFile,BufRead *.styl set filetype=stylus
+
+" }
+
+" GUI Vim {
+
+  " set guifont=Droid\ Sans\ Mono\ for\ Powerline:h18
+  " set guifont=Inconsolata-dz\ for\ Powerline:h18
+  set guifont=DejaVu\ Sans\ Mono\ for\ Powerline:h18
+  " set guifont=Liberation\ Mono\ for\ Powerline:h18
+  " set guifont=Menlo\ for\ Powerline:h18
+
+  " enable shift-select-replace movement with arrow keys
+  if has("gui_macvim")
+    let macvim_hig_shift_movement = 1
+  endif
+
+" }
+
+" Formatting {
+
+  set shiftwidth=2  " use indents of 2 spaces
+  set tabstop=2     " an indentation every 2 columns
+  set softtabstop=2 " let backspace delete indent
+
+  function! <SID>StripTrailingWhitespaces()
+      " Preparation: save last search, and cursor position.
+      let _s=@/
+      let l = line(".")
+      let c = col(".")
+      " Do the business:
+      %s/\s\+$//e
+      " Clean up: restore previous search history, and cursor position
+      let @/=_s
+      call cursor(l, c)
+  endfunction
+
+  " automatically strip trailing whitespace in python, js, and coffee upon write
+  autocmd BufWritePre *.py,*.js,*.coffee :call <SID>StripTrailingWhitespaces()
+
   " Code folding {
+
+  " Use modeline if there is one
+  set modeline
 
     " default code folding (excludes help files) {
 
@@ -216,99 +312,15 @@
 
   " }
 
-  " Solarized {
-
-    let g:solarized_termcolors=16 " use proper solarized palette
-    let g:solarized_contrast="normal"
-    let g:solarized_visibility="normal"
-
-  " }
-
-  " Line wrapping {
-
-    " This will get Vim to wrap existing text as desired. wrap tells Vim to word wrap visually (as opposed to changing the text in the buffer), and linebreak tells Vim to only wrap at a character in the breakat option (by default, this includes " ^I!@*-+;:,./?" (note the inclusion of " " and that ^I is the control character for Tab)).
-    set wrap
-    set linebreak
-    set nolist  " list disables linebreak
-    " In addition, you will need to prevent Vim from automatically inserting line breaks in newly entered text. The easiest way to do this is:
-    set textwidth=0
-    set wrapmargin=0
-    " If you want to keep your existing 'textwidth' settings for most lines in your file, but not have Vim automatically reformat when typing on existing lines, you can do this with:
-    set formatoptions+=l
-
-  " }
-
- " Tab completion {
-
-      noremap <expr> <C-n> pumvisible() ? '<C-n>' :
-        \ '<C-n><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
-      " keep menu item always highlighted by simulating <Up> on pu visible
-      inoremap <expr> <C-p> pumvisible() ? '<C-p>' :
-        \ '<C-p><C-r>=pumvisible() ? "\<lt>Up>" : ""<CR>'
-
-      function! CleverTab()
-      if pumvisible() 
-        return "\<C-N>"
-      endif
-      if strpart( getline('.'), 0, col('.')-1 ) =~ '^\s*$'
-        return "\<Tab>"
-      elseif exists('&omnifunc') && &omnifunc != ''
-        return "\<C-X>\<C-O>"
-      else
-        return "\<C-N>"
-      endif
-    endfunction
-    inoremap <Tab> <C-R>=CleverTab()<CR>
-
-  " }
-
-  set vb           " stop vim from beeping all the damn time
-
-  set cursorcolumn " highlight the column the cursor is on
-
-  set showmatch    " show matching parens
-
-  " fixes syntax highlighting for stylus
-  autocmd BufNewFile,BufRead *.styl set filetype=stylus
-
-" }
-
-" GUI Vim {
-
-  set guifont=Droid\ Sans\ Mono\ for\ Powerline:h16 " use Drois Sans Mono powerline font
-  " set guifont=Inconsolata-dz\ for\ Powerline:h16 " use Inconsolatd-dz font
-
-  " enable shift-select-replace movement with arrow keys
-  if has("gui_macvim")
-    let macvim_hig_shift_movement = 1
-  endif
-
-" }
-
-" Formatting {
-
-  set shiftwidth=2  " use indents of 2 spaces
-  set tabstop=2     " an indentation every 2 columns
-  set softtabstop=2 " let backspace delete indent
-
-  function! <SID>StripTrailingWhitespaces()
-      " Preparation: save last search, and cursor position.
-      let _s=@/
-      let l = line(".")
-      let c = col(".")
-      " Do the business:
-      %s/\s\+$//e
-      " Clean up: restore previous search history, and cursor position
-      let @/=_s
-      call cursor(l, c)
-  endfunction
-
-  " automatically strip trailing whitespace in python, js, and coffee upon write
-  autocmd BufWritePre *.py,*.js,*.coffee :call <SID>StripTrailingWhitespaces()
-
 " }
 
 " Plugins {
+
+  " Fugitive {
+
+    cnoremap Gwrite echo "This command has been disabled. If the current buffer is a git index file, it will silently destroy your work."<CR>
+
+  " }
 
   " Wipeout {
 
@@ -430,6 +442,8 @@
 
     " Gundo shortcut
     nnoremap ,u :GundoToggle<CR>
+    " Don't automatically render previews (can still manually do this with `r`)
+    let g:gundo_auto_preview=0
 
   " }
 
@@ -454,8 +468,8 @@
     nnoremap ]l :lnext<CR>
     nnoremap [L :lfirst<CR>
     nnoremap ]L :llast<CR>
-    nnoremap [q :cprevious<CR>
-    nnoremap ]q :cnext<CR>
+    nnoremap [q :cprevious<CR>:norm zz<CR>
+    nnoremap ]q :cnext<CR>:norm zz<CR>
     nnoremap [Q :cfirst<CR>
     nnoremap ]Q :clast<CR>
     nnoremap [t :tprevious<CR>
@@ -671,9 +685,9 @@
   nnoremap \v :tabedit ~/.vimrc.local<CR>
 
   " reload .vimrc.local
-  nnoremap \s :source ~/.vimrc.local<CR>
+  nnoremap \S :source ~/.vimrc.local<CR>
   " reload .vimrc
-  nnoremap \S :source $MYVIMRC<CR>
+  nnoremap \s :source $MYVIMRC<CR>
 
   " edit .vimrc
   if !exists("VRC_command_loaded")
