@@ -63,6 +63,13 @@
     let g:solarized_visibility="normal"
 
   " }
+  
+  " Tabs {
+
+    nnoremap <D-L> :execute "tabmove" tabpagenr()<CR>
+    nnoremap <D-H> :execute "tabmove" tabpagenr() - 2<CR>
+
+  " }
 
   " Line wrapping {
 
@@ -397,6 +404,10 @@
     \ 'AcceptSelection("v")': ['<c-v>', '<RightMouse>'],
     \ }
     let g:ctrlp_show_hidden = 1
+
+    nnoremap <C-t> :CtrlP<CR>
+    nnoremap <C-p> :CtrlPMRU<CR>
+    nnoremap <C-b> :CtrlPBuffer<CR>
 
   " }
 
