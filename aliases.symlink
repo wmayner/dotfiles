@@ -154,6 +154,8 @@
 
 # z {{{
 
+  # use j for z
+  alias j="z"
   # restrict matches to subdirectories of the current directory.
   alias jc="j -c"
   # show a brief help message
