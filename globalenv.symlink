@@ -18,11 +18,6 @@ DOTFILES=$HOME/dotfiles
 # Use curl-ca-bundle certificates with OpenSSL
 export SSL_CERT_FILE=/usr/local/opt/curl-ca-bundle/share/ca-bundle.crt
 
-# Configuration for BitcoinArmory
-# export CFLAGS="-arch x86_64"
-# export ARCHFLAGS="-arch x86_64"
-# export PYTHONPATH="`brew --prefix`/lib/python2.7/site-packages /usr/bin/python ~/src/BitcoinArmory/ArmoryQt.py"
-
 # Added by programs {{{
 
 ### Added by the Heroku Toolbelt

@@ -43,6 +43,8 @@ plugins=(grunt brew coffee cake command-not-found github git-flow git-extras git
 source $ZSH/oh-my-zsh.sh
 
 # Customize to your needs...
+# =============================================================================
+
 source $ZSH/plugins/history-substring-search/history-substring-search.zsh
 
 autoload colors; colors;
@@ -71,7 +73,7 @@ __git_files () {
 # Source every .zsh file in this repo
 for config_file ($DOTFILES/**/*.zsh) source $config_file
 
-# User powerline
+# Use powerline
 source /usr/local/Cellar/python/2.7.6/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/powerline/bindings/zsh/powerline.zsh
 
 # Use vi to edit command line

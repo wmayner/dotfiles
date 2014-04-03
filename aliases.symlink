@@ -7,8 +7,8 @@
   alias ll='ls -lAhG'
   alias ls='ls -Gh'
   alias lsa='ls -AhG'
-  # shortcut for vim
-  alias v="vim"
+  # shortcut for mvim
+  alias v="mvim"
   # shortcut to trash (safe rm)
   alias t="trash"
   # shortcut for clearing screen
