@@ -1,1 +1,2 @@
-export PYTHONSTARTUP=$HOME/.pythonstartup
+export PYTHONSTARTUP=$HOME/.pythonstartup.py
+export PYTHONPATH=$PYTHONPATH:~/.config/powerline/
