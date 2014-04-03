@@ -1,0 +1,34 @@
+{
+	"name": "Solarized Dark",
+	"groups": {
+		"jobnum":               { "fg": "oldlace", "bg": "darkgreencopper" },
+		"user":                 { "fg": "oldlace", "bg": "blue", "attr": ["bold"] },
+		"superuser":            { "fg": "oldlace", "bg": "red", "attr": ["bold"] },
+		"virtualenv":           { "fg": "royalblue5", "bg": "blue", "attr": ["bold"] },
+		"branch":               { "fg": "gray61", "bg": "royalblue5" },
+		"branch_dirty":         { "fg": "royalblue5", "bg": "yellow" },
+		"branch_clean":         { "fg": "royalblue5", "bg": "green" },
+		"continuation":         { "fg": "lightyellow", "bg": "darkgreencopper" },
+		"continuation:current": { "fg": "royalblue5", "bg": "darkgreencopper" },
+		"cwd":                  { "fg": "royalblue5", "bg": "darkgreencopper" },
+		"cwd:current_folder":   { "fg": "royalblue5", "bg": "cyan", "attr": ["bold"] },
+		"cwd:divider":          { "fg": "gray61", "bg": "darkgreencopper" },
+    "full_path":            { "fg": "darkgreencopper", "bg": "royalblue5" },
+    "compact_cwd":          { "fg": "cyan", "bg": "None" },
+		"hostname":             { "fg": "oldlace", "bg": "darkgreencopper" },
+		"exit_fail":            { "fg": "royalblue5", "bg": "orange" },
+		"exit_success":         { "fg": "oldlace", "bg": "green" },
+		"environment":          { "fg": "oldlace", "bg": "green" },
+		"mode":                 { "fg": "darkgreencopper", "bg": "darkgreencopper", "attr": ["bold"] },
+    "fuzzy_time":           { "fg": "royalblue5", "bg": "darkgreencopper" },
+    "system_load":          { "fg": "gray61", "bg": "royalblue5" },
+    "background:divider":   { "fg": "gray61", "bg": "royalblue5" }
+	},
+	"mode_translations": {
+		"vicmd": {
+			"groups": {
+				"mode": { "fg": "oldlace", "bg": "blue", "attr": ["bold"] }
+			}
+		}
+	}
+}

@@ -161,8 +161,5 @@ zle-line-init () {
 # Replace default zle-line-init with ours
 zle -N zle-line-init
 
-# Activate vi mod
-bindkey -v
-
 # Vim modeline:
 # vim:ft=zsh ts=2 sw=2 sts=2

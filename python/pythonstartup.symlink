@@ -1,5 +1,0 @@
-# -*- coding: utf-8 -*-
-
-import os
-if os.path.isfile('.pythonrc.py'):
-    exec(open('.pythonrc.py').read())

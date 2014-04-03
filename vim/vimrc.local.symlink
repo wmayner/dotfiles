@@ -409,6 +409,9 @@
     nnoremap <C-p> :CtrlPMRU<CR>
     nnoremap <C-b> :CtrlPBuffer<CR>
 
+    " Persistent caching across vim sessions
+    let g:ctrlp_clear_cache_on_exit = 0
+
   " }
 
   " GitGutter {
