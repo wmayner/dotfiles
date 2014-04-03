@@ -68,6 +68,8 @@
 
 # Dev {{{
 
+  # Shortcut for python interpreter
+  alias p='python'
   # use GitHub's CLI git wrapper
   alias git='hub'
   # git diff
