@@ -96,4 +96,9 @@ bindkey -v
 # > will remove the annoying delay after you type `\e' to enter vi command mode.
 # > The delay is there because the cursor keys usually also start with \e and the
 # > shell is waiting to see if you actually typed one of those.
+
 bindkey -rpM viins "\e"
+# Use control+j and control+k for scrolling through history, since removing all
+# bindings that begin with escape also removes the arrow-key bindings
+bindkey "^K" history-substring-search-up
+bindkey "^J" history-substring-search-down
