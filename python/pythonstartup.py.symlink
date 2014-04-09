@@ -116,7 +116,7 @@ Type <C-j> and <C-k> to go forward and backwards through your history.
 Type \e to get an external editor.
 %(Normal)s""" % _c
 
-atexit.register(lambda: sys.stdout.write("""%(DarkGray)s
+atexit.register(lambda: sys.stdout.write("""%(Blue)s
 Peace out.
 %(Normal)s""" % _c))
 
