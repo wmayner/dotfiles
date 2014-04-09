@@ -89,7 +89,7 @@ atexit.register(savehist)
 # Enable Color Prompts
 ######################
 
-sys.ps1 = '%s>>> %s' % (_c['Green'], _c['Normal'])
+sys.ps1 = '%s>>> %s' % (_c['Cyan'], _c['Normal'])
 sys.ps2 = '%s... %s' % (_c['Red'], _c['Normal'])
 
 # Enable Pretty Printing for stdout
@@ -110,9 +110,9 @@ sys.displayhook = my_displayhook
 #################
 
 WELCOME = """\
-%(Cyan)s
-Type <C-j> and <C-k> to go forward and backwards through your history (using substring matching).
-%(Brown)s
+%(Blue)s
+
+Type <C-j> and <C-k> to go forward and backwards through your history.
 Type \e to get an external editor.
 %(Normal)s""" % _c
 
@@ -163,6 +163,12 @@ normal environment call `teardown_test_environment()`.
 
 Warning: DEBUG_PROPAGATE_EXCEPTIONS has been set to True.
 %(Normal)s""" % _c
+
+# Read and execute local .pythonrc.py
+#####################################
+
+if os.path.isfile('.pythonrc.py'):
+    exec(open('.pythonrc.py').read())
 
 
 # Salt Helpers
@@ -248,12 +254,6 @@ class EditableBufferInteractiveConsole(InteractiveConsole):
 
 c = EditableBufferInteractiveConsole(locals=locals())
 c.interact(banner=WELCOME)
-
-# Read and execute local .pythonrc.py
-#####################################
-
-if os.path.isfile('.pythonrc.py'):
-    exec(open('.pythonrc.py').read())
 
 # Exit the Python shell on exiting the InteractiveConsole
 sys.exit()
