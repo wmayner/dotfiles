@@ -1,5 +1,5 @@
 " Modeline and Notes {
-" vim: set foldmarker={,} foldlevel=0  foldmethod=marker
+" vim: set foldmarker={,} foldlevel=0  foldmethod=marker :
 "
 "   This is the personal .vimrc.local file of Will Mayner.
 "   Find me at www.willmayner.com or @wmayner.
@@ -321,7 +321,13 @@
 
 " }
 
-" Plugins {
+" Plugin mappings and configuration {
+
+  " Commentary {
+
+    nmap g\\ <Plug>CommentaryLine
+
+  " }
 
   " Fugitive {
 
@@ -522,20 +528,25 @@
 
   " PythonMode {
 
-    " TODO: use PythonMode more
-
-    " let g:pymode_rope_global_prefix = '<C-r>'
-    " Don't use the 'run this selection/buffer' script
-    " let g:pymode_run = 0
-    " " Use linting
-    " let g:pymode_lint = 1
-    " " Lint on write
-    " let g:pymode_lint_write = 1
-    " " Choose lint checkers
+    " Choose lint checkers
     let g:pymode_lint_checkers = ['pyflakes', 'pep8', 'mccabe']
+    " Don't use rope completion
     let g:pymode_rope_complete_on_dot = 0
-    " Ignore these pep8 errors"
-    " let g:pymode_lint_ignore=""
+
+    " Rebind rope commands {
+      let g:pymode_rope_show_doc_bind = '\rd'
+      let g:pymode_rope_goto_definition_bind = '\rg'
+      let g:pymode_rope_rename_bind = '\rr'
+      let g:pymode_rope_rename_module_bind = '\rmr'
+      let g:pymode_rope_organize_imports_bind = '\roi'
+      let g:pymode_rope_autoimport_bind = '\rai'
+      let g:pymode_rope_module_to_package_bind = '\rmp'
+      let g:pymode_rope_extract_method_bind = '\rem'
+      let g:pymode_rope_extract_variable_bind = '\rev'
+      let g:pymode_rope_use_function_bind = '\ru'
+      let g:pymode_rope_move_bind = '\rv'
+      let g:pymode_rope_change_signature_bind = '\rs'
+    " }
 
   " }
 
@@ -561,7 +572,7 @@
 
   " Session.vim {
 
-    let g:session_autoload = 1
+    let g:session_autoload = 0
     let g:session_autosave = 0
     let g:session_default_to_last = 1
     let g:session_default_overwrite = 1
@@ -624,6 +635,12 @@
 " }
 
 " Key (re)mappings {
+
+  vnoremap \p :diffput<CR>
+  vnoremap \o :diffget<CR>
+
+  " Display the current filename
+  nnoremap \f :echo @%<CR>
 
   " Allow saving of files as sudo when I forgot to start vim using sudo.
   cmap w!! w !sudo tee > /dev/null %
