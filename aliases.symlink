@@ -25,10 +25,6 @@
   alias cl='clear && l'
   # move up one directory
   alias ..="cd .."
-  # cd to dropbox
-  alias ~~="cd ~/Dropbox/"
-  # cd to current project
-  alias cur="cd ~/dev/projects/iit/cyphi"
 
 # }}}
 
@@ -70,10 +66,6 @@
   alias vrcreal="vim ~/.vimrc"
   # edit local vim bundles for vundle
   alias vbun="vim ~/.vimrc.bundles.local"
-  # cd scripts
-  alias cdscripts="cd $DOTFILES/scripts"
-  # edit .slate
-  alias vslate="vim ~/.slate"
 
   # zsh {{{
 
@@ -81,14 +73,6 @@
     alias vzsh="vim ~/.zshrc"
     # source zsh config
     alias szsh="source ~/.zshrc"
-
-  # }}}
-
-  # bash {{{
-
-    # edit bash profile (this file)
-    alias vbp="vim ~/.bash_profile"
-    alias sbp="source ~/.bash_profile"
 
   # }}}
 
@@ -124,10 +108,6 @@
   alias cdd="cd $DEV"
   # copy current directory to htdocs to run php server locally with MAMP
   alias pphp="sudo rm -r /Applications/MAMP/htdocs && mkdir /Applications/MAMP/htdocs && cp -r ./* /Applications/MAMP/htdocs"
-  # edit app.coffee
-  alias vsp="vim $PROJECTS/fairdiv/src/app.coffee"
-  # cd splitr
-  alias cdsp="cd $PROJECTS/fairdiv/"
 
 # }}}
 
@@ -147,40 +127,14 @@
 
 # }}}
 
-# Work {{{
-
-  # cd iit
-  alias iit="cd ~/Dropbox/iit/"
-
-# }}}
-
-# IIT REU {{{
-
-  # cd summerwork
-  alias cdpaper="cd ~/Dropbox/iit-reu/repos/summerwork/research\ paper/"
-  # edit summerwork
-  alias vpaper="gvim ~/Dropbox/iit-reu/repos/summerwork/research\ paper/paper.tex"
-
-# }}}
-
 # Webdev {{{
 
-  # cd tickt.me
-  alias cdc="cd $CODE/cyphi"
-  # cd web-resume
-  alias cdres="cd $CODE/resume"
-  # edit paper resume
-  alias vpres="gvim ~/Dropbox/jobs-internships-etc/resumes/resume.tex"
-  # cd paper resume
-  alias cdpres="cd ~/Dropbox/jobs-internships-etc/resumes/"
-  # cd liz website
-  alias cdliz="cd $CODE/liz/liz-website/"
   # cd my website
   alias cdsite="cd $CODE/willmayner.com/"
 
 # }}}
 
-# z {{{
+# fasd {{{
 
   # use j for z
   alias j="z"
