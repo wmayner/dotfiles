@@ -13,7 +13,7 @@ import sys
 import os
 import readline, rlcompleter
 import atexit
-import pprint
+from pprint import pprint
 from tempfile import mkstemp
 from code import InteractiveConsole
 
@@ -95,7 +95,7 @@ def my_displayhook(value):
         except ImportError:
             __builtins__._ = value
 
-        pprint.pprint(value)
+        pprint(value)
 sys.displayhook = my_displayhook
 
 # Welcome message
