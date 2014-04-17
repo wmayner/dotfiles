@@ -38,14 +38,12 @@ COMPLETION_WAITING_DOTS="true"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(grunt brew coffee cake command-not-found github git-flow git-extras git-hubflow rake history-substring-search bower vundle git npm fasd osx heroku virtualenvwrapper terminalapp python pip per-directory-history lol)
+plugins=(grunt brew coffee cake command-not-found github git-flow git-extras git-hubflow rake history-substring-search bower vundle git npm osx heroku virtualenvwrapper terminalapp python pip per-directory-history lol)
 
 source $ZSH/oh-my-zsh.sh
 
 # Customize to your needs...
 # =============================================================================
-
-source $ZSH/plugins/history-substring-search/history-substring-search.zsh
 
 autoload colors; colors;
 export LSCOLORS="Gxfxcxdxbxegedabagacad"
@@ -71,15 +69,10 @@ __git_files () {
 }
 
 # Use powerline
-# if [[ -r /usr/local/lib/python2.7/dist-packages/powerline/bindings/zsh/powerline.zsh ]];
-#   then source /usr/local/lib/python2.7/dist-packages/powerline/bindings/zsh/powerline.zsh
-# fi
+source /usr/local/lib/python2.7/dist-packages/powerline/bindings/zsh/powerline.zsh
 
 # Source every .zsh file in this repo
 for config_file ($DOTFILES/**/*.zsh) source $config_file
-
-# Use powerline
-source /usr/local/Cellar/python/2.7.6/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/powerline/bindings/zsh/powerline.zsh
 
 # Use vi to edit command line
 bindkey -v
@@ -102,3 +95,6 @@ bindkey -rpM viins "\e"
 # bindings that begin with escape also removes the arrow-key bindings
 bindkey "^K" history-substring-search-up
 bindkey "^J" history-substring-search-down
+
+# Source local .zshrc
+source $HOME/.zshrc.local
