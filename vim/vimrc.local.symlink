@@ -58,9 +58,12 @@
 
   " Solarized {
 
-    let g:solarized_termcolors=16 " use proper solarized palette
+    " use proper solarized palette
+    let g:solarized_termcolors=16
     let g:solarized_contrast="normal"
     let g:solarized_visibility="normal"
+    " Make sure to load the colorscheme after setting the termcolors=16
+    colorscheme solarized
 
   " }
   
