@@ -53,6 +53,8 @@
   " no spellchecking
   set nospell
 
+  autocmd BufNewFile,BufRead *.py set iskeyword-=_ iskeyword-=.
+
   " set filetype to 'tex' for .tex files
   autocmd BufNewFile,BufRead *.tex set filetype=tex
 
@@ -88,29 +90,29 @@
 
   " }
 
- " Tab completion {
+ " " Tab completion {
 
-      noremap <expr> <C-n> pumvisible() ? '<C-n>' :
-        \ '<C-n><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
-      " keep menu item always highlighted by simulating <Up> on pu visible
-      inoremap <expr> <C-p> pumvisible() ? '<C-p>' :
-        \ '<C-p><C-r>=pumvisible() ? "\<lt>Up>" : ""<CR>'
+ "      noremap <expr> <C-n> pumvisible() ? '<C-n>' :
+ "        \ '<C-n><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
+ "      " keep menu item always highlighted by simulating <Up> on pu visible
+ "      inoremap <expr> <C-p> pumvisible() ? '<C-p>' :
+ "        \ '<C-p><C-r>=pumvisible() ? "\<lt>Up>" : ""<CR>'
 
-      function! CleverTab()
-      if pumvisible() 
-        return "\<C-N>"
-      endif
-      if strpart( getline('.'), 0, col('.')-1 ) =~ '^\s*$'
-        return "\<Tab>"
-      elseif exists('&omnifunc') && &omnifunc != ''
-        return "\<C-X>\<C-O>"
-      else
-        return "\<C-N>"
-      endif
-    endfunction
-    inoremap <Tab> <C-R>=CleverTab()<CR>
+ "      function! CleverTab()
+ "      if pumvisible() 
+ "        return "\<C-N>"
+ "      endif
+ "      if strpart( getline('.'), 0, col('.')-1 ) =~ '^\s*$'
+ "        return "\<Tab>"
+ "      elseif exists('&omnifunc') && &omnifunc != ''
+ "        return "\<C-X>\<C-O>"
+ "      else
+ "        return "\<C-N>"
+ "      endif
+ "    endfunction
+ "    inoremap <Tab> <C-R>=CleverTab()<CR>
 
-  " }
+ "  " }
 
   set vb           " stop vim from beeping all the damn time
 
@@ -125,9 +127,9 @@
 
 " GUI Vim {
 
+  set guifont=DejaVu\ Sans\ Mono\ for\ Powerline:h22
   " set guifont=Droid\ Sans\ Mono\ for\ Powerline:h18
   " set guifont=Inconsolata-dz\ for\ Powerline:h18
-  set guifont=DejaVu\ Sans\ Mono\ for\ Powerline:h18
   " set guifont=Liberation\ Mono\ for\ Powerline:h18
   " set guifont=Menlo\ for\ Powerline:h18
 
