@@ -45,8 +45,6 @@ source $ZSH/oh-my-zsh.sh
 # Customize to your needs...
 # =============================================================================
 
-source $ZSH/plugins/history-substring-search/history-substring-search.zsh
-
 autoload colors; colors;
 export LSCOLORS="Gxfxcxdxbxegedabagacad"
 # setopt auto_cd
