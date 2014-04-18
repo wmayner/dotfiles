@@ -13,11 +13,8 @@ export DEV=~/dev
 export CODE=$DEV/projects
 # Path to your dotfiles repo (just set it to $HOME if you don't have one)
 export DOTFILES=$HOME/dotfiles
-
 # Path to Matlab IIT code
 export IIT=$HOME/Dropbox/iit/code/iit
 
-# Use curl-ca-bundle certificates with OpenSSL
-export SSL_CERT_FILE=/usr/local/opt/curl-ca-bundle/share/ca-bundle.crt
 
 # vim:foldmethod=marker:foldmarker={{{,}}}:foldlevel=0:ft=sh
