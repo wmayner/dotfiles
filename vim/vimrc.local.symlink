@@ -60,10 +60,19 @@
 
   " Solarized {
 
-    " use proper solarized palette
+    set t_Co=16
+    " use proper (default) solarized options
     let g:solarized_termcolors=16
+    let g:solarized_termcolors=16
+    let g:solarized_termtrans=0
+    let g:solarized_degrade=0
+    let g:solarized_bold=1
+    let g:solarized_underline=1
+    let g:solarized_italic=1
     let g:solarized_contrast="normal"
     let g:solarized_visibility="normal"
+    let g:solarized_hitrail=0
+    let g:solarized_menu=1
     " Make sure to load the colorscheme after setting the termcolors=16
     colorscheme solarized
 
@@ -725,11 +734,13 @@
 
   " edit this file
   nnoremap \v :tabedit ~/.vimrc.local<CR>
+  " edit the main vimrc
+  nnoremap \V :tabedit $MYVIMRC<CR>
 
   " reload .vimrc.local
-  nnoremap \S :source ~/.vimrc.local<CR>
+  nnoremap \s :source ~/.vimrc.local<CR>
   " reload .vimrc
-  nnoremap \s :source $MYVIMRC<CR>
+  nnoremap \S :source $MYVIMRC<CR>
 
   " edit .vimrc
   if !exists("VRC_command_loaded")
