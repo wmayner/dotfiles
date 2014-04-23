@@ -151,10 +151,6 @@
 
 " Formatting {
 
-  set shiftwidth=2  " use indents of 2 spaces
-  set tabstop=2     " an indentation every 2 columns
-  set softtabstop=2 " let backspace delete indent
-
   " Use 4-space tabs for .py and .rst files
   autocmd BufNewFile,BufReadPost *.rst,*.py set shiftwidth=4 tabstop=4 softtabstop=4
 
