@@ -5,6 +5,9 @@
   " Choose bundle groups from spf13:
   let g:spf13_bundle_groups=['general', 'youcompleteme', 'python', 'programming', 'javascript', 'html', 'misc']
 
+  " Don't use CSApprox (we're using Solarized with 16 colors)"
+  let g:CSApprox_loaded = 1
+
 " }
 
 " Plugins {
