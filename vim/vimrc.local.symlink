@@ -37,6 +37,10 @@
 
 " Vim UI {
 
+  " Use xclip for clipboard forwarding over ssh
+  vmap "+y :!xclip -f -selection clipboard
+  map "+p :r!xclip -o -selection clipboard
+
   " leave insert mode quickly
   if ! has('gui_running')
     set ttimeoutlen=10
