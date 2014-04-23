@@ -8,6 +8,9 @@
 
 # Util {{{
 
+  # For some reason .vimrc.local isn't getting sourced properly, so source
+  # explicitly it every time vim starts until I figure out why
+  alias vim='vim +"source ~/.vimrc.local"'
   # list dir contents (all with human-readable size)
   alias l='ls -AhG1'
   alias ll='ls -lAhG'
