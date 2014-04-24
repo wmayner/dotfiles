@@ -54,7 +54,7 @@ autoload colors;
 # Find the option for using colors in ls, depending on the version: Linux or BSD
 ls --color -d . &>/dev/null 2>&1 && alias ls='ls --color=auto' || alias ls='ls -G'
 # Use dircolors if available
-eval `dircolors $DOTFILES/zsh/dircolors.ansi-dark` &>/dev/null || export LSCOLORS="Gxfxcxdxbxegedabagacad"
+dircolors &>/dev/null && eval `dircolors $DOTFILES/zsh/dircolors.ansi-dark` || export LSCOLORS="Gxfxcxdxbxegedabagacad"
 
 export GREP_OPTIONS='--color=auto'
 export GREP_COLOR='1;32'
