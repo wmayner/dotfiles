@@ -684,7 +684,7 @@
 
   " always do very magic search
   " (special characters don't need to be escaped with a '\')
-  nnoremap / /\v
+  " nnoremap / /\v
 
   " loads current directory into MAMP's local php environment
   " IMPORTANT: this destroys the existing one!
