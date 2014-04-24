@@ -58,8 +58,6 @@ ls --color -d . &>/dev/null 2>&1 && alias ls='ls --color=tty' || alias ls='ls -G
 export GREP_OPTIONS='--color=auto'
 export GREP_COLOR='1;32'
 
-PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
-
 # Don't treat `sudo` as a separate command (so don't use autocorrect)
 alias sudo="nocorrect sudo"
 
@@ -95,6 +93,11 @@ bindkey -rpM viins "\e"
 # bindings that begin with escape also removes the arrow-key bindings
 bindkey "^K" history-substring-search-up
 bindkey "^J" history-substring-search-down
+
+# Press Ctrl+Q to push the current command on to the stack. It will disappear,
+# allowing you to enter another command, after which it will reappear in the
+# prompt.
+bindkey "^Q" push-input
 
 # Source local .zshrc
 source $HOME/.zshrc.local
