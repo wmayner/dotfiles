@@ -45,15 +45,16 @@ source $ZSH/oh-my-zsh.sh
 # Customize to your needs...
 # =============================================================================
 
-autoload colors; colors;
-export LSCOLORS="Gxfxcxdxbxegedabagacad"
+autoload colors;
 # setopt auto_cd
 # setopt multios
 # setopt cdablevarS
 # setopt prompt_subst
 
 # Find the option for using colors in ls, depending on the version: Linux or BSD
-ls --color -d . &>/dev/null 2>&1 && alias ls='ls --color=tty' || alias ls='ls -G'
+ls --color -d . &>/dev/null 2>&1 && alias ls='ls --color=auto' || alias ls='ls -G'
+# Use dircolors if available
+eval `dircolors $DOTFILES/zsh/dircolors.ansi-dark` &>/dev/null || export LSCOLORS="Gxfxcxdxbxegedabagacad"
 
 export GREP_OPTIONS='--color=auto'
 export GREP_COLOR='1;32'
@@ -99,5 +100,15 @@ bindkey "^J" history-substring-search-down
 # prompt.
 bindkey "^Q" push-input
 
-# Source local .zshrc
-source $HOME/.zshrc.local
+# Add user binaries to path
+export PATH=$HOME/bin:$PATH
+
+# get aliases
+source $ALIASES
+
+# Use .localrc for SUPER SECRET CRAP that you don't
+# want in your public, versioned repo.
+if [[ -a ~/.zshrc.local ]]
+then
+  source ~/.zshrc.local
+fi
