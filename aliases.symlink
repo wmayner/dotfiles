@@ -5,7 +5,6 @@
   # list dir contents (all with human-readable size)
   alias l='ls -AhG1'
   alias ll='ls -lAhG'
-  alias ls='ls -Gh'
   alias lsa='ls -AhG'
   # shortcut for mvim
   alias v="mvim"
