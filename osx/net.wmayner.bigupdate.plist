@@ -14,7 +14,7 @@
   <key>ProgramArguments</key>
   <array>
     <string>/bin/sh</string>
-    <string>/Users/will/dotfiles/scripts/bigupdate</string>
+    <string>/Users/will/dotfiles/scripts/brewupdate</string>
   </array>
 
   <key>StartCalendarInterval</key>
