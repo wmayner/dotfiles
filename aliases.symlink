@@ -6,8 +6,8 @@
   alias l='ls -AhG1'
   alias ll='ls -lAhG'
   alias lsa='ls -AhG'
-  # shortcut for mvim
-  alias v="mvim"
+  # shortcut for vim
+  alias v="vim"
   # shortcut to trash (safe rm)
   alias t="trash"
   # shortcut for clearing screen
@@ -28,22 +28,22 @@
 # Config {{{
 
   # edit aliases
-  alias valias='mvim $ALIASES'
+  alias valias='vim $ALIASES'
   # use MacVim as gvim
   alias gvim="mvim"
   # edit local .vimrc
-  alias vrc="mvim ~/.vimrc.local"
+  alias vrc="vim ~/.vimrc.local"
   # edit .vimrc
-  alias vrcreal="mvim ~/.vimrc"
+  alias vrcreal="vim ~/.vimrc"
   # edit local vim bundles for vundle
-  alias vbun="mvim ~/.vimrc.bundles.local"
+  alias vbun="vim ~/.vimrc.bundles.local"
   # edit .slate
-  alias vslate="mvim ~/.slate"
+  alias vslate="vim ~/.slate"
 
   # zsh {{{
 
     # edit zsh config
-    alias vzsh="mvim ~/.zshrc"
+    alias vzsh="vim ~/.zshrc"
     # source zsh config
     alias szsh="source ~/.zshrc"
 
@@ -78,9 +78,9 @@
   # fast git status
   alias g='git status'
   # edit .gitconfig
-  alias vgrc="mvim ~/.gitconfig"
+  alias vgrc="vim ~/.gitconfig"
   # edit .hgrc
-  alias vhgrc="mvim ~/.hgrc"
+  alias vhgrc="vim ~/.hgrc"
   # cd dev
   alias cdd="cd $DEV"
   # copy current directory to htdocs to run php server locally with MAMP
@@ -99,8 +99,8 @@
 
   # vim the .tex files in the current directory
   alias vtex="find . -iname '*.tex' -exec vim {} \;"
-  # mvim the .tex files in the current directory
-  alias mtex="find . -iname '*.tex' -exec mvim {} \;"
+  # vim the .tex files in the current directory
+  alias mtex="find . -iname '*.tex' -exec vim {} \;"
 
 # }}}
 
