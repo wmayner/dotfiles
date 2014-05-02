@@ -53,8 +53,6 @@
   " no spellchecking
   set nospell
 
-  autocmd BufNewFile,BufRead *.py set iskeyword-=_ iskeyword-=.
-
   " set filetype to 'tex' for .tex files
   autocmd BufNewFile,BufRead *.tex set filetype=tex
 
@@ -549,6 +547,7 @@
     " Rebind rope commands {
       nmap \rd <C-c>d
       nmap \rg <C-c>g
+      " Rename
       nmap \rr <C-c>rr
       nmap \rmr <C-c>r1r
       nmap \roi <C-c>ro
