@@ -154,6 +154,9 @@
 
 # Python {{{
 
+  # Run a memory-intensive Python program with limited memory to stop kernel
+  # thrashing
+  alias pylim="sudo cgexec -g memory:limited python "
   # remove dot from py.test executable
   alias pytest="py.test"
 
