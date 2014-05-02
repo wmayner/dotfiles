@@ -136,7 +136,7 @@
 
 " GUI Vim {
 
-  set guifont=DejaVu\ Sans\ Mono\ for\ Powerline:h22
+  set guifont=DejaVu\ Sans\ Mono\ for\ Powerline:h16
   " set guifont=Droid\ Sans\ Mono\ for\ Powerline:h18
   " set guifont=Inconsolata-dz\ for\ Powerline:h18
   " set guifont=Liberation\ Mono\ for\ Powerline:h18
@@ -779,7 +779,7 @@
     " disable conceal for tex files
     autocmd BufNewFile,BufRead *.tex set cole=0
 
-    " LaTeX-Box {
+    " " LaTeX-Box {
 
       " set latexmk options to 'preview continuously' and -pdfps (from  http://stackoverflow.com/questions/3723493/latex-and-vim-usage)
       " let g:LatexBox_latexmk_options='-pvc'
@@ -833,7 +833,7 @@
 
     " }
 
-  " " LaTeX-Suite {
+  " LaTeX-Suite {
 
     " override <C-j>, the 'next placeholder' binding
     imap <C-g> <Plug>IMAP_JumpForward
