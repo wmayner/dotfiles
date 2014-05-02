@@ -34,6 +34,9 @@ export PATH="/usr/local/heroku/bin:$PATH"
 # Disable for now since it interferes with virtualenvwrapper
 # export PATH="$PATH:/Users/will/anaconda/bin"
 
+# Add TeX commands to PATH
+export PATH="$PATH:/usr/texbin"
+
 # Make sure /usr/local/bin/ is at beginning of $PATH
 export PATH="/usr/local/bin:$PATH"
 
