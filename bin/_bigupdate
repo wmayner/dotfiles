@@ -16,7 +16,7 @@
     echo 'Finished updating npm.'
   } &
   { echo 'Updating TeXLive...' && 
-    sh ~/dotfiles/scripts/texlive_update && 
+    texlive_update && 
     echo 'Finished updating TeXLive.'
   }
 } &&
