@@ -77,106 +77,11 @@ atexit.register(lambda: sys.stdout.write(colored("""
 Peace out.
 """, 'blue')))
 
-# Django Helpers
-################
-
-def SECRET_KEY():
-    "Generates a new SECRET_KEY that can be used in a project settings file."
-
-    from random import choice
-    return ''.join(
-            [choice('abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*(-_=+)')
-                for i in range(50)])
-
-# If we're working with a Django project, set up the environment
-if 'DJANGO_SETTINGS_MODULE' in os.environ:
-    from django.db.models.loading import get_models
-    from django.test.client import Client
-    from django.test.utils import setup_test_environment, teardown_test_environment
-    from django.conf import settings as S
-
-    class DjangoModels(object):
-        """Loop through all the models in INSTALLED_APPS and import them."""
-        def __init__(self):
-            for m in get_models():
-                setattr(self, m.__name__, m)
-
-    A = DjangoModels()
-    C = Client()
-
-    WELCOME += colored("""
-Django environment detected.
-* Your INSTALLED_APPS models are available as `A`.
-* Your project settings are available as `S`.
-* The Django test client is available as `C`.
-%s""", 'green')
-
-    setup_test_environment()
-    S.DEBUG_PROPAGATE_EXCEPTIONS = True
-
-    WELCOME += colored("""
-Warning: the Django test environment has been set up; to restore the
-normal environment call `teardown_test_environment()`.
-
-Warning: DEBUG_PROPAGATE_EXCEPTIONS has been set to True.
-%s""", 'orange')
-
-# Read and execute local .pythonrc.py
-#####################################
+# Local .pythonrc
+#################
 
 if os.path.isfile('.pythonrc.py'):
     exec(open('.pythonrc.py').read())
-
-
-# Salt Helpers
-##############
-if 'SALT_MASTER_CONFIG' in os.environ:
-    try:
-        import salt.config
-        import salt.client
-        import salt.runner
-    except ImportError:
-        pass
-    else:
-        __opts_master__ = salt.config.master_config(
-                os.environ['SALT_MASTER_CONFIG'])
-
-        # Instantiate LocalClient and RunnerClient
-        SLC = salt.client.LocalClient(__opts_master__)
-        SRUN = salt.runner.Runner(__opts_master__)
-
-if 'SALT_MINION_CONFIG' in os.environ:
-    try:
-        import salt.config
-        import salt.loader
-        import jinja2
-        import yaml
-    except ImportError:
-        pass
-    else:
-        # Create the Salt __opts__ variable
-        __opts__ = salt.config.client_config(os.environ['SALT_MINION_CONFIG'])
-
-        # Populate grains if it hasn't been done already
-        if not 'grains' in __opts__ or not __opts__['grains']:
-            __opts__['grains'] = salt.loader.grains(__opts__)
-
-        # Populate template variables
-        __salt__ = salt.loader.minion_mods(__opts__)
-        __grains__ = __opts__['grains']
-        __pillar__ = salt.pillar.get_pillar(
-            __opts__,
-            __grains__,
-            __opts__['id'],
-            __opts__.get('environment'),
-        ).compile_pillar()
-
-        JINJA = lambda x, **y: jinja2.Template(x).render(
-                grains=__grains__,
-                salt=__salt__,
-                opts=__opts__,
-                pillar=__pillar__,
-                **y)
 
 # Start an external editor with \e
 ##################################
