@@ -19,6 +19,8 @@
   blast = reset --hard HEAD
   amend = commit --amend -C HEAD
   contrib = shortlog -sn
+  untrack = update-index --assume-unchanged
+  track = update-index --no-assume-unchanged
 [color]
   ui = 1
 [color "branch"]
