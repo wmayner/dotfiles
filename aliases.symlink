@@ -3,6 +3,8 @@
 # Linux {{{
 
   alias linstall="sudo apt-get install"
+  alias "trash-restore"="restore-trash"
+  alias res="restore-trash"
 
 # }}}
 
