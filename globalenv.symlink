@@ -10,7 +10,7 @@ export ALIASES=~/.aliases
 # Bash-specific aliases
 export BASH_ALIASES=~/.bash_aliases
 # Development directory
-export DEV=~/dev
+export DEV=~/Dropbox/dev
 # Project directory
 export CODE=$DEV/projects
 # Path to your dotfiles repo (just set it to $HOME if you don't have one)
