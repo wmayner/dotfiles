@@ -21,6 +21,7 @@
   contrib = shortlog -sn
   untrack = update-index --assume-unchanged
   track = update-index --no-assume-unchanged
+  cp = cherry-pick
 [color]
   ui = 1
 [color "branch"]
