@@ -156,6 +156,10 @@
 
 # Python {{{
 
+  alias testregister="python setup.py register -r testpypi"
+  alias testupload="python setup.py sdist bdist_wheel upload -r testpypi"
+  alias pypiregister="python setup.py register -r pypi"
+  alias pypiupload="python setup.py sdist bdist_wheel register upload upload_docs -r pypi --sign"
   # Run a memory-intensive Python program with limited memory to stop kernel
   # thrashing
   alias pylim="sudo cgexec -g memory:limited python "
