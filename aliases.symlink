@@ -113,18 +113,33 @@
 
 # fasd {{{
 
-  # use j for fasd
-  alias j="fasd_cd -d"
-  # restrict matches to subdirectories of the current directory.
-  alias jc="fasd_cd -dc"
-  # show a brief help message
-  alias jh="fasd_cd -h"
-  # list only
-  alias jl="fasd_cd -dl"
-  # match by rank only
-  alias jr="fasd_cd -dr"
-  # match by recent access only
-  alias jt="fasd_cd -dt"
+  # Directory change aliases {{{
+      alias j="fasd_cd -d"
+      # restrict matches to subdirectories of the current directory.
+      alias jc="fasd_cd -dc"
+      # show a brief help message
+      alias jh="fasd_cd -h"
+      # list only
+      alias jl="fasd_cd -dl"
+      # match by rank only
+      alias jr="fasd_cd -dr"
+      # match by recent access only
+      alias jt="fasd_cd -dt"
+  # }}}
+
+  # Output matches to stdout, for use with backticks {{{
+      alias jj="fasd -d"
+      # restrict matches to subdirectories of the current directory.
+      alias jjc="fasd -dc"
+      # show a brief help message
+      alias jjh="fasd -h"
+      # list only
+      alias jjl="fasd -dl"
+      # match by rank only
+      alias jjr="fasd -dr"
+      # match by recent access only
+      alias jjt="fasd -dt"
+  # }}}
 
 # }}}
 
