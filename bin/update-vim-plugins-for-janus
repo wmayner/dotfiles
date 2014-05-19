@@ -1,6 +1,0 @@
-#/!/bin/bash
-
-for dir in ~/.janus/*
-do
-  (cd $dir && git pull)
-done
