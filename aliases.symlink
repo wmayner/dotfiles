@@ -148,7 +148,7 @@
   alias testregister="python setup.py register -r testpypi"
   alias testupload="python setup.py sdist bdist_wheel upload -r testpypi"
   alias pypiregister="python setup.py register -r pypi"
-  alias pypiupload="python setup.py sdist bdist_wheel register upload upload_docs -r pypi --sign"
+  alias pypiupload="python setup.py sdist bdist_wheel register upload --sign -r pypi"
   # remove dot from py.test executable
   alias pytest="py.test"
 
