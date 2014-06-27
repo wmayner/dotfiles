@@ -10,6 +10,8 @@
 
 # Util {{{
 
+  # Use colordiff and less instead of native diff
+  alias dif="colordiffless"
   # list dir contents (all with human-readable size)
   alias l='ls -AhG1'
   alias ll='ls -lAhG'
@@ -24,6 +26,7 @@
   alias c='clear'
   # shortcut for clearing screen and dispalying dir contents
   alias cl='clear && l'
+  alias cll='clear && ll'
   # move up one directory
   alias ..="cd .."
 
@@ -157,7 +160,7 @@
   alias testregister="python setup.py register -r testpypi"
   alias testupload="python setup.py sdist bdist_wheel upload -r testpypi"
   alias pypiregister="python setup.py register -r pypi"
-  alias pypiupload="python setup.py sdist bdist_wheel register upload upload_docs -r pypi --sign"
+  alias pypiupload="python setup.py sdist bdist_wheel register upload --sign upload_docs -r pypi"
   # Run a memory-intensive Python program with limited memory to stop kernel
   # thrashing
   alias pylim="sudo cgexec -g memory:limited python "
