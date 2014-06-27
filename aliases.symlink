@@ -27,8 +27,10 @@
 
 # Config {{{
 
+  # source aliases
+  alias salias="source $ALIASES"
   # edit aliases
-  alias valias='vim $ALIASES'
+  alias valias="vim $ALIASES"
   # use MacVim as gvim
   alias gvim="mvim"
   # edit local .vimrc
