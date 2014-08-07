@@ -1,0 +1,85 @@
+# Vi copypaste mode
+set-window-option -g mode-keys vi
+bind-key -t vi-copy 'v' begin-selection
+bind-key -t vi-copy 'y' copy-selection
+
+# Use C-a instead of C-b as prefix
+set-option -g prefix C-a
+bind-key C-a last-window
+ 
+# Allows us to use C-a a <command> to send commands to a tmux session inside
+# another tmux session
+bind-key a send-prefix
+
+# Rather than constraining window size to the maximum size of any client
+# connected to the *session*, constrain window size to the maximum size of any
+# client connected to *that window*. Much more reasonable.
+setw -g aggressive-resize on
+
+# 0 is too far from ` ;)
+set -g base-index 1
+
+# Automatically set window title
+set-window-option -g automatic-rename on
+set-option -g set-titles on
+
+set -g status-keys vi
+set -g history-limit 10000
+
+setw -g mode-keys vi
+setw -g mode-mouse on
+setw -g monitor-activity on
+set -g visual-activity on
+
+# Don't confirm before killing pane
+bind-key x kill-pane
+
+# Vim style window splitting
+bind-key v split-window -h
+bind-key s split-window -v
+
+# Vim style pane splitting/resizing
+bind-key J resize-pane -D 10
+bind-key K resize-pane -U 10
+bind-key H resize-pane -L 10
+bind-key L resize-pane -R 10
+
+bind-key M-j resize-pane -D
+bind-key M-k resize-pane -U
+bind-key M-h resize-pane -L
+bind-key M-l resize-pane -R
+
+# Vim style pane selection
+bind h select-pane -L
+bind j select-pane -D 
+bind k select-pane -U
+bind l select-pane -R
+
+bind-key C command-prompt -p "Name of new window: " "new-window -n '%%'"
+
+# Use Alt-vim keys without prefix key to switch panes
+bind -n M-h select-pane -L
+bind -n M-j select-pane -D 
+bind -n M-k select-pane -U
+bind -n M-l select-pane -R
+
+# Use Alt-arrow keys without prefix key to switch panes
+bind -n M-Left select-pane -L
+bind -n M-Right select-pane -R
+bind -n M-Up select-pane -U
+bind -n M-Down select-pane -D
+
+# Shift arrow to switch windows
+bind -n S-Left  previous-window
+bind -n S-Right next-window
+
+# No delay for escape key press
+set -sg escape-time 0
+
+# Reload tmux config
+bind r source-file ~/.tmux.conf
+
+# THEME
+set-option -g status-utf8 on
+set -g default-terminal "xterm-256color"
+source "/usr/local/lib/python2.7/dist-packages/powerline/bindings/tmux/powerline.conf"
