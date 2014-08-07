@@ -114,3 +114,5 @@ if [[ -a ~/.zshrc.local ]]
 then
   source ~/.zshrc.local
 fi
+
+export TERM="xterm-256color"
