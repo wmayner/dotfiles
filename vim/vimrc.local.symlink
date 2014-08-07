@@ -63,7 +63,6 @@
     set t_Co=16
     " use proper (default) solarized options
     let g:solarized_termcolors=16
-    let g:solarized_termcolors=16
     let g:solarized_termtrans=0
     let g:solarized_degrade=0
     let g:solarized_bold=1
