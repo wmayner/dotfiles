@@ -2,6 +2,10 @@
 
 # Util {{{
 
+  # Use colordiff and less instead of native diff
+  alias dif="colordiffless"
+  # Always use 256 colors with tmux.
+  alias tmux="tmux -2"
   # list dir contents (all with human-readable size)
   alias l='ls -AhG1'
   alias ll='ls -lAhG'
