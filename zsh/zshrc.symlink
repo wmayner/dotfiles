@@ -38,7 +38,7 @@ COMPLETION_WAITING_DOTS="true"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(grunt brew coffee cake command-not-found github git-flow git-extras git-hubflow rake history-substring-search bower vundle git npm fasd osx heroku virtualenvwrapper terminalapp python pip per-directory-history lol)
+plugins=(grunt brew coffee cake command-not-found github git-flow git-extras git-hubflow rake history-substring-search bower vundle git npm fasd osx heroku virtualenvwrapper terminalapp python pip lol)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -73,7 +73,7 @@ __git_files () {
 for config_file ($DOTFILES/**/*.zsh) source $config_file
 
 # Use powerline
-source /usr/local/Cellar/python/2.7.6/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/powerline/bindings/zsh/powerline.zsh
+source "/usr/local/lib/python2.7/site-packages/powerline/bindings/zsh/powerline.zsh"
 
 # Use vi to edit command line
 bindkey -v
@@ -114,3 +114,6 @@ if [[ -a ~/.zshrc.local ]]
 then
   source ~/.zshrc.local
 fi
+
+# Teamocil completion (tmux layout manager)
+compctl -g '~/.teamocil/*(:t:r)' teamocil
