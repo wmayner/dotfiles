@@ -82,4 +82,4 @@ bind r source-file ~/.tmux.conf
 # THEME
 set-option -g status-utf8 on
 set -g default-terminal "xterm-256color"
-source "/usr/local/lib/python2.7/dist-packages/powerline/bindings/tmux/powerline.conf"
+source "/usr/local/lib/python2.7/site-packages/powerline/bindings/tmux/powerline.conf"
