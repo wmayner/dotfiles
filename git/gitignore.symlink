@@ -2,3 +2,4 @@
 .DS_Store
 *.rej
 paper-test.tex
+.venv

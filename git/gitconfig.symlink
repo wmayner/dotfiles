@@ -41,14 +41,14 @@
   name = Will Mayner
   email = wmayner@gmail.com
 [core]
-  excludesfile = /Users/will/.gitignore_global
+  excludesfile = /Users/will/.gitignore
   autocrlf = input
 [gui]
   recentrepo = /Users/will/Dropbox/jobs-internships-etc/web-resume
 [credential]
   helper = osxkeychain
 [merge]
-  tool = gvimdiff
+  tool = vimdiff
   conflictstyle = diff3
 [push]
   default = current
@@ -58,3 +58,6 @@
   enabled = 1
 [diff]
   tool = vimdiff
+[filter "media"]
+	clean = git-media-clean %f
+	smudge = git-media-smudge %f
