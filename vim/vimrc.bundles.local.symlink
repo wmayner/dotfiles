@@ -1,5 +1,7 @@
 " vim: set foldmethod=marker foldmarker={,} foldlevel=0
 
+Bundle 'visual-increment'
+Bundle 'chikamichi/mediawiki.vim'
 Bundle 'rking/ag.vim'
 Bundle 'camelcasemotion'
 Bundle 'wincent/Command-T'

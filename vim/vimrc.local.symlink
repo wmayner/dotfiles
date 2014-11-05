@@ -131,6 +131,22 @@
   " fixes syntax highlighting for stylus
   autocmd BufNewFile,BufRead *.styl set filetype=stylus
 
+  " If doing a diff. Upon writing changes to file, automatically update the
+  " differences
+  autocmd BufWritePost * if &diff == 1 | diffupdate | endif
+
+  " " Auto update vimdiff
+  "
+  " augroup AutoDiffUpdate 
+  "   au! 
+  "   autocmd InsertLeave * if &diff | diffupdate | let b:old_changedtick = b:changedtick | endif 
+  "   " autocmd CursorHold * 
+  "         \ if &diff && 
+  "         \    (!exists('b:old_changedtick') || b:old_changedtick != b:changedtick) | 
+  "         \   let b:old_changedtick = b:changedtick | diffupdate | 
+  "         \ endif 
+  " augroup END 
+
 " }
 
 " GUI Vim {
