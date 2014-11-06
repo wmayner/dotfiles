@@ -3,37 +3,19 @@ export EDITOR=vim
 export VISUAL='mvim -f'
 export DEFAULT_USER="will"
 # Keep public, versioned executables in ~/dotfiles/bin
-export PATH=~/dotfiles/bin:$PATH:
-export DEFAULT_USER=will
+export PATH=$HOME/dotfiles/bin:$PATH:
 # Shortcut to aliases
-export ALIASES=~/.aliases
+export ALIASES=$HOME/.aliases
 # Bash-specific aliases
-export BASH_ALIASES=~/.bash_aliases
+export BASH_ALIASES=$HOME/.bash_aliases
 # Development directory
-export DEV=~/Dropbox/dev
+export DEV=$HOME/dev
 # Project directory
 export CODE=$DEV/projects
-# Path to your dotfiles repo (just set it to $HOME if you don't have one)
+# Path to dotfiles repo (just set it to $HOME if you don't have one)
 export DOTFILES=$HOME/dotfiles
-
-# Path to Matlab IIT code
-export IIT=$HOME/Dropbox/iit/code/iit
-
-# Added by programs {{{
-
-### Added by the Heroku Toolbelt
-export PATH="/usr/local/sbin:$PATH"
-export PATH="/usr/local/heroku/bin:$PATH"
-
-# }}}
-
-# Anaconda (scientific python distribution)
-# Disable for now since it interferes with virtualenvwrapper
-# export PATH="$PATH:/Users/will/anaconda/bin"
-
 # Add TeX commands to PATH
 export PATH="$PATH:/usr/texbin"
-
 # Make sure /usr/local/bin/ is at beginning of $PATH
 export PATH="/usr/local/bin:$PATH"
 
