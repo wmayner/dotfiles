@@ -129,3 +129,6 @@ env x='() { :;}; echo "WARNING: SHELLSHOCK DETECTED"' \
 # will be printed if your shell has been patched. It will take a little longer
 # to launch a new shell slightly, but for some, this may be worth it.
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+export NVM_DIR="/home/will/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
