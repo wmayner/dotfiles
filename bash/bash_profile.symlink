@@ -1,8 +1,0 @@
-# get environment
-source ~/.globalenv
-# get aliases
-source $ALIASES
-# get bash-specific aliases
-source $BASH_ALIASES
-# use vi to edit commands
-set -o vi
