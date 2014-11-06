@@ -64,8 +64,6 @@
   alias ag='ag --color-line-number 34 --color-match 36 --color-path 32'
   # Shortcut for python interpreter
   alias p='python'
-  # use GitHub's CLI git wrapper
-  alias git='hub'
   # git diff
   alias gd='git d'
   # git log
