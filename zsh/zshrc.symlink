@@ -131,5 +131,5 @@ env x='() { :;}; echo "WARNING: SHELLSHOCK DETECTED"' \
 # to launch a new shell slightly, but for some, this may be worth it.
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-# Activate NVM
-source ~/.nvm/nvm.sh
+export NVM_DIR="/Users/will/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
