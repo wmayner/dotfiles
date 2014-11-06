@@ -90,6 +90,8 @@
   alias ag='ag --color-line-number 34 --color-match 36 --color-path 32'
   # Shortcut for python interpreter
   alias p='python'
+  # git diff
+  alias gd='git d'
   # git log
   alias gl='git l'
   # git branch
