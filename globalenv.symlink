@@ -19,9 +19,6 @@ export DOTFILES=$HOME/dotfiles
 # Path to Matlab IIT code
 export IIT=$HOME/Dropbox/iit/code/iit
 
-# Use curl-ca-bundle certificates with OpenSSL
-export SSL_CERT_FILE=/usr/local/opt/curl-ca-bundle/share/ca-bundle.crt
-
 # Added by programs {{{
 
 ### Added by the Heroku Toolbelt
