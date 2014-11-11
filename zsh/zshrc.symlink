@@ -132,3 +132,8 @@ env x='() { :;}; echo "WARNING: SHELLSHOCK DETECTED"' \
 
 export NVM_DIR="/home/will/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+
+# Grunt task tab-completion
+eval "$(grunt --completion=zsh)"
+# Gulp task tab-completion
+eval "$(gulp --completion=zsh)"
