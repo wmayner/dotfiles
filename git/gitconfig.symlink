@@ -43,8 +43,6 @@
 [core]
   excludesfile = /Users/will/.gitignore
   autocrlf = input
-[gui]
-  recentrepo = /Users/will/Dropbox/jobs-internships-etc/web-resume
 [credential]
   helper = osxkeychain
 [merge]
