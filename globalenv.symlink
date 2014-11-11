@@ -1,6 +1,6 @@
 # Make Vim the default editor
 export EDITOR=vim
-export VISUAL='mvim -f'
+export VISUAL='vim'
 export DEFAULT_USER="will"
 # Keep public, versioned executables in ~/dotfiles/bin
 export PATH=$HOME/dotfiles/bin:$PATH:
