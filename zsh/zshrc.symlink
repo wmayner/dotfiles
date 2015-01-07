@@ -138,3 +138,5 @@ export NVM_DIR="/Users/will/.nvm"
 eval "$(grunt --completion=zsh)"
 # Gulp task tab-completion
 eval "$(gulp --completion=zsh)"
+### Added by the Heroku Toolbelt
+export PATH="/usr/local/heroku/bin:$PATH"
