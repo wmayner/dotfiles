@@ -102,9 +102,6 @@ bindkey "^J" history-substring-search-down
 # prompt.
 bindkey "^Q" push-input
 
-# Add user binaries to path
-export PATH=$HOME/bin:$PATH
-
 # get aliases
 source $ALIASES
 
