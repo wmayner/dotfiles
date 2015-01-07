@@ -1,10 +1,14 @@
+# Keep public, versioned executables in ~/dotfiles/bin
+export PATH=~/dotfiles/bin:$PATH:
+# Add non-versioned user binaries to path
+export PATH=$HOME/bin:$PATH
+# Add local binaries to path
+export PATH=$HOME/.local/bin:$PATH
+
 # Make Vim the default editor
 export EDITOR=vim
 export VISUAL='vim'
 export DEFAULT_USER="will"
-# Keep public, versioned executables in ~/dotfiles/bin
-export PATH=~/dotfiles/bin:$PATH:
-export DEFAULT_USER=will
 # Shortcut to aliases
 export ALIASES=~/.aliases
 # Bash-specific aliases
