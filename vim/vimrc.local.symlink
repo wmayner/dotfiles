@@ -84,14 +84,21 @@
 
   " Line wrapping {
 
-    " This will get Vim to wrap existing text as desired. wrap tells Vim to word wrap visually (as opposed to changing the text in the buffer), and linebreak tells Vim to only wrap at a character in the breakat option (by default, this includes " ^I!@*-+;:,./?" (note the inclusion of " " and that ^I is the control character for Tab)).
+    " This will get Vim to wrap existing text as desired. wrap tells Vim to
+    " word wrap visually (as opposed to changing the text in the buffer), and
+    " linebreak tells Vim to only wrap at a character in the breakat option
+    " (by default, this includes " ^I!@*-+;:,./?" (note the inclusion of " "
+    " and that ^I is the control character for Tab)).
     set wrap
     set linebreak
     set nolist  " list disables linebreak
-    " In addition, you will need to prevent Vim from automatically inserting line breaks in newly entered text. The easiest way to do this is:
+    " In addition, you will need to prevent Vim from automatically inserting
+    " line breaks in newly entered text. The easiest way to do this is:
     set textwidth=0
     set wrapmargin=0
-    " If you want to keep your existing 'textwidth' settings for most lines in your file, but not have Vim automatically reformat when typing on existing lines, you can do this with:
+    " If you want to keep your existing 'textwidth' settings for most lines in
+    " your file, but not have Vim automatically reformat when typing on
+    " existing lines, you can do this with:
     set formatoptions+=l
 
   " }
@@ -892,6 +899,12 @@
   " }
 
   " Custom commands {
+  
+    " Switch to previously active tab
+    " From http://stackoverflow.com/a/2120168/1085344
+    let g:lasttab = 1
+    nmap \tl :exe "tabn "g:lasttab<CR>
+    au TabLeave * let g:lasttab = tabpagenr()
 
     " Snatched from http://stackoverflow.com/a/4793316/1085344
     " This function creates the command Qargs, for use in the
