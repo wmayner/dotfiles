@@ -3,3 +3,4 @@
 *.rej
 paper-test.tex
 .venv
+npm-debug.log
