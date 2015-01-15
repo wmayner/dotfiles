@@ -22,6 +22,11 @@
   untrack = update-index --assume-unchanged
   track = update-index --no-assume-unchanged
   cp = cherry-pick
+  # Alternative to stash:
+  #   1. Create a branch named “foobar”
+  #   2. Commit any changes on that branch
+  #   3. Swap you back to the branch you started on
+  save = !sh -c 'export PREV=$(git symbolic-ref HEAD|cut -d/ -f3-) && git checkout -b "$1" && git commit -am "$1" && git checkout "$PREV"' -
 [color]
   ui = 1
 [color "branch"]
