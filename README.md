@@ -1,7 +1,7 @@
 dotfiles
 ========
 
-This is my OSX environment. Check out the `linux` branch for the linux version.
+This is my linux environment. Check out the `master` branch for the OSX version.
 
 
 Install
