@@ -25,12 +25,6 @@ Install
 
 4. In the `.zshrc`, set `DOTFILES=~/path/to/this/repo>`. I just use `~/dotfiles`.
 
-3. Symlink the Powerline configuration:
-
-  ```sh
-  ln -s $DOTFILES/powerline ~/.config/powerline
-  ```
-
 Then you should be all set. Some files you'll want to personalize right away:
 
 - `zsh/zshrc.symlink` and `globalenv.symlink`: set up your own path variables
@@ -52,8 +46,7 @@ install`. This is so you can keep everything versioned in the repo.
   configuration into separate files and categories, rather than having a
   monolithic `.zshrc`.
 
-* The prompt is my custom theme for
-  [Powerline](https://github.com/Lokaltog/powerline).
+* The prompt is supplied by [Powerline][4] (I just use the default theme).
 
 * Aliases are defined in `aliases.symlink`.
 
@@ -65,7 +58,7 @@ install`. This is so you can keep everything versioned in the repo.
     terminal to use a powerline-enabled font. Install one of the fonts from
     [here](https://github.com/Lokaltog/powerline-fonts) and then set it as the
     font in `iTerm2 > Preferences > Profiles > Text`.
-There's a few special files in the hierarchy.
+    There's a few special files in the hierarchy.
 
 ### Vim ###
 
@@ -96,4 +89,4 @@ excellent projects.
 [1]: https://github.com/spf13/spf13-vim "spf13-vim"
 [2]: https://github.com/robbyrussell/oh-my-zsh "oh-my-zsh"
 [3]: https://github.com/holman/dotfiles "holman/dotfiles"
-[4]: https://github.com/Lokaltog/powerline "powerline"
+[4]: https://github.com/powerline/powerline "powerline"
