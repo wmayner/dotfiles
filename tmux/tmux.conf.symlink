@@ -6,6 +6,9 @@ bind-key -t vi-copy 'y' copy-selection
 # Use C-a instead of C-b as prefix
 set-option -g prefix C-a
 bind-key C-a last-window
+
+# Automatically renumber windows so they're consecutive integers
+set-option -g renumber-windows on
  
 # Allows us to use C-a a <command> to send commands to a tmux session inside
 # another tmux session
