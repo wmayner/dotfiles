@@ -88,6 +88,8 @@
 
   # Alias for custom-coloring of ag
   alias ag='ag --color-line-number 34 --color-match 36 --color-path 32'
+  # Shortcut for ipython interpreter
+  alias ip='ipython'
   # Shortcut for python interpreter
   alias p='python'
   # git diff
