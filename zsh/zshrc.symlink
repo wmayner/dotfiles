@@ -70,7 +70,7 @@ __git_files () {
 }
 
 # Use powerline
-source /home/will/.local/lib/python2.7/site-packages/powerline/bindings/zsh/powerline.zsh
+source "/usr/local/lib/python2.7/dist-packages/powerline/bindings/zsh/powerline.zsh"
 
 # Source every .zsh file in this repo
 for config_file ($DOTFILES/**/*.zsh) source $config_file
@@ -134,3 +134,6 @@ export NVM_DIR="/home/will/.nvm"
 eval "$(grunt --completion=zsh)"
 # Gulp task tab-completion
 eval "$(gulp --completion=zsh)"
+
+# Load z for jumping around directories
+source "$HOME/z/z.sh"
