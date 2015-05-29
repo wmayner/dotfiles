@@ -1,7 +1,7 @@
 # use this instead of 'pip install' to keep things local and not require root
 alias pinstall="pip install --user"
 # pip configuration
-export PIP_REQUIRE_VIRTUALENV=true
+export PIP_REQUIRE_VIRTUALENV=false
 # use `gpip` to use global pip
 gpip() {
   PIP_REQUIRE_VIRTUALENV="" pip "$@"
