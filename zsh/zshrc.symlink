@@ -140,3 +140,6 @@ eval "$(grunt --completion=zsh)"
 eval "$(gulp --completion=zsh)"
 ### Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
+
+# Initialize fasd
+eval "$(fasd --init auto)"
