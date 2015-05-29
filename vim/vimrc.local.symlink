@@ -178,8 +178,8 @@
   set tabstop=2 
   set softtabstop=2
 
-  " But use 4-space tabs for .py and .rst files
-  autocmd BufNewFile,BufReadPost *.rst,*.py set shiftwidth=4 tabstop=4 softtabstop=4
+  " But use 4-space tabs for certain languages
+  autocmd BufNewFile,BufReadPost *.py,*.rst,*.html,*.cpp,*.h set shiftwidth=4 tabstop=4 softtabstop=4
 
   function! <SID>StripTrailingWhitespaces()
       " Preparation: save last search, and cursor position.
@@ -657,7 +657,6 @@
     map <Leader> <Plug>(easymotion-prefix)
 
   " }
-
   " CamelCaseMotion {
 
     " override prefix to be double leader"
@@ -670,6 +669,16 @@
     xmap <Leader><Leader>ib <Plug>CamelCaseMotion_ib
     omap <Leader><Leader>ie <Plug>CamelCaseMotion_ie
     xmap <Leader><Leader>ie <Plug>CamelCaseMotion_ie
+
+  " }
+
+  " YouCompleteMe {
+
+    " enable completion for stuff in comments
+    let g:ycm_collect_identifiers_from_comments_and_strings = 1
+
+    " extra completions for e.g. C++
+    let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
 
   " }
 
