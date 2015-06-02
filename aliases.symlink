@@ -65,7 +65,7 @@
   # Shortcut for Python interpreter
   alias p='python'
   # Shortcut for IPython intepreter
-  alias ip='ipython'
+  alias ip='ipython --pdb --matplotlib'
   # git diff
   alias gd='git d'
   # git log
