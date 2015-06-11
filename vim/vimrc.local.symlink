@@ -679,6 +679,9 @@
     " extra completions for e.g. C++
     let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
 
+    " populate location list for detailed diagnostic messages
+    let g:ycm_always_populate_location_list = 1
+
   " }
 
 " }
@@ -707,9 +710,6 @@
 
   " <Leader>vs splits in 2 and sets scrollbind
   nnoremap <silent> <Leader>vs :<C-u>let @z=&so<CR>:set so=0 noscb<CR>:bo vs<CR>Ljzt:setl scb<CR><C-w>p:setl scb<CR>:let &so=@z<CR>
-
-  " copy word to clipboard
-  nnoremap ,d "*yiw
 
   " clear search highlighting with enter key
   " second enter is for triggering quickfix jumps and the like
