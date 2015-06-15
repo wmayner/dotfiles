@@ -26,6 +26,28 @@
 # Git {{{
 
   alias gc="git commit -m"
+  # git diff
+  alias gd='git d'
+  # git diff
+  alias gd='git dc'
+  # git log
+  alias gl='git l'
+  # git branch
+  alias gb='git branch'
+  # git branch delete
+  alias gbd='git branch -d'
+  # git flow
+  alias gf='git flow'
+  # git flow feature
+  alias gff='git flow feature'
+  # git flow release
+  alias gfr='git flow release'
+  # git flow hotfix
+  alias gfh='git flow hotfix'
+  # fast git status
+  alias g='git status'
+  # edit .gitconfig
+  alias vgrc="vim ~/.gitconfig"
 
 # }}}
 
@@ -66,26 +88,6 @@
   alias p='python'
   # Shortcut for IPython intepreter
   alias ip='ipython --matplotlib'
-  # git diff
-  alias gd='git d'
-  # git log
-  alias gl='git l'
-  # git branch
-  alias gb='git branch'
-  # git branch delete
-  alias gbd='git branch -d'
-  # git flow
-  alias gf='git flow'
-  # git flow feature
-  alias gff='git flow feature'
-  # git flow release
-  alias gfr='git flow release'
-  # git flow hotfix
-  alias gfh='git flow hotfix'
-  # fast git status
-  alias g='git status'
-  # edit .gitconfig
-  alias vgrc="vim ~/.gitconfig"
   # edit .hgrc
   alias vhgrc="vim ~/.hgrc"
   # cd dev
