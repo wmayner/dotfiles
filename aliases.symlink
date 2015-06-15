@@ -37,10 +37,10 @@
 # Git {{{
 
   alias gc="git commit -m"
-  # use GitHub's CLI git wrapper
-  # alias git='hub'
   # git diff
   alias gd='git d'
+  # git diff --cached
+  alias gdc="git dc"
   # git log
   alias gl='git l'
   # git branch
