@@ -29,7 +29,7 @@
   # git diff
   alias gd='git d'
   # git diff
-  alias gd='git dc'
+  alias gdc='git dc'
   # git log
   alias gl='git l'
   # git branch
