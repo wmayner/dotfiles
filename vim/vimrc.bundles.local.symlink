@@ -1,5 +1,6 @@
 " vim: set foldmethod=marker foldmarker={,} foldlevel=0
 
+Bundle 'auto_autoread.vim'
 Bundle 'clang'
 Bundle 'recover.vim'
 Bundle 'visual-increment'
