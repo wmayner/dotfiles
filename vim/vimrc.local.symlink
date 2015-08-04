@@ -24,6 +24,9 @@
   " automatically load file if it's changed externally
   set autoread
 
+  " automatically source files named `.vimrc`
+  set exrc
+
   " switch to existing tab if buffer is open, otherwise create new one
   set switchbuf=usetab,newtab
 
