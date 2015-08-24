@@ -574,6 +574,8 @@
 
     " Choose lint checkers
     let g:pymode_lint_checkers = ['pyflakes', 'pep8', 'mccabe']
+    " Increase mccabe complexity warning threshold"
+    let g:pymode_lint_options_mccabe = { 'complexity': 15 }
     " Don't use rope completion
     let g:pymode_rope_complete_on_dot = 0
 
