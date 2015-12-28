@@ -18,5 +18,7 @@ export DOTFILES=$HOME/dotfiles
 export PATH="$PATH:/usr/texbin"
 # Make sure /usr/local/bin/ is at beginning of $PATH
 export PATH="/usr/local/bin:$PATH"
+# Register powerline config files in ~/.config/powerline
+export XDG_CONFIG_HOME="~/.config/powerline"
 
 # vim:foldmethod=marker:foldmarker={{{,}}}:foldlevel=0:ft=sh
