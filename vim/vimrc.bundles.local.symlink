@@ -1,5 +1,6 @@
 " vim: set foldmethod=marker foldmarker={,} foldlevel=0
 
+Bundle 'vim-airline/vim-airline-themes'
 Bundle 'vimlatex'
 Bundle 'auto_autoread.vim'
 Bundle 'clang'
@@ -16,7 +17,6 @@ Bundle 'tpope/vim-unimpaired'
 Bundle 'chrisbra/NrrwRgn'
 Bundle 'djoshea/vim-matlab-fold'
 Bundle 'xolox/vim-session'
-Bundle 'mbadran/headlights'
 Bundle 'https://github.com/tshirtman/vim-cython.git'
 Bundle 'vim-misc'
 Bundle 'vim-stylus'
