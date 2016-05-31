@@ -7,6 +7,11 @@ bind-key -t vi-copy 'y' copy-selection
 set-option -g prefix C-a
 bind-key C-a last-window
 
+# Fix mouse behavior
+set -g mouse on
+bind -n WheelUpPane if-shell -F -t = "#{mouse_any_flag}" "send-keys -M" "if -Ft= '#{pane_in_mode}' 'send-keys -M' 'select-pane -t=; copy-mode -e; send-keys -M'"
+bind -n WheelDownPane select-pane -t= \; send-keys -M
+
 # Automatically renumber windows so they're consecutive integers
 set-option -g renumber-windows on
  
@@ -30,7 +35,6 @@ set -g status-keys vi
 set -g history-limit 10000
 
 setw -g mode-keys vi
-setw -g mode-mouse on
 setw -g monitor-activity on
 set -g visual-activity on
 
