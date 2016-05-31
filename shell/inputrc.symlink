@@ -52,4 +52,3 @@ $endif
 # IPython needs this to appear at the bottom of the
 # file for clear-screen to work
 set keymap vi
-

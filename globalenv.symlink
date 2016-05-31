@@ -20,5 +20,7 @@ export PATH="$PATH:/usr/texbin"
 export PATH="/usr/local/bin:$PATH"
 # Register powerline config files in ~/.config/powerline
 export XDG_CONFIG_HOME="~/.config/powerline"
+# Run `.pythonrc.py` after starting interpreter
+export PYTHONSTARTUP=".pythonrc.py"
 
 # vim:foldmethod=marker:foldmarker={{{,}}}:foldlevel=0:ft=sh
