@@ -569,41 +569,17 @@
     " command -nargs=1 C CoffeeCompile | :<args>
 
   " }
+  
+  " python.vim (python-syntax) {
 
-  " PythonMode {
-
-    " Choose lint checkers
-    let g:pymode_lint_checkers = ['pyflakes', 'pep8', 'mccabe']
-    " Increase mccabe complexity warning threshold"
-    let g:pymode_lint_options_mccabe = { 'complexity': 15 }
-    " Don't use rope completion
-    let g:pymode_rope_complete_on_dot = 0
-
-    " Rebind rope commands {
-      nmap \rd <C-c>d
-      nmap \rg <C-c>g
-      nmap \rr <C-c>rr
-      nmap \rmr <C-c>r1r
-      nmap \roi <C-c>ro
-      nmap \rai <C-c>ra
-      nmap \rmp <C-c>r1p
-      nmap \rem <C-c>rm
-      nmap \rev <C-c>rl
-      nmap \ru <C-c>ru
-      nmap \rv <C-c>rv
-      nmap \rs <C-c>rs
-    " }
+    let python_highlight_all = 1
 
   " }
 
   " Syntastic {
 
-    " let PythonMode's syntax-checker take over in python files
-    let g:syntastic_mode_map = { 'mode': 'active',
-                               \ 'active_filetypes': [],
-                               \ 'passive_filetypes': ['python'] }
     " Use python3
-    let g:syntastic_python_python_exe = 'python3'
+    let g:syntastic_python_python_exec = '/usr/local/bin/python3'
 
   " }
 
