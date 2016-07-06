@@ -2,6 +2,8 @@
 
 # Util {{{
 
+  # Use GNU grep instead of BSD grep
+  alias grep="ggrep"
   # Use colordiff and less instead of native diff
   alias diff="colordiffless"
   # Always sudo htop (doesn't work properly otherwise)
