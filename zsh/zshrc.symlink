@@ -58,7 +58,6 @@ dircolors &>/dev/null 2>&1 && eval `dircolors $DOTFILES/zsh/dircolors.ansi-dark`
 # Use GNU ls if available (for Mac OSX; `brew install coreutils`)
 gdircolors &>/dev/null 2>&1 && eval `gdircolors $DOTFILES/zsh/dircolors.ansi-dark` && alias ls='gls --color=auto -h'
 
-export GREP_OPTIONS='--color=auto'
 export GREP_COLOR='1;32'
 
 # Don't treat `sudo` as a separate command (so don't use autocorrect)
@@ -90,8 +89,8 @@ bindkey -v
 # > will remove the annoying delay after you type `\e' to enter vi command mode.
 # > The delay is there because the cursor keys usually also start with \e and the
 # > shell is waiting to see if you actually typed one of those.
+# bindkey -rpM viins "\e"
 
-bindkey -rpM viins "\e"
 # Use control+j and control+k for scrolling through history, since removing all
 # bindings that begin with escape also removes the arrow-key bindings
 bindkey "^K" history-substring-search-up
@@ -145,3 +144,6 @@ export PATH="/usr/local/heroku/bin:$PATH"
 eval "$(fasd --init auto)"
 
 test -e ${HOME}/.iterm2_shell_integration.zsh && source ${HOME}/.iterm2_shell_integration.zsh
+
+# added by travis gem
+[ -f /Users/will/.travis/travis.sh ] && source /Users/will/.travis/travis.sh
