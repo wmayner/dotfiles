@@ -1,9 +1,9 @@
 # Keep public, versioned executables in ~/dotfiles/bin
 export PATH=~/dotfiles/bin:$PATH:
-# Add non-versioned user binaries to path
-export PATH=$HOME/bin:$PATH
 # Add local binaries to path
 export PATH=$HOME/.local/bin:$PATH
+# Add non-versioned user binaries to path
+export PATH=$HOME/bin:$PATH
 
 # Make Vim the default editor
 export EDITOR=vim
