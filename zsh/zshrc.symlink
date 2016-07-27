@@ -59,7 +59,7 @@ dircolors &>/dev/null 2>&1 && eval `dircolors $DOTFILES/zsh/dircolors.ansi-dark`
 gdircolors &>/dev/null 2>&1 && eval `gdircolors $DOTFILES/zsh/dircolors.ansi-dark` && alias ls='gls --color=auto'
 
 export GREP_OPTIONS='--color=auto'
-export GREP_COLOR='1;32'
+export GREP_COLOR='1;31'
 
 # Don't treat `sudo` as a separate command (so don't use autocorrect)
 alias sudo="nocorrect sudo"
