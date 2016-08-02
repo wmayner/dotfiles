@@ -145,5 +145,8 @@ eval "$(fasd --init auto)"
 
 test -e ${HOME}/.iterm2_shell_integration.zsh && source ${HOME}/.iterm2_shell_integration.zsh
 
+# Load `zmv` (alternative to `mmv`)
+autoload zmv
+
 # added by travis gem
 [ -f /Users/will/.travis/travis.sh ] && source /Users/will/.travis/travis.sh
