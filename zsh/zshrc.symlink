@@ -132,3 +132,6 @@ export NVM_DIR="/home/will/.nvm"
 
 # Initialize fasd
 eval "$(fasd --init auto)"
+
+# Load `zmv` (alternative to `mmv`)
+autoload zmv
