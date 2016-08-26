@@ -1,0 +1,9 @@
+#!/bin/sh
+
+# Piped standard input; interpret argument as a newline-delimited list
+if [ $# -eq 0 ]; then
+  wc -l
+# No pipe; interpret argument as a directory
+else
+  ls "$@" | wc -l
+fi    
