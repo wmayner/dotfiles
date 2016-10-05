@@ -10,6 +10,8 @@
 
 # Util {{{
 
+  # Always use human-readable sizes with `df`.
+  alias df="df -h"
   # Always use 256 colors with tmux.
   alias tmux="tmux -2"
   # Use colordiff and less instead of native diff
