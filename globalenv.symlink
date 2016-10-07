@@ -18,7 +18,5 @@ export DOTFILES=$HOME/dotfiles
 export PATH="$PATH:/usr/texbin"
 # Make sure /usr/local/bin/ is at beginning of $PATH
 export PATH="/usr/local/bin:$PATH"
-# Run `.pythonrc.py` after starting interpreter
-export PYTHONSTARTUP=".pythonrc.py"
 
 # vim:foldmethod=marker:foldmarker={{{,}}}:foldlevel=0:ft=sh
