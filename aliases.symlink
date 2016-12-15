@@ -2,6 +2,7 @@
 
 # Util {{{
 
+  alias fullpath="greadlink -f"
   # Use GNU grep instead of BSD grep
   alias grep="ggrep"
   # Use colordiff instead of native diff
@@ -92,7 +93,7 @@
   # Alias for syntax highlighting with Pygments
   alias hl="pygmentize -g"
   # Alias for MATLAB binary
-  alias matlab='/Applications/MATLAB_R2014b.app/bin/matlab'
+  alias matlab='/Applications/MATLAB_R2016a.app/bin/matlab'
   # Alias for custom-coloring of ag
   alias ag='ag --color-line-number 34 --color-match 36 --color-path 32'
   # Shortcut for Python interpreter
