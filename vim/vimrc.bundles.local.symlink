@@ -1,5 +1,6 @@
-" vim: set foldmethod=marker foldmarker={,} foldlevel=0
-
+Bundle 'hynek/vim-python-pep8-indent'
+Bundle 'vimlatex'
+Bundle 'auto_autoread.vim'
 Bundle 'clang'
 Bundle 'recover.vim'
 Bundle 'visual-increment'
@@ -14,7 +15,6 @@ Bundle 'tpope/vim-unimpaired'
 Bundle 'chrisbra/NrrwRgn'
 Bundle 'djoshea/vim-matlab-fold'
 Bundle 'xolox/vim-session'
-Bundle 'mbadran/headlights'
 Bundle 'https://github.com/tshirtman/vim-cython.git'
 Bundle 'vim-misc'
 Bundle 'vim-stylus'
@@ -25,12 +25,8 @@ Bundle 'argtextobj.vim'
 Bundle 'vim-indent-object'
 Bundle 'sudo.vim'
 Bundle 'Rename'
-Bundle 'pyrex.vim'
+" Bundle 'hdima/python-syntax'
 
 " Disabled
 " ========
-" Bundle 'LaTeX-Suite-aka-Vim-LaTeX'
-
-" Already in spf13
-" ================
-" Bundle 'kien/ctrlp.vim'
+UnBundle 'amirh/HTML-AutoCloseTag'
