@@ -15,8 +15,10 @@
   alias l='ls -AhG1'
   alias ll='ls -lAhG'
   alias lsa='ls -AhG'
+  # use nvim
+  alias vim="nvim"
   # shortcut for vim
-  alias v="vim"
+  alias v="nvim"
   # shortcut to trash (safe rm)
   alias t="trash"
   # shortcut for clearing screen
@@ -54,7 +56,7 @@
   # fast git status
   alias g='git status'
   # edit .gitconfig
-  alias vgrc="vim ~/.gitconfig"
+  alias vgrc="nvim ~/.gitconfig"
 
 # }}}
 
@@ -63,22 +65,22 @@
   # source aliases
   alias salias="source $ALIASES"
   # edit aliases
-  alias valias="vim $ALIASES"
+  alias valias="nvim $ALIASES"
   # use MacVim as gvim
   alias gvim="mvim"
   # edit local .vimrc
-  alias vrc="vim ~/.vimrc.local"
+  alias vrc="nvim ~/.vimrc.local"
   # edit .vimrc
-  alias vrcreal="vim ~/.vimrc"
+  alias vrcreal="nvim ~/.vimrc"
   # edit local vim bundles for vundle
-  alias vbun="vim ~/.vimrc.bundles.local"
+  alias vbun="nvim ~/.vimrc.bundles.local"
   # edit .slate
-  alias vslate="vim ~/.slate"
+  alias vslate="nvim ~/.slate"
 
   # zsh {{{
 
     # edit zsh config
-    alias vzsh="vim ~/.zshrc"
+    alias vzsh="nvim ~/.zshrc"
     # source zsh config
     alias szsh="source ~/.zshrc"
 
@@ -101,7 +103,7 @@
   # Shortcut for IPython intepreter
   alias ip='ipython'
   # edit .hgrc
-  alias vhgrc="vim ~/.hgrc"
+  alias vhgrc="nvim ~/.hgrc"
   # cd dev
   alias cdd="cd $DEV"
   # copy current directory to htdocs to run php server locally with MAMP
@@ -119,9 +121,9 @@
   alias ltx="latexmk"
 
   # vim the .tex files in the current directory
-  alias vtex="find . -iname '*.tex' -exec vim {} \;"
+  alias vtex="find . -iname '*.tex' -exec nvim {} \;"
   # vim the .tex files in the current directory
-  alias mtex="find . -iname '*.tex' -exec vim {} \;"
+  alias mtex="find . -iname '*.tex' -exec nvim {} \;"
 
 # }}}
 
@@ -171,7 +173,7 @@
   alias pypiregister="python setup.py register -r pypi"
   alias pypiupload="python setup.py sdist bdist_wheel register upload --sign -r pypi"
   # remove dot from py.test executable
-  alias pytest="py.test"
+  alias pytest="python -m pytest"
 
 # }}}
 
