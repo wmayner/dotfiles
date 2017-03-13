@@ -56,6 +56,9 @@
   " no spellchecking
   set nospell
 
+  " change how files are written when editing crontab
+  au FileType crontab setlocal bkc=yes
+
   autocmd BufNewFile,BufRead *.py set iskeyword-=_ iskeyword-=.
 
   " set filetype to 'tex' for .tex files
@@ -76,6 +79,7 @@
     let g:solarized_hitrail=0
     let g:solarized_menu=1
     " Make sure to load the colorscheme after setting the termcolors=16
+    set background=dark
     colorscheme solarized
 
   " }
@@ -182,7 +186,7 @@
   set softtabstop=2
 
   " But use 4-space tabs for certain languages
-  autocmd BufNewFile,BufReadPost *.py,*.rst,*.html,*.cpp,*.h set shiftwidth=4 tabstop=4 softtabstop=4
+  autocmd BufNewFile,BufReadPost *.py,*.rst,*.html,*.cpp,*.h,*.m set shiftwidth=4 tabstop=4 softtabstop=4
 
   function! <SID>StripTrailingWhitespaces()
       " Preparation: save last search, and cursor position.
