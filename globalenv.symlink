@@ -1,9 +1,18 @@
+# Add `sbin` to path
+export PATH=/sbin:$PATH
 # Keep public, versioned executables in ~/dotfiles/bin
-export PATH=~/dotfiles/bin:$PATH:
+export PATH=~/dotfiles/bin:$PATH
 # Add local binaries to path
 export PATH=$HOME/.local/bin:$PATH
 # Add non-versioned user binaries to path
 export PATH=$HOME/bin:$PATH
+# Add CHTC scripts to path
+export PATH=/data/will/chtc/bin:$PATH
+
+# Add custom-compiled Python 3 to path
+export PATH=$HOME/python3.6/bin:$PATH
+
+export MANPATH=$HOME/man:$MANPATH
 
 # Make Vim the default editor
 export EDITOR=vim
@@ -13,13 +22,7 @@ export DEFAULT_USER="will"
 export ALIASES=~/.aliases
 # Bash-specific aliases
 export BASH_ALIASES=~/.bash_aliases
-# Development directory
-export DEV=~/dev
-# Project directory
-export CODE=$DEV/projects
 # Path to your dotfiles repo (just set it to $HOME if you don't have one)
 export DOTFILES=$HOME/dotfiles
-# Path to Matlab IIT code
-export IIT=$HOME/Dropbox/iit/code/iit
 
 # vim:foldmethod=marker:foldmarker={{{,}}}:foldlevel=0:ft=sh
