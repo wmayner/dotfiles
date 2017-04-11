@@ -14,9 +14,15 @@ export DEV=$HOME/dev
 export CODE=$DEV/projects
 # Path to dotfiles repo (just set it to $HOME if you don't have one)
 export DOTFILES=$HOME/dotfiles
+
+
 # Add TeX commands to PATH
 export PATH="$PATH:/usr/texbin"
 # Make sure /usr/local/bin/ is at beginning of $PATH
 export PATH="/usr/local/bin:$PATH"
 
 # vim:foldmethod=marker:foldmarker={{{,}}}:foldlevel=0:ft=sh
+
+# Set up NVIDIA CUDA libraries
+export PATH="$PATH:/Developer/NVIDIA/CUDA-8.0/bin"
+export DYLD_LIBRARY_PATH="/Developer/NVIDIA/CUDA-8.0/lib:$DYLD_LIBRARY_PATH"
