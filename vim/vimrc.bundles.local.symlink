@@ -27,6 +27,7 @@ Bundle 'sudo.vim'
 Bundle 'Rename'
 Bundle 'hdima/python-syntax'
 
-" Disabled
-" ========
+" Disabled spf13 plugins
+" ======================
 UnBundle 'amirh/HTML-AutoCloseTag'
+UnBundle 'yssource/python.vim'
