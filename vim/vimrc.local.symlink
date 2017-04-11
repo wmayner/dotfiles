@@ -523,27 +523,15 @@
 
   " vim-unimpaired {
 
-    " remap some mappings that don't seem to work for some reason
-    nnoremap [a :previous<CR>
-    nnoremap ]a :next<CR>
-    nnoremap [A :first<CR>
-    nnoremap ]A :last<CR>
-    nnoremap [b :bprevious<CR>
-    nnoremap ]b :bnext<CR>
-    nnoremap [B :bfirst<CR>
-    nnoremap ]B :blast<CR>
-    nnoremap [l :lprevious<CR>
-    nnoremap ]l :lnext<CR>
-    nnoremap [L :lfirst<CR>
-    nnoremap ]L :llast<CR>
-    nnoremap [q :cprevious<CR>:norm zz<CR>
-    nnoremap ]q :cnext<CR>:norm zz<CR>
-    nnoremap [Q :cfirst<CR>
-    nnoremap ]Q :clast<CR>
-    nnoremap [t :tprevious<CR>
-    nnoremap ]t :tnext<CR>
-    nnoremap [T :tfirst<CR>
-    nnoremap ]T :tlast<CR>
+    " switch q and l bindings, and center screen after commands 
+    nmap [q <Plug>unimpairedLPrevious \| zz
+    nmap ]q <Plug>unimpairedLNext \| zz
+    nmap [Q <Plug>unimpairedLFirst \| zz
+    nmap ]Q <Plug>unimpairedLLast \| zz
+    nmap [l <Plug>unimpairedCPrevious \| zz
+    nmap ]l <Plug>unimpairedCNext \| zz
+    nmap [L <Plug>unimpairedCFirst \| zz
+    nmap ]L <Plug>unimpairedClast \| zz
 
   " }
 
