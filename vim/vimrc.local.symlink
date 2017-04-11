@@ -562,12 +562,6 @@
 
   " }
 
-  " python.vim (python-syntax) {
-
-    let python_highlight_all = 1
-
-  " }
-
   " PythonMode {
   
   " Disable syntax highlighting (doesn't work with Python 3)
