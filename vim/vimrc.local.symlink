@@ -573,12 +573,25 @@
   " Disable syntax highlighting (doesn't work with Python 3)
   let g:pymode_syntax = 0
 
+  " Choose lint checkers 
+  let g:pymode_lint_checkers = ['pylint', 'pep8']
+  " Use Syntastic instead
+  let g:pymode_lint_on_write = 0
+
   " }
 
   " Syntastic {
 
     " Use python3
     let g:syntastic_python_python_exec = '/usr/local/bin/python3'
+    " Use pylint
+    let g:syntastic_python_checkers = ['pylint', 'pep8']
+  
+    " Recommended settings
+    let g:syntastic_always_populate_loc_list = 1
+    let g:syntastic_auto_loc_list = 1
+    let g:syntastic_check_on_open = 1
+    let g:syntastic_check_on_wq = 0
 
   " }
 
