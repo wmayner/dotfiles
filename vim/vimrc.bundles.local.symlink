@@ -25,6 +25,7 @@ Bundle 'argtextobj.vim'
 Bundle 'vim-indent-object'
 Bundle 'sudo.vim'
 Bundle 'Rename'
+Bundle 'fisadev/vim-isort'
 " Bundle 'hdima/python-syntax'
 
 " Disabled spf13 plugins
