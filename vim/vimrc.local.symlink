@@ -558,31 +558,16 @@
 
   " PythonMode {
 
+    " Disable syntax highlighting (doesn't work with Python 3)
+    let g:pymode_syntax = 0
+
     " Choose lint checkers
-    let g:pymode_lint_checkers = ['pyflakes', 'pep8', 'mccabe']
+    let g:pymode_lint_checkers = ['pylint', 'flake8', 'pep8', 'mccabe']
+    " Use Syntastic instead
+    let g:pymode_lint = 0
+
     " Don't use rope completion
     let g:pymode_rope_complete_on_dot = 0
-
-    " Rebind rope commands {
-      nmap \rd <C-c>d
-      nmap \rg <C-c>g
-      " Rename
-      nmap \rr <C-c>rr
-      nmap \rmr <C-c>r1r
-      nmap \roi <C-c>ro
-      nmap \rai <C-c>ra
-      nmap \rmp <C-c>r1p
-      nmap \rem <C-c>rm
-      nmap \rev <C-c>rl
-      nmap \ru <C-c>ru
-      nmap \rv <C-c>rv
-      nmap \rs <C-c>rs
-    " }
-
-  " Choose lint checkers 
-  let g:pymode_lint_checkers = ['pylint', 'pep8']
-  " Use Syntastic instead
-  let g:pymode_lint_on_write = 0
 
   " }
 
@@ -591,7 +576,9 @@
     " Use python3
     let g:syntastic_python_python_exe = '/home/will/python3.6/bin/python3'
     " Use pylint
-    let g:syntastic_python_checkers = ['pylint', 'pep8']
+    let g:syntastic_python_checkers = ['pylint', 'flake8', 'pep8', 'mccabe']
+    " Display errors from different checkers together
+    let g:syntastic_aggregate_errors = 1
   
     " Recommended settings
     let g:syntastic_always_populate_loc_list = 1
