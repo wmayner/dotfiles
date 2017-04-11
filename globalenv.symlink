@@ -8,15 +8,16 @@ export PATH=$HOME/.local/bin:$PATH
 export PATH=$HOME/bin:$PATH
 # Add CHTC scripts to path
 export PATH=/data/will/chtc/bin:$PATH
-
 # Add custom-compiled Python 3 to path
 export PATH=$HOME/python3.6/bin:$PATH
+# Add neovim to path
+export PATH=$HOME/neovim/bin:$PATH
 
 export MANPATH=$HOME/man:$MANPATH
 
 # Make Vim the default editor
-export EDITOR=vim
-export VISUAL='vim'
+export EDITOR=nvim
+export VISUAL='nvim'
 export DEFAULT_USER="will"
 # Shortcut to aliases
 export ALIASES=~/.aliases

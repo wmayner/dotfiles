@@ -21,8 +21,10 @@
   alias l='ls -AhG1'
   alias ll='ls -lAhG'
   alias lsa='ls -AhG'
+  # use nvim
+  alias vim="nvim"
   # shortcut for vim
-  alias v="vim"
+  alias v="nvim"
   # move file to trash
   alias t="trash-put"
   # safe rm
