@@ -12,7 +12,7 @@
 " Environment {
 
   " use aliases when running shell commands within vim
-  set shell=/usr/local/bin/zsh
+  set shell=/usr/bin/zsh
 
   " don't need usr/include in path as far as I can tell; just slows completion
   set path=.,,
@@ -579,16 +579,25 @@
       nmap \rs <C-c>rs
     " }
 
+  " Choose lint checkers 
+  let g:pymode_lint_checkers = ['pylint', 'pep8']
+  " Use Syntastic instead
+  let g:pymode_lint_on_write = 0
+
   " }
 
   " Syntastic {
 
-    " let PythonMode's syntax-checker take over in python files
-    let g:syntastic_mode_map = { 'mode': 'active',
-                               \ 'active_filetypes': [],
-                               \ 'passive_filetypes': ['python'] }
     " Use python3
-    let g:syntastic_python_python_exe = 'python3'
+    let g:syntastic_python_python_exe = '/home/will/python3.6/bin/python3'
+    " Use pylint
+    let g:syntastic_python_checkers = ['pylint', 'pep8']
+  
+    " Recommended settings
+    let g:syntastic_always_populate_loc_list = 1
+    let g:syntastic_auto_loc_list = 1
+    let g:syntastic_check_on_open = 1
+    let g:syntastic_check_on_wq = 0
 
   " }
 
