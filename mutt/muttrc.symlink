@@ -2,6 +2,14 @@
 # System configuration file for Mutt
 #
 
+bind pager j next-line
+bind pager k previous-line
+bind pager d next-page
+bind pager u previous-page
+
+set sleep_time = 0
+set smart_wrap
+
 # Default list of header fields to weed when displaying.
 # Ignore all lines by default...
 ignore *
