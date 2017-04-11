@@ -83,7 +83,7 @@
     colorscheme solarized
 
   " }
-  
+
   " Tabs {
 
     nnoremap <D-L> :execute "tabmove" tabpagenr()<CR>
@@ -561,7 +561,7 @@
     " command -nargs=1 C CoffeeCompile | :<args>
 
   " }
-  
+
   " python.vim (python-syntax) {
 
     let python_highlight_all = 1
@@ -650,6 +650,7 @@
     map <Leader> <Plug>(easymotion-prefix)
 
   " }
+
   " CamelCaseMotion {
 
     " override prefix to be double leader
@@ -749,7 +750,7 @@
   " move line up and match indentation in all modes
   noremap ˚ :m .-2<CR>==
 
-  " help help navigation
+  " help navigation
   autocmd FileType help nnoremap <buffer> <CR> <C-]>
   autocmd FileType help nnoremap <buffer> <BS> <C-O>
   autocmd FileType help nnoremap <buffer> o /'\l\{2,\}'<CR>
@@ -901,7 +902,7 @@
   " }
 
   " Custom commands {
-  
+
     " Switch to previously active tab
     " From http://stackoverflow.com/a/2120168/1085344
     let g:lasttab = 1
