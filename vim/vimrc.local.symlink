@@ -722,10 +722,6 @@
   " (special characters don't need to be escaped with a '\')
   " nnoremap / /\v
 
-  " loads current directory into MAMP's local php environment
-  " IMPORTANT: this destroys the existing one!
-  nnoremap ,p :!rm\ -r\ /Applications/MAMP/htdocs/*\ \|\|\ cp\ -r\ ./* /Applications/MAMP/htdocs<CR>
-
   " window navigation and resizing {
     nnoremap <C-h> <C-w>h
     nnoremap <C-j> <C-w>j
