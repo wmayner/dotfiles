@@ -523,6 +523,9 @@
 
   " vim-unimpaired {
 
+    " TODO: for some reason these don't take effect unless the vimrc is
+    " manually reloaded
+    "
     " switch q and l bindings, and center screen after commands 
     nmap [q <Plug>unimpairedLPrevious \| zz
     nmap ]q <Plug>unimpairedLNext \| zz
@@ -568,9 +571,12 @@
   let g:pymode_syntax = 0
 
   " Choose lint checkers 
-  let g:pymode_lint_checkers = ['pylint', 'pep8']
+  let g:pymode_lint_checkers = ['pylint', 'flake8', 'pep8', 'mccabe']
   " Use Syntastic instead
-  let g:pymode_lint_on_write = 0
+  let g:pymode_lint = 0
+
+  " Don't use rope completion
+  let g:pymode_rope_complete_on_dot = 0
 
   " }
 
@@ -579,7 +585,9 @@
     " Use python3
     let g:syntastic_python_python_exec = '/usr/local/bin/python3'
     " Use pylint
-    let g:syntastic_python_checkers = ['pylint', 'pep8']
+    let g:syntastic_python_checkers = ['pylint', 'flake8', 'pep8', 'mccabe']
+    " Display errors from different checkers together
+    let g:syntastic_aggregate_errors = 1
   
     " Recommended settings
     let g:syntastic_always_populate_loc_list = 1
