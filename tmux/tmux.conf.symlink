@@ -85,6 +85,9 @@ set-option -g status-utf8 on
 set -g default-terminal "xterm-256color"
 source "/home/will/.local/lib/python2.7/site-packages/powerline/bindings/tmux/powerline.conf"
 
+# Use screen as default terminal
+set-option -g default-terminal "screen-256color"
+
 # List plugins to load
 set -g @plugin 'tmux-plugins/tmux-yank'
 
