@@ -38,10 +38,14 @@
 # c.InteractiveShellApp.exec_PYTHONSTARTUP = True
 
 # List of files to run at IPython startup.
-# c.InteractiveShellApp.exec_files = []
+c.InteractiveShellApp.exec_files = [
+    'startup.py'
+]
 
 # lines of code to run at IPython startup.
-# c.InteractiveShellApp.exec_lines = []
+c.InteractiveShellApp.exec_lines = [
+    'import numpy as np'
+]
 
 # A list of dotted module names of IPython extensions to load.
 # c.InteractiveShellApp.extensions = []
