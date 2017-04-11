@@ -15,7 +15,7 @@
   set shell=/usr/local/bin/zsh
 
   " don't need usr/include in path as far as I can tell; just slows completion
-  set path-=.,,
+  set path=.,,
 
 " }
 
