@@ -658,16 +658,16 @@
   " }
   " CamelCaseMotion {
 
-    " override prefix to be double leader"
-    map <Leader><Leader>w <Plug>CamelCaseMotion_w
-    map <Leader><Leader>b <Plug>CamelCaseMotion_b
-    map <Leader><Leader>e <Plug>CamelCaseMotion_e
-    omap <Leader><Leader>iw <Plug>CamelCaseMotion_iw
-    xmap <Leader><Leader>iw <Plug>CamelCaseMotion_iw
-    omap <Leader><Leader>ib <Plug>CamelCaseMotion_ib
-    xmap <Leader><Leader>ib <Plug>CamelCaseMotion_ib
-    omap <Leader><Leader>ie <Plug>CamelCaseMotion_ie
-    xmap <Leader><Leader>ie <Plug>CamelCaseMotion_ie
+    " override prefix to be double leader
+    map w <Plug>CamelCaseMotion_w
+    map b <Plug>CamelCaseMotion_b
+    map e <Plug>CamelCaseMotion_e
+    omap iw <Plug>CamelCaseMotion_iw
+    xmap iw <Plug>CamelCaseMotion_iw
+    omap ib <Plug>CamelCaseMotion_ib
+    xmap ib <Plug>CamelCaseMotion_ib
+    omap ie <Plug>CamelCaseMotion_ie
+    xmap ie <Plug>CamelCaseMotion_ie
 
   " }
 
