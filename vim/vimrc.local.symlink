@@ -12,7 +12,7 @@
 " Environment {
 
   " use aliases when running shell commands within vim
-  set shell=/bin/bash\ --rcfile\ ~/.bash_profile\ -i
+  set shell=/usr/local/bin/zsh
 
   " don't need usr/include in path as far as I can tell; just slows completion
   set path-=.,,
