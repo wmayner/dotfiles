@@ -580,6 +580,13 @@
 
   " }
 
+  " PythonMode {
+  
+  " Disable syntax highlighting (doesn't work with Python 3)
+  let g:pymode_syntax = 0
+
+  " }
+
   " Syntastic {
 
     " Use python3

@@ -25,7 +25,7 @@ Bundle 'argtextobj.vim'
 Bundle 'vim-indent-object'
 Bundle 'sudo.vim'
 Bundle 'Rename'
-" Bundle 'hdima/python-syntax'
+Bundle 'hdima/python-syntax'
 
 " Disabled
 " ========
