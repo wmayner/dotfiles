@@ -696,8 +696,8 @@
   nnoremap <A-D-Right> :tabn<CR>
   nnoremap <A-D-Left> :tabp<CR>
 
-  " fast quit
-  nnoremap \q :q<CR> 
+  " close location list
+  nnoremap \q :lclose<CR> 
 
   " fast write
   nnoremap \w :w<CR>
