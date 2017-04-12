@@ -570,8 +570,6 @@
   " Disable syntax highlighting (doesn't work with Python 3)
   let g:pymode_syntax = 0
 
-  " Choose lint checkers 
-  let g:pymode_lint_checkers = ['pylint', 'flake8', 'pep8', 'mccabe']
   " Use Syntastic instead
   let g:pymode_lint = 0
 
