@@ -585,7 +585,7 @@
     " Use python3
     let g:syntastic_python_python_exe = '/home/will/python3.6/bin/python3'
     " Use pylint
-    let g:syntastic_python_checkers = ['pylint', 'flake8', 'pep8', 'mccabe']
+    let g:syntastic_python_checkers = ['pylint', 'flake8', 'pep257', 'dodgy']
     " Display errors from different checkers together
     let g:syntastic_aggregate_errors = 1
   
