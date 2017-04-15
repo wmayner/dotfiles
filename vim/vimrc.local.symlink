@@ -126,7 +126,7 @@
  "        \ '<C-p><C-r>=pumvisible() ? "\<lt>Up>" : ""<CR>'
 
  "      function! CleverTab()
- "      if pumvisible() 
+ "      if pumvisible()
  "        return "\<C-N>"
  "      endif
  "      if strpart( getline('.'), 0, col('.')-1 ) =~ '^\s*$'
@@ -156,15 +156,15 @@
 
   " " Auto update vimdiff
   "
-  " augroup AutoDiffUpdate 
-  "   au! 
-  "   autocmd InsertLeave * if &diff | diffupdate | let b:old_changedtick = b:changedtick | endif 
-  "   " autocmd CursorHold * 
-  "         \ if &diff && 
-  "         \    (!exists('b:old_changedtick') || b:old_changedtick != b:changedtick) | 
-  "         \   let b:old_changedtick = b:changedtick | diffupdate | 
-  "         \ endif 
-  " augroup END 
+  " augroup AutoDiffUpdate
+  "   au!
+  "   autocmd InsertLeave * if &diff | diffupdate | let b:old_changedtick = b:changedtick | endif
+  "   " autocmd CursorHold *
+  "         \ if &diff &&
+  "         \    (!exists('b:old_changedtick') || b:old_changedtick != b:changedtick) |
+  "         \   let b:old_changedtick = b:changedtick | diffupdate |
+  "         \ endif
+  " augroup END
 
 " }
 
@@ -186,8 +186,8 @@
 " Formatting {
 
   " Use 2-space tabs
-  set shiftwidth=2 
-  set tabstop=2 
+  set shiftwidth=2
+  set tabstop=2
   set softtabstop=2
 
   " But use 4-space tabs for certain languages
@@ -528,7 +528,7 @@
 
   " vim-unimpaired {
 
-    " switch q and l bindings, and center screen after commands 
+    " switch q and l bindings, and center screen after commands
     nmap [q <Plug>unimpairedLPrevious \| zz
     nmap ]q <Plug>unimpairedLNext \| zz
     nmap [Q <Plug>unimpairedLFirst \| zz
@@ -542,8 +542,8 @@
 
   " restore_view {
 
-    set viewoptions=cursor,folds,slash,unix 
-    " let g:skipview_files = ['*\.vim'] 
+    set viewoptions=cursor,folds,slash,unix
+    " let g:skipview_files = ['*\.vim']
 
   " }
 
@@ -585,10 +585,10 @@
     " Use python3
     let g:syntastic_python_python_exe = '/home/will/python3.6/bin/python3'
     " Use pylint
-    let g:syntastic_python_checkers = ['pylint', 'flake8', 'pep8', 'mccabe']
+    let g:syntastic_python_checkers = ['pylint', 'flake8']
     " Display errors from different checkers together
     let g:syntastic_aggregate_errors = 1
-  
+
     " Recommended settings
     let g:syntastic_always_populate_loc_list = 1
     let g:syntastic_auto_loc_list = 1
@@ -700,7 +700,7 @@
   nnoremap <A-D-Left> :tabp<CR>
 
   " close location list
-  nnoremap \q :lclose<CR> 
+  nnoremap \q :lclose<CR>
 
   " fast write
   nnoremap \w :w<CR>
@@ -925,7 +925,7 @@
       " list of lines in buffers (easy way
       " to get unique entries)
       let buffer_numbers = {}
-      " For each entry, use the buffer number as 
+      " For each entry, use the buffer number as
       " a dictionary key (won't get repeats)
       for fixlist_entry in getqflist()
         let buffer_numbers[fixlist_entry['bufnr']] = 1
@@ -935,11 +935,11 @@
 
       " For each buffer
       for num in buffer_number_list
-        " Select the buffer 
+        " Select the buffer
         exe 'buffer' num
-        " Run the command that's passed as an argument 
+        " Run the command that's passed as an argument
         exe a:command
-        " Save if necessary 
+        " Save if necessary
         update
       endfor
     endfunction
