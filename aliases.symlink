@@ -2,6 +2,9 @@
 
 # Util {{{
 
+  # List only directories
+  alias lsd="ls -d */"
+  # Get the absolute path of a file
   alias fullpath="greadlink -f"
   # Use GNU grep instead of BSD grep
   alias grep="ggrep"
