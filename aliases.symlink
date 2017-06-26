@@ -11,8 +11,15 @@
 
 # Util {{{
 
+  # List only directories
+  alias lsd="ls -d */"
   # Always use human-readable sizes with `df`.
   alias df="df -h"
+  alias fullpath="greadlink -f"
+  # Use GNU grep instead of BSD grep
+  alias grep="ggrep"
+  # Use colordiff instead of native diff
+  alias diff="colordiff"
   # Always use 256 colors with tmux.
   alias tmux="tmux -2"
   # Use colordiff and less instead of native diff
