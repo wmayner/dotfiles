@@ -47,9 +47,17 @@
 
   set fileencodings=utf-8
 
+  " no spellchecking except markdown
+  set nospell
+  autocmd BufNewFile,BufRead *.md set spell
+
 " }
 
 " Vim UI {
+
+  " format lines with Q
+  nnoremap Q mf{gq}`f
+  vnoremap Q gq
 
   " leave insert mode quickly
   if ! has('gui_running')
@@ -66,6 +74,11 @@
 
   " no spellchecking
   set nospell
+
+  " change how files are written when editing crontab
+  au FileType crontab setlocal bkc=yes
+
+  autocmd BufNewFile,BufRead *.py set iskeyword-=_ iskeyword-=.
 
   " set filetype to 'tex' for .tex files
   autocmd BufNewFile,BufRead *.tex set filetype=tex
@@ -421,6 +434,8 @@
       endfor
       echon "Deleted " . l:tally . " buffers"
     endfun
+
+    nnoremap \W :Wipeout<CR>
 
   " }
 
