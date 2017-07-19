@@ -2,8 +2,10 @@
 export EDITOR=nvim
 export VISUAL='nvim'
 export DEFAULT_USER="will"
+# Add brewed Python to path
+export PATH=/usr/local/opt/python/libexec/bin:$PATH
 # Keep public, versioned executables in ~/dotfiles/bin
-export PATH=$HOME/dotfiles/bin:$PATH:
+export PATH=$HOME/dotfiles/bin:$PATH
 # Shortcut to aliases
 export ALIASES=$HOME/.aliases
 # Bash-specific aliases
