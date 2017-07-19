@@ -1,0 +1,15 @@
+#!/bin/bash
+
+# Convert a reStructured Text document to HTML with GitHub styling.
+
+# NOTE: this script requires that `github-markdown-css` has been installed to
+# this directory with `npm`.
+
+script_dir=$(dirname "${BASH_SOURCE[0]}")
+
+input_file="$1"
+output_file="${input_file%.*}.html"
+
+echo -n "Converting \`$input_file\` to \`$output_file\`... "
+
+pandoc $input_file -t markdown --highlight-style=pygments | wrap "<div class='markdown-body' style='padding:45px'>" "</div>" | pandoc -c "$script_dir/node_modules/github-markdown-css/github-markdown.css" -o $output_file && echo "done."
