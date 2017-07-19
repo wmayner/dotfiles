@@ -69,6 +69,18 @@
   " set filetype to 'tex' for .tex files
   autocmd BufNewFile,BufRead *.tex set filetype=tex
 
+  " Markdown {
+
+    " don't conceal markdown delimiters
+    let g:vim_markdown_conceal = 0
+    " highlight fenced code
+    let g:vim_markdown_fenced_languages = ['html', 'python', 'bash=sh']
+    " disable math conceal with LaTeX math syntax enabled
+    let g:tex_conceal = ""
+    let g:vim_markdown_math = 1
+
+  " }
+
   " Solarized {
 
     set t_Co=16
