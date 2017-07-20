@@ -135,3 +135,6 @@ eval "$(fasd --init auto)"
 
 # Load `zmv` (alternative to `mmv`)
 autoload zmv
+
+# Use extended globbing
+setopt extendedglob
