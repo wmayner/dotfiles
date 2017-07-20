@@ -38,7 +38,7 @@
   alias rm="trash-put"
   # shortcut for clearing screen
   alias c='clear'
-  # shortcut for clearing screen and dispalying dir contents
+  # shortcut for clearing screen and displaying dir contents
   alias cl='clear && l'
   alias cll='clear && ll'
   # move up one directory
