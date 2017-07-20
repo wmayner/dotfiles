@@ -175,7 +175,7 @@ c.InteractiveShellApp.extensions = [
 
 # 'all', 'last', 'last_expr' or 'none', specifying which nodes should be run
 # interactively (displaying output from expressions).
-c.InteractiveShell.ast_node_interactivity = 'all'
+c.InteractiveShell.ast_node_interactivity = 'last_expr'
 
 # A list of ast.NodeTransformer subclass instances, which will be applied to
 # user input before code is run.
