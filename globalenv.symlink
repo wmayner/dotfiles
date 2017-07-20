@@ -2,18 +2,28 @@
 export PATH=/sbin:$PATH
 # Keep public, versioned executables in ~/dotfiles/bin
 export PATH=~/dotfiles/bin:$PATH
-# Add local binaries to path
+
+# Add custom executables to the PATH
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 export PATH=$HOME/.local/bin:$PATH
-# Add non-versioned user binaries to path
 export PATH=$HOME/bin:$PATH
-# Add CHTC scripts to path
 export PATH=/data/will/chtc/bin:$PATH
-# Add custom-compiled Python 3 to path
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+# Add stuff I built myself to the relevant paths
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 export PATH=$HOME/python3.6/bin:$PATH
-# Add neovim to path
 export PATH=$HOME/neovim/bin:$PATH
+export PATH=$HOME/gcc-7.1.0/bin:$PATH
+
+export LD_LIBRARY_PATH=$HOME/gcc-7.1.0/lib:$LD_LIBRARY_PATH
+export LD_LIBRARY_PATH=$HOME/gcc-7.1.0/lib64:$LD_LIBRARY_PATH
+export LD_LIBRARY_PATH=$HOME/tcl8.6.6/lib:$LD_LIBRARY_PATH
+export LD_LIBRARY_PATH=$HOME/tk8.6.6/lib:$LD_LIBRARY_PATH
+export LD_LIBRARY_PATH=$HOME/python3.6/lib:$LD_LIBRARY_PATH
 
 export MANPATH=$HOME/man:$MANPATH
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 # Make Vim the default editor
 export EDITOR=nvim
@@ -25,5 +35,3 @@ export ALIASES=~/.aliases
 export BASH_ALIASES=~/.bash_aliases
 # Path to your dotfiles repo (just set it to $HOME if you don't have one)
 export DOTFILES=$HOME/dotfiles
-
-# vim:foldmethod=marker:foldmarker={{{,}}}:foldlevel=0:ft=sh
