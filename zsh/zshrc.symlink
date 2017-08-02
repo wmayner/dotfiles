@@ -70,7 +70,7 @@ __git_files () {
 }
 
 # Use powerline
-source ~/.local/lib/python2.7/site-packages/powerline/bindings/zsh/powerline.zsh
+source "/home/mayner/.local/lib/python2.7/site-packages/powerline/bindings/zsh/powerline.zsh"
 
 # Source every .zsh file in this repo
 for config_file ($DOTFILES/**/*.zsh) source $config_file

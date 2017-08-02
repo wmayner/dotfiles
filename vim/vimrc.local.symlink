@@ -12,7 +12,7 @@
 " Environment {
 
   " use aliases when running shell commands within vim
-  set shell=/bin/bash\ --rcfile\ ~/.bash_profile\ -i
+  set shell=/bin/bash
 
   " don't need usr/include in path as far as I can tell; just slows completion
   set path-=.,,
@@ -50,8 +50,8 @@
     augroup END
   endif
 
-  " relative line numbering
-  set relativenumber
+  " use relative line numbering
+  " set relativenumber
 
   " no spellchecking
   set nospell
