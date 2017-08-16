@@ -35,3 +35,6 @@ export ALIASES=~/.aliases
 export BASH_ALIASES=~/.bash_aliases
 # Path to your dotfiles repo (just set it to $HOME if you don't have one)
 export DOTFILES=$HOME/dotfiles
+
+# anaconda
+export PATH=/home/will/anaconda3/bin:$PATH:
