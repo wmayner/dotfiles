@@ -16,8 +16,6 @@
   # Always use human-readable sizes with `df`.
   alias df="df -h"
   alias fullpath="greadlink -f"
-  # Use GNU grep instead of BSD grep
-  alias grep="ggrep"
   # Use colordiff instead of native diff
   alias diff="colordiff"
   # Always use 256 colors with tmux.
