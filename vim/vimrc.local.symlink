@@ -98,6 +98,7 @@
     let g:solarized_hitrail=0
     let g:solarized_menu=1
     " Make sure to load the colorscheme after setting the termcolors=16
+    set background=dark
     colorscheme solarized
 
   " }
