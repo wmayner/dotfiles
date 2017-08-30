@@ -150,3 +150,7 @@ autoload zmv
 
 # added by travis gem
 [ -f /Users/will/.travis/travis.sh ] && source /Users/will/.travis/travis.sh
+
+export LANG='en_US.UTF-8'
+export LC_ALL=$LANG
+powerline-daemon
