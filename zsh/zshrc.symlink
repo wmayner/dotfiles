@@ -138,3 +138,6 @@ autoload zmv
 
 # Use extended globbing
 setopt extendedglob
+
+# Run powerline-daemon for faster prompt
+powerline-daemon --quiet
