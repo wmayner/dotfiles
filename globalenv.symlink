@@ -12,9 +12,11 @@ export PATH=/data/will/chtc/bin:$PATH
 
 # Add stuff I built myself to the relevant paths
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+export PATH=$HOME/cmake-3.9.4-Linux-x86_64/bin:$PATH
 export PATH=$HOME/python3.6/bin:$PATH
 export PATH=$HOME/neovim/bin:$PATH
 export PATH=$HOME/gcc-7.1.0/bin:$PATH
+export PATH=$HOME/nest-2.12.0/bin:$PATH
 
 export LD_LIBRARY_PATH=$HOME/gcc-7.1.0/lib:$LD_LIBRARY_PATH
 export LD_LIBRARY_PATH=$HOME/gcc-7.1.0/lib64:$LD_LIBRARY_PATH
@@ -38,3 +40,6 @@ export DOTFILES=$HOME/dotfiles
 
 # anaconda
 export PATH=/home/will/anaconda3/bin:$PATH:
+
+# Necessary to stop IPython crashing when matplotlib is imported
+export QT_QPA_PLATFORM='offscreen'
