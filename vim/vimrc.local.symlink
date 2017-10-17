@@ -203,9 +203,14 @@
   set shiftwidth=2
   set tabstop=2
   set softtabstop=2
+  " Enforce for certain languages
+  autocmd BufNewFile,BufReadPost *.yml set shiftwidth=2 tabstop=2 softtabstop=2
 
   " But use 4-space tabs for certain languages
   autocmd BufNewFile,BufReadPost *.py,*.rst,*.html,*.cpp,*.h set shiftwidth=4 tabstop=4 softtabstop=4
+
+  " Use actual tab characters for Makefiles
+  autocmd FileType make setlocal noexpandtab
 
   function! <SID>StripTrailingWhitespaces()
       " Preparation: save last search, and cursor position.
@@ -601,14 +606,15 @@
     " Use python3
     let g:syntastic_python_python_exe = '/home/will/python3.6/bin/python3'
     " Use pylint
-    let g:syntastic_python_checkers = ['pylint', 'flake8']
+    " let g:syntastic_python_checkers = ['flake8', 'pylint']
+    let g:syntastic_python_checkers = ['flake8']
     " Display errors from different checkers together
     let g:syntastic_aggregate_errors = 1
 
     " Recommended settings
     let g:syntastic_always_populate_loc_list = 1
     let g:syntastic_auto_loc_list = 1
-    let g:syntastic_check_on_open = 1
+    let g:syntastic_check_on_open = 0
     let g:syntastic_check_on_wq = 0
 
   " }
