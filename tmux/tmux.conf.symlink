@@ -1,7 +1,7 @@
 # Vi copypaste mode
 set-window-option -g mode-keys vi
-bind-key -t vi-copy 'v' begin-selection
-bind-key -t vi-copy 'y' copy-selection
+# bind-key -t vi-copy 'v' begin-selection
+# bind-key -t vi-copy 'y' copy-selection
 
 # Use C-a instead of C-b as prefix
 set-option -g prefix C-a
