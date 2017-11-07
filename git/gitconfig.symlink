@@ -11,7 +11,7 @@
   g = log --graph
   gr = log --graph --pretty=oneline --abbrev-commit
   la = log --graph --date-order --all --full-history --date=short --color --pretty=format:"%x1b[31m%h%x09%x1b[32m%d%x1b[0m%x20%s%x20%x1b[33m(%an)%x1b[0m"
-  l = log --graph --date-order --full-history --date=relative --color --pretty=format:"%x1b[31m%h%x09%x1b[32m%d%x1b[0m%x20%s%x20%x1b[33m(%an)%x1b[32m%x20%ad%x1b[0m"
+  l = log --all --graph --date-order --full-history --date=relative --color --pretty=format:"%x1b[31m%h%x09%x1b[32m%d%x1b[0m%x20%s%x20%x1b[33m(%an)%x1b[32m%x20%ad%x1b[0m"
   s = status
   mt = mergetool
   unstage = reset HEAD --
