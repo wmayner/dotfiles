@@ -153,4 +153,4 @@ autoload zmv
 
 export LANG='en_US.UTF-8'
 export LC_ALL=$LANG
-powerline-daemon
+powerline-daemon --quiet
