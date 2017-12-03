@@ -1,3 +1,13 @@
+" Disabled spf13 plugins
+" ======================
+UnBundle 'amirh/HTML-AutoCloseTag'
+UnBundle 'yssource/python.vim'
+UnBundle 'SirVer/ultisnips'
+UnBundle 'SirVer/ultisnips'
+UnBundle 'scrooloose/syntastic'
+
+" Additional plugins
+" ==================
 Bundle 'hynek/vim-python-pep8-indent'
 Bundle 'vimlatex'
 Bundle 'auto_autoread.vim'
@@ -26,10 +36,10 @@ Bundle 'vim-indent-object'
 Bundle 'sudo.vim'
 Bundle 'Rename'
 Bundle 'fisadev/vim-isort'
-Bundle 'wmayner/python3-syntax'
+Bundle 'lervag/vimtex'
+Bundle 'neomake/neomake'
 
-" Disabled spf13 plugins
-" ======================
-UnBundle 'amirh/HTML-AutoCloseTag'
-UnBundle 'yssource/python.vim'
-UnBundle 'SirVer/ultisnips'
+" My forks
+" ========
+Bundle 'wmayner/vim-markdown'
+Bundle 'wmayner/python3-syntax'
