@@ -4,6 +4,7 @@ UnBundle 'amirh/HTML-AutoCloseTag'
 UnBundle 'yssource/python.vim'
 UnBundle 'SirVer/ultisnips'
 UnBundle 'tpope/vim-markdown'
+UnBundle 'scrooloose/syntastic'
 
 " Additional plugins
 " ==================
