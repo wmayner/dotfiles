@@ -46,6 +46,7 @@
 [user]
   name = Will Mayner
   email = wmayner@gmail.com
+  signingkey = B46975179AD9DFC0
 [core]
   excludesfile = /Users/will/.gitignore
   autocrlf = input
@@ -63,11 +64,11 @@
 [diff]
   tool = vimdiff
 [filter "media"]
-	clean = git-media-clean %f
-	smudge = git-media-smudge %f
+  clean = git-media-clean %f
+  smudge = git-media-smudge %f
 [filter "lfs"]
-	clean = git lfs clean %f
-	smudge = git lfs smudge %f
-	required = true
+  clean = git lfs clean %f
+  smudge = git lfs smudge %f
+  required = true
 [pull]
-	rebase = true
+  rebase = true
