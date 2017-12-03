@@ -618,6 +618,16 @@
     let g:syntastic_check_on_wq = 0
 
   " }
+  
+  " Neomake {
+
+    " Run Neomake when writing a buffer, and on normal mode changes (after
+    " 750ms).
+    call neomake#configure#automake('rnw', 750)
+    " Open the list automatically.
+    let g:neomake_open_list = 2
+
+  " }
 
   " SnipMate {
 
