@@ -37,6 +37,8 @@
 
 # Git {{{
 
+  alias gp="git push"
+  # git diff
   alias gc="git commit -m"
   # git diff
   alias gd='git d'
