@@ -46,6 +46,8 @@
   alias gdc='git dc'
   # git log
   alias gl='git l'
+  # git log all branches
+  alias gla='git la'
   # git branch
   alias gb='git branch'
   # git branch delete
