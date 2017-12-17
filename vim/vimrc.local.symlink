@@ -386,7 +386,22 @@
 
 " }
 
-" Plugin mappings and configuration {
+  " vim-sneak {
+  
+    let g:sneak#label = 1
+    let g:sneak#s_next = 1
+
+  " }
+
+  " vim-slash {
+
+    noremap <Plug>(slash-after) zz
+    if has('timers')
+      " Blink 2 times with 50ms interval
+      noremap <expr> <Plug>(slash-after) slash#blink(2, 50)
+    endif
+
+  " }
 
   " Commentary {
 
@@ -525,12 +540,10 @@
 
   " }
 
-  " Gundo {
+  " undotree {
 
-    " Gundo shortcut
-    nnoremap ,u :GundoToggle<CR>
-    " Don't automatically render previews (can still manually do this with `r`)
-    let g:gundo_auto_preview=0
+    " UndotreeToggle shortcut
+    nnoremap ,u :UndotreeToggle<CR>
 
   " }
 
@@ -709,6 +722,22 @@
     let g:ycm_always_populate_location_list = 1
 
   " }
+  
+  " limelight.vim {
+
+    " Color name (:help cterm-colors) or ANSI code
+    let g:limelight_conceal_ctermfg = 'black'
+    nmap <Leader>l :Limelight!!<CR>
+    xmap <Leader>l :Limelight!!<CR>
+    vmap <Leader>l <Plug>(Limelight)
+
+  " }
+
+  " goyo.vim {
+
+    nmap <Leader>G :Goyo<CR>
+
+  " }
 
 " }
 
@@ -830,6 +859,7 @@
 
   " search mappings: these will make it so that going to the next one in a
   " search will center on the line it's found in.
+  " TODO?
   noremap N Nzz
   noremap n nzz
 
