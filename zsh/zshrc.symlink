@@ -52,11 +52,11 @@ autoload colors;
 # setopt prompt_subst
 
 # Find the option for using colors in ls, depending on the version: Linux or BSD
-ls --color -d . &>/dev/null 2>&1 && alias ls='ls --color=auto' || alias ls='ls -G'
+ls --color -d . &>/dev/null 2>&1 && alias ls='ls --color=auto -F' || alias ls='ls -GF'
 # Use dircolors if available
 dircolors &>/dev/null 2>&1 && eval `dircolors $DOTFILES/zsh/dircolors.ansi-dark` || export LSCOLORS="Gxfxcxdxbxegedabagacad"
 # Use GNU ls if available (for Mac OSX; `brew install coreutils`)
-gdircolors &>/dev/null 2>&1 && eval `gdircolors $DOTFILES/zsh/dircolors.ansi-dark` && alias ls='gls --color=auto -h'
+gdircolors &>/dev/null 2>&1 && eval `gdircolors $DOTFILES/zsh/dircolors.ansi-dark` && alias ls='gls --color=auto -hF'
 
 export GREP_COLOR='1;32'
 
