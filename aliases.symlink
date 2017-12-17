@@ -15,9 +15,9 @@
   # Always use 256 colors with tmux.
   alias tmux="tmux -2"
   # list dir contents (all with human-readable size)
-  alias l='ls -AhG1'
-  alias ll='ls -lAhG'
-  alias lsa='ls -AhG'
+  alias l='ls -AhG1F'
+  alias ll='ls -lAhGF'
+  alias lsa='ls -AhGF'
   # use nvim
   alias vim="nvim"
   # shortcut for vim
