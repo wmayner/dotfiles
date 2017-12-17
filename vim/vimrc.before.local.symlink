@@ -1,11 +1,28 @@
 " Options that determine spf13 behavior
 
+" Use vim-plug with vundle syntax {
+
+  function! s:deregister(repo)
+    let repo = substitute(a:repo, '[\/]\+$', '', '')
+    let name = fnamemodify(repo, ':t:s?\.git$??')
+    call remove(g:plugs, name)
+    call remove(g:plugs_order, index(g:plugs_order, name))
+  endfunction
+
+  command! -nargs=1 -bar UnPlug call s:deregister(<args>)
+
+  " compatibility with Vundle
+  command! -nargs=+ -bar Bundle call plug#(<args>)
+  command! -nargs=1 -bar UnBundle call s:deregister(<args>)
+
+" }
+
 " Bundles {
 
   " Choose bundle groups from spf13:
   let g:spf13_bundle_groups=['general', 'youcompleteme', 'python', 'programming', 'javascript', 'html', 'misc']
 
-  " Don't use CSApprox (we're using Solarized with 16 colors)"
+  " Don't use CSApprox (we're using Solarized with 16 colors)
   let g:CSApprox_loaded = 1
 
 " }
@@ -15,8 +32,9 @@
   " Airline {
 
     " Use fancy symbols in airline
-    let g:airline_powerline_fonts=1
+    let g:airline_powerline_fonts = 1
 
   " }
 
 " }
+"
