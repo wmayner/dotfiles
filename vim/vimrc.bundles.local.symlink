@@ -43,8 +43,12 @@ Bundle 'junegunn/limelight.vim'
 Bundle 'junegunn/goyo.vim'
 Bundle 'junegunn/vim-slash'
 Bundle 'junegunn/vim-after-object'
+Bundle 'prettier/vim-prettier'
+Bundle 'sbdchd/neoformat', {
+  \ 'do': 'npm install -g prettier', }
 
 " My forks
 " ========
-Bundle 'wmayner/vim-markdown'
+" Bundle 'wmayner/vim-markdown'
+Bundle 'tpope/vim-markdown'
 Bundle 'wmayner/python3-syntax'
