@@ -55,6 +55,9 @@
 
   " }
 
+  " highlight the column beyond textwidth
+  set colorcolumn=+1
+
   " format lines with Q
   nnoremap Q mf{gq}`f
   vnoremap Q gq
