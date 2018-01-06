@@ -72,5 +72,3 @@
   required = true
 [pull]
   rebase = true
-[commit]
-  gpgsign = true
