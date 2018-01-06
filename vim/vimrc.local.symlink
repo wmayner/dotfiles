@@ -38,11 +38,22 @@
 
   " no spellchecking except markdown
   set nospell
-  autocmd BufNewFile,BufRead *.md set spell
 
 " }
 
 " Vim UI {
+
+  " Markdown {
+
+    " enable spellcheck
+    autocmd FileType markdown set spell
+    " don't conceal
+    autocmd FileType markdown set conceallevel=0
+    " automatically format lines while typing
+    autocmd FileType markdown set textwidth=80
+    autocmd FileType markdown set formatoptions-=l
+
+  " }
 
   " format lines with Q
   nnoremap Q mf{gq}`f
