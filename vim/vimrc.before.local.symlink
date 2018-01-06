@@ -1,4 +1,11 @@
-" Options that determine spf13 behavior
+" Options that take effect before spf13
+
+" spf13-vim {
+
+  " Don't strip trailing whitespace
+  " let g:spf13_keep_trailing_whitespace = 0
+
+" }
 
 " Use vim-plug with vundle syntax {
 
@@ -37,4 +44,3 @@
   " }
 
 " }
-"
