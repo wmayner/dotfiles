@@ -1,1 +1,0 @@
-terminal-notifier -title "Updated Homebrew, Vim, npm, and TeXLive" -message "`~/dotfiles/bin/_bigupdate`"
