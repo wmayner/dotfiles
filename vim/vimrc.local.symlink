@@ -619,9 +619,10 @@
 
   " Neomake {
 
-    " Run Neomake when writing a buffer, and on normal mode changes (after
-    " 750ms).
+    " Run Neomake when reading/writing a buffer, and on normal mode changes
+    " (after 750ms).
     call neomake#configure#automake('rnw', 750)
+    let g:neomake_python_enabled_makers = ['pylint', 'flake8'] 
     " Open the list automatically.
     let g:neomake_open_list = 2
 
