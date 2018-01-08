@@ -1,4 +1,18 @@
-" Options that determine spf13 behavior
+" Options that take effect before spf13
+
+" Neovim {
+
+  let g:python3_host_prog=expand('$HOME/.virtualenvs/neovim-python3/bin/python')
+  let g:python_host_prog=expand('$HOME/.virtualenvs/neovim-python2/bin/python')
+
+" }
+
+" spf13-vim {
+
+  " Don't strip trailing whitespace
+  " let g:spf13_keep_trailing_whitespace = 0
+
+" }
 
 " Use vim-plug with vundle syntax {
 
@@ -37,4 +51,3 @@
   " }
 
 " }
-"
