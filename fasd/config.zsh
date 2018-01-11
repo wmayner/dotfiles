@@ -1,1 +1,0 @@
-export _FASD_FUZZY=200
