@@ -482,7 +482,7 @@
   " Auto format comment blocks
   "set comments=sl:/*,mb:*,elx:*/
   " Remove trailing whitespaces and ^M chars
-  autocmd FileType c,cpp,java,go,php,javascript,puppet,python,rust,twig,xml,yml,perl,sql,vim,zsh autocmd BufWritePre <buffer> call StripTrailingWhitespace()
+  autocmd FileType c,cpp,java,go,php,javascript,puppet,python,rust,twig,xml,yml,perl,sql,vim,zsh,sh autocmd BufWritePre <buffer> call StripTrailingWhitespace()
   "autocmd FileType go autocmd BufWritePre <buffer> Fmt
   autocmd BufNewFile,BufRead *.html.twig set filetype=html.twig
   autocmd FileType haskell,puppet,ruby,yml setlocal expandtab shiftwidth=2 softtabstop=2
