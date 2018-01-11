@@ -1,15 +1,1 @@
 virtualenvwrapper
-
-pylint
-
-isort
-
-flake8
-flake8-blind-except
-flake8-comprehensions
-flake8-debugger
-flake8-dodgy
-flake8-formatter-abspath
-flake8-isort
-flake8-single-quotes
-mccabe
