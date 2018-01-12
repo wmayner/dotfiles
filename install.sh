@@ -13,6 +13,10 @@ if [ "$OS" == "Darwin" ]; then
   BREW_FORUMLAE='./brew/formulae.txt'
   echo "Installing brew formulae from '$BREW_FORUMLAE'..."
   xargs brew install < $BREW_FORUMLAE
+  # Ensure brewed Python is used instead of the system Python
+  if [ ! -e "/usr/local/bin/python" ]; then
+    ln -s "/usr/local/bin/python2" "/usr/local/bin/python"
+  fi
 fi
 
 echo "\nInstalling oh-my-zsh...\n"
