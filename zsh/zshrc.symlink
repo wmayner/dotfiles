@@ -89,14 +89,18 @@
   # }
 
   # Python {
-
     # virtualenvwrapper {
       export WORKON_HOME="$HOME/.virtualenvs"
       export PROJECT_HOME=$CODE
+      export VIRTUALENV_PYTHON="/usr/local/bin/python"
       source "/usr/local/bin/virtualenvwrapper.sh"
       export VIRTUAL_ENV_DISABLE_PROMPT=1
     # }
 
+  # }
+
+  # Homebrew {
+    export HOMEBREW_NO_ANALYTICS=1
   # }
 
   # powerline {
