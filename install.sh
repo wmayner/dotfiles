@@ -10,9 +10,11 @@ OS=$(uname -s)
 if [ "$OS" == "Darwin" ]; then
   echo "Installing Homebrew..."
   /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-  BREW_FORUMLAE='./brew/formulae.txt'
-  echo "Installing brew formulae from '$BREW_FORUMLAE'..."
-  xargs brew install < $BREW_FORUMLAE
+  BREW_FORMULAE='./brew/formulae.txt'
+  BREW_FORMULAE_HEAD='./brew/formulae-head.txt'
+  echo "Installing Homebrew formulae from '$BREW_FORMULAE' and '$BREW_FORMULAE_HEAD'..."
+  xargs brew install < $BREW_FORMULAE
+  xargs brew install --HEAD < $BREW_FORMULAE_HEAD
   # Ensure brewed Python is used instead of the system Python
   if [ ! -e "/usr/local/bin/python" ]; then
     ln -s "/usr/local/bin/python2" "/usr/local/bin/python"

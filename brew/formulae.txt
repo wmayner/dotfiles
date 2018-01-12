@@ -20,7 +20,6 @@ the_silver_searcher
 tmux
 trash
 tree
-universal-ctags
 vim
 wakeonlan
 watch
