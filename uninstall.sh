@@ -9,5 +9,4 @@ for SOURCE_FILE in $(find $(pwd) -name '*.symlink'); do
     echo "Removing symlink $LINK_FILE -> $SOURCE_FILE"
     rm $LINK_FILE
   fi
-  echo ''
 done
