@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
+# - Jnstall homebrew if on macOS and brews various formulae
 #
-# - Install homebrew if on macOS and brews various formulae
 # - Install oh-my-zsh
 # - Symlink all *.symlink files into $HOME as dotfiles
 
@@ -21,6 +21,12 @@ if [ "$OS" == "Darwin" ]; then
     ln -s "/usr/local/bin/python2" "/usr/local/bin/python"
   fi
 fi
+
+# Change shell to zsh
+#
+# NOTE: You may have to run the following:
+#   sudo echo $(which zsh) >> /etc/shells`
+chsh -s $(which zsh)
 
 # oh-my-zsh
 echo "\nInstalling oh-my-zsh...\n"
