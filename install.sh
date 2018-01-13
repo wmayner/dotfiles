@@ -2,7 +2,7 @@
 #
 # - Install Homebrew if on macOS and brews various formulae
 # - Change default shell to zsh
-# - Install oh-my-zsh
+# - Install Oh My Zsh
 # - Install various Python packages
 # - Symlink all *.symlink files into $HOME as dotfiles
 
