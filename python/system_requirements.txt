@@ -1,1 +1,8 @@
 virtualenvwrapper
+powerline-status
+pip-autoremove
+tqdm
+pytest
+pylint
+isort
+yapf
