@@ -1,7 +1,9 @@
 #!/usr/bin/env sh
-# - Jnstall homebrew if on macOS and brews various formulae
 #
+# - Install Homebrew if on macOS and brews various formulae
+# - Change default shell to zsh
 # - Install oh-my-zsh
+# - Install various Python packages
 # - Symlink all *.symlink files into $HOME as dotfiles
 
 # Are we on macOS or Linux?
@@ -33,8 +35,10 @@ echo "\nInstalling oh-my-zsh...\n"
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 echo ''
 
-# Powerline
-pip install --user powerline-status
+# Python packages
+PYTHON_REQUIREMENTS_FILE='./python/requirements.txt'
+pip install --user -r $PYTHON_REQUIREMENTS_FILE
+echo ''
 
 # Symlink dotfiles
 for SOURCE_FILE in $(find $(pwd) -name '*.symlink'); do

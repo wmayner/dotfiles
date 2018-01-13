@@ -25,9 +25,8 @@
   # NVIDIA CUDA libraries
   export PATH="$PATH:/Developer/NVIDIA/CUDA-8.0/bin"
   export DYLD_LIBRARY_PATH="/Developer/NVIDIA/CUDA-8.0/lib:$DYLD_LIBRARY_PATH"
-  # TODO needed?
-  # Add brewed Python to path
-  # export PATH=/usr/local/opt/python/libexec/bin:$PATH
+  # Executables installed via `pip install --user`
+  export PATH="$HOME/Library/Python/2.7/bin/:$PATH"
   # Public, versioned executables in ~/dotfiles/bin
   export PATH=$HOME/dotfiles/bin:$PATH
   # Local executables in ~/bin
@@ -93,7 +92,7 @@
       export WORKON_HOME="$HOME/.virtualenvs"
       export PROJECT_HOME=$CODE
       export VIRTUALENV_PYTHON="/usr/local/bin/python"
-      source "/usr/local/bin/virtualenvwrapper.sh"
+      source "$HOME/Library/Python/2.7/bin/virtualenvwrapper.sh"
       export VIRTUAL_ENV_DISABLE_PROMPT=1
     # }
 
@@ -104,7 +103,7 @@
   # }
 
   # powerline {
-    source "/usr/local/lib/python2.7/site-packages/powerline/bindings/zsh/powerline.zsh"
+    source "$HOME/Library/Python/2.7/lib/python/site-packages/powerline/bindings/zsh/powerline.zsh"
     export PYTHONPATH=$PYTHONPATH:~/.config/powerline/
     powerline-daemon --quiet
   # }
