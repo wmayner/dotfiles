@@ -171,7 +171,7 @@
     " with `crs`, `crm`, `crc`
     " Also provides :Abolish and :Subvert
     Plug 'tpope/vim-abolish'
-    " Emoji in Vim
+    " Emoji completion in Vim
     Plug 'junegunn/vim-emoji'
     " Text objects {
       " Dependency for sentence and quote text objects
@@ -502,6 +502,13 @@
 
   " vimtex {
     let g:tex_flavor = 'latex'
+  " }
+
+  " vim-emoji {
+    augroup emoji_complete
+      autocmd!
+      autocmd FileType markdown setlocal completefunc=emoji#complete
+    augroup END
   " }
 
   " easymotion {
