@@ -22,10 +22,12 @@ DOTFILES=$(pwd)
 
 # macOS-specific
 if [ "$OS" = "Darwin" ]; then
+  # Install homebrew
   printf "\nInstalling Homebrew...\n"
   /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
   BREW_FORMULAE='./brew/formulae.txt'
   BREW_FORMULAE_HEAD='./brew/formulae-head.txt'
+  # Install brew formulae
   printf "Installing Homebrew formulae from '$BREW_FORMULAE' and '$BREW_FORMULAE_HEAD'..."
   xargs brew install <$BREW_FORMULAE
   xargs brew install --HEAD <$BREW_FORMULAE_HEAD
@@ -35,17 +37,20 @@ if [ "$OS" = "Darwin" ]; then
   fi
 # Linux specific
 else
+  # System packages
   printf "\nInstalling system packages...\n"
   LINUX_PACKAGES='./linux/packages.txt'
   xargs sudo apt-get install <$LINUX_PACKAGES
-
-  printf "\nInstalling Neovim...\n"
-  git clone https://github.com/neovim/neovim.git "$HOME/neovim-src"
-  cd "$HOME/neovim-src"
-  make CMAKE_EXTRA_FLAGS="-DCMAKE_INSTALL_PREFIX=$NEOVIM_INSTALL_PREFIX"
-  make install
-  cd "$DOTFILES"
-  rm -rf "$HOME/neovim-src"
+  # Neovim
+  command -v nvim >/dev/null || {
+    printf "\nInstalling Neovim...\n" &&
+    git clone https://github.com/neovim/neovim.git "$HOME/neovim-src" &&
+    cd "$HOME/neovim-src" &&
+    make CMAKE_EXTRA_FLAGS="-DCMAKE_INSTALL_PREFIX=$NEOVIM_INSTALL_PREFIX" &&
+    make install &&
+    cd "$DOTFILES" &&
+    rm -rf "$HOME/neovim-src"
+  }
 fi
 
 printf "\nChanging shell to zsh...\n"
