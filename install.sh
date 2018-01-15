@@ -93,12 +93,11 @@ printf "\nSetting up Vim and Neovim...\n"
 # Vim
 mkdir -p "$HOME/.vim/autoload"
 # Install vim-plug
-curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+curl -fLo "$HOME/.vim/autoload/plug.vim" --create-dirs \
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 # Neovim
-mkdir -p "$HOME/.config/nvim/autoload"
-ln -sv $(find . -name "vimrc.symlink") "$HOME/.config/nvim/init.vim"
 ln -sv "$HOME/.vim" "$HOME/.config/nvim"
+ln -sv $(find . -name "vimrc.symlink") "$HOME/.config/nvim/init.vim"
 # Install plugins
 nvim +PlugInstall! +qall
 
