@@ -9,6 +9,7 @@
 #   `pip install neovim` in each
 # - Install global node packages
 # - Symlink all `*.symlink` files into $HOME as dotfiles
+# - Symlink IPython profile
 # - Download and install vim-plug
 # - Symlink Neovim configuration directory to Vim configuration directory
 # - Install Vim plugins
@@ -16,9 +17,9 @@
 # Are we on macOS or Linux?
 OS=$(uname -s)
 
-# Homebrew
+# macOS-specific
 if [ "$OS" = "Darwin" ]; then
-  echo "Installing Homebrew..."
+  echo "\nInstalling Homebrew...\n"
   /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
   BREW_FORMULAE='./brew/formulae.txt'
   BREW_FORMULAE_HEAD='./brew/formulae-head.txt'
@@ -32,23 +33,18 @@ if [ "$OS" = "Darwin" ]; then
   echo ''
 fi
 
-# Change shell to zsh
-#
+echo "\nChanging shell to zsh...\n"
 # NOTE: You may have to run the following:
 #   sudo echo $(which zsh) >> /etc/shells`
-echo "\nChanging shell to zsh..."
 chsh -s $(which zsh)
 
-# oh-my-zsh
 echo "\nInstalling oh-my-zsh...\n"
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 
-# Python packages
 echo "\nInstalling Python packages...\n"
 PYTHON_REQUIREMENTS_FILE='./python/requirements.txt'
 pip install --user --upgrade -r $PYTHON_REQUIREMENTS_FILE
 
-# Neovim virtualenvs
 echo "\nMaking Neovim virtualenvs...\n"
 NEOVIM_REQUIREMENTS="./vim/neovim_requirements.txt"
 source $(which virtualenvwrapper.sh)
@@ -63,17 +59,19 @@ source "$HOME/.virtualenvs/neovim-python3/bin/activate"
 pip install --upgrade -r $NEOVIM_REQUIREMENTS
 deactivate
 
-# Node packages
 echo "\nInstalling Node packages...\n"
 NODE_PACKAGES_FILE="./node/global_packages.txt"
 xargs npm install --global < $NODE_PACKAGES_FILE
 
 echo "\nSymlinking '*.symlink' files...\n"
-# Symlink dotfiles
 for SOURCE_FILE in $(find $(pwd) -name '*.symlink'); do
   LINK_FILE="$HOME/.$(basename ${SOURCE_FILE%.symlink})"
   ln -sv "$SOURCE_FILE" $LINK_FILE;
 done
+
+echo "\nSymlinking IPython profile...\n"
+mkdir -p "$HOME/.ipython/profile_default"
+ln -sv "$(pwd)/ipython/ipython_config.py" "$HOME/.ipython/profile_default/ipython_config.py"
 
 echo "\nSetting up Vim and Neovim...\n"
 # Vim

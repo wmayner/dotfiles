@@ -19,6 +19,7 @@ This will
 - Make virtualenvironments `neovim-python2` and `neovim-python3` and run
   `pip install neovim` in each
 - Symlink all `*.symlink` files into $HOME as dotfiles
+- Symlink IPython profile
 - Download and install vim-plug
 - Symlink Neovim configuration directory to Vim configuration directory
 - Install Vim plugins
