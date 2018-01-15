@@ -128,8 +128,6 @@
     Plug 'w0rp/ale'
     " Auto formatting
     Plug 'sbdchd/neoformat', { 'do': 'npm install --global prettier' }
-    " Commenting blocks
-    Plug 'tomtom/tcomment_vim'
     " Ack/Ag in Vim
     Plug 'mileszs/ack.vim'
     " File browser
@@ -174,6 +172,8 @@
     " Text objects {
       " Dependency for sentence and quote text objects
       Plug 'kana/vim-textobj-user'
+      " Generic brace text objects
+      Plug 'rhysd/vim-textobj-anyblock'
       " Sentence text objects
       Plug 'reedes/vim-textobj-sentence'
       " Curly quotes text objects
@@ -229,7 +229,7 @@
   " Shorter timeout length, leave insert mode quickly
   set timeoutlen=500
   if !has('gui_running')
-    augroup FastEscape
+    augroup VimrcFastEscape
       autocmd!
       autocmd InsertEnter * set timeoutlen=0
       autocmd InsertLeave * set timeoutlen=500
@@ -261,7 +261,10 @@
   command! -nargs=1 -bar Grep execute 'silent! grep! <q-args>' | redraw! | copen
 
   " Always switch to the current file directory
-  autocmd BufEnter * if bufname("") !~ "^\[A-Za-z0-9\]*://" | lcd %:p:h | endif
+  augroup VimrcSwitchToCurrentFileDir
+    autocmd!
+    autocmd BufEnter * if bufname("") !~ "^\[A-Za-z0-9\]*://" | lcd %:p:h | endif
+  augroup END
 
   " Automatically write a file when leaving a modified buffer
   "set autowrite
@@ -274,7 +277,10 @@
   " Store a ton of history (default is 20)
   set history=1000
   " Spell checking on for some filetypes
-  autocmd FileType markdown,text,tex set spell
+  augroup VimrcTurnOnSpell
+    autocmd!
+    autocmd FileType markdown,text,tex set spell
+  augroup END
   set spell
   " Allow buffer switching without saving
   set hidden
@@ -298,7 +304,7 @@
       endif
   endfunction
 
-  augroup resCur
+  augroup VimrcResCur
       autocmd!
       autocmd BufWinEnter * call ResCur()
   augroup END
@@ -325,16 +331,29 @@
         " Maximum number lines to save for undo on a buffer reload
         set undoreload=10000
     endif
+  " }
 
-  " change how files are written when editing crontab
-  autocmd FileType crontab setlocal bkc=yes
+  " Change how files are written when editing crontab
+  augroup VimrcCrontabWrite
+    autocmd!
+    autocmd FileType crontab setlocal bkc=yes
+  augroup END
 
-  " Set filetype for Stylus files
-  autocmd BufNewFile,BufRead *.styl set filetype=stylus
+  " Set filetypes
+  augroup VimrcSetFileTypes
+    autocmd!
+    autocmd BufNewFile,BufRead *.coffee set filetype=coffee
+    autocmd BufNewFile,BufRead Dockerfile* set filetype=dockerfile
+    autocmd BufNewFile,BufRead *.styl set filetype=stylus
+    autocmd BufNewFile,BufRead *.html.twig set filetype=html.twig
+  augroup END
 
-  " If doing a diff. Upon writing changes to file, automatically update the
-  " differences
-  autocmd BufWritePost * if &diff == 1 | diffupdate | endif
+  " If doing a diff, automatically update the differences upon writing changes
+  " to file
+  augroup VimrcDiffUpdate
+    autocmd!
+    autocmd BufWritePost * if &diff == 1 | diffupdate | endif
+  augroup END
 
   " }
 
@@ -418,7 +437,7 @@
     " Use relative line numbers, except for current line
     set number relativenumber
     " Use absolute line numbers in insert mode and when buffer loses focus
-    augroup numbertoggle
+    augroup VimrcNumberToggle
       autocmd!
       autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
       autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
@@ -470,8 +489,12 @@
   set tabstop=2
   " Let backspace delete indent
   set softtabstop=2
-  " But use 4-space tabs for certain languages
-  autocmd BufNewFile,BufReadPost *.py,*.rst,*.html,*.cpp,*.h,*.c,*.m set shiftwidth=4 tabstop=4 softtabstop=4
+  " Explicitly set tab size for certain languages
+  augroup VimrcSetTabs
+    autocmd!
+    autocmd BufNewFile,BufReadPost *.py,*.rst,*.html,*.cpp,*.h,*.c,*.m setlocal shiftwidth=4 tabstop=4 softtabstop=4
+    autocmd FileType haskell,puppet,ruby,yml setlocal expandtab shiftwidth=2 softtabstop=2
+  augroup END
   " Prevents inserting two spaces after punctuation on a join (J)
   set nojoinspaces
   " Puts new vsplit windows to the right of the current
@@ -482,17 +505,11 @@
   set matchpairs+=<:>
   " pastetoggle (sane indentation on pastes)
   set pastetoggle=<F12>
-  " Auto format comment blocks
-  "set comments=sl:/*,mb:*,elx:*/
   " Remove trailing whitespaces and ^M chars
-  autocmd FileType c,cpp,java,go,php,javascript,puppet,python,rust,twig,xml,yml,perl,sql,vim,zsh,sh autocmd BufWritePre <buffer> call StripTrailingWhitespace()
-  "autocmd FileType go autocmd BufWritePre <buffer> Fmt
-  autocmd BufNewFile,BufRead *.html.twig set filetype=html.twig
-  autocmd FileType haskell,puppet,ruby,yml setlocal expandtab shiftwidth=2 softtabstop=2
-  " preceding line best in a plugin but here for now.
-
-  autocmd BufNewFile,BufRead *.coffee set filetype=coffee
-  autocmd BufNewFile,BufRead Dockerfile* set filetype=dockerfile
+  augroup VimrcRemoveTrailingWhitespace
+    autocmd!
+    autocmd FileType c,cpp,java,go,php,javascript,puppet,python,rust,twig,xml,yml,perl,sql,vim,zsh,sh autocmd BufWritePre <buffer> call StripTrailingWhitespace()
+  augroup END
 
 " }
 
@@ -560,11 +577,14 @@
   " }
 
   " OmniComplete {
-    if has("autocmd") && exists("+omnifunc")
-      autocmd Filetype *
-        \if &omnifunc == "" |
-        \setlocal omnifunc=syntaxcomplete#Complete |
-        \endif
+    if exists("+omnifunc")
+      augroup VimrcSetOmnifunc
+        autocmd!
+        autocmd Filetype *
+          \if &omnifunc == "" |
+          \setlocal omnifunc=syntaxcomplete#Complete |
+          \endif
+      augroup END
     endif
 
     hi Pmenu  guifg=#000000 guibg=#F8F8F8 ctermfg=black ctermbg=Lightgray
@@ -578,7 +598,10 @@
     inoremap <expr> <C-d>      pumvisible() ? "\<PageDown>\<C-p>\<C-n>" : "\<C-d>"
     inoremap <expr> <C-u>      pumvisible() ? "\<PageUp>\<C-p>\<C-n>" : "\<C-u>"
     " Automatically open and close the popup menu / preview window
-    autocmd CursorMovedI,InsertLeave * if pumvisible() == 0|silent! pclose|endif
+    augroup VimrcOmniPopup
+      autocmd!
+      autocmd CursorMovedI,InsertLeave * if pumvisible() == 0|silent! pclose|endif
+    augroup END
     set completeopt=menu,preview
   " }
 
@@ -593,8 +616,11 @@
   " }
 
   " AutoCloseTag {
-    " Make it so AutoCloseTag works for xml and xhtml files as well
-    autocmd FileType xhtml,xml ru ftplugin/html/autoclosetag.vim
+    " Set up for xhtml and xml
+    augroup VimrcAutoCloseTag
+      autocmd!
+      autocmd FileType xhtml,xml ru ftplugin/html/autoclosetag.vim
+    augroup end
     nmap <Leader>ac <plug>ToggleAutoCloseMappings
   " }
 
@@ -777,14 +803,17 @@
     let g:UltiSnipsJumpBackwardTrigger = '<C-k>'
 
     " Enable omni completion
-    autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-    autocmd FileType html setlocal omnifunc=htmlcomplete#CompleteTags
-    autocmd FileType markdown setlocal omnifunc=emoji#complete
-    autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-    autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-    autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-    autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
-    autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
+    augroup VimrcOmniCompletion
+      autocmd!
+      autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+      autocmd FileType html setlocal omnifunc=htmlcomplete#CompleteTags
+      autocmd FileType markdown setlocal omnifunc=emoji#complete
+      autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+      autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+      autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+      autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
+      autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
+    augroup END
 
     " For snippet_complete marker
     if has('conceal')
@@ -806,11 +835,11 @@
     let g:indent_guides_enable_on_vim_startup = 1
   " }
 
-  " Wildfire {
-  let g:wildfire_objects = {
-        \ "*" : ["i'", 'i"', "i)", "i]", "i}", "ip"],
-        \ "html,xml" : ["at"],
-        \ }
+  " wildfire.vim {
+    let g:wildfire_objects = {
+          \ "*" : ["iw", "iW", "i'", 'i"', "i)", "i]", "i}", "ip"],
+          \ "html,xml" : ["at"],
+          \ }
 
   " vim-after-object {
     silent! if has_key(g:plugs, 'vim-after-object')
@@ -936,15 +965,14 @@
   " Display the current filename
   nnoremap \f :echo @%<CR>
 
-  " Close location list
-  nnoremap \q :lclose<CR>
-
   " Clear search buffer
-  nnoremap \cc :let @/ =""<CR>:<backspace>
+  nnoremap <leader>cc :let @/ =""<CR>:<backspace>
 
   " Toggle folds
+  nnoremap <leader>z za
   nnoremap z<Space> za
   " In visual mode, insert fold markers around the highlighted text
+  vnoremap <leader>z zf
   vnoremap z<Space> zf
 
   " qq to record, Q to replay
@@ -962,8 +990,7 @@
   map ¬ <C-w>l
   map ˙ <C-w>h
 
-  " Move lines
-  " and match indentation with `==`
+  " Move lines and match indentation with `==`
   nnoremap <silent> <C-j> :move+<CR>==
   nnoremap <silent> <C-k> :move-2<CR>==
   nnoremap <silent> <C-h> <<
@@ -975,7 +1002,7 @@
   xnoremap < <gv
   xnoremap > >gv
 
-  " Last inserted text
+  " Go to last inserted text
   nnoremap g. :normal! `[v`]<CR><left>
 
   " Quickfix
@@ -986,31 +1013,31 @@
   nnoremap ]b :bnext<CR>
   nnoremap [b :bprev<CR>
 
-  " Markdown headings {
-  nnoremap <leader>1 m`yypVr=``
-  nnoremap <leader>2 m`yypVr-``
+  " Tags
+  nnoremap ]t :pop<CR>
+  nnoremap ]t :tag<CR>
+
+  " Command history navigation
+  cmap <C-j> <Down>
+  cmap <C-k> <Up>
+
+  " Help navigation
+  augroup VimrcHelpNavigation
+    autocmd!
+    autocmd FileType help nnoremap <buffer> <CR> <C-]>
+    autocmd FileType help nnoremap <buffer> <BS> <C-O>
+    autocmd FileType help nnoremap <buffer> o /'\l\{2,\}'<CR>
+    autocmd FileType help nnoremap <buffer> O ?'\l\{2,\}'<CR>
+    autocmd FileType help nnoremap <buffer> s /\|\zs\S\+\ze\|<CR>
+    autocmd FileType help nnoremap <buffer> S ?\|\zs\S\+\ze\|<CR>
+  augroup END
+
+  " Markdown headings
+  nnoremap <leader>1 m`^i# <Esc>``1l
+  nnoremap <leader>2 m`^i## <Esc>``2l
   nnoremap <leader>3 m`^i### <Esc>``4l
   nnoremap <leader>4 m`^i#### <Esc>``5l
   nnoremap <leader>5 m`^i##### <Esc>``6l
-  " }
-
-  " Help navigation
-  autocmd FileType help nnoremap <buffer> <CR> <C-]>
-  autocmd FileType help nnoremap <buffer> <BS> <C-O>
-  autocmd FileType help nnoremap <buffer> o /'\l\{2,\}'<CR>
-  autocmd FileType help nnoremap <buffer> O ?'\l\{2,\}'<CR>
-  autocmd FileType help nnoremap <buffer> s /\|\zs\S\+\ze\|<CR>
-  autocmd FileType help nnoremap <buffer> S ?\|\zs\S\+\ze\|<CR>
-
-  " Readline-style key bindings in command-line (excerpt from rsi.vim)
-  cnoremap        <C-a> <Home>
-  cnoremap        <C-b> <Left>
-  cnoremap <expr> <C-d> getcmdpos()>strlen(getcmdline())?"\<Lt>C-D>":"\<Lt>Del>"
-  cnoremap <expr> <C-f> getcmdpos()>strlen(getcmdline())?&cedit:"\<Lt>Right>"
-  cnoremap        <M-b> <S-Left>
-  cnoremap        <M-f> <S-Right>
-  silent! exe "set <S-Left>=\<Esc>b"
-  silent! exe "set <S-Right>=\<Esc>f"
 
   " <leader>bs | buf-search
   nnoremap <leader>bs :cex []<BAR>bufdo vimgrepadd @@g %<BAR>cw<s-left><s-left><right>
@@ -1127,7 +1154,7 @@
 
 " Functions {
 
-    " Initialize directories {
+  " Initialize directories {
     function! InitializeDirectories()
       let parent = $HOME
       let prefix = 'vim'
@@ -1160,9 +1187,9 @@
       endfor
     endfunction
     call InitializeDirectories()
-    " }
+  " }
 
-    " Strip whitespace {
+  " Strip whitespace {
     function! StripTrailingWhitespace()
         " Preparation: save last search, and cursor position.
         let _s=@/
@@ -1174,9 +1201,9 @@
         let @/=_s
         call cursor(l, c)
     endfunction
-    " }
+  " }
 
-    " Shell command {
+  " Shell command {
     function! s:RunShellCommand(cmdline)
         botright new
 
@@ -1197,29 +1224,32 @@
 
     command! -complete=file -nargs=+ Shell call s:RunShellCommand(<q-args>)
     " e.g. Grep current file for <search_term>: Shell grep -Hn <search_term> %
-    " }
-
-  " :Root | Change directory to the root of the Git repository {
-  function! s:root()
-    let root = systemlist('git rev-parse --show-toplevel')[0]
-    if v:shell_error
-      echo 'Not in git repo'
-    else
-      execute 'lcd' root
-      echo 'Changed directory to: '.root
-    endif
-  endfunction
-  command! Root call s:root()
   " }
 
-  " Help in new tabs {
-  function! s:helptab()
-    if &buftype == 'help'
-      wincmd T
-      nnoremap <buffer> q :q<CR>
-    endif
-  endfunction
-  autocmd BufEnter *.txt call s:helptab()
+  " :Root | Change directory to the root of the Git repository {
+    function! s:root()
+      let root = systemlist('git rev-parse --show-toplevel')[0]
+      if v:shell_error
+        echo 'Not in git repo'
+      else
+        execute 'lcd' root
+        echo 'Changed directory to: '.root
+      endif
+    endfunction
+    command! Root call s:root()
+  " }
+
+  " Help in new tabs, `q` to close help {
+    function! s:helptab()
+      if &buftype == 'help'
+        wincmd T
+        nnoremap <buffer> q :q<CR>
+      endif
+    endfunction
+    augroup VimrcHelpTab
+      autocmd!
+      autocmd BufEnter *.txt call s:helptab()
+    augroup END
   " }
 
   " tmux {
@@ -1287,14 +1317,17 @@
   " }
 
   " Quit if the quickfix is the last window {
-  function! AutoCloseQuickfix()
-    if &buftype=="quickfix"
-      if winbufnr(2) == -1
-        quit!
+    function! AutoCloseQuickfix()
+      if &buftype == "quickfix"
+        if winbufnr(2) == -1
+          quit!
+        endif
       endif
-    endif
-  endfunction
-  autocmd BufEnter * call AutoCloseQuickfix()
+    endfunction
+    augroup VimrcAutoCloseQuickfix
+      autocmd!
+      autocmd BufEnter * call AutoCloseQuickfix()
+    augroup END
   " }
 
 " }
