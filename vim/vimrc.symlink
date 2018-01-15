@@ -13,8 +13,6 @@
     inoremap <silent> <C-[>OC <RIGHT>
   endif
 
-  " Use aliases when running shell commands within vim
-  set shell=/usr/local/bin/zsh
   " Don't need usr/include in path as far as I can tell; just slows completion
   set path=.,,
 
