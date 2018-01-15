@@ -28,12 +28,14 @@ OS=$(uname -s)
   export PATH="$PATH:/Developer/NVIDIA/CUDA-8.0/bin"
   export DYLD_LIBRARY_PATH="/Developer/NVIDIA/CUDA-8.0/lib:$DYLD_LIBRARY_PATH"
   # Executables installed via `pip install --user`
-  export PATH="$HOME/Library/Python/2.7/bin/:$PATH"
+  if [ "$OS" = "Darwin" ]; then
+    export PATH="$HOME/Library/Python/2.7/bin:$PATH"
+  fi
   # Public, versioned executables in ~/dotfiles/bin
   export PATH=$HOME/dotfiles/bin:$PATH
   # Local executables in ~/bin
   export PATH=$HOME/bin:$PATH
-  # Ensure /usr/local/bin/ is first
+  # Ensure /usr/local/bin is first
   export PATH="/usr/local/bin:$PATH"
 # }
 
@@ -98,9 +100,9 @@ OS=$(uname -s)
     # virtualenvwrapper {
       export WORKON_HOME="$HOME/.virtualenvs"
       export PROJECT_HOME=$CODE
-      export VIRTUALENV_PYTHON="/usr/local/bin/python"
-      source "$HOME/Library/Python/2.7/bin/virtualenvwrapper.sh"
+      export VIRTUALENV_PYTHON=$(which python)
       export VIRTUAL_ENV_DISABLE_PROMPT=1
+      source $(which virtualenvwrapper.sh)
     # }
 
   # }
@@ -161,18 +163,18 @@ OS=$(uname -s)
   # }
 
   # nvm {
-    export NVM_DIR="/Users/will/.nvm"
+    export NVM_DIR="$HOME/.nvm"
 
     [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
     # This loads nvm bash_completion
     [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
   # }
 
-  # npm package completion {
+  # node {
     # Grunt task tab-completion
-    eval "$(grunt --completion=zsh)"
+    command -v grunt >/dev/null && eval "$(grunt --completion=zsh)"
     # Gulp task tab-completion
-    eval "$(gulp --completion=zsh)"
+    command -v gulp >/dev/null && eval "$(gulp --completion=zsh)"
   # }
 
   # fasd {
@@ -288,17 +290,22 @@ OS=$(uname -s)
   # Don't treat `sudo` as a separate command (so don't use autocorrect)
   # alias sudo="nocorrect sudo"
 
+  # macOS {
+    if [ "$OS" = "Darwin" ]; then
+      # Use GNU readlink
+      alias readlink="greadlink"
+      # Use GNU grep instead of native grep
+      alias grep="ggrep"
+    fi
+  # }
+
   # General {
     # List only directories
     alias lsd="ls -d */"
     # Allow colors with less
     alias less="less -R"
-    # Use GNU readlink
-    alias readlink="greadlink"
     # Get the absolute path of a file
-    alias fullpath="greadlink -f"
-    # Use GNU grep instead of native grep
-    alias grep="ggrep"
+    alias fullpath="readlink -f"
     # Use colordiff instead of native diff
     alias diff="colordiff"
     # Always sudo htop (doesn't work properly on macOS otherwise)
