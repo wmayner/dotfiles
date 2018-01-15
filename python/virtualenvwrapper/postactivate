@@ -1,8 +1,0 @@
-#!/usr/local/bin/zsh
-# This should be placed in the ~/.virtualenvs directory.
-
-# This hook is run after every virtualenv is activated.
-
-PS1="$_OLD_VIRTUAL_PS1"
-_OLD_VIRTUAL_RPS1=$RPS1
-RPS1="$RPS1 [`basename \"$VIRTUAL_ENV\"`]"
