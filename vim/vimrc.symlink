@@ -500,19 +500,6 @@
 
 " Configure plugins {
 
-  " " neoformat {
-  "   nmap <leader>f :Neoformat<CR>
-  "   " autocmd BufWritePre *.js,*.py,*.md,*.markdown Neoformat
-  "   let g:neoformat_run_all_formatters = 1
-  "   let g:neoformat_enabled_python = ['autopep8', 'isort', 'yapf']
-  "   let g:neoformat_enabled_markdown = ['prettier']
-  "   let g:neoformat_markdown_prettier = {
-  "         \ 'exe': 'prettier',
-  "         \ 'args': ['--parser=markdown', '--prose-wrap=always'],
-  "         \ 'stdin': 1
-  "         \ }
-  " " }
-
   " vimtex {
     let g:tex_flavor = 'latex'
   " }
