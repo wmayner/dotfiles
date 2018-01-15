@@ -4,5 +4,6 @@ pip-autoremove
 tqdm
 pytest
 pylint
+flake8
 isort
 yapf
