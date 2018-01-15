@@ -14,8 +14,11 @@
 # - Symlink Neovim configuration directory to Vim configuration directory
 # - Install Vim plugins
 
+NEOVIM_INSTALL_PREFIX="$HOME/neovim"
+
 # Are we on macOS or Linux?
 OS=$(uname -s)
+DOTFILES=$(pwd)
 
 # macOS-specific
 if [ "$OS" = "Darwin" ]; then
@@ -24,16 +27,25 @@ if [ "$OS" = "Darwin" ]; then
   BREW_FORMULAE='./brew/formulae.txt'
   BREW_FORMULAE_HEAD='./brew/formulae-head.txt'
   printf "Installing Homebrew formulae from '$BREW_FORMULAE' and '$BREW_FORMULAE_HEAD'..."
-  xargs brew install < $BREW_FORMULAE
-  xargs brew install --HEAD < $BREW_FORMULAE_HEAD
+  xargs brew install <$BREW_FORMULAE
+  xargs brew install --HEAD <$BREW_FORMULAE_HEAD
   # Ensure brewed Python is used instead of the system Python
   if [ ! -e "/usr/local/bin/python" ]; then
     ln -s "/usr/local/bin/python2" "/usr/local/bin/python"
   fi
+# Linux specific
 else
   printf "\nInstalling system packages...\n"
   LINUX_PACKAGES='./linux/packages.txt'
-  xargs sudo apt-get install < $LINUX_PACKAGES
+  xargs sudo apt-get install <$LINUX_PACKAGES
+
+  printf "\nInstalling Neovim...\n"
+  git clone https://github.com/neovim/neovim.git "$HOME/neovim-src"
+  cd "$HOME/neovim-src"
+  make CMAKE_EXTRA_FLAGS="-DCMAKE_INSTALL_PREFIX=$NEOVIM_INSTALL_PREFIX"
+  make install
+  cd "$DOTFILES"
+  rm -rf "$HOME/neovim-src"
 fi
 
 printf "\nChanging shell to zsh...\n"
@@ -65,7 +77,7 @@ deactivate
 
 printf "\nInstalling Node packages...\n"
 NODE_PACKAGES_FILE="./node/global_packages.txt"
-xargs npm install --global < $NODE_PACKAGES_FILE
+xargs npm install --global <$NODE_PACKAGES_FILE
 
 printf "\nSymlinking '*.symlink' files...\n"
 for SOURCE_FILE in $(find $(pwd) -name '*.symlink'); do
@@ -88,6 +100,6 @@ mkdir -p "$HOME/.config/nvim/autoload"
 ln -sv $(find . -name "vimrc.symlink") "$HOME/.config/nvim/init.vim"
 ln -sv "$HOME/.vim" "$HOME/.config/nvim"
 # Install plugins
-vim +PlugInstall! +qall
+nvim +PlugInstall! +qall
 
 printf "\nDone!"
