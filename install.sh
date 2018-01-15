@@ -30,6 +30,10 @@ if [ "$OS" = "Darwin" ]; then
   if [ ! -e "/usr/local/bin/python" ]; then
     ln -s "/usr/local/bin/python2" "/usr/local/bin/python"
   fi
+else
+  printf "\nInstalling system packages...\n"
+  LINUX_PACKAGES='./linux/packages.txt'
+  xargs sudo apt-get install < $LINUX_PACKAGES
 fi
 
 printf "\nChanging shell to zsh...\n"
