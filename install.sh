@@ -15,7 +15,7 @@
 OS=$(uname -s)
 
 # Homebrew
-if [ "$OS" == "Darwin" ]; then
+if [ "$OS" = "Darwin" ]; then
   echo "Installing Homebrew..."
   /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
   BREW_FORMULAE='./brew/formulae.txt'
