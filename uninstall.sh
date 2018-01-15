@@ -10,6 +10,11 @@ for SOURCE_FILE in $(find $(pwd) -name '*.symlink'); do
   fi
 done
 
+# Remove Neovim virtualenvs
+source $(which virtualenvwrapper.sh)
+rmvirtualenv neovim-python2
+rmvirtualenv neovim-python3
+
 # Remove Neovim config
 mkdir -p "$HOME/.config/nvim/autoload"
 LINK_FILE="$HOME/.config/nvim/init.vim"
