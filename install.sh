@@ -46,16 +46,17 @@ pip install --user -r $PYTHON_REQUIREMENTS_FILE
 echo ''
 
 # Neovim virtualenvs
+NEOVIM_REQUIREMENTS="./vim/neovim_requirements.txt"
 source $(which virtualenvwrapper.sh)
 # Python 2
 mkvirtualenv -p $(which python2) neovim-python2 &&
 source "$HOME/.virtualenvs/neovim-python2/bin/activate"
-pip install neovim
+pip install -r $NEOVIM_REQUIREMENTS
 deactivate
 # Python 3
 mkvirtualenv -p $(which python3) neovim-python3
 source "$HOME/.virtualenvs/neovim-python3/bin/activate"
-pip install neovim
+pip install -r $NEOVIM_REQUIREMENTS
 deactivate
 
 # Symlink dotfiles
