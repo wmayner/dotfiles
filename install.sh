@@ -102,7 +102,7 @@ curl -fLo "$HOME/.vim/autoload/plug.vim" --create-dirs \
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 # Neovim
 ln -sv "$HOME/.vim" "$HOME/.config/nvim"
-ln -sv $(find . -name "vimrc.symlink") "$HOME/.config/nvim/init.vim"
+ln -sv $(find $(pwd) -name "vimrc.symlink") "$HOME/.config/nvim/init.vim"
 # Install plugins
 nvim +PlugInstall! +qall
 
