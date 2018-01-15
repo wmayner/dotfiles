@@ -1,6 +1,7 @@
 " vim: sw=2 ts=2 sts=2 et tw=80 foldmarker={,} foldlevel=0 foldmethod=marker
 "
 " vimrc of wmayner
+"   based on spf13/spf13-vim and junegunn/dotfiles
 
 " Environment {
   " No compatibility with vi; must be first line
@@ -16,6 +17,10 @@
   set shell=/usr/local/bin/zsh
   " Don't need usr/include in path as far as I can tell; just slows completion
   set path=.,,
+
+  " Use a dedicated virtualenv for the Neovim Python provider
+  let g:python_host_prog = '/Users/will/.virtualenvs/neovim-python2/bin/python'
+  let g:python3_host_prog = '/Users/will/.virtualenvs/neovim-python3/bin/python'
 " }
 
 " Plugins {
