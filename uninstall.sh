@@ -16,7 +16,6 @@ rmvirtualenv neovim-python2
 rmvirtualenv neovim-python3
 
 # Remove Neovim config
-mkdir -p "$HOME/.config/nvim/autoload"
 LINK_FILE="$HOME/.config/nvim/init.vim"
 SOURCE_FILE=$(find . -name "vimrc.symlink")
 if [ "$(readlink $LINK_FILE)" == "$SOURCE_FILE" ]; then
