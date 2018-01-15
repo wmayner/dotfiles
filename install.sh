@@ -1,10 +1,15 @@
 #!/usr/bin/env sh
 #
-# - Install Homebrew if on macOS and brews various formulae
+# - Downloads and installs Homebrew if on macOS and brews various formulae
 # - Change default shell to zsh
-# - Install Oh My Zsh
-# - Install various Python packages
+# - Downloads and installs Oh My Zsh
+# - Installs various Python packages
+# - Makes virtualenvironments `neovim-python2` and `neovim-python3` and runs
+#   `pip install neovim` in each
 # - Symlink all *.symlink files into $HOME as dotfiles
+# - Downloads and installs vim-plug
+# - Symlinks Neovim configuration directory to Vim configuration directory
+# - Installs Vim plugins
 
 # Are we on macOS or Linux?
 OS=$(uname -s)
@@ -40,11 +45,36 @@ PYTHON_REQUIREMENTS_FILE='./python/requirements.txt'
 pip install --user -r $PYTHON_REQUIREMENTS_FILE
 echo ''
 
+# Neovim virtualenvs
+source $(which virtualenvwrapper.sh)
+# Python 2
+mkvirtualenv -p $(which python2) neovim-python2 &&
+source "$HOME/.virtualenvs/neovim-python2/bin/activate"
+pip install neovim
+deactivate
+# Python 3
+mkvirtualenv -p $(which python3) neovim-python3
+source "$HOME/.virtualenvs/neovim-python3/bin/activate"
+pip install neovim
+deactivate
+
 # Symlink dotfiles
 for SOURCE_FILE in $(find $(pwd) -name '*.symlink'); do
   LINK_FILE="$HOME/.$(basename ${SOURCE_FILE%.symlink})"
-  echo "Symlinking $LINK_FILE -> $SOURCE_FILE";
-  ln -s "$SOURCE_FILE" $LINK_FILE;
+  ln -sv "$SOURCE_FILE" $LINK_FILE;
 done
+echo ''
+
+# Vim
+mkdir -p "$HOME/.vim/autoload"
+# Install vim-plug
+curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+# Neovim
+mkdir -p "$HOME/.config/nvim/autoload"
+ln -sv $(find . -name "vimrc.symlink") "$HOME/.config/nvim/init.vim"
+ln -sv "$HOME/.vim" "$HOME/.config/nvim"
+# Install plugins
+vim +PlugInstall! +qall
 
 echo "\nDone!"
