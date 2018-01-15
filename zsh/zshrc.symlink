@@ -2,6 +2,8 @@
 #
 # zshrc of wmayner
 
+OS=$(uname -s)
+
 # Environment variables {
   export DEFAULT_USER="will"
   # Make Vim the default editor
@@ -87,6 +89,11 @@
     source $ZSH/oh-my-zsh.sh
   # }
 
+  # zsh {
+    # Use extended globbing
+    setopt extendedglob
+  # }
+
   # Python {
     # virtualenvwrapper {
       export WORKON_HOME="$HOME/.virtualenvs"
@@ -103,8 +110,12 @@
   # }
 
   # powerline {
-    source "$HOME/Library/Python/2.7/lib/python/site-packages/powerline/bindings/zsh/powerline.zsh"
-    export PYTHONPATH=$PYTHONPATH:~/.config/powerline/
+    if [ "$OS" = "Darwin" ]; then
+      source "$HOME/Library/Python/2.7/lib/python/site-packages/powerline/bindings/zsh/powerline.zsh"
+    else
+      source "$HOME/.local/lib/python2.7/site-packages/powerline/bindings/zsh/powerline.zsh"
+    fi
+    export PYTHONPATH="$PYTHONPATH:$HOME/.config/powerline/"
     powerline-daemon --quiet
   # }
 
@@ -126,9 +137,15 @@
     }
   # }
 
+  # less {
+    # Pygmentize less automatically
+    # (requires pygmentize to be available; `pip install pygments`)
+    export LESSOPEN='|$HOME/.lessfilter %s'
+  # }
+
   # teamocil {
     # Set up completions
-    compctl -g '~/.teamocil/*(:t:r)' teamocil
+    compctl -g '$HOME/.teamocil/*(:t:r)' teamocil
   # }
 
   # SHELLSHOCK {
@@ -274,6 +291,10 @@
   # General {
     # List only directories
     alias lsd="ls -d */"
+    # Allow colors with less
+    alias less="less -R"
+    # Use GNU readlink
+    alias readlink="greadlink"
     # Get the absolute path of a file
     alias fullpath="greadlink -f"
     # Use GNU grep instead of native grep
@@ -339,7 +360,7 @@
     # fast git status
     alias g='git status'
     # edit .gitconfig
-    alias vgrc="nvim ~/.gitconfig"
+    alias vgrc="nvim $HOME/.gitconfig"
   # }
 
   # Python {
@@ -395,18 +416,17 @@
 
   # zsh {
     # Edit zsh config
-    alias vsh="$EDITOR ~/.zshrc"
+    alias vsh="$EDITOR $HOME/.zshrc"
     # Source zsh config
-    alias szsh="source ~/.zshrc"
+    alias szsh="source $HOME/.zshrc"
   # }
 
 # }
 
 # Local zshrc {
-  # Use .zshrc.local for SUPER SECRET CRAP that you don't
-  # want in the public dotfiles repo.
-  if [[ -a ~/.zshrc.local ]]
+  # Put system-specific stuff in `.zshrc.local`.
+  if [[ -a $HOME/.zshrc.local ]]
   then
-    source ~/.zshrc.local
+    source $HOME/.zshrc.local
   fi
 # }
