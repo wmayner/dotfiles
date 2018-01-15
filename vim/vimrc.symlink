@@ -765,7 +765,6 @@
   " }
 
   " YouCompleteMe {
-    let g:acp_enableAtStartup = 0
 
     let g:ycm_collect_identifiers_from_tags_files = 1
     let g:ycm_collect_identifiers_from_comments_and_strings = 1
@@ -774,14 +773,15 @@
     imap <C-j> <C-n>
     imap <C-k> <C-p>
 
-    " Remap Ultisnips for compatibility for YCM
-    " let g:UltiSnipsExpandTrigger = '<C-l>'
+    " Remap Ultisnips for compatibility for YCM and fix tab key mapping
+    let g:UltiSnipsExpandTrigger = '<C-s>'
     let g:UltiSnipsJumpForwardTrigger = '<C-j>'
     let g:UltiSnipsJumpBackwardTrigger = '<C-k>'
 
     " Enable omni completion
     autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-    autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+    autocmd FileType html setlocal omnifunc=htmlcomplete#CompleteTags
+    autocmd FileType markdown setlocal omnifunc=emoji#complete
     autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
     autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
     autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
@@ -792,6 +792,7 @@
     if has('conceal')
       set conceallevel=2 concealcursor=i
     endif
+
   " }
 
   " vimtex {
