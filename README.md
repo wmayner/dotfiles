@@ -1,6 +1,6 @@
 # dotfiles
 
-This is my OSX environment. Check out the `linux` branch for the Linux version.
+My shell. :sparkles:
 
 ## Install
 
@@ -13,6 +13,7 @@ cd ~/dotfiles
 ```
 This will
 - Download and install Homebrew on macOS, and brew various formulae
+- Install system packages and Neovim on Linux
 - Change default shell to zsh
 - Download and install Oh My Zsh
 - Install various Python packages
