@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 # Remove any dotfiles that are symlinks to '*.symlink' files in this
 # directory

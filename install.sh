@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 #
 # This script will
 # - Download and install Homebrew on macOS, and brew various formulae
