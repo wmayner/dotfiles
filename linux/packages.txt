@@ -3,11 +3,12 @@ mmv
 mutt
 nmap
 pandoc
-python-dev
 python3-dev
+python-dev
 redis-server
 rsnapshot
 rstudio-server
 rsync
 tree
+vim-gtk
 zsh
