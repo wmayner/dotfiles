@@ -1,15 +1,16 @@
 #!/usr/bin/env sh
 #
-# - Downloads and installs Homebrew if on macOS and brews various formulae
+# This script will
+# - Download and install Homebrew on macOS, and brew various formulae
 # - Change default shell to zsh
-# - Downloads and installs Oh My Zsh
-# - Installs various Python packages
-# - Makes virtualenvironments `neovim-python2` and `neovim-python3` and runs
+# - Download and install Oh My Zsh
+# - Install various Python packages
+# - Make virtualenvironments `neovim-python2` and `neovim-python3` and run
 #   `pip install neovim` in each
-# - Symlink all *.symlink files into $HOME as dotfiles
-# - Downloads and installs vim-plug
-# - Symlinks Neovim configuration directory to Vim configuration directory
-# - Installs Vim plugins
+# - Symlink all `*.symlink` files into $HOME as dotfiles
+# - Download and install vim-plug
+# - Symlink Neovim configuration directory to Vim configuration directory
+# - Install Vim plugins
 
 # Are we on macOS or Linux?
 OS=$(uname -s)
