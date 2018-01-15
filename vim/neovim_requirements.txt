@@ -5,3 +5,4 @@ neovim
 flake8
 pylint
 isort
+yapf
