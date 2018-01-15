@@ -43,7 +43,8 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/mas
 
 echo "\nInstalling Python packages...\n"
 PYTHON_REQUIREMENTS_FILE='./python/requirements.txt'
-pip install --user --upgrade -r $PYTHON_REQUIREMENTS_FILE
+pip2 install --user --upgrade -r $PYTHON_REQUIREMENTS_FILE
+pip3 install --user --upgrade -r $PYTHON_REQUIREMENTS_FILE
 
 echo "\nMaking Neovim virtualenvs...\n"
 NEOVIM_REQUIREMENTS="./vim/neovim_requirements.txt"
