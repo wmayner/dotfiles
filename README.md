@@ -2,7 +2,6 @@
 
 This is my OSX environment. Check out the `linux` branch for the Linux version.
 
-
 ## Install
 
 Clone and run the install script:
@@ -13,12 +12,16 @@ cd ~/dotfiles
 ./install.sh
 ```
 This will
-- Install Homebrew if on macOS and brews various formulae
+- Download and install Homebrew on macOS, and brew various formulae
 - Change default shell to zsh
-- Install Oh My Zsh
+- Download and install Oh My Zsh
 - Install various Python packages
-- Symlink all `*.symlink` files into `$HOME` as dotfiles
-
+- Make virtualenvironments `neovim-python2` and `neovim-python3` and run
+  `pip install neovim` in each
+- Symlink all `*.symlink` files into $HOME as dotfiles
+- Download and install vim-plug
+- Symlink Neovim configuration directory to Vim configuration directory
+- Install Vim plugins
 
 ## Personalize
 
