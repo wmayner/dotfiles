@@ -48,10 +48,10 @@
   email = wmayner@gmail.com
   signingkey = B46975179AD9DFC0
 [core]
-  excludesfile = /Users/will/.gitignore
+  excludesfile = ~/.gitignore
   autocrlf = input
 [credential]
-  helper = osxkeychain
+  helper = cache --timeout=3600
 [merge]
   tool = vimdiff
   conflictstyle = diff3
