@@ -96,15 +96,17 @@ mkdir -p "$HOME/.ipython/profile_default"
 ln -sv "$(pwd)/ipython/ipython_config.py" "$HOME/.ipython/profile_default/ipython_config.py"
 
 printf "\nSetting up Vim and Neovim...\n"
-# Vim
-mkdir -p "$HOME/.vim/autoload"
-# Install vim-plug
-curl -fLo "$HOME/.vim/autoload/plug.vim" --create-dirs \
-    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 # Neovim
 ln -sv "$HOME/.vim" "$HOME/.config/nvim"
 ln -sv $(find $(pwd) -name "vimrc.symlink") "$HOME/.config/nvim/init.vim"
+# Install vim-plug
+mkdir -p "$HOME/.vim/autoload"
+curl -fLo "$HOME/.vim/autoload/plug.vim" --create-dirs \
+    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+# Mapping overrides
+mkdir -p "$HOME/.vim/after/plugin"
+echo "call VimrcMappings()" >> "$HOME/.vim/after/plugin/overrides.vim"
 # Install plugins
-nvim +PlugInstall! +qall
+vim +PlugInstall! +qall
 
 printf "\nDone!"
