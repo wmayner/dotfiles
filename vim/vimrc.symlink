@@ -325,6 +325,7 @@
     autocmd BufNewFile,BufRead Dockerfile* set filetype=dockerfile
     autocmd BufNewFile,BufRead *.styl set filetype=stylus
     autocmd BufNewFile,BufRead *.html.twig set filetype=html.twig
+    autocmd BufNewFile,BufRead *flake8,*pylintrc set filetype=cfg
     " Prefer cfg highlighting to conf
     autocmd FileType conf set filetype=cfg
   augroup END
