@@ -495,6 +495,11 @@
     colorscheme solarized
   " }
 
+  " Neoformat {
+    let g:neoformat_run_all_formatters = 1
+    let g:neoformat_enabled_python = ['isort', 'yapf']
+  " }
+
   " vimtex {
     let g:tex_flavor = 'latex'
   " }
