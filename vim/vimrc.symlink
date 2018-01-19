@@ -466,7 +466,7 @@
     " Remove trailing whitespaces and ^M chars
     augroup VimrcRemoveTrailingWhitespace
       autocmd!
-      autocmd FileType c,cpp,java,go,php,javascript,puppet,python,rust,twig,xml,yml,perl,sql,vim,zsh,sh autocmd BufWritePre <buffer> call StripTrailingWhitespace()
+      autocmd FileType c,cpp,java,go,php,javascript,puppet,python,pyrex,rust,twig,xml,yml,perl,sql,vim,zsh,sh autocmd BufWritePre <buffer> call StripTrailingWhitespace()
     augroup END
 
   " }
