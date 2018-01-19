@@ -8,10 +8,7 @@ OS=$(uname -s)
 # zshrc.before.local {
   # Put system-specific stuff that needs to be sourced before this file in
   # `~/.zshrc.before.local`.
-  if [[ -a $HOME/.zshrc.before.local ]]
-  then
-    source $HOME/.zshrc.before.local
-  fi
+  [ -f "$HOME/.zshrc.before.local" ] && source "$HOME/.zshrc.before.local"
 # }
 
 # Environment variables {
@@ -205,7 +202,7 @@ OS=$(uname -s)
   # }
 
   # travis {
-    [ -f /Users/will/.travis/travis.sh ] && source /Users/will/.travis/travis.sh
+    [ -f "$HOME/.travis/travis.sh" ] && source "$HOME/.travis/travis.sh"
   # }
 
   # fzy {
@@ -218,14 +215,12 @@ OS=$(uname -s)
       }
     zle -N insert-fzy-path-in-command-line
 
-  # By default, ^S freezes terminal output, only needed if keybinding is ^S
+    # By default, ^S freezes terminal output, only needed if keybinding is ^S
     unsetopt flowcontrol
     bindkey "^S" "insert-fzy-path-in-command-line"
   # }
 
   # fzf {
-    [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
     _gen_fzf_default_opts() {
       local base03="234"
       local base02="235"
@@ -248,6 +243,7 @@ OS=$(uname -s)
 
       # Solarized Dark color scheme for fzf
       export FZF_DEFAULT_OPTS="
+        --reverse
         --color fg:-1,bg:-1,hl:$blue,fg+:$base2,bg+:$base02,hl+:$blue
         --color info:$yellow,prompt:$yellow,pointer:$base3,marker:$base3,spinner:$yellow
       "
@@ -266,6 +262,8 @@ OS=$(uname -s)
     }
     zle     -N     fzf-history-widget-accept
     bindkey '^X^R' fzf-history-widget-accept
+
+    [ -f "$HOME/.fzf.zsh" ] && source "$HOME/.fzf.zsh"
   # }
 
 # }
@@ -444,8 +442,5 @@ OS=$(uname -s)
 
 # zshrc.local {
   # Put system-specific stuff in `~/.zshrc.local`.
-  if [[ -a $HOME/.zshrc.local ]]
-  then
-    source $HOME/.zshrc.local
-  fi
+  [ -f "$HOME/.zshrc.local" ] && source "$HOME/.zshrc.local"
 # }
