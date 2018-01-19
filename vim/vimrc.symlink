@@ -436,6 +436,7 @@
 
   " Formatting {
 
+    set textwidth=80
     " Do not wrap long lines
     set nowrap
     " Indent at the same level of the previous line
