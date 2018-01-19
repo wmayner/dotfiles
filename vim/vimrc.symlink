@@ -325,6 +325,8 @@
     autocmd BufNewFile,BufRead Dockerfile* set filetype=dockerfile
     autocmd BufNewFile,BufRead *.styl set filetype=stylus
     autocmd BufNewFile,BufRead *.html.twig set filetype=html.twig
+    " Prefer cfg highlighting to conf
+    autocmd FileType conf set filetype=cfg
   augroup END
 
   " If doing a diff, automatically update the differences upon writing changes
