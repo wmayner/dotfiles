@@ -48,8 +48,6 @@ OS=$(uname -s)
   export PATH="$HOME/bin:$PATH"
 # }
 
-# Tool configuration {
-
   # oh-my-zsh {
     # Path to your oh-my-zsh configuration
     ZSH="$HOME/.oh-my-zsh"
@@ -99,6 +97,35 @@ OS=$(uname -s)
 
     source "$ZSH/oh-my-zsh.sh"
   # }
+
+# Keybindings {
+  # Use vi to edit command line
+  bindkey -v
+
+  # Remove delay in entering command mode, as described by
+  # http://zsh.sourceforge.net/Guide/zshguide04.html:
+  #
+  # You can remove all bindings starting with a given prefix by adding the `-p
+  # option. The example given in the manual,
+  #     bindkey -rpM viins '\e'
+  # (except it uses the equivalent form `^[') is amongst the most useful, as it
+  # will remove the annoying delay after you type `\e' to enter vi command mode.
+  # The delay is there because the cursor keys usually also start with \e and
+  # the shell is waiting to see if you actually typed one of those.
+  # bindkey -rpM viins "\e"
+
+  # Use control+j and control+k for scrolling through history, since removing
+  # all bindings that begin with escape also removes the arrow-key bindings
+  bindkey "^K" history-substring-search-up
+  bindkey "^J" history-substring-search-down
+
+  # Press Ctrl+Q to push the current command on to the stack. It will disappear,
+  # allowing you to enter another command, after which it will reappear in the
+  # prompt.
+  bindkey "^Q" push-input
+# }
+
+# Tool configuration {
 
   # zsh {
     # Use extended globbing
@@ -266,33 +293,6 @@ OS=$(uname -s)
     [ -f "$HOME/.fzf.zsh" ] && source "$HOME/.fzf.zsh"
   # }
 
-# }
-
-# Keybindings {
-  # Use vi to edit command line
-  bindkey -v
-
-  # Remove delay in entering command mode, as described by
-  # http://zsh.sourceforge.net/Guide/zshguide04.html:
-  #
-  # You can remove all bindings starting with a given prefix by adding the `-p
-  # option. The example given in the manual,
-  #     bindkey -rpM viins '\e'
-  # (except it uses the equivalent form `^[') is amongst the most useful, as it
-  # will remove the annoying delay after you type `\e' to enter vi command mode.
-  # The delay is there because the cursor keys usually also start with \e and
-  # the shell is waiting to see if you actually typed one of those.
-  # bindkey -rpM viins "\e"
-
-  # Use control+j and control+k for scrolling through history, since removing
-  # all bindings that begin with escape also removes the arrow-key bindings
-  bindkey "^K" history-substring-search-up
-  bindkey "^J" history-substring-search-down
-
-  # Press Ctrl+Q to push the current command on to the stack. It will disappear,
-  # allowing you to enter another command, after which it will reappear in the
-  # prompt.
-  bindkey "^Q" push-input
 # }
 
 # Aliases {
