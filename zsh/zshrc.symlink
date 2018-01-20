@@ -13,7 +13,7 @@ OS=$(uname -s)
 
 # Environment variables {
   export DEFAULT_USER="will"
-  # Make Vim the default editor
+  # Set the default editor
   export EDITOR="nvim"
   export VISUAL="nvim"
   # Development directory
@@ -326,10 +326,6 @@ OS=$(uname -s)
     alias l="ls -AhG1F"
     alias ll="ls -lAhGF"
     alias lsa="ls -AhGF"
-    # Use nvim
-    alias vim="nvim"
-    # vim shortcut
-    alias v="nvim"
     # Safe rm
     alias t="trash"
     # Clear screen
@@ -348,6 +344,14 @@ OS=$(uname -s)
     alias matlab="/Applications/MATLAB_R2016a.app/bin/matlab"
     # ag with custom colors
     alias ag="ag --color-line-number 34 --color-match 36 --color-path 32"
+  # }
+
+  # vim {
+    # Editing shortcuts
+    alias vim='$EDITOR '
+    alias v='$EDITOR '
+    # Edit configuration (from within dotfiles, for interacting with repo)
+    alias vrc='$EDITOR $(realpath $HOME/.vimrc)'
   # }
 
   # git {
@@ -377,7 +381,7 @@ OS=$(uname -s)
     # fast git status
     alias g="git status"
     # edit .gitconfig
-    alias vgrc="nvim $HOME/.gitconfig"
+    alias vgrc="$EDITOR $HOME/.gitconfig"
   # }
 
   # Python {
@@ -433,9 +437,9 @@ OS=$(uname -s)
 
   # zsh {
     # Edit zsh config
-    alias vsh="$EDITOR $HOME/.zshrc"
+    alias vsh='$EDITOR $(realpath $HOME/.zshrc)'
     # Source zsh config
-    alias szsh="source $HOME/.zshrc"
+    alias szsh='source $(realpath $HOME/.zshrc)'
   # }
 
 # }
