@@ -956,7 +956,7 @@
   vnoremap : ;
 
   " Edit this file
-  nnoremap \v :tabedit ~/.vimrc<CR>
+  nnoremap \v :tabedit ~/dotfiles/vim/vimrc.symlink<CR>
 
   " Reload this file
   nnoremap \s :source ~/.vimrc<CR>
