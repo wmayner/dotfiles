@@ -326,6 +326,7 @@
     autocmd BufNewFile,BufRead *.styl set filetype=stylus
     autocmd BufNewFile,BufRead *.html.twig set filetype=html.twig
     autocmd BufNewFile,BufRead *flake8,*pylintrc set filetype=cfg
+    autocmd BufNewFile,BufRead MANIFEST.in set filetype=manifest
     " Prefer cfg highlighting to conf
     autocmd FileType conf set filetype=cfg
   augroup END
@@ -470,7 +471,7 @@
     " Remove trailing whitespaces and ^M chars
     augroup VimrcRemoveTrailingWhitespace
       autocmd!
-      autocmd FileType c,cpp,java,go,php,javascript,puppet,python,pyrex,rust,twig,xml,yml,perl,sql,vim,zsh,sh,cfg,conf,yaml,make,dosini autocmd BufWritePre <buffer> call StripTrailingWhitespace()
+      autocmd FileType c,cpp,java,go,php,javascript,puppet,python,pyrex,rust,twig,xml,yml,perl,sql,vim,zsh,sh,cfg,conf,yaml,make,dosini,manifest autocmd BufWritePre <buffer> call StripTrailingWhitespace()
     augroup END
 
   " }
