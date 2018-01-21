@@ -1,0 +1,6 @@
+#!/bin/sh
+
+PATTERN=$1
+shift 1
+
+ag --color --color-line-number 34 --color-match 31 --color-path 32 "\\b${PATTERN}\\b" $@

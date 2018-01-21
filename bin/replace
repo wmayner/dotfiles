@@ -1,0 +1,12 @@
+#!/bin/sh
+
+# Recursively replace all occurences of a regex with a string.
+#
+# Usage:
+#   replace <old_string> <new_string> <path> ...
+
+OLD=$1
+NEW=$2
+shift 2
+
+grep -rl --exclude-dir="*.git" ${OLD} $@ | xargs sed -i "s^${OLD}^${NEW}^g"

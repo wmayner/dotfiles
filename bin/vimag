@@ -1,0 +1,3 @@
+#!/bin/sh
+
+$EDITOR -p $(ag --nocolor --files-with-matches "$1")
