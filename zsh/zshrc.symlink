@@ -14,8 +14,8 @@ OS=$(uname -s)
 # Environment variables {
   export DEFAULT_USER="will"
   # Set the default editor
-  export EDITOR="nvim"
-  export VISUAL="nvim"
+  export EDITOR="vim"
+  export VISUAL="vim"
   # Development directory
   export DEV="$HOME/dev"
   # Project directory
