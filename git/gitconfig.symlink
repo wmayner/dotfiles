@@ -1,4 +1,6 @@
 [alias]
+  a = commit --amend
+  addon = commit --amend --no-edit
   co = checkout
   b = branch
   ba = branch -a
