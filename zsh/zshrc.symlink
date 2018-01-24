@@ -332,6 +332,8 @@ OS=$(uname -s)
     alias c="clear"
     # Clear screen and list contents
     alias cl="clear && l"
+    # Clear screen and print directory tree
+    alias ck="clear && tree"
     # Move up one directory
     alias ..="cd .."
     # Human-readable disk usage information
