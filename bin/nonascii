@@ -1,3 +1,7 @@
 #!/bin/sh
 
-ggrep --color='auto' -P -n '[^\x00-\x7F]' $1
+GREP=grep
+# Use ggrep if available
+command -v ggrep >/dev/null && GREP=ggrep
+
+$GREP --color='auto' -P -n '[^\x00-\x7F]' $1
