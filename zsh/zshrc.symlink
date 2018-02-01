@@ -305,7 +305,9 @@ OS=$(uname -s)
       # Use GNU readlink
       alias readlink="greadlink"
       # Use GNU grep instead of native grep
-      alias grep="ggrep"
+      alias grep="ggrep --color"
+    else
+      alias grep="grep --color"
     fi
   # }
 
