@@ -209,7 +209,7 @@
    " searches wrap around the end of the file
   set wrapscan
   " highlight the column beyond textwidth
-  set colorcolumn=+1
+  set colorcolumn=81
   " Set which number formats will be incremented with <C-A> and <C-X>
   set nrformats=alpha,octal,hex,bin
 
@@ -358,17 +358,17 @@
     set tabpagemax=20
     " Display the current mode
     set showmode
-    " Highlight current line
-    set cursorline
-    " highlight the column the cursor is on
-    set cursorcolumn
+    " Don't highlight current line
+    set nocursorline
+    " Don't highlight the column the cursor is on
+    set nocursorcolumn
 
     " SignColumn should match background
     highlight clear SignColumn
     " Current line number row will have same background color in relative mode
     highlight clear LineNr
     " Remove highlight color from current line number
-    "highlight clear CursorLineNr
+    " highlight clear CursorLineNr
 
     if has('cmdline_info')
       " Show the ruler
