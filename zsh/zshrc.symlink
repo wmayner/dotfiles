@@ -300,7 +300,7 @@ OS=$(uname -s)
     zle     -N     fzf-history-widget-accept
     bindkey '^X^R' fzf-history-widget-accept
 
-    [ -f "$HOME/.fzf.zsh" ] && source "$HOME/.fzf.zsh"
+    [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
   # }
 
 # }
