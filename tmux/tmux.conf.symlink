@@ -3,6 +3,9 @@ set-window-option -g mode-keys vi
 # bind-key -t vi-copy 'v' begin-selection
 # bind-key -t vi-copy 'y' copy-selection
 
+# Update environment variables from shell that started tmux
+set-option -ga update-environment ' VIRTUAL_ENV'
+
 # Use C-a instead of C-b as prefix
 set-option -g prefix C-a
 bind-key C-a last-window
@@ -14,7 +17,7 @@ bind -n WheelDownPane select-pane -t= \; send-keys -M
 
 # Automatically renumber windows so they're consecutive integers
 set-option -g renumber-windows on
- 
+
 # Allows us to use C-a a <command> to send commands to a tmux session inside
 # another tmux session
 bind-key a send-prefix
@@ -58,7 +61,7 @@ bind-key M-l resize-pane -R
 
 # Vim style pane selection
 bind h select-pane -L
-bind j select-pane -D 
+bind j select-pane -D
 bind k select-pane -U
 bind l select-pane -R
 
@@ -66,7 +69,7 @@ bind-key C command-prompt -p "Name of new window: " "new-window -n '%%'"
 
 # Use Alt-vim keys without prefix key to switch panes
 bind -n M-h select-pane -L
-bind -n M-j select-pane -D 
+bind -n M-j select-pane -D
 bind -n M-k select-pane -U
 bind -n M-l select-pane -R
 
