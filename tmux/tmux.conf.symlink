@@ -88,4 +88,4 @@ bind r source-file ~/.tmux.conf
 
 # THEME
 set -g default-terminal "xterm-256color"
-source "/usr/local/lib/python2.7/site-packages/powerline/bindings/tmux/powerline.conf"
+source "$HOME/.local/lib/python2.7/site-packages/powerline/bindings/tmux/powerline.conf"
