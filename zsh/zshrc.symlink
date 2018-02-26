@@ -58,7 +58,7 @@ OS=$(uname -s)
     export VIRTUAL_ENV_DISABLE_PROMPT=1
     source "$(which virtualenvwrapper.sh)"
     # Auto-set VIRTUAL_ENV in tmux
-    if [[ -n "$TMUX" ]]; then
+    if [[ -n "$TMUX" ]] && [ -n "$VIRTUAL_ENV" ]; then
       tmux set-environment VIRTUAL_ENV $VIRTUAL_ENV
     fi
     # Activate VIRTUAL_ENV if set
