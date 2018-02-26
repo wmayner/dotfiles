@@ -53,8 +53,13 @@ OS=$(uname -s)
   # virtualenvwrapper {
     export WORKON_HOME="$HOME/.virtualenvs"
     export PROJECT_HOME="$CODE"
-    export VIRTUALENV_PYTHON="/usr/bin/python"
-    export VIRTUALENVWRAPPER_PYTHON="/usr/bin/python"
+    if [ "$OS" = "Darwin" ]; then
+      export VIRTUALENV_PYTHON="$(which python)"
+      export VIRTUALENVWRAPPER_PYTHON="$(which python)"
+    else
+      export VIRTUALENV_PYTHON="/usr/bin/python"
+      export VIRTUALENVWRAPPER_PYTHON="/usr/bin/python"
+    fi
     export VIRTUAL_ENV_DISABLE_PROMPT=1
     source "$(which virtualenvwrapper.sh)"
     # Auto-set VIRTUAL_ENV in tmux
