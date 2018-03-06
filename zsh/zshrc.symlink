@@ -36,7 +36,7 @@ OS=$(uname -s)
   export DYLD_LIBRARY_PATH="/Developer/NVIDIA/CUDA-8.0/lib:$DYLD_LIBRARY_PATH"
   if [ "$OS" = "Darwin" ]; then
     # Executables from `pip install --user`
-    export PATH="$HOME/Library/Python/2.7/bin:$PATH"
+    export PATH="$HOME/Library/Python/3.6/bin:$PATH"
   fi
   # User-local executables
   export PATH="$HOME/.local/bin:$PATH"
@@ -164,7 +164,7 @@ OS=$(uname -s)
 
   # powerline {
     if [ "$OS" = "Darwin" ]; then
-      source "$HOME/Library/Python/2.7/lib/python/site-packages/powerline/bindings/zsh/powerline.zsh"
+      source "$HOME/Library/Python/3.6/lib/python/site-packages/powerline/bindings/zsh/powerline.zsh"
     else
       source "$HOME/.local/lib/python2.7/site-packages/powerline/bindings/zsh/powerline.zsh"
     fi
