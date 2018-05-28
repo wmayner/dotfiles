@@ -1,0 +1,9 @@
+{
+  "NotebookApp": {
+    "nbserver_extensions": {
+      "ipyparallel.nbextension": true
+    },
+    "password": "sha1:074724bf6404:994b5287384c0383d93dac3b5cd76f3e7ba2e9b7",
+    "iopub_data_rate_limit": 1000000000000
+  }
+}

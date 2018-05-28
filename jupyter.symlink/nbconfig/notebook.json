@@ -1,0 +1,15 @@
+{
+  "load_extensions": {
+    "ipyparallel": true,
+    "ipcluster": true,
+    "vim_binding/vim_binding": true,
+    "jupyter-js-widgets/extension": true
+  },
+  "keys": {
+    "command": {
+      "bind": {
+        "ctrl-c": "jupyter-notebook:interrupt-kernel"
+      }
+    }
+  }
+}
