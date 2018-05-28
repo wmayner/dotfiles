@@ -1,0 +1,5 @@
+#!/bin/sh
+
+input=$(cat)
+
+echo "$1$input\n$2"
