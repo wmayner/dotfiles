@@ -153,6 +153,10 @@ OS=$(uname -s)
 
 # Tool configuration {
 
+  # gpg {
+    export GPG_TTY=$(tty)
+  # }
+
   # zsh {
     # Use extended globbing
     setopt extendedglob
