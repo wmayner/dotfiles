@@ -13,7 +13,7 @@ mutt
 neovim
 pandoc
 python
-python3
+python2
 r
 rsync
 ruby
