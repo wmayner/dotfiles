@@ -323,8 +323,8 @@ OS=$(uname -s)
     if [ "$OS" = "Darwin" ]; then
       # Use GNU readlink
       alias readlink="greadlink"
-      # Use GNU grep instead of native grep
-      alias grep="ggrep --color"
+      # Use color with grep
+      alias grep="grep --color"
     else
       alias grep="grep --color"
     fi
