@@ -11,6 +11,7 @@ gpg
 gpg-agent
 mutt
 neovim
+nmap
 pandoc
 python
 python2
