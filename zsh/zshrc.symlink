@@ -54,8 +54,8 @@ OS=$(uname -s)
     export WORKON_HOME="$HOME/.virtualenvs"
     export PROJECT_HOME="$CODE"
     if [ "$OS" = "Darwin" ]; then
-      export VIRTUALENV_PYTHON="$(which python)"
-      export VIRTUALENVWRAPPER_PYTHON="$(which python)"
+      export VIRTUALENV_PYTHON="$(which python3)"
+      export VIRTUALENVWRAPPER_PYTHON="$(which python3)"
     else
       export VIRTUALENV_PYTHON="/usr/bin/python"
       export VIRTUALENVWRAPPER_PYTHON="/usr/bin/python"
@@ -200,11 +200,6 @@ OS=$(uname -s)
     export LESSOPEN='|$HOME/.lessfilter %s'
   # }
 
-  # teamocil {
-    # Set up completions
-    compctl -g '$HOME/.teamocil/*(:t:r)' teamocil
-  # }
-
   # SHELLSHOCK {
     # To anyone worried about using servers that may not have attentive admins -
     # put the following line(s) in your ~/.bashrc to help protect yourself:
@@ -311,6 +306,19 @@ OS=$(uname -s)
 
     [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
   # }
+
+  # fast-p {
+
+  p () {
+      ag -U -g ".pdf$" \
+      | fast-p \
+      | fzf --read0 --reverse -e -d $'\t'  \
+          --preview-window down:80% --preview '
+              v=$(echo {q} | tr " " "|");
+              echo -e {1}"\n"{2} | grep -E "^|$v" -i --color=always;
+          ' \
+      | cut -z -f 1 -d $'\t' | tr -d '\n' | xargs -r --null open
+  }
 
 # }
 
