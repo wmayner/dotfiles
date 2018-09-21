@@ -344,8 +344,6 @@ OS=$(uname -s)
     alias diff="colordiff"
     # Always sudo htop (doesn't work properly on macOS otherwise)
     alias htop="sudo htop"
-    # Always use 256 colors with tmux
-    alias tmux="tmux -2"
     # list dir contents (with human-readable sizes)
     alias l="ls -AhG1F"
     alias ll="ls -lAhGF"
