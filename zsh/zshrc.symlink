@@ -165,7 +165,7 @@ OS=$(uname -s)
     if [ "$OS" = "Darwin" ]; then
       source "$HOME/Library/Python/3.7/lib/python/site-packages/powerline/bindings/zsh/powerline.zsh"
     else
-      source "$HOME/.local/lib/python2.7/site-packages/powerline/bindings/zsh/powerline.zsh"
+      source "$HOME/.local/lib/python3.6/site-packages/powerline/bindings/zsh/powerline.zsh"
     fi
     export PYTHONPATH="$PYTHONPATH:$HOME/.config/powerline/"
     powerline-daemon --quiet
