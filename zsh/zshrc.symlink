@@ -372,8 +372,7 @@ OS=$(uname -s)
 
   # vim {
     # Editing shortcuts
-    alias vim='$EDITOR '
-    alias v='$EDITOR '
+    alias v="vim"
     # Edit configuration (from within dotfiles, for interacting with repo)
     alias vrc='$EDITOR $(realpath $HOME/.vimrc)'
   # }
