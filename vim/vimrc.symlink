@@ -925,7 +925,7 @@
     let g:ale_list_window_size = 3
     let g:ale_fix_on_save = 0
 
-    nmap \f :ALEFix<CR>
+    nmap <leader>f <plug>(ale_fix)
     nmap ]a <plug>(ale_next_wrap)zz
     nmap ]l <plug>(ale_next_wrap)zz
     nmap [a <plug>(ale_previous_wrap)zz
@@ -1132,9 +1132,9 @@
   " Adjust viewports to the same size
   map <Leader>= <C-w>=
 
-  " Map <Leader>ff to display all lines with keyword under cursor
+  " Map <leader>ff to display all lines with keyword under cursor
   " and ask which one to jump to
-  nmap <Leader>ff [I:let nr = input("Which one: ")<Bar>exe "normal " . nr ."[\t"<CR>
+  nmap <leader>ff [I:let nr = input("Which one: ")<Bar>exe "normal " . nr ."[\t"<CR>
 
   " Easier horizontal scrolling
   map zl zL
