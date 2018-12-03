@@ -914,7 +914,8 @@
     let g:ale_fixers = {
           \ 'python': ['autopep8', 'yapf', 'isort'],
           \ 'markdown': ['prettier --parser=markdown'],
-          \ 'javascript': ['eslint']
+          \ 'javascript': ['eslint'],
+          \ 'json': ['prettier --parser=json']
           \ }
 
     let g:ale_sign_error = '×'
