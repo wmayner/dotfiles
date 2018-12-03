@@ -41,6 +41,8 @@
     Plug 'tpope/vim-haml'
     " Tex
     Plug 'lervag/vimtex'
+    " TypeScript
+    Plug 'leafgarland/typescript-vim'
   " }
 
   " Editing {
