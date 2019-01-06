@@ -4,3 +4,5 @@ zshrc.before.local.symlink
 node_modules
 package.json
 package-lock.json
+
+jupyter.symlink/lab/workspaces
