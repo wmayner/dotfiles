@@ -1,1 +1,10 @@
-{"theme":"JupyterLab Dark"}
+{
+    // Theme
+    // @jupyterlab/apputils-extension:themes
+    // Theme manager settings.
+    // *************************************
+
+    // Selected Theme
+    // [missing schema description]
+    "theme": "JupyterLab Dark"
+}

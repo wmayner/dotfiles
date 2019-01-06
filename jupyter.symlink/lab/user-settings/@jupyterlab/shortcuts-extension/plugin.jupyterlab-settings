@@ -1,0 +1,47 @@
+{
+    "kernelmenu:interrupt": {
+        "command": "kernelmenu:interrupt",
+        "keys": [
+            "Ctrl C"
+        ],
+        "selector": "[data-jp-kernel-user]:focus",
+        "title": "Interrupt Kernel",
+        "category": "Kernel Operations"
+    },
+    "notebook:enter-edit-mode-vim": {
+        "command": "notebook:enter-edit-mode",
+        "keys": [
+            "I"
+        ],
+        "selector": ".jp-Notebook:focus",
+        "title": "Enter Edit Mode",
+        "category": "Notebook Operations" 
+    },
+    "notebook:collapse-selected-outputs": {
+        "command": "notebook:hide-cell-outputs",
+        "keys": [
+            "Shift F"
+        ],
+        "selector": ".jp-Notebook:focus",
+        "title": "Hide Output",
+        "category": "Notebook Operations"
+    },
+    "notebook:expand-selected-outputs": {
+        "command": "notebook:show-cell-outputs",
+        "keys": [
+            "Shift V"
+        ],
+        "selector": ".jp-Notebook:focus",
+        "title": "Show Output",
+        "category": "Notebook Operations"
+    },
+    "apputils:activate-command-palette": {
+      "command": "apputils:activate-command-palette",
+      "keys": [
+        "Accel Shift P"
+      ],
+      "selector": "body",
+      "title": "Activate Command Palette",
+      "category": "Main Area"
+    }
+}
