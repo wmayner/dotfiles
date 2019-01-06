@@ -1,15 +1,24 @@
 {
-  "load_extensions": {
-    "ipyparallel": true,
-    "ipcluster": true,
-    "vim_binding/vim_binding": true,
-    "jupyter-js-widgets/extension": true
-  },
   "keys": {
     "command": {
       "bind": {
         "ctrl-c": "jupyter-notebook:interrupt-kernel"
       }
     }
+  },
+  "Cell": {
+    "cm_config": {
+      "lineNumbers": true
+    }
+  },
+  "load_extensions": {
+    "ipcluster": true,
+    "jupyter-js-widgets/extension": true,
+    "vim_binding/vim_binding": true,
+    "ipyparallel": true
+  },
+  "Notebook": {
+    "Header": false,
+    "Toolbar": false
   }
 }
