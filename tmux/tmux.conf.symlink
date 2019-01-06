@@ -93,4 +93,4 @@ bind r source-file ~/.tmux.conf
 set -g default-terminal "xterm-256color"
 if-shell 'test "$(uname -s)" = "Darwin"' \
   'source "$HOME/Library/Python/3.6/lib/python/site-packages/powerline/bindings/tmux/powerline.conf"' \
-  'source "$HOME/.local/lib/python2.7/site-packages/powerline/bindings/tmux/powerline.conf"'
+  'source "$HOME/.local/lib/python3.6/site-packages/powerline/bindings/tmux/powerline.conf"'
