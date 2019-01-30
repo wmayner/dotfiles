@@ -54,6 +54,8 @@
     Plug 'tpope/vim-endwise'
     " Comment stuff out (`gc`)
     Plug 'tpope/vim-commentary'
+    " Increment dates properly
+    Plug 'tpope/vim-speeddating'
     " View undo history as a tree
     Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
     " Replace something (`r`) with the contents of a register
@@ -80,7 +82,9 @@
     Plug 'junegunn/vim-slash'
     " Increment with <C-x> and <C-a> in visual mode
     Plug 'vim-scripts/visual-increment'
-  " }
+    " Run shell commands asynchronously
+    Plug 'skywind3000/asyncrun.vim'
+  "
 
   " Coding {
     " Solarized colorscheme
