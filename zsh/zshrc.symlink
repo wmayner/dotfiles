@@ -42,8 +42,6 @@ OS=$(uname -s)
   fi
   # User-local executables
   export PATH="$HOME/.local/bin:$PATH"
-  # Ensure /usr/local/bin is early
-  export PATH="/usr/local/bin:$PATH"
   # Dotfile executables
   export PATH="$HOME/dotfiles/bin:$PATH"
   # Local executables
@@ -165,7 +163,7 @@ OS=$(uname -s)
 
   # powerline {
     if [ "$OS" = "Darwin" ]; then
-      source "$HOME/Library/Python/3.7/lib/python/site-packages/powerline/bindings/zsh/powerline.zsh"
+      source "$HOME/Library/Python/3.6/lib/python/site-packages/powerline/bindings/zsh/powerline.zsh"
     else
       source "$HOME/.local/lib/python3.6/site-packages/powerline/bindings/zsh/powerline.zsh"
     fi

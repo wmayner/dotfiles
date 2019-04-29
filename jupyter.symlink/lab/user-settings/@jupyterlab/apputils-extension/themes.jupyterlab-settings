@@ -6,5 +6,5 @@
 
     // Selected Theme
     // [missing schema description]
-    "theme": "JupyterLab Dark"
+    "theme": "JupyterLab Light"
 }
