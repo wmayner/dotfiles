@@ -35,6 +35,8 @@ OS=$(uname -s)
   export PATH="$PATH:/Developer/NVIDIA/CUDA-8.0/bin"
   export DYLD_LIBRARY_PATH="/Developer/NVIDIA/CUDA-8.0/lib:$DYLD_LIBRARY_PATH"
   if [ "$OS" = "Darwin" ]; then
+    # GNU-utilities
+    export PATH="/usr/local/opt/grep/libexec/gnubin:$PATH"
     # Executables from `pip install --user`
     export PATH="$HOME/Library/Python/3.7/bin:$PATH"
   fi
@@ -321,17 +323,6 @@ OS=$(uname -s)
   # TODO: needed?
   # Don't treat `sudo` as a separate command (so don't use autocorrect)
   # alias sudo="nocorrect sudo"
-
-  # macOS {
-    if [ "$OS" = "Darwin" ]; then
-      # Use GNU readlink
-      alias readlink="greadlink"
-      # Use color with grep
-      alias grep="grep --color"
-    else
-      alias grep="grep --color"
-    fi
-  # }
 
   # General {
     # List only directories
