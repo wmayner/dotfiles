@@ -1,7 +1,3 @@
 #!/bin/sh
 
-GREP=grep
-# Use ggrep if available
-command -v ggrep >/dev/null && GREP=ggrep
-
-$GREP --color='auto' -P -n '[^\x00-\x7F]' $1
+ag "[\x80-\xFF]" $1
