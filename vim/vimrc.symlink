@@ -41,8 +41,6 @@
     Plug 'tpope/vim-haml'
     " Tex
     Plug 'lervag/vimtex'
-    " TypeScript
-    Plug 'leafgarland/typescript-vim'
   " }
 
   " Editing {
@@ -111,12 +109,13 @@
     Plug 'w0rp/ale'
     " Auto formatting
     Plug 'sbdchd/neoformat', { 'do': 'npm install --global prettier' }
+    Plug 'ambv/black'
     " Ack/Ag in Vim
     Plug 'mileszs/ack.vim'
     " File browser
     Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
-    " Tagbar (shows code structure concisely)
     " NOTE: requires Universal Ctags
+    " Tagbar (shows code structure concisely)
     if v:version >= 703
       Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle' }
     endif
@@ -190,15 +189,17 @@
 " }
 
 " Settings {
+
+  " Only affects neovim:
+  "   Use a dedicated virtualenv for the Neovim Python provider
+  let g:python_host_prog = '/Users/will/.virtualenvs/neovim-python2/bin/python'
+  let g:python3_host_prog = '/Users/will/.virtualenvs/neovim-python3/bin/python'
+
   " No compatibility with vi; must be first line
   set nocompatible
 
   " Don't need usr/include in path as far as I can tell; just slows completion
   set path=.,,
-
-  " Use a dedicated virtualenv for the Neovim Python provider
-  let g:python_host_prog = '/Users/will/.virtualenvs/neovim-python2/bin/python'
-  let g:python3_host_prog = '/Users/will/.virtualenvs/neovim-python3/bin/python'
 
   " Use space as leader
   " NOTE: this only affects mappings made afterwards
@@ -213,8 +214,8 @@
   set switchbuf=usetab,newtab
    " searches wrap around the end of the file
   set wrapscan
-  " highlight the column beyond textwidth
-  set colorcolumn=81
+  " " highlight the column beyond textwidth
+  " set colorcolumn=81
   " Set which number formats will be incremented with <C-A> and <C-X>
   set nrformats=alpha,octal,hex,bin
 
@@ -447,21 +448,23 @@
     set nowrap
     " Indent at the same level of the previous line
     set autoindent
-    " Smart indenting
+    " Indent using code structure to infer level
     set smartindent
     " Use indents of 2 spaces
     set shiftwidth=2
     " Tabs are spaces, not tabs
     set expandtab
-    " An indentation every four columns
+    " An indentation every 2 columns
     set tabstop=2
+    " <Tab> inserts the right number of spaces
+    set smarttab
     " Let backspace delete indent
     set softtabstop=2
     " Explicitly set tab size for certain languages
     augroup VimrcSetTabs
       autocmd!
       autocmd BufNewFile,BufReadPost *.py,*.rst,*.html,*.cpp,*.h,*.c,*.m setlocal shiftwidth=4 tabstop=4 softtabstop=4
-      autocmd FileType haskell,puppet,ruby,yml setlocal expandtab shiftwidth=2 softtabstop=2
+      autocmd FileType haskell,puppet,ruby,yml,r setlocal expandtab shiftwidth=2 softtabstop=2
     augroup END
     " Prevents inserting two spaces after punctuation on a join (J)
     set nojoinspaces
@@ -478,6 +481,8 @@
       autocmd!
       autocmd FileType c,cpp,java,go,php,javascript,puppet,python,pyrex,rust,twig,xml,yml,perl,sql,vim,zsh,sh,cfg,conf,yaml,make,dosini,manifest,bib,tmux,json,css,r autocmd BufWritePre <buffer> call StripTrailingWhitespace()
     augroup END
+    " R indenting
+    let r_indent_align_args = 0
 
   " }
 
@@ -915,19 +920,25 @@
   " }
 
   " ALE {
+
     let g:ale_fixers = {
-          \ 'python': ['autopep8', 'yapf', 'isort'],
-          \ 'markdown': ['prettier --parser=markdown'],
-          \ 'javascript': ['eslint'],
-          \ 'json': ['prettier --parser=json']
+          \ 'python': ['black', 'autopep8', 'isort', 'remove_trailing_lines', 'trim_whitespace'],
+          \ 'markdown': ['prettier --parser=markdown', 'remove_trailing_lines', 'trim_whitespace'],
+          \ 'javascript': ['eslint', 'remove_trailing_lines', 'trim_whitespace'],
+          \ 'json': ['prettier --parser=json', 'remove_trailing_lines', 'trim_whitespace'],
+          \ 'r': ['styler', 'remove_trailing_lines', 'trim_whitespace']
+          \ }
+
+    let g:ale_linters = {
+          \ 'r': ['lintr'],
           \ }
 
     let g:ale_sign_error = '×'
     let g:ale_sign_warning = '⚠'
     let g:ale_lint_delay = 1000
     let g:ale_open_list = 1
-    let g:ale_list_window_size = 3
-    let g:ale_fix_on_save = 0
+    let g:ale_list_window_size = 5
+    let g:ale_fix_on_save = 1
 
     nmap <leader>f <plug>(ale_fix)
     nmap ]a <plug>(ale_next_wrap)zz
@@ -1341,4 +1352,10 @@ endfunction
     augroup END
   " }
 
+" }
+
+" Local {
+  nnoremap <leader>r :w<CR> :!Rscript % && make output<CR>
+  nnoremap <leader>w :w<CR> :AsyncRun Rscript % && make output<CR>
+  nnoremap <leader>m :w<CR> :make -j<CR>
 " }
