@@ -94,7 +94,7 @@ set -sg escape-time 0
 bind-key r source-file ~/.tmux.conf
 
 # THEME
-set -g default-terminal "xterm-256color"
+set -g default-terminal "screen-256color"
 if-shell 'test "$(uname -s)" = "Darwin"' \
   'source "$HOME/Library/Python/3.6/lib/python/site-packages/powerline/bindings/tmux/powerline.conf"' \
   'source "$HOME/.local/lib/python3.6/site-packages/powerline/bindings/tmux/powerline.conf"'
