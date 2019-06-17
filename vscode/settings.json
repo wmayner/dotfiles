@@ -1,6 +1,6 @@
 {
     "workbench.iconTheme": "vscode-icons",
-    "window.zoomLevel": 0,
+    "window.zoomLevel": 2,
     "editor.fontFamily": "Roboto Mono for Powerline, Menlo, Monaco, 'Courier New', monospace",
     "debug.console.fontSize": 12,
     "workbench.colorTheme": "Solarized Dark",
@@ -8,10 +8,39 @@
     "gitlens.mode.active": "zen",
     "editor.cursorBlinking": "solid",
     "editor.cursorStyle": "block",
-    "editor.fontSize": 12,
+    "editor.fontSize": 14,
     "workbench.colorCustomizations": {
-        "editorCursor.foreground": "#fff"
+        "editorCursor.foreground": "#fff",
         "editorCursor.background": "#999"
     },
-    "remote.SSH.showLoginTerminal": true
+    "terminal.integrated.fontSize": 14,
+    "vim.easymotion": true,
+    "vim.sneak": true,
+    "vim.incsearch": true,
+    "vim.useSystemClipboard": true,
+    "vim.useCtrlKeys": true,
+    "vim.hlsearch": true,
+    "vim.normalModeKeyBindingsNonRecursive": [
+        {
+            "before": ["<leader>", "d"],
+            "after": ["d", "d"]
+        },
+        {
+            "before": ["<C-n>"],
+            "commands": [":nohl"]
+        },
+        {
+            "before": ["k"],
+            "after": ["g", "k"]
+        },
+        {
+            "before": ["j"],
+            "after": ["g", "j"]
+        },
+    ],
+    "vim.leader": "<space>",
+    "vim.handleKeys": {
+        "<C-a>": false,
+        "<C-f>": false
+    }
 }
