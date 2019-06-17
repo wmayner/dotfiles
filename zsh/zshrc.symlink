@@ -39,6 +39,8 @@ OS=$(uname -s)
     export PATH="/usr/local/opt/grep/libexec/gnubin:$PATH"
     # Executables from `pip install --user`
     export PATH="$HOME/Library/Python/3.7/bin:$PATH"
+    # Add Visual Studio Code (code)
+    export PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
   fi
   # User-local executables
   export PATH="$HOME/.local/bin:$PATH"
