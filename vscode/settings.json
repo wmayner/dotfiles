@@ -1,4 +1,17 @@
 {
-    "editor.fontFamily": "Roboto for Powerline, Menlo, Monaco, 'Courier New', monospace",
-    "window.zoomLevel": 2
+    "workbench.iconTheme": "vscode-icons",
+    "window.zoomLevel": 0,
+    "editor.fontFamily": "Roboto Mono for Powerline, Menlo, Monaco, 'Courier New', monospace",
+    "debug.console.fontSize": 12,
+    "workbench.colorTheme": "Solarized Dark",
+    "files.autoSave": "off",
+    "gitlens.mode.active": "zen",
+    "editor.cursorBlinking": "solid",
+    "editor.cursorStyle": "block",
+    "editor.fontSize": 12,
+    "workbench.colorCustomizations": {
+        "editorCursor.foreground": "#fff"
+        "editorCursor.background": "#999"
+    },
+    "remote.SSH.showLoginTerminal": true
 }
