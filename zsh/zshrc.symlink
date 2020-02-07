@@ -338,7 +338,9 @@ OS=$(uname -s)
     # Use colordiff instead of native diff
     alias diff="colordiff"
     # Always sudo htop (doesn't work properly on macOS otherwise)
-    alias htop="sudo htop"
+    if [ "$OS" = "Darwin" ]; then
+      alias htop="sudo htop"
+    fi
     # list dir contents (with human-readable sizes)
     alias l="ls -AhG1F"
     alias ll="ls -lAhGF"
