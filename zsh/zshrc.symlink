@@ -466,3 +466,13 @@ OS=$(uname -s)
   # Put system-specific stuff in `~/.zshrc.local`.
   [ -f "$HOME/.zshrc.local" ] && source "$HOME/.zshrc.local"
 # }
+
+# Functions {
+
+  # conda {
+    create() {
+      conda create -n $1 && conda activate $1
+    }
+  # }
+
+# }
