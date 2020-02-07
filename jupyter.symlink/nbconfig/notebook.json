@@ -14,8 +14,7 @@
   "load_extensions": {
     "ipcluster": true,
     "jupyter-js-widgets/extension": true,
-    "vim_binding/vim_binding": true,
-    "ipyparallel": true
+    "vim_binding/vim_binding": true
   },
   "Notebook": {
     "Header": false,
