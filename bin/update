@@ -1,7 +1,7 @@
 #!/bin/sh
 
 if [ "$(uname -s)" = "Darwin" ]; then
-  brew upgrade; conda update conda python; vim +PlugUpgrade +PlugInstall! +PlugClean! +qa; npm update -g; cd $HOME/.oh-my-zsh/tools/ && sh upgrade.sh; pip install -U pip setuptools; npm install -g npm; apm update --no-confirm
+  brew upgrade; conda update conda python; vim +PlugUpgrade +PlugInstall! +PlugClean! +qa; npm update -g; cd $HOME/.oh-my-zsh/tools/ && sh upgrade.sh; pip install -U pip setuptools; npm install -g npm;
 else
   sudo apt-get update; sudo apt-get upgrade -y; cd $HOME/.oh-my-zsh/tools/ && sh upgrade.sh; vim +PlugUpgrade +PlugInstall! +PlugClean! +qa; sudo -H pip install -U pip setuptools; pip3 install -U pip setuptools
 fi
