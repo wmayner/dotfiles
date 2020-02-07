@@ -1,6 +1,10 @@
 // Place your key bindings in this file to override the defaults
 [
     {
+        "key": "alt+b",
+        "command": "workbench.action.toggleActivityBarVisibility"
+    },
+    {
         "key": "alt+h",
         "command": "workbench.action.navigateLeft"
     },
