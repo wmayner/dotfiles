@@ -1,4 +1,14 @@
 {
+    "files.associations": {
+        "*.rmd": "markdown"
+    },
+    "r.linting.enable": true,
+    "[stylus]": {
+        "editor.tabSize": 2,
+    },
+    "[jade]": {
+        "editor.tabSize": 2,
+    },
     "workbench.iconTheme": "vscode-icons",
     "window.zoomLevel": 2,
     "editor.fontFamily": "Roboto Mono for Powerline, Menlo, Monaco, 'Courier New', monospace",
