@@ -53,20 +53,20 @@ OS=$(uname -s)
 # Python {
 
   # virtualenvwrapper {
-    export WORKON_HOME="$HOME/.virtualenvs"
-    export PROJECT_HOME="$CODE"
-    export VIRTUALENV_PYTHON="$(which python3)"
-    export VIRTUALENVWRAPPER_PYTHON="$(which python3)"
-    export VIRTUAL_ENV_DISABLE_PROMPT=1
-    source "$(which virtualenvwrapper.sh)"
-    # Auto-set VIRTUAL_ENV in tmux
-    if [[ -n "$TMUX" ]] && [ -n "$VIRTUAL_ENV" ]; then
-      tmux set-environment VIRTUAL_ENV $VIRTUAL_ENV
-    fi
-    # Activate VIRTUAL_ENV if set
-    if [ -n "$VIRTUAL_ENV" ]; then
-      source $VIRTUAL_ENV/bin/activate
-    fi
+    # export WORKON_HOME="$HOME/.virtualenvs"
+    # export PROJECT_HOME="$CODE"
+    # export VIRTUALENV_PYTHON="$(which python3)"
+    # export VIRTUALENVWRAPPER_PYTHON="$(which python3)"
+    # export VIRTUAL_ENV_DISABLE_PROMPT=1
+    # source "$(which virtualenvwrapper.sh)"
+    # # Auto-set VIRTUAL_ENV in tmux
+    # if [[ -n "$TMUX" ]] && [ -n "$VIRTUAL_ENV" ]; then
+    #   tmux set-environment VIRTUAL_ENV $VIRTUAL_ENV
+    # fi
+    # # Activate VIRTUAL_ENV if set
+    # if [ -n "$VIRTUAL_ENV" ]; then
+    #  source $VIRTUAL_ENV/bin/activate  # commented out by conda initialize
+    # fi
   # }
 
 # }
@@ -466,3 +466,18 @@ OS=$(uname -s)
   # Put system-specific stuff in `~/.zshrc.local`.
   [ -f "$HOME/.zshrc.local" ] && source "$HOME/.zshrc.local"
 # }
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/Users/will/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/Users/will/miniconda3/etc/profile.d/conda.sh" ]; then
+        . "/Users/will/miniconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/Users/will/miniconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
