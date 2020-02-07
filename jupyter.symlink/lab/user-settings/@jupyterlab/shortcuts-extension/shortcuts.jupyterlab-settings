@@ -62,9 +62,12 @@
     // docmanager:toggle-autosave
     // sidebar:switch
     // apputils:change-theme
+    // apputils:theme-scrollbars
+    // apputils:incr-font-size
+    // apputils:decr-font-size
     // statusbar:toggle
     // rendermime:handle-local-link
-    // 
+    //
     // Note: To disable a system default shortcut,
     // copy it to User Preferences and add the
     // "disabled" key, for example:
@@ -76,9 +79,23 @@
     //     "selector": "body",
     //     "disabled": true
     // }
-    // 
+    //
     // List of Keyboard Shortcuts
     "shortcuts": [
+        {
+            "command": "notebook:change-cell-to-markdown",
+            "keys": [
+                "Accel 2"
+            ],
+            "selector": ".jp-Notebook:focus"
+        },
+        {
+            "command": "notebook:change-cell-to-code",
+            "keys": [
+                "Accel 1"
+            ],
+            "selector": ".jp-Notebook:focus"
+        },
         {
             "command": "kernelmenu:interrupt",
             "keys": [
@@ -99,6 +116,14 @@
                 "Shift V"
             ],
             "selector": ".jp-Notebook:focus"
+        },
+        {
+            "command": "documentsearch:start",
+            "keys": [
+                "Accel F"
+            ],
+            "selector": ".jp-mod-searchable",
+            "disabled": true
         }
     ]
 }

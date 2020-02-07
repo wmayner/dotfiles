@@ -53,20 +53,37 @@ OS=$(uname -s)
 # Python {
 
   # virtualenvwrapper {
-    export WORKON_HOME="$HOME/.virtualenvs"
-    export PROJECT_HOME="$CODE"
-    export VIRTUALENV_PYTHON="$(which python3)"
-    export VIRTUALENVWRAPPER_PYTHON="$(which python3)"
-    export VIRTUAL_ENV_DISABLE_PROMPT=1
-    source "$(which virtualenvwrapper.sh)"
-    # Auto-set VIRTUAL_ENV in tmux
-    if [[ -n "$TMUX" ]] && [ -n "$VIRTUAL_ENV" ]; then
-      tmux set-environment VIRTUAL_ENV $VIRTUAL_ENV
+    # export WORKON_HOME="$HOME/.virtualenvs"
+    # export PROJECT_HOME="$CODE"
+    # export VIRTUALENV_PYTHON="$(which python3)"
+    # export VIRTUALENVWRAPPER_PYTHON="$(which python3)"
+    # export VIRTUAL_ENV_DISABLE_PROMPT=1
+    # source "$(which virtualenvwrapper.sh)"
+    # # Auto-set VIRTUAL_ENV in tmux
+    # if [[ -n "$TMUX" ]] && [ -n "$VIRTUAL_ENV" ]; then
+    #   tmux set-environment VIRTUAL_ENV $VIRTUAL_ENV
+    # fi
+    # # Activate VIRTUAL_ENV if set
+    # if [ -n "$VIRTUAL_ENV" ]; then
+    #  source $VIRTUAL_ENV/bin/activate  # commented out by conda initialize
+    # fi
+  # }
+
+  # conda {
+    # >>> conda initialize >>>
+    # !! Contents within this block are managed by 'conda init' !!
+    __conda_setup="$($HOME/'miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+    if [ $? -eq 0 ]; then
+        eval "$__conda_setup"
+    else
+        if [ -f "$HOME/miniconda3/etc/profile.d/conda.sh" ]; then
+            . "$HOME/miniconda3/etc/profile.d/conda.sh"
+        else
+            export PATH="$HOME/miniconda3/bin:$PATH"
+        fi
     fi
-    # Activate VIRTUAL_ENV if set
-    if [ -n "$VIRTUAL_ENV" ]; then
-      source $VIRTUAL_ENV/bin/activate
-    fi
+    unset __conda_setup
+    # <<< conda initialize <<<
   # }
 
 # }
@@ -114,9 +131,9 @@ OS=$(uname -s)
   # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
   # Example format: plugins=(rails git textmate ruby lighthouse)
   plugins=(
-    grunt brew coffee cake command-not-found git github git-flow git-extras
-    git-hubflow rake history-substring-search bower fasd osx virtualenvwrapper
-    python lol)
+    grunt brew command-not-found git github git-flow git-extras git-hubflow
+    history-substring-search fasd osx python lol
+  )
 
   source "$ZSH/oh-my-zsh.sh"
 # }
@@ -334,7 +351,9 @@ OS=$(uname -s)
     # Use colordiff instead of native diff
     alias diff="colordiff"
     # Always sudo htop (doesn't work properly on macOS otherwise)
-    alias htop="sudo htop"
+    if [ "$OS" = "Darwin" ]; then
+      alias htop="sudo htop"
+    fi
     # list dir contents (with human-readable sizes)
     alias l="ls -AhG1F"
     alias ll="ls -lAhGF"
@@ -357,8 +376,8 @@ OS=$(uname -s)
     alias hl="pygmentize -g"
     # MATLAB binary
     alias matlab="/Applications/MATLAB_R2016a.app/bin/matlab"
-    # ag with custom colors
-    alias ag="ag --color-line-number 34 --color-match 36 --color-path 32"
+    # ag with custom colors and restricted line width
+    alias ag="ag --color-line-number 34 --color-match 36 --color-path 32 --width 100"
   # }
 
   # vim {
@@ -399,6 +418,9 @@ OS=$(uname -s)
   # }
 
   # Python {
+    # Invoke pip directly through python
+    # See https://jakevdp.github.io/blog/2017/12/05/installing-python-packages-from-jupyter/
+    alias pip="python -m pip"
     # Python interpreter
     alias p="python"
     # IPython intepreter

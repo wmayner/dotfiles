@@ -6,5 +6,7 @@ ms-vscode-remote.remote-ssh-edit
 ms-vscode-remote.remote-ssh-explorer
 ms-vscode-remote.remote-wsl
 ms-vscode-remote.vscode-remote-extensionpack
+ms-azuretools.vscode-docker
 vscode-icons-team.vscode-icons
 vscodevim.vim
+ryuta46.multi-command
