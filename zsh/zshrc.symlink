@@ -403,6 +403,9 @@ OS=$(uname -s)
   # }
 
   # Python {
+    # Invoke pip directly through python
+    # See https://jakevdp.github.io/blog/2017/12/05/installing-python-packages-from-jupyter/
+    alias pip="python -m pip"
     # Python interpreter
     alias p="python"
     # IPython intepreter
