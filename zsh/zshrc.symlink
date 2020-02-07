@@ -114,9 +114,9 @@ OS=$(uname -s)
   # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
   # Example format: plugins=(rails git textmate ruby lighthouse)
   plugins=(
-    grunt brew coffee cake command-not-found git github git-flow git-extras
-    git-hubflow rake history-substring-search bower fasd osx virtualenvwrapper
-    python lol)
+    grunt brew command-not-found git github git-flow git-extras git-hubflow
+    history-substring-search fasd osx python lol
+  )
 
   source "$ZSH/oh-my-zsh.sh"
 # }
