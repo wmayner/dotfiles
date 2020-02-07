@@ -403,6 +403,8 @@ OS=$(uname -s)
   # }
 
   # Python {
+    # Use built-in pip
+    alias pip="python -m pip"
     # Python interpreter
     alias p="python"
     # IPython intepreter
