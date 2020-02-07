@@ -324,10 +324,6 @@ OS=$(uname -s)
 # }
 
 # Aliases {
-  # TODO: needed?
-  # Don't treat `sudo` as a separate command (so don't use autocorrect)
-  # alias sudo="nocorrect sudo"
-
   # General {
     # List only directories
     alias lsd="ls -d */"
