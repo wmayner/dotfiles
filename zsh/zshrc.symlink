@@ -361,8 +361,8 @@ OS=$(uname -s)
     alias hl="pygmentize -g"
     # MATLAB binary
     alias matlab="/Applications/MATLAB_R2016a.app/bin/matlab"
-    # ag with custom colors
-    alias ag="ag --color-line-number 34 --color-match 36 --color-path 32"
+    # ag with custom colors and restricted line width
+    alias ag="ag --color-line-number 34 --color-match 36 --color-path 32 --width 100"
   # }
 
   # vim {
