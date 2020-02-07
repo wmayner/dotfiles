@@ -6,5 +6,5 @@
 
     // Autosave Documents
     // Whether to autosave documents
-    "autosave": true
+    "autosave": false
 }

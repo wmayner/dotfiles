@@ -5,6 +5,6 @@
     // *************************************
 
     // Selected Theme
-    // [missing schema description]
-    "theme": "JupyterLab Light"
+    // Application-level visual styling theme
+     "theme": "JupyterLab Light"
 }
