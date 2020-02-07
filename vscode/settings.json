@@ -1,14 +1,11 @@
 {
     "workbench.iconTheme": "vscode-icons",
-    "window.zoomLevel": 2,
-    "editor.fontFamily": "Roboto Mono for Powerline, Menlo, Monaco, 'Courier New', monospace",
-    "debug.console.fontSize": 12,
+    "window.zoomLevel": 0,
     "workbench.colorTheme": "Solarized Dark",
     "files.autoSave": "off",
     "gitlens.mode.active": "zen",
     "editor.cursorBlinking": "solid",
     "editor.cursorStyle": "block",
-    "editor.fontSize": 14,
     "files.trimTrailingWhitespace": true,
     "workbench.colorCustomizations": {
         "editorCursor.foreground": "#fff",
@@ -78,4 +75,22 @@
     "python.formatting.provider": "black",
     "vsicons.dontShowNewVersionMessage": true,
     "editor.formatOnSave": true,
+    "files.associations": {
+        "*.rmd": "markdown"
+    },
+    "terminal.integrated.inheritEnv": false,
+    "search.searchOnType": false,
+    "workbench.activityBar.visible": true,
+    "multiCommand.commands": [
+        {
+            "command": "multiCommand.makeRoom",
+            "sequence": [
+                "workbench.action.toggleSidebarVisibility",
+                "workbench.action.toggleActivityBarVisibility"
+            ]
+        }
+    ],
+    "editor.fontFamily": "Roboto Mono for Powerline, Menlo, Monaco, 'Courier New', monospace",
+    "editor.fontSize": 14,
+    "debug.console.fontSize": 12,
 }
