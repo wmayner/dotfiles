@@ -435,6 +435,12 @@ OS=$(uname -s)
     alias pytest="python -m pytest"
   # }
 
+  # conda {
+    alias deactivate="conda deactivate"
+    alias activate="conda activate"
+    alias workon="conda activate"
+  # }
+
   # LaTeX {
     # Run latexmk with following options: compile to pdf, preview continuously
     alias latexmk="latexmk -pdf -pvc"
@@ -481,11 +487,6 @@ OS=$(uname -s)
 
 # }
 
-# zshrc.local {
-  # Put system-specific stuff in `~/.zshrc.local`.
-  [ -f "$HOME/.zshrc.local" ] && source "$HOME/.zshrc.local"
-# }
-
 # Functions {
 
   # conda {
@@ -494,4 +495,9 @@ OS=$(uname -s)
     }
   # }
 
+# }
+
+# zshrc.local {
+  # Put system-specific stuff in `~/.zshrc.local`.
+  [ -f "$HOME/.zshrc.local" ] && source "$HOME/.zshrc.local"
 # }
