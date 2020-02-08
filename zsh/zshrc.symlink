@@ -42,6 +42,8 @@ OS=$(uname -s)
   fi
   # User-local executables
   export PATH="$HOME/.local/bin:$PATH"
+  # Conda executables
+  export PATH="$HOME/miniconda3/bin:$PATH"
   # Dotfile executables
   export PATH="$HOME/dotfiles/bin:$PATH"
   # Local executables
