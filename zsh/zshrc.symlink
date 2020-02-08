@@ -37,8 +37,6 @@ OS=$(uname -s)
   if [ "$OS" = "Darwin" ]; then
     # GNU-utilities
     export PATH="/usr/local/opt/grep/libexec/gnubin:$PATH"
-    # Executables from `pip install --user`
-    export PATH="$HOME/Library/Python/3.7/bin:$PATH"
     # Add Visual Studio Code (code)
     export PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
   fi
@@ -85,6 +83,9 @@ OS=$(uname -s)
     unset __conda_setup
     # <<< conda initialize <<<
   # }
+
+  # Get base environment Python version
+  local PYTHON_VERSION=$("$HOME/miniconda3/bin/python" --version | cut -c 8,9,10)
 
 # }
 
@@ -186,11 +187,7 @@ OS=$(uname -s)
 
   # powerline {
     powerline-daemon --quiet
-    if [ "$OS" = "Darwin" ]; then
-      source "$HOME/miniconda3/lib/python3.8/site-packages/powerline/bindings/zsh/powerline.zsh"
-    else
-      source "$HOME/.local/lib/python3.6/site-packages/powerline/bindings/zsh/powerline.zsh"
-    fi
+    source "$HOME/miniconda3/lib/python$PYTHON_VERSION/site-packages/powerline/bindings/zsh/powerline.zsh"
   # }
 
   # dircolors {
@@ -499,7 +496,7 @@ OS=$(uname -s)
     }
 
     setup_conda_env() {
-      local DEFAULT_PYTHON_VERSION='3.7'
+      local DEFAULT_PYTHON_VERSION='3.8'
       if [[ -z "$1"  ]]; then
         echo "No python version specified; assuming $DEFAULT_PYTHON_VERSION" 1>&2
         local PYTHON_VERSION="$DEFAULT_PYTHON_VERSION"
