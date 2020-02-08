@@ -490,8 +490,37 @@ OS=$(uname -s)
 # Functions {
 
   # conda {
-    create() {
-      conda create -n $1 && conda activate $1
+    create_conda_env() {
+      conda create -n $1 -y && \
+        conda activate $1
+    }
+
+    setup_conda_env() {
+      local DEFAULT_PYTHON_VERSION='3.7'
+      if [[ -z "$1"  ]]; then
+        echo "No python version specified; assuming $DEFAULT_PYTHON_VERSION" 1>&2
+        local PYTHON_VERSION="$DEFAULT_PYTHON_VERSION"
+      else
+        local PYTHON_VERSION="$1"
+      fi
+      conda install -y \
+            python=$PYTHON_VERSION \
+            jupyterlab \
+            scipy \
+            numpy \
+            pandas \
+          && \
+        python -m pip install \
+            black \
+            blackcellmagic \
+          && \
+        jupyter labextension install \
+            @jupyter-widgets/jupyterlab-manager \
+            jupyterlab_vim \
+            @pyviz/jupyterlab_pyviz \
+            @jupyterlab/toc \
+          && \
+        echo "Finished setting up environment." 1>&2
     }
   # }
 
