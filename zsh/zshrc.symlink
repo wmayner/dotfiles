@@ -89,6 +89,10 @@ OS=$(uname -s)
 # }
 
 # oh-my-zsh {
+  # Prevent loading https://github.com/ohmyzsh/ohmyzsh/blob/master/lib/compfix.zsh
+  # since it slows down the prompt considerably
+  ZSH_DISABLE_COMPFIX=true
+
   # Path to your oh-my-zsh configuration
   ZSH="$HOME/.oh-my-zsh"
 
