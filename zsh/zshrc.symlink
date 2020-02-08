@@ -341,6 +341,7 @@ OS=$(uname -s)
 # }
 
 # Aliases {
+
   # General {
     # List only directories
     alias lsd="ls -d */"
