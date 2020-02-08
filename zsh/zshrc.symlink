@@ -3,6 +3,8 @@
 #
 # zshrc of wmayner
 
+zmodload zsh/zprof
+
 OS=$(uname -s)
 
 # zshrc.before.local {
@@ -227,11 +229,11 @@ OS=$(uname -s)
   # }
 
   # nvm {
-    export NVM_DIR="$HOME/.nvm"
+    # export NVM_DIR="$HOME/.nvm"
 
-    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-    # This loads nvm bash_completion
-    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+    # [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+    # # This loads nvm bash_completion
+    # [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
   # }
 
   # node {
@@ -530,3 +532,5 @@ OS=$(uname -s)
   # Put system-specific stuff in `~/.zshrc.local`.
   [ -f "$HOME/.zshrc.local" ] && source "$HOME/.zshrc.local"
 # }
+
+zprof
