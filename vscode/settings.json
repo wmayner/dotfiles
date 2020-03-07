@@ -10,7 +10,7 @@
         "editor.tabSize": 2,
     },
     "workbench.iconTheme": "vscode-icons",
-    "window.zoomLevel": 0,
+    "window.zoomLevel": 2,
     "workbench.colorTheme": "Solarized Dark",
     "files.autoSave": "off",
     "gitlens.mode.active": "zen",
@@ -67,6 +67,24 @@
         },
         {
             "before": [
+                "0"
+            ],
+            "after": [
+                "g",
+                "0"
+            ]
+        },
+        {
+            "before": [
+                "$"
+            ],
+            "after": [
+                "g",
+                "_"
+            ]
+        },
+        {
+            "before": [
                 "L",
             ],
             "commands": [
@@ -97,5 +115,6 @@
     ],
     "editor.fontFamily": "Roboto Mono for Powerline, Menlo, Monaco, 'Courier New', monospace",
     "debug.console.fontSize": 12,
-    "editor.fontSize": 14
+    "editor.fontSize": 14,
+    "terminal.integrated.inheritEnv": false
 }
