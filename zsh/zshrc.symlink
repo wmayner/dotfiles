@@ -511,6 +511,7 @@ OS=$(uname -s)
       conda install -y \
             python=$PYTHON_VERSION \
             jupyterlab \
+            ipywidgets \
             scipy \
             numpy \
             pandas \
@@ -521,9 +522,9 @@ OS=$(uname -s)
           && \
         jupyter labextension install \
             @jupyter-widgets/jupyterlab-manager \
-            jupyterlab_vim \
-            @pyviz/jupyterlab_pyviz \
             @jupyterlab/toc \
+            @pyviz/jupyterlab_pyviz \
+            jupyterlab_vim \
           && \
         echo "Finished setting up environment." 1>&2
     }
