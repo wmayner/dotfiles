@@ -72,20 +72,20 @@ OS=$(uname -s)
   # }
 
   # conda {
-    # >>> conda initialize >>>
-    # !! Contents within this block are managed by 'conda init' !!
-    __conda_setup="$($HOME/'miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-    if [ $? -eq 0 ]; then
-        eval "$__conda_setup"
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$($HOME/'miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "$HOME/miniconda3/etc/profile.d/conda.sh" ]; then
+      . "$HOME/miniconda3/etc/profile.d/conda.sh"
     else
-        if [ -f "$HOME/miniconda3/etc/profile.d/conda.sh" ]; then
-            . "$HOME/miniconda3/etc/profile.d/conda.sh"
-        else
-            export PATH="$HOME/miniconda3/bin:$PATH"
-        fi
+      export PATH="$HOME/miniconda3/bin:$PATH"
     fi
-    unset __conda_setup
-    # <<< conda initialize <<<
+fi
+unset __conda_setup
+# <<< conda initialize <<<
   # }
 
   # Get base environment Python version
@@ -141,7 +141,7 @@ OS=$(uname -s)
   # Example format: plugins=(rails git textmate ruby lighthouse)
   plugins=(
     grunt brew command-not-found git github git-flow git-extras git-hubflow
-    history-substring-search fasd osx python lol zsh-nvm
+    history-substring-search fasd osx python lol zsh-nvm autoenv
   )
 
   source "$ZSH/oh-my-zsh.sh"
@@ -528,9 +528,47 @@ OS=$(uname -s)
           && \
         echo "Finished setting up environment." 1>&2
     }
+
+# Auto activate conda environments
+# - If an `environment.yml` or `.venv` file is in the current directory,
+#   the environment specified by that file is activated
+#     - `environment.yml` files are parsed
+#     - `.venv` files must contain just the name of the environment
+# - If no such files are present and no environment is already activated, then
+#   we try to activate an environment with the same name as the current directory
+# - Assumes that the conda installation is at $HOME/miniconda3
+# Modified from:
+# https://github.com/chdoig/conda-auto-env
+conda_auto_env() {
+  # Get environment name from files if available
+  if [ -e "environment.yaml" ]; then
+    # Parse environment.yml file
+    ENV_NAME=$(head -n 1 environment.yaml | cut -f2 -d ' ')
+  elif [ -e ".venv" ]; then
+    # Parse the .venv file
+    ENV_NAME=$(cat .venv)
+  fi
+  # If we're not in that environment now, try to activate it
+  if [[ $CONDA_PREFIX != *$ENV_NAME* ]]; then
+    source activate $ENV_NAME &>/dev/null
+  # Otherwise, if we're not in any environment, check if the current
+  # directory name is an environment and try to activate that
+  elif [[ $CONDA_PREFIX == '' ]]; then
+    # Get current directory name
+    CWD=$(basename $(pwd))
+    if [[ -e "$HOME/miniconda3/envs/$CWD" ]]; then
+      source activate $CWD &>/dev/null
+    fi
+  fi
+}
   # }
 
 # }
+
+# zsh precmd() function: special function that's executed before each command
+precmd() {
+  conda_auto_env
+}
 
 # zshrc.local {
   # Put system-specific stuff in `~/.zshrc.local`.
