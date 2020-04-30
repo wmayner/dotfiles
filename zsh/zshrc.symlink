@@ -143,6 +143,8 @@ unset __conda_setup
     grunt brew command-not-found git github git-flow git-extras git-hubflow
     history-substring-search fasd osx python lol zsh-nvm autoenv
   )
+  # Autoenv requires separate installation; see
+  # https://github.com/zpm-zsh/autoenv
 
   source "$ZSH/oh-my-zsh.sh"
 # }
