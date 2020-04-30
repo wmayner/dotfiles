@@ -141,10 +141,8 @@ unset __conda_setup
   # Example format: plugins=(rails git textmate ruby lighthouse)
   plugins=(
     grunt brew command-not-found git github git-flow git-extras git-hubflow
-    history-substring-search fasd osx python lol zsh-nvm autoenv
+    history-substring-search fasd osx python lol zsh-nvm
   )
-  # Autoenv requires separate installation; see
-  # https://github.com/zpm-zsh/autoenv
 
   source "$ZSH/oh-my-zsh.sh"
 # }
@@ -177,6 +175,12 @@ unset __conda_setup
 # }
 
 # Tool configuration {
+
+  # Autoenv {
+    # See https://github.com/inishchith/autoenv
+    export AUTOENV_ENABLE_LEAVE='yes'
+    source ~/.autoenv/activate.sh
+  # }
 
   # gpg {
     export GPG_TTY=$(tty)
@@ -541,36 +545,36 @@ unset __conda_setup
 # - Assumes that the conda installation is at $HOME/miniconda3
 # Modified from:
 # https://github.com/chdoig/conda-auto-env
-conda_auto_env() {
-  # Get environment name from files if available
-  if [ -e "environment.yaml" ]; then
-    # Parse environment.yml file
-    ENV_NAME=$(head -n 1 environment.yaml | cut -f2 -d ' ')
-  elif [ -e ".venv" ]; then
-    # Parse the .venv file
-    ENV_NAME=$(cat .venv)
-  fi
-  # If we're not in that environment now, try to activate it
-  if [[ $CONDA_PREFIX != *$ENV_NAME* ]]; then
-    source activate $ENV_NAME &>/dev/null
-  # Otherwise, if we're not in any environment, check if the current
-  # directory name is an environment and try to activate that
-  elif [[ $CONDA_PREFIX == '' ]]; then
-    # Get current directory name
-    CWD=$(basename $(pwd))
-    if [[ -e "$HOME/miniconda3/envs/$CWD" ]]; then
-      source activate $CWD &>/dev/null
-    fi
-  fi
-}
+# conda_auto_env() {
+#   # Get environment name from files if available
+#   if [ -e "environment.yaml" ]; then
+#     # Parse environment.yml file
+#     ENV_NAME=$(head -n 1 environment.yaml | cut -f2 -d ' ')
+#   elif [ -e ".venv" ]; then
+#     # Parse the .venv file
+#     ENV_NAME=$(cat .venv)
+#   fi
+#   # If we're not in that environment now, try to activate it
+#   if [[ $CONDA_PREFIX != *$ENV_NAME* ]]; then
+#     source activate $ENV_NAME &>/dev/null
+#   # Otherwise, if we're not in any environment, check if the current
+#   # directory name is an environment and try to activate that
+#   elif [[ $CONDA_PREFIX == '' ]]; then
+#     # Get current directory name
+#     CWD=$(basename $(pwd))
+#     if [[ -e "$HOME/miniconda3/envs/$CWD" ]]; then
+#       source activate $CWD &>/dev/null
+#     fi
+#   fi
+# }
   # }
 
 # }
 
 # zsh precmd() function: special function that's executed before each command
-precmd() {
-  conda_auto_env
-}
+# precmd() {
+#   conda_auto_env
+# }
 
 # zshrc.local {
   # Put system-specific stuff in `~/.zshrc.local`.
