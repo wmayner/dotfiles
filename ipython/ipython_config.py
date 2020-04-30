@@ -620,3 +620,7 @@ c.TerminalInteractiveShell.highlighting_style = 'vim'
 # If True, any %store-d variables will be automatically restored when IPython
 # starts.
 # c.StoreMagics.autorestore = False
+
+# Don't override any matplotlib rc settings
+# https://stackoverflow.com/a/36021869/1085344
+c.InlineBackend.rc = {}
