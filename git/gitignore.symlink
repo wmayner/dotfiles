@@ -7,3 +7,4 @@ npm-debug.log
 .pythonrc.py
 .vscode
 .ropeproject
+.in
