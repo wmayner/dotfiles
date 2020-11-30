@@ -54,21 +54,21 @@ OS=$(uname -s)
 
 # Python {
 
-  # virtualenvwrapper {
-    # export WORKON_HOME="$HOME/.virtualenvs"
-    # export PROJECT_HOME="$CODE"
-    # export VIRTUALENV_PYTHON="$(which python3)"
-    # export VIRTUALENVWRAPPER_PYTHON="$(which python3)"
-    # export VIRTUAL_ENV_DISABLE_PROMPT=1
-    # source "$(which virtualenvwrapper.sh)"
-    # # Auto-set VIRTUAL_ENV in tmux
-    # if [[ -n "$TMUX" ]] && [ -n "$VIRTUAL_ENV" ]; then
-    #   tmux set-environment VIRTUAL_ENV $VIRTUAL_ENV
-    # fi
-    # # Activate VIRTUAL_ENV if set
-    # if [ -n "$VIRTUAL_ENV" ]; then
-    #  source $VIRTUAL_ENV/bin/activate  # commented out by conda initialize
-    # fi
+  # # virtualenvwrapper {
+  #   export WORKON_HOME="$HOME/.virtualenvs"
+  #   export PROJECT_HOME="$CODE"
+  #   export VIRTUALENV_PYTHON="$(which python3)"
+  #   export VIRTUALENVWRAPPER_PYTHON="$(which python3)"
+  #   export VIRTUAL_ENV_DISABLE_PROMPT=1
+  #   source "$(which virtualenvwrapper.sh)"
+  #   # Auto-set VIRTUAL_ENV in tmux
+  #   if [[ -n "$TMUX" ]] && [ -n "$VIRTUAL_ENV" ]; then
+  #     tmux set-environment VIRTUAL_ENV $VIRTUAL_ENV
+  #   fi
+  #   # Activate VIRTUAL_ENV if set
+  #   if [ -n "$VIRTUAL_ENV" ]; then
+  #    source $VIRTUAL_ENV/bin/activate  # commented out by conda initialize
+  #   fi
   # }
 
   # conda {
