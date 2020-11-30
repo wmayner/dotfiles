@@ -923,7 +923,7 @@
   " ALE {
 
     let g:ale_fixers = {
-          \ 'python': ['black', 'autopep8', 'isort', 'remove_trailing_lines', 'trim_whitespace'],
+          \ 'python': ['black', 'isort', 'remove_trailing_lines', 'trim_whitespace'],
           \ 'markdown': ['prettier --parser=markdown', 'remove_trailing_lines', 'trim_whitespace'],
           \ 'javascript': ['eslint', 'remove_trailing_lines', 'trim_whitespace'],
           \ 'json': ['prettier --parser=json', 'remove_trailing_lines', 'trim_whitespace'],
