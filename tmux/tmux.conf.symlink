@@ -1,5 +1,5 @@
-# Vi copypaste mode
 set-window-option -g mode-keys vi
+# Vi copypaste mode
 # bind-key -t vi-copy 'v' begin-selection
 # bind-key -t vi-copy 'y' copy-selection
 
@@ -95,6 +95,4 @@ bind-key r source-file ~/.tmux.conf
 
 # THEME
 set -g default-terminal "screen-256color"
-if-shell 'test "$(uname -s)" = "Darwin"' \
-  'source "$HOME/Library/Python/3.6/lib/python/site-packages/powerline/bindings/tmux/powerline.conf"' \
-  'source "$HOME/.local/lib/python3.6/site-packages/powerline/bindings/tmux/powerline.conf"'
+source "$(python3-config --prefix)/lib/python3.8/site-packages/powerline/bindings/tmux/powerline.conf"
