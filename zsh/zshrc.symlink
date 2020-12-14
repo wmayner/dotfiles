@@ -1,3 +1,8 @@
+#!/usr/bin/env zsh
+# vim: sw=2 ts=2 sts=2 tw=80 foldmarker={,} foldlevel=0 foldmethod=marker
+#
+# zshrc of wmayner
+
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -5,18 +10,17 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-#!/usr/bin/env zsh
-# vim: sw=2 ts=2 sts=2 tw=80 foldmarker={,} foldlevel=0 foldmethod=marker
-#
-# zshrc of wmayner
-
-OS=$(uname -s)
-
 # zshrc.before.local {
-  # Put system-specific stuff that needs to be sourced before this file in
+  # Put system-specific stuff that needs to be sourced early in
   # `~/.zshrc.before.local`.
   [ -f "$HOME/.zshrc.before.local" ] && source "$HOME/.zshrc.before.local"
 # }
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+OS=$(uname -s)
+
 
 # Environment variables {
   export DEFAULT_USER="will"
@@ -51,8 +55,6 @@ OS=$(uname -s)
   fi
   # User-local executables
   export PATH="$HOME/.local/bin:$PATH"
-  # Conda executables
-  export PATH="$HOME/miniconda3/bin:$PATH"
   # Dotfile executables
   export PATH="$HOME/dotfiles/bin:$PATH"
   # Local executables
@@ -81,14 +83,14 @@ OS=$(uname -s)
   # conda {
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$($HOME/'miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+__conda_setup="$('/Users/will/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
     eval "$__conda_setup"
 else
-    if [ -f "$HOME/miniconda3/etc/profile.d/conda.sh" ]; then
-      . "$HOME/miniconda3/etc/profile.d/conda.sh"
+    if [ -f "/Users/will/miniconda3/etc/profile.d/conda.sh" ]; then
+        . "/Users/will/miniconda3/etc/profile.d/conda.sh"
     else
-      export PATH="$HOME/miniconda3/bin:$PATH"
+        export PATH="/Users/will/miniconda3/bin:$PATH"
     fi
 fi
 unset __conda_setup
@@ -190,7 +192,7 @@ unset __conda_setup
   # }
 
   # gpg {
-    export GPG_TTY=$(tty)
+    export GPG_TTY=$TTY
   # }
 
   # zsh {
@@ -431,9 +433,6 @@ unset __conda_setup
   # }
 
   # Python {
-    # Invoke pip directly through python
-    # See https://jakevdp.github.io/blog/2017/12/05/installing-python-packages-from-jupyter/
-    alias pip="python -m pip"
     # Python interpreter
     alias p="python"
     # IPython intepreter
@@ -543,51 +542,42 @@ unset __conda_setup
         echo "Finished setting up environment." 1>&2
     }
 
-# Auto activate conda environments
-# - If an `environment.yml` or `.venv` file is in the current directory,
-#   the environment specified by that file is activated
-#     - `environment.yml` files are parsed
-#     - `.venv` files must contain just the name of the environment
-# - If no such files are present and no environment is already activated, then
-#   we try to activate an environment with the same name as the current directory
-# - Assumes that the conda installation is at $HOME/miniconda3
-# Modified from:
-# https://github.com/chdoig/conda-auto-env
-# conda_auto_env() {
-#   # Get environment name from files if available
-#   if [ -e "environment.yaml" ]; then
-#     # Parse environment.yml file
-#     ENV_NAME=$(head -n 1 environment.yaml | cut -f2 -d ' ')
-#   elif [ -e ".venv" ]; then
-#     # Parse the .venv file
-#     ENV_NAME=$(cat .venv)
-#   fi
-#   # If we're not in that environment now, try to activate it
-#   if [[ $CONDA_PREFIX != *$ENV_NAME* ]]; then
-#     source activate $ENV_NAME &>/dev/null
-#   # Otherwise, if we're not in any environment, check if the current
-#   # directory name is an environment and try to activate that
-#   elif [[ $CONDA_PREFIX == '' ]]; then
-#     # Get current directory name
-#     CWD=$(basename $(pwd))
-#     if [[ -e "$HOME/miniconda3/envs/$CWD" ]]; then
-#       source activate $CWD &>/dev/null
-#     fi
-#   fi
-# }
+    conda_install() {
+      # Don't install anything into base environment
+      if [[ -v CONDA_DEFAULT_ENV ]] then
+        conda install $@
+      else
+        echo 'No active environment; not installing'
+      fi
+    }
+
+    pip() {
+      # Don't install anything into base environment
+      if [[ -v CONDA_DEFAULT_ENV ]] then
+        string=$(which python)
+        word='envs'
+        if test "${string#*$word}" != "$string"; then
+          python -m pip $@
+        # Invoke pip directly through python
+        # See https://jakevdp.github.io/blog/2017/12/05/installing-python-packages-from-jupyter/
+        else
+          echo 'Python is not installed in this environment; not running'
+        fi
+      else
+        echo 'No active environment; not running'
+      fi
+    }
+
+    # zsh precmd() function: special function that's executed before each command
+    # precmd() {
+    #   conda_auto_env
+    # }
+
   # }
 
-# }
-
-# zsh precmd() function: special function that's executed before each command
-# precmd() {
-#   conda_auto_env
 # }
 
 # zshrc.local {
   # Put system-specific stuff in `~/.zshrc.local`.
   [ -f "$HOME/.zshrc.local" ] && source "$HOME/.zshrc.local"
 # }
-
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
