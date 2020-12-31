@@ -551,6 +551,8 @@ unset __conda_setup
       fi
     }
 
+    alias cinstall='conda_install'
+
     pip() {
       # Don't install anything into base environment
       if [[ -v CONDA_DEFAULT_ENV ]] then
