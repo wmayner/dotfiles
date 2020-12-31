@@ -3,8 +3,9 @@ set-window-option -g mode-keys vi
 # bind-key -t vi-copy 'v' begin-selection
 # bind-key -t vi-copy 'y' copy-selection
 
-# Update environment variables from shell that started tmux
-# set-option -ga update-environment ' VIRTUAL_ENV'
+# Start a non-login shell
+# https://wiki.archlinux.org/index.php/tmux#Start_a_non-login_shell
+set -g default-command "${SHELL}"
 
 # Use C-a instead of C-b as prefix
 set-option -g prefix C-a
