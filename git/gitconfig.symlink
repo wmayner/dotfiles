@@ -1,74 +1,80 @@
 [alias]
-  a = commit --amend
-  addon = commit --amend --no-edit
-  co = checkout
-  b = branch
-  ba = branch -a
-  c = commit -m 
-  com = commit -m
-  ca = commit -am 
-  d = diff
-  wd = diff --word-diff
-  dc = diff --cached
-  g = log --graph
-  gr = log --graph --pretty=oneline --abbrev-commit
-  l = log --graph --date-order --full-history --date=relative --color --pretty=format:"%x1b[31m%h%x09%x1b[32m%d%x1b[0m%x20%s%x20%x1b[33m(%an)%x1b[32m%x20%ad%x1b[0m"
-  la = log --all --graph --date-order --full-history --date=relative --color --pretty=format:"%x1b[31m%h%x09%x1b[32m%d%x1b[0m%x20%s%x20%x1b[33m(%an)%x1b[32m%x20%ad%x1b[0m"
-  s = status
-  mt = mergetool
-  unstage = reset HEAD --
-  undo = reset --soft HEAD^
-  nuke = reset --hard HEAD^
-  blast = reset --hard HEAD
-  amend = commit --amend -C HEAD
-  contrib = shortlog -sn
-  untrack = update-index --assume-unchanged
-  track = update-index --no-assume-unchanged
-  cp = cherry-pick
-  # Alternative to stash:
-  #   1. Create a branch named “foobar”
-  #   2. Commit any changes on that branch
-  #   3. Swap you back to the branch you started on
-  save = !sh -c 'export PREV=$(git symbolic-ref HEAD|cut -d/ -f3-) && git checkout -b "$1" && git commit -am "$1" && git checkout "$PREV"' -
+	a = commit --amend
+	addon = commit --amend --no-edit
+	co = checkout
+	b = branch
+	ba = branch -a
+	c = commit -m
+	com = commit -m
+	ca = commit -am
+	d = diff
+	wd = diff --word-diff
+	dc = diff --cached
+	g = log --graph
+	gr = log --graph --pretty=oneline --abbrev-commit
+	l = log --graph --date-order --full-history --date=relative --color --pretty=format:"%x1b[31m%h%x09%x1b[32m%d%x1b[0m%x20%s%x20%x1b[33m(%an)%x1b[32m%x20%ad%x1b[0m"
+	la = log --all --graph --date-order --full-history --date=relative --color --pretty=format:"%x1b[31m%h%x09%x1b[32m%d%x1b[0m%x20%s%x20%x1b[33m(%an)%x1b[32m%x20%ad%x1b[0m"
+	s = status
+	mt = mergetool
+	unstage = reset HEAD --
+	undo = reset --soft HEAD^
+	nuke = reset --hard HEAD^
+	blast = reset --hard HEAD
+	amend = commit --amend -C HEAD
+	contrib = shortlog -sn
+	untrack = update-index --assume-unchanged
+	track = update-index --no-assume-unchanged
+	cp = cherry-pick
+	# Alternative to stash:
+	#   1. Create a branch named “foobar”
+	#   2. Commit any changes on that branch
+	#   3. Swap you back to the branch you started on
+	save = !sh -c 'export PREV=$(git symbolic-ref HEAD|cut -d/ -f3-) && git checkout -b "$1" && git commit -am "$1" && git checkout "$PREV"' -
 [color]
-  ui = 1
+	ui = 1
 [color "branch"]
-  current = cyan
-  local = green
-  remote = yellow
+	current = cyan
+	local = green
+	remote = yellow
 [color "diff"]
-  meta = cyan reverse
-  frag = reverse
-  old = red
-  new = green
+	meta = cyan reverse
+	frag = reverse
+	old = red
+	new = green
 [color "status"]
-  added = green
-  changed = yellow
-  untracked = cyan
+	added = green
+	untracked = cyan
+	changed = yellow
 [user]
-  name = Will Mayner
-  email = wmayner@gmail.com
-  signingkey = B46975179AD9DFC0
+	name = Will Mayner
+	email = wmayner@gmail.com
+	signingkey = B46975179AD9DFC0
 [core]
-  excludesfile = ~/.gitignore
-  autocrlf = input
+	excludesfile = ~/.gitignore
+	autocrlf = input
 [credential]
-  helper = cache --timeout=3600
+	helper = cache --timeout=3600
 [merge]
-  tool = vimdiff
-  conflictstyle = diff3
+	tool = vimdiff
+	conflictstyle = diff3
 [push]
-  default = current
+	default = current
 [help]
-  autocorrect = 0
+	autocorrect = 0
 [rerere]
-  enabled = 1
+	enabled = 1
 [diff]
-  tool = vimdiff
+	tool = vimdiff
 [filter "media"]
-  clean = git-media-clean %f
-  smudge = git-media-smudge %f
+	clean = git-media-clean %f
+	smudge = git-media-smudge %f
 [filter "lfs"]
-  clean = git lfs clean %f
-  smudge = git lfs smudge %f
-  required = true
+	clean = git lfs clean %f
+	smudge = git lfs smudge %f
+	required = true
+[pull]
+	ff = only
+[gpg]
+	program = /usr/local/bin/gpg
+[commit]
+	gpgsign = true
