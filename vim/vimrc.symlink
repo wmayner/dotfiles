@@ -29,7 +29,7 @@
     Plug 'vim-scripts/python_match.vim'
     Plug 'vim-scripts/pythoncomplete'
     Plug 'hynek/vim-python-pep8-indent'
-    Plug 'vim-python/python3-syntax'
+    Plug 'vim-python/python-syntax'
     " HTML
     Plug 'vim-scripts/HTML-AutoCloseTag', { 'for': 'html' }
     " Jade
