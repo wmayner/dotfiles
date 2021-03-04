@@ -1,0 +1,13 @@
+#!/bin/sh
+
+# Compress a video to mp4 format using H.265 (with CRF 26) as the video codec
+# and AAC (at 128k) as the audio codec
+
+set -o nounset
+set -x
+
+input=$1
+output="${input%.*}.mp4"
+
+# `-tag:v hvc1` is necessary for Apple QuickTime to recognize the mp4 container
+ffmpeg -i ${input} -c:v libx265 -crf 26 -preset slow -c:a aac -b:a 128k -tag:v hvc1 ${output}
