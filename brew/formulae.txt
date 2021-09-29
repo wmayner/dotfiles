@@ -27,3 +27,4 @@ wakeonlan
 watch
 wget
 zsh
+hammerspoon
