@@ -1,4 +1,5 @@
 {
+    "remote.SSH.useFlock": false,
     "files.associations": {
         "*.rmd": "markdown"
     },
@@ -10,13 +11,10 @@
         "editor.tabSize": 2,
     },
     "workbench.iconTheme": "vscode-icons",
-    "window.zoomLevel": 2,
     "workbench.colorTheme": "Solarized Dark",
     "files.autoSave": "off",
-    "gitlens.mode.active": "zen",
     "editor.cursorBlinking": "solid",
-    "editor.cursorStyle": "block",
-    "files.trimTrailingWhitespace": true,
+    "editor.cursorStyle": "line",
     "workbench.colorCustomizations": {
         "editorCursor.foreground": "#fff",
         "editorCursor.background": "#999"
@@ -101,9 +99,8 @@
         }
     ],
     "python.formatting.provider": "black",
-    "editor.formatOnSave": true,
     "search.searchOnType": false,
-    "workbench.activityBar.visible": true,
+    "workbench.activityBar.visible": false,
     "multiCommand.commands": [
         {
             "command": "multiCommand.makeRoom",
@@ -113,8 +110,34 @@
             ]
         }
     ],
-    "editor.fontFamily": "Roboto Mono for Powerline, Menlo, Monaco, 'Courier New', monospace",
+    "editor.fontFamily": "MesloLGS NF, Menlo, Monaco, 'Courier New', monospace",
     "debug.console.fontSize": 12,
     "editor.fontSize": 14,
-    "terminal.integrated.inheritEnv": false
+    "terminal.integrated.inheritEnv": false,
+    "terminal.external.osxExec": "iTerm.app",
+    "terminal.integrated.shell.osx": "/usr/local/bin/zsh",
+    "terminal.integrated.fontFamily": "MesloLGS NF",
+    "vsicons.dontShowNewVersionMessage": true,
+    "python.insidersChannel": "off",
+    "python.languageServer": "Pylance",
+    "workbench.editor.enablePreviewFromQuickOpen": false,
+    "git.untrackedChanges": "separate",
+    "files.insertFinalNewline": true,
+    "workbench.editorAssociations": {
+        "*.ipynb": "jupyter-notebook"
+    },
+    "editor.lineNumbers": "on",
+    "editor.wordSeparators": "/\\()\"':,.;<>~!@#$%^&*|+=[]{}`?-",
+    "editor.wordWrap": "off",
+    "jupyter.maxOutputSize": 0,
+    "notebook.cellToolbarLocation": {
+        "default": "right",
+        "jupyter-notebook": "left"
+    },
+    "jupyter.experimental.debugging": true,
+    "security.workspace.trust.untrustedFiles": "open",
+    "files.trimTrailingWhitespace": true,
+    "editor.formatOnSave": true,
+    "window.zoomLevel": 1,
+	"editor.insertSpaces": false
 }
