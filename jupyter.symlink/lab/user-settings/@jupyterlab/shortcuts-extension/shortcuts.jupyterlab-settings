@@ -124,6 +124,27 @@
             ],
             "selector": ".jp-mod-searchable",
             "disabled": true
+        },
+        {
+             "command": "notebook:restart-run-all",
+            "keys": [
+                "Ctrl Shift Accel Enter"
+            ],
+            "selector": ".jp-Notebook:focus"
+        },
+        {
+            "command": "notebook:run-all-above",
+            "keys": [
+                "Ctrl Shift Accel ArrowUp"
+            ],
+            "selector": ".jp-Notebook:focus"
+        },
+        {
+            "command": "notebook:run-all-below",
+            "keys": [
+                "Ctrl Shift Accel ArrowDown"
+            ],
+            "selector": ".jp-Notebook:focus"
         }
     ]
 }
