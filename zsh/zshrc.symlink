@@ -150,7 +150,7 @@ unset __conda_setup
   # Example format: plugins=(rails git textmate ruby lighthouse)
   plugins=(
     grunt brew command-not-found git github git-flow git-extras git-hubflow
-    history-substring-search fasd osx python lol
+    history-substring-search fasd macos python lol
   )
 
   source "$ZSH/oh-my-zsh.sh"
