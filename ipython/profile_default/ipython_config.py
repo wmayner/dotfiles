@@ -36,7 +36,8 @@
 
 ## A list of dotted module names of IPython extensions to load.
 #  Default: []
-# c.InteractiveShellApp.extensions = []
+c.InteractiveShellApp.extensions = ['blackcellmagic', 'jupyternotify', 'autoreload']
+
 
 ## DEPRECATED. Dotted module name of a single extra IPython extension to load.
 #
