@@ -1,0 +1,7 @@
+#!/bin/sh
+
+# Convert all arguments (assumed .png)to a TIFF with 600 dpi
+for i in $@; do
+  BN=$(basename $i .png)
+  convert -units PixelsPerInch $BN.png -density 600 $BN.tif
+done

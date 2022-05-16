@@ -3,7 +3,6 @@
     "files.associations": {
         "*.rmd": "markdown"
     },
-    "r.linting.enable": true,
     "[stylus]": {
         "editor.tabSize": 2,
     },
@@ -100,7 +99,6 @@
     ],
     "python.formatting.provider": "black",
     "search.searchOnType": false,
-    "workbench.activityBar.visible": false,
     "multiCommand.commands": [
         {
             "command": "multiCommand.makeRoom",
@@ -118,7 +116,6 @@
     "terminal.integrated.shell.osx": "/usr/local/bin/zsh",
     "terminal.integrated.fontFamily": "MesloLGS NF",
     "vsicons.dontShowNewVersionMessage": true,
-    "python.insidersChannel": "off",
     "python.languageServer": "Pylance",
     "workbench.editor.enablePreviewFromQuickOpen": false,
     "git.untrackedChanges": "separate",
@@ -134,10 +131,14 @@
         "default": "right",
         "jupyter-notebook": "left"
     },
-    "jupyter.experimental.debugging": true,
     "security.workspace.trust.untrustedFiles": "open",
     "files.trimTrailingWhitespace": true,
     "editor.formatOnSave": true,
-    "window.zoomLevel": 1,
-	"editor.insertSpaces": false
+    "editor.insertSpaces": false,
+    "notebook.showFoldingControls": "always",
+    "notebook.output.textLineLimit": 25,
+    "editor.quickSuggestions": true,
+    "editor.quickSuggestionsDelay": 10,
+    "editor.suggestOnTriggerCharacters": true,
+    "window.zoomLevel": 1
 }

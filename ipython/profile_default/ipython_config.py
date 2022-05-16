@@ -944,7 +944,7 @@ c.TerminalInteractiveShell.editor = 'vim'
 ## Experimental: Use Jedi to generate autocompletions. Default to True if jedi is
 #  installed.
 #  Default: True
-# c.Completer.use_jedi = True
+c.Completer.use_jedi = False
 
 #------------------------------------------------------------------------------
 # IPCompleter(Completer) configuration
