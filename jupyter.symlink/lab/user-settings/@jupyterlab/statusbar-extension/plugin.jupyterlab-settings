@@ -6,5 +6,5 @@
 
     // Status Bar Visibility
     // Whether to show status bar or not
-    "visible": false
+    "visible": true
 }
