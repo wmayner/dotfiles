@@ -9,22 +9,22 @@ spoon.SpoonInstall.repos.ShiftIt = {
 spoon.SpoonInstall:andUse("ShiftIt", { repo = "ShiftIt" })
 -- Use Vim arrow keys
 spoon.ShiftIt:bindHotkeys({
-    maximum = { { 'ctrl', 'cmd' }, 'o' },
-    left = { { 'ctrl', 'cmd' }, 'k' },
-    down = { { 'ctrl', 'cmd' }, 'l' },
-    right = { { 'ctrl', 'cmd' }, ';' },
-    upleft = { { 'ctrl', 'cmd', 'shift'}, 'k' },
-    upright = { { 'ctrl', 'cmd', 'shift'}, ';' },
-    botleft = { { 'ctrl', 'cmd', 'alt'}, 'k' },
-    botright = { { 'ctrl', 'cmd', 'alt' }, 'l' },
-    up = { { 'ctrl', 'cmd', 'alt'}, 'o' },
-    center = { { 'ctrl', 'alt', 'cmd' }, 'c' },
-    nextScreen = { { 'alt', 'cmd' }, 'o' },
-    previousScreen = { { 'alt', 'cmd' }, 'l' },
-    toggleFullScreen = { { 'ctrl', 'alt', 'cmd' }, 'f' },
-    toggleZoom = { { 'ctrl', 'alt', 'cmd' }, 'z' },
-    resizeOut = { { 'ctrl', 'alt', 'cmd' }, '=' },
-    resizeIn = { { 'ctrl', 'alt', 'cmd' }, '-' }
+    maximum = { { 'cmd', 'ctrl' }, 'o' },
+    left = { { 'cmd', 'ctrl' }, 'k' },
+    right = { { 'cmd', 'ctrl' }, ';' },
+    down = { { 'cmd', 'ctrl' }, 'l' },
+    upleft = { { 'cmd', 'alt', 'shift' }, 'k' },
+    upright = { { 'cmd', 'alt', 'shift' }, ';' },
+    botleft = { { 'cmd', 'alt', 'ctrl' }, 'k' },
+    botright = { { 'cmd', 'alt', 'ctrl' }, ';' },
+    up = { { 'cmd', 'alt', 'ctrl' }, 'o' },
+    center = { { 'cmd', 'alt', 'ctrl' }, 'c' },
+    nextScreen = { { 'cmd', 'alt' }, 'o' },
+    previousScreen = { { 'cmd', 'alt' }, 'l' },
+    toggleFullScreen = { { 'cmd', 'alt', 'ctrl' }, 'f' },
+    toggleZoom = { { 'cmd', 'alt', 'ctrl' }, 'z' },
+    resizeOut = { { 'cmd', 'alt', 'ctrl' }, '=' },
+    resizeIn = { { 'cmd', 'alt', 'ctrl' }, '-' }
   })
 
 -- Disable animations

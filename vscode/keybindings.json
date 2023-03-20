@@ -1,8 +1,62 @@
 // Place your key bindings in this file to override the defaults
 [
+    // {
+    //     "key": "alt+b",
+    //     "command": "workbench.action.toggleActivityBarVisibility"
+    // },
+    {
+        "key": "ctrl+h",
+        "command": "workbench.action.navigateLeft"
+    },
+    {
+        "key": "ctrl+l",
+        "command": "workbench.action.navigateRight"
+    },
+    {
+        "key": "ctrl+k",
+        "command": "workbench.action.navigateUp"
+    },
+    {
+        "key": "ctrl+j",
+        "command": "workbench.action.navigateDown"
+    },
+    {
+        "command": "merge-conflict.next",
+        "when": "editorTextFocus && vim.mode == 'Normal'",
+        "key": "alt+c ]"
+    },
+    {
+        "command": "merge-conflict.previous",
+        "when": "editorTextFocus && vim.mode == 'Normal'",
+        "key": "alt+c ["
+    },
+    {
+        "command": "merge-conflict.accept.selection",
+        "when": "editorTextFocus && vim.mode == 'Normal'",
+        "key": "alt+m enter"
+    },
+    {
+        "command": "merge-conflict.accept.current",
+        "when": "editorTextFocus && vim.mode == 'Normal'",
+        "key": "alt+m 1"
+    },
+    {
+        "command": "merge-conflict.accept.incoming",
+        "when": "editorTextFocus && vim.mode == 'Normal'",
+        "key": "alt+m 2"
+    },
+    {
+        "command": "merge-conflict.accept.both",
+        "when": "editorTextFocus && vim.mode == 'Normal'",
+        "key": "alt+m 3"
+    },
     {
         "key": "alt+b",
         "command": "workbench.action.toggleActivityBarVisibility"
+    },
+    {
+        "key": "alt+h",
+        "command": "workbench.action.navigateLeft"
     },
     {
         "key": "alt+h",
@@ -19,10 +73,6 @@
     {
         "key": "alt+j",
         "command": "workbench.action.navigateDown"
-    },
-    {
-        "key": "alt+h",
-        "command": "workbench.action.navigateLeft"
     },
     {
         "key": "ctrl+e",
@@ -245,4 +295,8 @@
         "command": "-notebook.cell.cut",
         "when": "notebookCellListFocused && !inputFocus"
     },
+    {
+        "key": "shift+cmd+a",
+        "command": "workbench.view.testing.focus"
+    }
 ]
