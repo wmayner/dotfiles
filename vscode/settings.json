@@ -97,7 +97,6 @@
             ]
         }
     ],
-    "python.formatting.provider": "black",
     "search.searchOnType": false,
     "multiCommand.commands": [
         {
@@ -113,7 +112,6 @@
     "editor.fontSize": 14,
     "terminal.integrated.inheritEnv": false,
     "terminal.external.osxExec": "iTerm.app",
-    "terminal.integrated.shell.osx": "/usr/local/bin/zsh",
     "terminal.integrated.fontFamily": "MesloLGS NF",
     "vsicons.dontShowNewVersionMessage": true,
     "python.languageServer": "Pylance",
@@ -133,12 +131,40 @@
     },
     "security.workspace.trust.untrustedFiles": "open",
     "files.trimTrailingWhitespace": true,
-    "editor.formatOnSave": true,
     "editor.insertSpaces": false,
     "notebook.showFoldingControls": "always",
     "notebook.output.textLineLimit": 25,
-    "editor.quickSuggestions": true,
+    "editor.quickSuggestions": {
+        "comments": "on",
+        "strings": "on",
+        "other": "on"
+    },
     "editor.quickSuggestionsDelay": 10,
     "editor.suggestOnTriggerCharacters": true,
-    "window.zoomLevel": 1
+    "editor.formatOnSave": true,
+    "[python]": {
+        "editor.defaultFormatter": "ms-python.python",
+        "editor.formatOnType": true
+    },
+    "python.formatting.provider": "black",
+    "editor.inlineSuggest.enabled": true,
+    "window.commandCenter": true,
+    "redhat.telemetry.enabled": false,
+    "editor.stickyScroll.enabled": true,
+    "python.testing.pytestEnabled": true,
+    "terminal.integrated.defaultProfile.linux": "zsh",
+    "testing.automaticallyOpenPeekView": "never",
+    "github.copilot.enable": {
+        "*": true,
+        "yaml": true,
+        "plaintext": false,
+        "markdown": false
+    },
+    "git.autofetch": true,
+    "merge-conflict.autoNavigateNextConflict.enabled": true,
+    "git.enableCommitSigning": true,
+    "python.linting.flake8Enabled": true,
+    "python.linting.pylintEnabled": true,
+    "problems.decorations.enabled": false,
+    "workbench.activityBar.visible": false
 }
