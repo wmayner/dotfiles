@@ -166,5 +166,7 @@
     "python.linting.flake8Enabled": true,
     "python.linting.pylintEnabled": true,
     "problems.decorations.enabled": false,
-    "window.zoomLevel": 1
+    "window.zoomLevel": 1,
+    "workbench.activityBar.visible": false,
+    "git.openRepositoryInParentFolders": "always"
 }
