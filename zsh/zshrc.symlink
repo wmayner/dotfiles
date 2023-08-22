@@ -51,7 +51,8 @@ OS=$(uname -s)
     # GNU-utilities
     export PATH="/usr/local/opt/grep/libexec/gnubin:$PATH"
     # Add Visual Studio Code (code)
-    export PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
+    # export PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
+    export PATH="$PATH:/Applications/Visual Studio Code - Insiders.app/Contents/Resources/app/bin"
   fi
   # User-local executables
   export PATH="$HOME/.local/bin:$PATH"
@@ -99,6 +100,11 @@ unset __conda_setup
 
   # Get base environment Python version
   local PYTHON_VERSION=$("$HOME/miniconda3/bin/python" --version | cut -c 8,9,10)
+
+if [[ -v TMUX ]]; then
+  tmux source-file "$HOME/.tmux.conf"
+  conda deactivate; conda activate base
+fi
 
 # }
 
