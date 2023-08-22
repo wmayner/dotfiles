@@ -1,38 +1,70 @@
 {
-    "remote.SSH.useFlock": false,
+    "[python]": {
+        "editor.defaultFormatter": "ms-python.black-formatter",
+        "editor.formatOnSave": true
+    },
+    "[latex]": {
+        "editor.wordWrap": "on"
+    },
+    "debug.console.fontSize": 12,
+    "editor.cursorBlinking": "solid",
+    "editor.cursorStyle": "block",
+    "editor.fontFamily": "Roboto Mono for Powerline, Menlo, Monaco, 'Courier New', monospace",
+    "editor.fontSize": 14,
+    "editor.inlineSuggest.enabled": true,
+    "editor.insertSpaces": true,
+    "editor.stickyScroll.enabled": true,
     "files.associations": {
         "*.rmd": "markdown"
     },
-    "[stylus]": {
-        "editor.tabSize": 2,
+    "files.insertFinalNewline": true,
+    "files.trimTrailingWhitespace": true,
+    "git.autofetch": true,
+    "git.enableCommitSigning": true,
+    "git.openRepositoryInParentFolders": "always",
+    "git.untrackedChanges": "separate",
+    "github.copilot.enable": {
+        "*": true,
+        "markdown": false,
+        "plaintext": false,
+        "yaml": true
     },
-    "[jade]": {
-        "editor.tabSize": 2,
-    },
-    "workbench.iconTheme": "vscode-icons",
-    "workbench.colorTheme": "Solarized Dark",
-    "files.autoSave": "off",
-    "editor.cursorBlinking": "solid",
-    "editor.cursorStyle": "line",
-    "workbench.colorCustomizations": {
-        "editorCursor.foreground": "#fff",
-        "editorCursor.background": "#999"
-    },
+    "jupyter.notebookFileRoot": "${projectDirname}",
+    "merge-conflict.autoNavigateNextConflict.enabled": true,
+    "multiCommand.commands": [
+        {
+            "command": "multiCommand.makeRoom",
+            "sequence": [
+                "workbench.action.toggleSidebarVisibility",
+                "workbench.action.toggleActivityBarVisibility"
+            ]
+        }
+    ],
+    "problems.decorations.enabled": true,
+    "python.formatting.provider": "none",
+    "python.languageServer": "Pylance",
+    "python.linting.flake8Enabled": true,
+    "python.linting.pylintEnabled": true,
+    "python.testing.pytestEnabled": true,
+    "search.searchOnType": false,
+    "terminal.external.osxExec": "iTerm.app",
+    "terminal.integrated.defaultProfile.linux": "zsh",
     "terminal.integrated.fontSize": 14,
+    "terminal.integrated.inheritEnv": false,
+    "testing.automaticallyOpenPeekView": "never",
+    "vim.cursorStylePerMode.insert": "line",
+    "vim.cursorStylePerMode.replace": "block-outline",
     "vim.easymotion": true,
-    "vim.sneak": true,
-    "vim.incsearch": true,
-    "vim.useSystemClipboard": true,
-    "vim.useCtrlKeys": true,
     "vim.hlsearch": true,
+    "vim.incsearch": true,
     "vim.normalModeKeyBindingsNonRecursive": [
         {
-            "before": [
-                "<leader>",
-                "d"
-            ],
             "after": [
                 "d",
+                "d"
+            ],
+            "before": [
+                "<leader>",
                 "d"
             ]
         },
@@ -45,39 +77,39 @@
             ]
         },
         {
-            "before": [
-                "k"
-            ],
             "after": [
                 "g",
                 "k"
+            ],
+            "before": [
+                "k"
             ]
         },
         {
-            "before": [
-                "j"
-            ],
             "after": [
                 "g",
                 "j"
+            ],
+            "before": [
+                "j"
             ]
         },
         {
-            "before": [
-                "0"
-            ],
             "after": [
                 "g",
                 "0"
+            ],
+            "before": [
+                "0"
             ]
         },
         {
-            "before": [
-                "$"
-            ],
             "after": [
                 "g",
                 "_"
+            ],
+            "before": [
+                "$"
             ]
         },
         {
@@ -97,76 +129,21 @@
             ]
         }
     ],
-    "search.searchOnType": false,
-    "multiCommand.commands": [
-        {
-            "command": "multiCommand.makeRoom",
-            "sequence": [
-                "workbench.action.toggleSidebarVisibility",
-                "workbench.action.toggleActivityBarVisibility"
-            ]
-        }
-    ],
-    "editor.fontFamily": "MesloLGS NF, Menlo, Monaco, 'Courier New', monospace",
-    "debug.console.fontSize": 12,
-    "editor.fontSize": 14,
-    "terminal.integrated.inheritEnv": false,
-    "terminal.external.osxExec": "iTerm.app",
-    "terminal.integrated.fontFamily": "MesloLGS NF",
+    "vim.sneak": true,
+    "vim.useCtrlKeys": true,
+    "vim.useSystemClipboard": true,
     "vsicons.dontShowNewVersionMessage": true,
-    "python.languageServer": "Pylance",
-    "workbench.editor.enablePreviewFromQuickOpen": false,
-    "git.untrackedChanges": "separate",
-    "files.insertFinalNewline": true,
-    "workbench.editorAssociations": {
-        "*.ipynb": "jupyter-notebook"
-    },
-    "editor.lineNumbers": "on",
-    "editor.wordSeparators": "/\\()\"':,.;<>~!@#$%^&*|+=[]{}`?-",
-    "editor.wordWrap": "off",
-    "jupyter.maxOutputSize": 0,
-    "notebook.cellToolbarLocation": {
-        "default": "right",
-        "jupyter-notebook": "left"
-    },
-    "security.workspace.trust.untrustedFiles": "open",
-    "files.trimTrailingWhitespace": true,
-    "editor.insertSpaces": false,
-    "notebook.showFoldingControls": "always",
-    "notebook.output.textLineLimit": 25,
-    "editor.quickSuggestions": {
-        "comments": "on",
-        "strings": "on",
-        "other": "on"
-    },
-    "editor.quickSuggestionsDelay": 10,
-    "editor.suggestOnTriggerCharacters": true,
-    "editor.formatOnSave": true,
-    "[python]": {
-        "editor.defaultFormatter": "ms-python.python",
-        "editor.formatOnType": true
-    },
-    "python.formatting.provider": "black",
-    "editor.inlineSuggest.enabled": true,
     "window.commandCenter": true,
-    "redhat.telemetry.enabled": false,
-    "editor.stickyScroll.enabled": true,
-    "python.testing.pytestEnabled": true,
-    "terminal.integrated.defaultProfile.linux": "zsh",
-    "testing.automaticallyOpenPeekView": "never",
-    "github.copilot.enable": {
-        "*": true,
-        "yaml": true,
-        "plaintext": false,
-        "markdown": false
+    "workbench.colorCustomizations": {
+        "editorCursor.background": "#999999",
+        "editorCursor.foreground": "#03fe0f"
     },
-    "git.autofetch": true,
-    "merge-conflict.autoNavigateNextConflict.enabled": true,
-    "git.enableCommitSigning": true,
-    "python.linting.flake8Enabled": true,
-    "python.linting.pylintEnabled": true,
-    "problems.decorations.enabled": false,
-    "window.zoomLevel": 1,
-    "workbench.activityBar.visible": false,
-    "git.openRepositoryInParentFolders": "always"
+    "workbench.colorTheme": "Solarized Dark",
+    "workbench.editor.enablePreviewFromQuickOpen": false,
+    "editor.cursorWidth": 3,
+    "terminal.integrated.cursorWidth": 3,
+    "workbench.editorAssociations": {
+        "*.pdf": "latex-workshop-pdf-hook"
+    },
+    "latex-workshop.latex.autoBuild.run": "onSave"
 }
