@@ -96,5 +96,4 @@ bind-key r source-file ~/.tmux.conf
 
 # THEME
 set -g default-terminal "screen-256color"
-
-source "/Users/will/miniconda3/lib/python3.10/site-packages/powerline/bindings/tmux/powerline.conf"
+source "$(python3-config --prefix)/lib/python3.8/site-packages/powerline/bindings/tmux/powerline.conf"

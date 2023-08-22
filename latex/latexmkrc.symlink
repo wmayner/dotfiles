@@ -1,2 +1,2 @@
-$pdf_previewer = "open -a /Applications/Skim.app";
+$pdf_previewer = "open";
 $clean_ext = "paux lox pdfsync out";
