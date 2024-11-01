@@ -101,6 +101,17 @@ unset __conda_setup
   # Get base environment Python version
   local PYTHON_VERSION=$("$HOME/miniconda3/bin/python" --version | cut -c 8,9,10)
 
+
+# Prevent installing new things into base
+function extended_conda(){
+  if [ "${CONDA_PROMPT_MODIFIER-}" = "(base) " ] && [ "$1" = "install" ]; then
+    echo "Not allowed in base environment"
+  else
+    conda "$@"
+  fi
+}
+alias conda=extended_conda
+
 if [[ -v TMUX ]]; then
   tmux source-file "$HOME/.tmux.conf"
   conda deactivate; conda activate base
@@ -218,7 +229,7 @@ fi
     dircolors &>/dev/null 2>&1 && eval `dircolors $DOTFILES/zsh/dircolors.ansi-dark` || export LSCOLORS="Gxfxcxdxbxegedabagacad"
     # Use GNU ls if available (for macOS: `brew install coreutils`)
     gdircolors &>/dev/null 2>&1 && eval `gdircolors $DOTFILES/zsh/dircolors.ansi-dark` && alias ls='gls --color=auto -hF'
-    export GREP_COLOR='1;31'
+    export GREP_COLORS='mt=1;31'
   # }
 
   # git {
@@ -560,19 +571,23 @@ fi
     alias cinstall='conda_install'
 
     pip() {
-      # Don't install anything into base environment
-      if [[ -v CONDA_DEFAULT_ENV ]] then
-        string=$(which python)
-        word='envs'
-        if test "${string#*$word}" != "$string"; then
-          python -m pip $@
-        # Invoke pip directly through python
-        # See https://jakevdp.github.io/blog/2017/12/05/installing-python-packages-from-jupyter/
-        else
-          echo 'Python is not installed in this environment; not running'
-        fi
+      if [ "${CONDA_PROMPT_MODIFIER-}" = "(base) " ] && [ "$1" = "install" ]; then
+        echo "Not allowed in base environment"
       else
-        echo 'No active environment; not running'
+        # Don't install anything into base environment
+        if [[ -v CONDA_DEFAULT_ENV ]] then
+          string=$(which python)
+          word='envs'
+          if test "${string#*$word}" != "$string"; then
+            python -m pip $@
+          # Invoke pip directly through python
+          # See https://jakevdp.github.io/blog/2017/12/05/installing-python-packages-from-jupyter/
+          else
+            echo 'Python is not installed in this environment; not running'
+          fi
+        else
+          echo 'No active environment; not running'
+        fi
       fi
     }
 
