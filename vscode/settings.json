@@ -6,6 +6,9 @@
     "[latex]": {
         "editor.wordWrap": "on"
     },
+    "[jade]": {
+        "files.trimTrailingWhitespace": false
+    },
     "debug.console.fontSize": 12,
     "editor.cursorBlinking": "solid",
     "editor.cursorStyle": "block",
@@ -145,5 +148,6 @@
     "workbench.editorAssociations": {
         "*.pdf": "latex-workshop-pdf-hook"
     },
-    "latex-workshop.latex.autoBuild.run": "onSave"
+    "latex-workshop.latex.autoBuild.run": "onSave",
+    "window.zoomLevel": -1
 }
