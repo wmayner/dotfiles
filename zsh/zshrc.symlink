@@ -257,13 +257,13 @@ fi
     # to launch a new shell slightly, but for some, this may be worth it.
   # }
 
-  # nvm {
-    export NVM_DIR="$HOME/.nvm"
+  # # nvm {
+  #   export NVM_DIR="$HOME/.nvm"
 
-    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-    # This loads nvm bash_completion
-    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
-  # }
+  #   [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+  #   # This loads nvm bash_completion
+  #   [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+  # # }
 
   # node {
     # Grunt task tab-completion
@@ -471,7 +471,7 @@ fi
 
   # LaTeX {
     # Run latexmk with following options: compile to pdf, preview continuously
-    alias latexmk="latexmk -pdf -pvc"
+    alias latexmk="latexmk -pdf"
     alias ltx="latexmk"
     # Edit .tex files in the current directory
     alias vtex="find . -iname '*.tex' -exec $EDITOR {} \;"
