@@ -1,3 +1,6 @@
+----------------------------------------------------------------------
+-- Supercededed by Rectangle.app
+----------------------------------------------------------------------
 hs.loadSpoon("SpoonInstall")
 
 spoon.SpoonInstall.repos.ShiftIt = {
@@ -9,23 +12,24 @@ spoon.SpoonInstall.repos.ShiftIt = {
 spoon.SpoonInstall:andUse("ShiftIt", { repo = "ShiftIt" })
 -- Use Vim arrow keys
 spoon.ShiftIt:bindHotkeys({
-    maximum = { { 'cmd', 'ctrl' }, 'o' },
-    left = { { 'cmd', 'ctrl' }, 'k' },
-    right = { { 'cmd', 'ctrl' }, ';' },
-    down = { { 'cmd', 'ctrl' }, 'l' },
-    up = { { 'cmd', 'alt', 'shift' }, 'o' },
-    upleft = { { 'cmd', 'alt', 'shift' }, 'k' },
-    upright = { { 'cmd', 'alt', 'shift' }, ';' },
-    botleft = { { 'cmd', 'alt', 'ctrl' }, 'k' },
-    botright = { { 'cmd', 'alt', 'ctrl' }, ';' },
-    center = { { 'cmd', 'alt', 'ctrl' }, 'c' },
+    -- maximum = { { 'cmd', 'ctrl' }, 'o' },
+    -- left = { { 'cmd', 'ctrl' }, 'k' },
+    -- right = { { 'cmd', 'ctrl' }, ';' },
+    -- down = { { 'cmd', 'ctrl' }, 'l' },
+    -- up = { { 'cmd', 'alt', 'shift' }, 'o' },
+    -- upleft = { { 'cmd', 'alt', 'shift' }, 'k' },
+    -- upright = { { 'cmd', 'alt', 'shift' }, ';' },
+    -- botleft = { { 'cmd', 'alt', 'ctrl' }, 'k' },
+    -- botright = { { 'cmd', 'alt', 'ctrl' }, ';' },
+    -- center = { { 'cmd', 'alt', 'ctrl' }, 'c' },
     nextScreen = { { 'cmd', 'alt' }, 'o' },
     previousScreen = { { 'cmd', 'alt' }, 'l' },
-    toggleFullScreen = { { 'cmd', 'alt', 'ctrl' }, 'f' },
-    toggleZoom = { { 'cmd', 'alt', 'ctrl' }, 'z' },
-    resizeOut = { { 'cmd', 'alt', 'ctrl' }, '=' },
-    resizeIn = { { 'cmd', 'alt', 'ctrl' }, '-' }
+    -- toggleFullScreen = { { 'cmd', 'alt', 'ctrl' }, 'f' },
+    -- toggleZoom = { { 'cmd', 'alt', 'ctrl' }, 'z' },
+    -- resizeOut = { { 'cmd', 'alt', 'ctrl' }, '=' },
+    -- resizeIn = { { 'cmd', 'alt', 'ctrl' }, '-' }
   })
+----------------------------------------------------------------------
 
 -- Disable animations
 hs.window.animationDuration = 0
