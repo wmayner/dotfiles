@@ -64,23 +64,6 @@ OS=$(uname -s)
 
 # Python {
 
-  # # virtualenvwrapper {
-  #   export WORKON_HOME="$HOME/.virtualenvs"
-  #   export PROJECT_HOME="$CODE"
-  #   export VIRTUALENV_PYTHON="$(which python3)"
-  #   export VIRTUALENVWRAPPER_PYTHON="$(which python3)"
-  #   export VIRTUAL_ENV_DISABLE_PROMPT=1
-  #   source "$(which virtualenvwrapper.sh)"
-  #   # Auto-set VIRTUAL_ENV in tmux
-  #   if [[ -n "$TMUX" ]] && [ -n "$VIRTUAL_ENV" ]; then
-  #     tmux set-environment VIRTUAL_ENV $VIRTUAL_ENV
-  #   fi
-  #   # Activate VIRTUAL_ENV if set
-  #   if [ -n "$VIRTUAL_ENV" ]; then
-  #    source $VIRTUAL_ENV/bin/activate  # commented out by conda initialize
-  #   fi
-  # }
-
   # conda {
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
@@ -604,3 +587,23 @@ fi
   # Put system-specific stuff in `~/.zshrc.local`.
   [ -f "$HOME/.zshrc.local" ] && source "$HOME/.zshrc.local"
 # }
+
+# fnm
+FNM_PATH="/usr/local/opt/fnm/bin"
+if [ -d "$FNM_PATH" ]; then
+  eval "`fnm env --use-on-cd --version-file-strategy=recursive`"
+fi
+
+# asdf multi-tool version manager
+. $(brew --prefix asdf)/libexec/asdf.sh
+
+# add golang managed by asdf to PATH
+export PATH="$(asdf where golang)/bin:$PATH"
+
+# Keep Powerline configuration in sync with Python user site packages
+POWERLINE_CONF=$(find ~/miniconda3/lib -path '*/powerline/bindings/tmux/powerline.conf' 2>/dev/null | head -n1)
+if [[ -n "$POWERLINE_CONF" ]]; then
+    mkdir -p ~/.config/powerline/tmux
+    ln -sf "$POWERLINE_CONF" ~/.config/powerline/tmux/powerline.conf
+fi
+export PATH="/opt/homebrew/opt/postgresql@17/bin:$PATH"
