@@ -109,7 +109,6 @@
     Plug 'w0rp/ale'
     " Auto formatting
     Plug 'sbdchd/neoformat', { 'do': 'npm install --global prettier' }
-    Plug 'ambv/black'
     " Ack/Ag in Vim
     Plug 'mileszs/ack.vim'
     " File browser
