@@ -1,0 +1,252 @@
+{
+  "laptop": {
+    "77102": {
+      "multitab": false,
+      "fullscreen": "no",
+      "screen": 1,
+      "frame": {
+        "y": 44,
+        "w": 872,
+        "x": 1184,
+        "h": 500
+      },
+      "app": "Finder",
+      "title": "Baltazar",
+      "space": 884
+    },
+    "93657": {
+      "multitab": true,
+      "fullscreen": "no",
+      "screen": 1,
+      "frame": {
+        "y": 44,
+        "w": 1563,
+        "x": 0,
+        "h": 1210
+      },
+      "app": "Firefox",
+      "title": "g1 - O portal de notícias da Globo",
+      "space": 17,
+      "tabs": {
+        "3": "9GAG - Best Funny Memes and Breaking News",
+        "2": "Netflix",
+        "1": "g1 - O portal de notícias da Globo"
+      }
+    },
+    "145": {
+      "multitab": false,
+      "fullscreen": "right",
+      "screen": 1,
+      "frame": {
+        "y": 43,
+        "w": 1022,
+        "x": 1034,
+        "h": 1286
+      },
+      "app": "Notes",
+      "title": "Notes",
+      "space": 8
+    },
+    "112": {
+      "multitab": false,
+      "fullscreen": "yes",
+      "screen": 1,
+      "frame": {
+        "y": 43,
+        "w": 2056,
+        "x": 0,
+        "h": 1286
+      },
+      "app": "Calendar",
+      "title": "Calendar",
+      "space": 5
+    },
+    "93634": {
+      "multitab": true,
+      "fullscreen": "no",
+      "screen": 1,
+      "frame": {
+        "y": 44,
+        "w": 1822,
+        "x": 0,
+        "h": 1219
+      },
+      "app": "Safari",
+      "title": "Start Page",
+      "space": 18,
+      "tabs": {
+        "7": "511 · mas-cli/mas",
+        "3": "osx_install_config/11_system_and_app_preferences/11c_macos_preferences_14.sh at be085fb76d3544f603b1a1d87e713189bcd8fa9e · tiiiecherle/osx_install_config",
+        "8": "Remove all option · Issue ",
+        "11": "tplobo/config-private: Computer configuration (private data). Forked from `tplobo/config`.",
+        "4": "ZSH - split string into array",
+        "9": "5 · mosen/mysides",
+        "5": "Usage · macOS Setup Guide",
+        "1": "Start Page",
+        "6": "Command to uninstall all apps from App Store · Issue ",
+        "10": "tplobo/restore-spaces: Hammerspoon implementation to restore organization of windows throughout spaces on MacOS.",
+        "2": "ChatGPT"
+      }
+    },
+    "81": {
+      "multitab": false,
+      "fullscreen": "no",
+      "screen": 1,
+      "frame": {
+        "y": 192,
+        "w": 1380,
+        "x": 164,
+        "h": 876
+      },
+      "app": "Finder",
+      "title": "Twin Peaks Season 2",
+      "space": 25
+    },
+    "115": {
+      "multitab": false,
+      "fullscreen": "left",
+      "screen": 1,
+      "frame": {
+        "y": 43,
+        "w": 1022,
+        "x": 0,
+        "h": 1286
+      },
+      "app": "Reminders",
+      "title": "Reminders",
+      "space": 8
+    },
+    "93639": {
+      "multitab": true,
+      "fullscreen": "no",
+      "screen": 1,
+      "frame": {
+        "y": 44,
+        "w": 1563,
+        "x": 479,
+        "h": 1210
+      },
+      "app": "Firefox",
+      "title": "Amazon.de: Low Prices in Electronics, Books, Sports Equipment & more",
+      "space": 17,
+      "tabs": {
+        "3": "Google",
+        "1": "Amazon.de: Low Prices in Electronics, Books, Sports Equipment & more",
+        "4": "New Tab",
+        "2": "YouTube"
+      }
+    },
+    "4239": {
+      "multitab": false,
+      "fullscreen": "no",
+      "screen": 1,
+      "frame": {
+        "y": 44,
+        "w": 1691,
+        "x": 0,
+        "h": 1210
+      },
+      "app": "Code",
+      "title": "~/Documents/VSCODE/CONFIG/config — config",
+      "space": 23
+    },
+    "370": {
+      "multitab": false,
+      "fullscreen": "no",
+      "screen": 1,
+      "frame": {
+        "y": 44,
+        "w": 1745,
+        "x": 0,
+        "h": 1210
+      },
+      "app": "Sourcetree",
+      "title": "restore-spaces (Git)",
+      "space": 21
+    },
+    "92461": {
+      "multitab": false,
+      "fullscreen": "no",
+      "screen": 1,
+      "frame": {
+        "y": 65,
+        "w": 1193,
+        "x": 723,
+        "h": 1074
+      },
+      "app": "Activity Monitor",
+      "title": "Activity Monitor – All Processes",
+      "space": 22
+    },
+    "4241": {
+      "multitab": false,
+      "fullscreen": "no",
+      "screen": 1,
+      "frame": {
+        "y": 44,
+        "w": 1872,
+        "x": 0,
+        "h": 1210
+      },
+      "app": "Code",
+      "title": "~/Documents/VSCODE/CONFIG/restore-spaces — restore-spaces",
+      "space": 20
+    },
+    "88696": {
+      "multitab": false,
+      "fullscreen": "right",
+      "screen": 1,
+      "frame": {
+        "y": 43,
+        "w": 1022,
+        "x": 1034,
+        "h": 1286
+      },
+      "app": "‎WhatsApp",
+      "title": "‎WhatsApp",
+      "space": 12
+    },
+    "4240": {
+      "multitab": false,
+      "fullscreen": "no",
+      "screen": 1,
+      "frame": {
+        "y": 44,
+        "w": 1883,
+        "x": -0,
+        "h": 1210
+      },
+      "app": "Code",
+      "title": "~/.hammerspoon — .hammerspoon",
+      "space": 22
+    },
+    "249": {
+      "multitab": false,
+      "fullscreen": "yes",
+      "screen": 1,
+      "frame": {
+        "y": 43,
+        "w": 2056,
+        "x": 0,
+        "h": 1286
+      },
+      "app": "Music",
+      "title": "Music",
+      "space": 45
+    },
+    "77136": {
+      "multitab": false,
+      "fullscreen": "left",
+      "screen": 1,
+      "frame": {
+        "y": 43,
+        "w": 1022,
+        "x": 0,
+        "h": 1286
+      },
+      "app": "Rakuten Viber",
+      "title": "Rakuten Viber",
+      "space": 12
+    }
+  }
+}

@@ -1,0 +1,106 @@
+# ~/.config/aerospace/aerospace.toml
+
+# Make aerospace-specific scripts accessible
+[exec.env-vars]
+    PATH = '${HOME}/dotfiles/aerospace/scripts:${PATH}'
+
+# ---------- Floating only ----------
+[[on-window-detected]]
+run = "layout floating"
+
+# ---------- Workspace mapping ----------
+[workspace-to-monitor-force-assignment]
+"1L"  = 1
+"1C"  = 2
+"1R"  = 3
+"2L"  = 1
+"2C"  = 2
+"2R"  = 3
+"3L"  = 1
+"3C"  = 2
+"3R"  = 3
+"4L"  = 1
+"4C"  = 2
+"4R"  = 3
+"5L"  = 1
+"5C"  = 2
+"5R"  = 3
+"6L"  = 1
+"6C"  = 2
+"6R"  = 3
+"7L"  = 1
+"7C"  = 2
+"7R"  = 3
+"8L"  = 1
+"8C"  = 2
+"8R"  = 3
+"9L"  = 1
+"9C"  = 2
+"9R"  = 3
+"10L" = 1
+"10C" = 2
+"10R" = 3
+
+# ---------- Keybindings ----------
+[mode.main.binding]
+
+# Unified workspace: next/prev (Ctrl+→ / Ctrl+←)
+ctrl-right = 'exec-and-forget cycle-unified-workspace.sh next'
+ctrl-left  = 'exec-and-forget cycle-unified-workspace.sh prev'
+
+# Switch unified workspace (Ctrl+1..10)
+ctrl-1  = ["workspace 1L", "workspace 1C", "workspace 1R", "focus-monitor mouse"]
+ctrl-2  = ["workspace 2L", "workspace 2C", "workspace 2R", "focus-monitor mouse"]
+ctrl-3  = ["workspace 3L", "workspace 3C", "workspace 3R", "focus-monitor mouse"]
+ctrl-4  = ["workspace 4L", "workspace 4C", "workspace 4R", "focus-monitor mouse"]
+ctrl-5  = ["workspace 5L", "workspace 5C", "workspace 5R", "focus-monitor mouse"]
+ctrl-6  = ["workspace 6L", "workspace 6C", "workspace 6R", "focus-monitor mouse"]
+ctrl-7  = ["workspace 7L", "workspace 7C", "workspace 7R", "focus-monitor mouse"]
+ctrl-8  = ["workspace 8L", "workspace 8C", "workspace 8R", "focus-monitor mouse"]
+ctrl-9  = ["workspace 9L", "workspace 9C", "workspace 9R", "focus-monitor mouse"]
+ctrl-0 =  ["workspace 10L","workspace 10C","workspace 10R","focus-monitor mouse"]
+
+# Throw focused window (Shift+Alt+1..10)
+shift-alt-1  = 'exec-and-forget move-node-to-workspace-and-follow.sh 1'
+shift-alt-2  = 'exec-and-forget move-node-to-workspace-and-follow.sh 2'
+shift-alt-3  = 'exec-and-forget move-node-to-workspace-and-follow.sh 3'
+shift-alt-4  = 'exec-and-forget move-node-to-workspace-and-follow.sh 4'
+shift-alt-5  = 'exec-and-forget move-node-to-workspace-and-follow.sh 5'
+shift-alt-6  = 'exec-and-forget move-node-to-workspace-and-follow.sh 6'
+shift-alt-7  = 'exec-and-forget move-node-to-workspace-and-follow.sh 7'
+shift-alt-8  = 'exec-and-forget move-node-to-workspace-and-follow.sh 8'
+shift-alt-9  = 'exec-and-forget move-node-to-workspace-and-follow.sh 9'
+shift-alt-0  = 'exec-and-forget move-node-to-workspace-and-follow.sh 10'
+
+# Throw focused window (Shift+Alt+1..10) — no follow
+shift-alt-cmd-1  = 'exec-and-forget move-node-to-workspace.sh 1'
+shift-alt-cmd-2  = 'exec-and-forget move-node-to-workspace.sh 2'
+shift-alt-cmd-3  = 'exec-and-forget move-node-to-workspace.sh 3'
+shift-alt-cmd-4  = 'exec-and-forget move-node-to-workspace.sh 4'
+shift-alt-cmd-5  = 'exec-and-forget move-node-to-workspace.sh 5'
+shift-alt-cmd-6  = 'exec-and-forget move-node-to-workspace.sh 6'
+shift-alt-cmd-7  = 'exec-and-forget move-node-to-workspace.sh 7'
+shift-alt-cmd-8  = 'exec-and-forget move-node-to-workspace.sh 8'
+shift-alt-cmd-9  = 'exec-and-forget move-node-to-workspace.sh 9'
+shift-alt-cmd-0  = 'exec-and-forget move-node-to-workspace.sh 10'
+
+# maximize using Rectangle
+ctrl-cmd-o = 'exec-and-forget open -g "rectangle://execute-action?name=maximize"'
+
+# Cycle forward: L→C→R→L within same number
+cmd-alt-o = ['move-node-to-monitor next --focus-follows-window --wrap-around', 'exec-and-forget open -g "rectangle://execute-action?name=maximize"']
+
+# Cycle forward and back: L→C→R→L within same number
+cmd-alt-p = ['move-node-to-monitor next --focus-follows-window --wrap-around', 'exec-and-forget open -g "rectangle://execute-action?name=maximize"']
+cmd-alt-i = ['move-node-to-monitor prev --focus-follows-window --wrap-around', 'exec-and-forget open -g "rectangle://execute-action?name=maximize"']
+
+# Half screens
+cmd-alt-k = ['move-node-to-monitor prev --focus-follows-window --wrap-around', 'exec-and-forget open -g "rectangle://execute-action?name=left"']
+cmd-alt-l = ['move-node-to-monitor next --focus-follows-window --wrap-around', 'exec-and-forget open -g "rectangle://execute-action?name=bottom"']
+cmd-alt-semicolon = ['move-node-to-monitor next --focus-follows-window --wrap-around', 'exec-and-forget open -g "rectangle://execute-action?name=right"']
+
+cmd-backtick = 'exec-and-forget cycle-app-windows-in-workspace.sh next'
+cmd-shift-backtick = 'exec-and-forget cycle-app-windows-in-workspace.sh prev'
+
+# QoL
+ctrl-alt-cmd-r = "reload-config"

@@ -1,0 +1,55 @@
+#!/usr/bin/env bash
+# migrate-workspaces.sh <main|desktop>
+# Streams "id ws mon" triples into xargs and runs migrate-window.sh in parallel.
+set -euo pipefail
+
+LOGFILE="/tmp/aerospace.log"
+log() { echo "[$(date '+%Y-%m-%d %H:%M:%S')] $(basename "$0"): $*" >> "$LOGFILE"; }
+
+MODE="${1:-}"
+if [[ "$MODE" != "main" && "$MODE" != "desktop" ]]; then
+  echo "Usage: $(basename "$0") <main|desktop>" >&2
+  exit 2
+fi
+
+CONCURRENCY="${CONCURRENCY:-0}"  # parallel workers (0 = unlimited)
+
+# Build the -P flag for xargs
+if [[ "$CONCURRENCY" == "0" ]]; then
+  PFLAG="-P0"
+  echo PFLAG
+else
+  PFLAG="-P$CONCURRENCY"
+fi
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+ONE="$SCRIPT_DIR/migrate-window.sh"
+[[ -x "$ONE" ]] || { echo "Error: not executable: $ONE" >&2; exit 1; }
+
+collect_main() {
+  for n in {1..10}; do
+    for s in L C R; do
+      aerospace list-windows --workspace "${n}${s}" \
+        --format '%{window-id} %{workspace} %{monitor-id}' 2>/dev/null || true
+    done
+  done
+}
+
+collect_desktop() {
+  for n in {1..10}; do
+    aerospace list-windows --workspace "$n" \
+      --format '%{window-id} %{workspace} %{monitor-id}' 2>/dev/null || true
+  done
+}
+
+log "Migrating windows to $MODE mode..."
+
+if [[ "$MODE" == "main" ]]; then
+  collect_main    | awk 'NF==3' | xargs -n3 $PFLAG -r -- "$ONE" "$MODE"
+else
+  collect_desktop | awk 'NF==3' | xargs -n3 $PFLAG -r -- "$ONE" "$MODE"
+fi
+
+msg="Migrated windows to $MODE mode"
+log "$msg."
+echo "$msg"
