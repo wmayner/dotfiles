@@ -1,7 +1,8 @@
 #!/bin/sh
 
 if [ "$(uname -s)" = "Darwin" ]; then
-  brew upgrade; conda update -y -n base -c defaults conda python setuptools; npm update -g; vim +PlugUpdate +PlugInstall! +PlugClean! +qa; omz update;
+  brew upgrade; conda update -y -n base -c defaults conda python setuptools; npm update -g; vim +PlugUpdate +PlugInstall! +PlugClean! +qa; zsh -ic 'omz update';
 else
-  sudo apt-get update; sudo apt-get upgrade -y; conda update -y -n base -c defaults conda python setuptools; vim +PlugUpgrade +PlugInstall! +PlugClean! +qa; omz update;
+  sudo apt-get update; sudo apt-get upgrade -y; conda update -y -n base -c defaults conda python setuptools; vim +PlugUpgrade +PlugInstall! +PlugClean! +qa; zsh -ic 'omz update';
 fi
+brew install node
