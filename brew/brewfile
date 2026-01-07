@@ -1,0 +1,35 @@
+# Brewfile
+
+## To install:
+# brew bundle install
+# Later, to clean anything installed but not in Brewfile:
+# brew bundle cleanup --force
+
+tap "homebrew/bundle"
+tap "homebrew/cask"
+tap "homebrew/core"
+
+# --- Formulae ---
+brew "cmake"
+brew "colordiff"
+brew "coreutils"
+brew "fzf"
+brew "git"
+brew "gnupg"
+brew "node"
+brew "pandoc"
+brew "ripgrep"
+brew "rsync"
+brew "tmux"
+brew "trash"
+brew "tree"
+brew "watch"
+brew "wget"
+brew "zoxide"
+
+# --- Casks ---
+cask "1password-cli"
+cask "aerospace"
+cask "blackhole-2ch"
+cask "hammerspoon"
+cask "ngrok"
