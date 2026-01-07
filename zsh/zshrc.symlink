@@ -3,6 +3,16 @@
 #
 # zshrc of wmayner
 
+# --- must be first: ensure core macOS tools are always available ---
+export PATH="/usr/bin:/bin:/usr/sbin:/sbin:/opt/homebrew/bin:/opt/homebrew/sbin"
+hash -r
+# ------------------------------------------------
+
+# Force arm64 shell on Apple Silicon (avoid x86_64 Homebrew shells via Rosetta)
+if [[ "$(uname -m)" == "x86_64" ]] && [[ "$(sysctl -n hw.optional.arm64 2>/dev/null)" == "1" ]] && [[ -z "${ZSH_FORCE_ARM64_DONE:-}" ]]; then
+  export ZSH_FORCE_ARM64_DONE=1
+  exec arch -arm64 /bin/zsh -l
+fi
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -20,7 +30,6 @@ fi
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 OS=$(uname -s)
-
 
 # Environment variables {
   export DEFAULT_USER="will"
@@ -42,29 +51,50 @@ OS=$(uname -s)
 # }
 
 # PATH {
-  # TeX commands
-  export PATH="$PATH:/usr/texbin"
-  # NVIDIA CUDA libraries
-  export PATH="$PATH:/Developer/NVIDIA/CUDA-8.0/bin"
-  export DYLD_LIBRARY_PATH="/Developer/NVIDIA/CUDA-8.0/lib:$DYLD_LIBRARY_PATH"
-  if [ "$OS" = "Darwin" ]; then
-    # GNU-utilities
-    export PATH="/usr/local/opt/grep/libexec/gnubin:$PATH"
-    # Add Visual Studio Code (code)
-    # export PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
-    export PATH="$PATH:/Applications/Visual Studio Code - Insiders.app/Contents/Resources/app/bin"
-  fi
   # User-local executables
   export PATH="$HOME/.local/bin:$PATH"
   # Dotfile executables
   export PATH="$HOME/dotfiles/bin:$PATH"
   # Local executables
   export PATH="$HOME/bin:$PATH"
+
+  # Prefer Apple Silicon Homebrew + system tools over Intel Homebrew
+  if [ "$OS" = "Darwin" ]; then
+    if [ -d "/opt/homebrew/bin" ]; then
+      export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:$PATH"
+    fi
+    # De-prioritize Intel Homebrew if present
+    if command -v /usr/libexec/path_helper >/dev/null 2>&1; then
+      :
+    fi
+  fi
+
+  # Normalize PATH order (Apple Silicon: prefer arm64 Homebrew; drop any Intel Homebrew paths)
+  if [[ "$OS" == "Darwin" && "$(uname -m)" == "arm64" ]]; then
+    typeset -U path
+
+    # Start with preferred roots, then append whatever is already there (after filtering).
+    path=(/opt/homebrew/bin /opt/homebrew/sbin /usr/bin /bin /usr/sbin /sbin $path)
+
+    # IMPORTANT: join with ':' (not spaces) when exporting PATH.
+    export PATH="${(j/:/)path}"
+    hash -r
+  fi
+
+  # TeX commands
+  export PATH="$PATH:/usr/texbin"
+  if [ "$OS" = "Darwin" ]; then
+    # GNU-utilities
+    if [ -d "/opt/homebrew/opt/grep/libexec/gnubin" ]; then
+      export PATH="/opt/homebrew/opt/grep/libexec/gnubin:$PATH"
+    fi
+  fi
 # }
 
 # Python {
 
   # conda {
+  export CONDA_AUTO_ACTIVATE_BASE=false
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
 __conda_setup="$('/Users/will/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
@@ -74,7 +104,7 @@ else
     if [ -f "/Users/will/miniconda3/etc/profile.d/conda.sh" ]; then
         . "/Users/will/miniconda3/etc/profile.d/conda.sh"
     else
-        export PATH="/Users/will/miniconda3/bin:$PATH"
+        export PATH="$PATH:/Users/will/miniconda3/bin"
     fi
 fi
 unset __conda_setup
@@ -97,7 +127,6 @@ alias conda=extended_conda
 
 if [[ -v TMUX ]]; then
   tmux source-file "$HOME/.tmux.conf"
-  conda deactivate; conda activate base
 fi
 
 # }
@@ -149,8 +178,8 @@ fi
   # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
   # Example format: plugins=(rails git textmate ruby lighthouse)
   plugins=(
-    grunt brew command-not-found git github git-flow git-extras git-hubflow
-    history-substring-search fasd macos python lol
+    brew command-not-found git github git-extras git-hubflow
+    history-substring-search macos python lol
   )
 
   source "$ZSH/oh-my-zsh.sh"
@@ -184,12 +213,6 @@ fi
 # }
 
 # Tool configuration {
-
-  # Autoenv {
-    # See https://github.com/inishchith/autoenv
-    export AUTOENV_ENABLE_LEAVE='yes'
-    source ~/.autoenv/activate.sh
-  # }
 
   # gpg {
     export GPG_TTY=$TTY
@@ -255,11 +278,8 @@ fi
     command -v gulp >/dev/null && eval "$(gulp --completion=zsh)"
   # }
 
-  # fasd {
-    # Don't limit characters between matches
-    export _FASD_FUZZY=100
-    # Initialize
-    eval "$(fasd --init auto)"
+  # zoxide {
+    eval "$(zoxide init zsh)"
   # }
 
   # iterm {
@@ -332,7 +352,14 @@ fi
     zle     -N     fzf-history-widget-accept
     bindkey '^X^R' fzf-history-widget-accept
 
-    [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+    # Prefer Homebrew-provided fzf integrations without modifying PATH
+    if command -v brew >/dev/null 2>&1; then
+      FZF_BASE="$(brew --prefix)/opt/fzf"
+      [[ -r "$FZF_BASE/shell/completion.zsh" ]] && source "$FZF_BASE/shell/completion.zsh"
+      [[ -r "$FZF_BASE/shell/key-bindings.zsh" ]] && source "$FZF_BASE/shell/key-bindings.zsh"
+      unset FZF_BASE
+    fi
+
   # }
 
   # fast-p {
@@ -460,33 +487,9 @@ fi
     alias vtex="find . -iname '*.tex' -exec $EDITOR {} \;"
   # }
 
-  # fasd {
-    # Directory change {
-        alias j="fasd_cd -d"
-        # restrict matches to subdirectories of the current directory.
-        alias jc="fasd_cd -dc"
-        # show a brief help message
-        alias jh="fasd_cd -h"
-        # list only
-        alias jl="fasd_cd -dl"
-        # match by rank only
-        alias jr="fasd_cd -dr"
-        # match by recent access only
-        alias jt="fasd_cd -dt"
-    # }
-    # Output matches to stdout, for use with backticks {
-      alias jj="fasd -d"
-      # restrict matches to subdirectories of the current directory.
-      alias jjc="fasd -dc"
-      # show a brief help message
-      alias jjh="fasd -h"
-      # list only
-      alias jjl="fasd -dl"
-      # match by rank only
-      alias jjr="fasd -dr"
-      # match by recent access only
-      alias jjt="fasd -dt"
-    # }
+  # zoxide {
+    alias j='z'
+    alias ji='zi'
   # }
 
   # zsh {
@@ -574,11 +577,6 @@ fi
       fi
     }
 
-    # zsh precmd() function: special function that's executed before each command
-    # precmd() {
-    #   conda_auto_env
-    # }
-
   # }
 
 # }
@@ -589,16 +587,15 @@ fi
 # }
 
 # fnm
-FNM_PATH="/usr/local/opt/fnm/bin"
+FNM_PATH="/opt/homebrew/opt/fnm/bin"
 if [ -d "$FNM_PATH" ]; then
   eval "`fnm env --use-on-cd --version-file-strategy=recursive`"
 fi
 
 # asdf multi-tool version manager
-. $(brew --prefix asdf)/libexec/asdf.sh
-
-# add golang managed by asdf to PATH
-export PATH="$(asdf where golang)/bin:$PATH"
+if [ -x "/opt/homebrew/bin/brew" ]; then
+  . "$(/opt/homebrew/bin/brew --prefix asdf)/libexec/asdf.sh"
+fi
 
 # Keep Powerline configuration in sync with Python user site packages
 POWERLINE_CONF=$(find ~/miniconda3/lib -path '*/powerline/bindings/tmux/powerline.conf' 2>/dev/null | head -n1)
@@ -606,4 +603,3 @@ if [[ -n "$POWERLINE_CONF" ]]; then
     mkdir -p ~/.config/powerline/tmux
     ln -sf "$POWERLINE_CONF" ~/.config/powerline/tmux/powerline.conf
 fi
-export PATH="/opt/homebrew/opt/postgresql@17/bin:$PATH"
