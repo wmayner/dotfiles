@@ -1,100 +1,70 @@
-#!/usr/bin/env zsh
-# vim: sw=2 ts=2 sts=2 tw=80 foldmarker={,} foldlevel=0 foldmethod=marker
-#
-# zshrc of wmayner
+# .zshrc of wmayner
 
-# --- must be first: ensure core macOS tools are always available ---
+# -----------------------------------------------------------------------------
+# MUST BE FIRST
+# -----------------------------------------------------------------------------
+# Establish a minimal, known-good baseline PATH so core macOS tools are always
+# available even if later initialization fails. Final PATH ordering is enforced
+# near the end of the file.
 export PATH="/usr/bin:/bin:/usr/sbin:/sbin:/opt/homebrew/bin:/opt/homebrew/sbin"
 hash -r
-# ------------------------------------------------
 
-# Force arm64 shell on Apple Silicon (avoid x86_64 Homebrew shells via Rosetta)
+# -----------------------------------------------------------------------------
+# Apple Silicon safety: force arm64 shell if launched under Rosetta
+# -----------------------------------------------------------------------------
+# Prevent accidentally running an x86_64 shell that would pick up Intel
+# Homebrew artifacts. The guard variable prevents infinite recursion.
 if [[ "$(uname -m)" == "x86_64" ]] && [[ "$(sysctl -n hw.optional.arm64 2>/dev/null)" == "1" ]] && [[ -z "${ZSH_FORCE_ARM64_DONE:-}" ]]; then
   export ZSH_FORCE_ARM64_DONE=1
   exec arch -arm64 /bin/zsh -l
 fi
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
+
+# -----------------------------------------------------------------------------
+# Powerlevel10k instant prompt
+# -----------------------------------------------------------------------------
+# This must appear near the top. Anything that prints to stdout before this
+# block will disable instant prompt.
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-# zshrc.before.local {
-  # Put system-specific stuff that needs to be sourced early in
-  # `~/.zshrc.before.local`.
-  [ -f "$HOME/.zshrc.before.local" ] && source "$HOME/.zshrc.before.local"
-# }
+# -----------------------------------------------------------------------------
+# Early, machine-specific overrides
+# -----------------------------------------------------------------------------
+# Put system-specific early logic in ~/.zshrc.before.local so this file
+# remains portable.
+[ -f "$HOME/.zshrc.before.local" ] && source "$HOME/.zshrc.before.local"
+# -----------------------------------------------------------------------------
 
+# -----------------------------------------------------------------------------
+# Prompt configuration
+# -----------------------------------------------------------------------------
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+# -----------------------------------------------------------------------------
 
-OS=$(uname -s)
+# -----------------------------------------------------------------------------
+# Environment variables
+# -----------------------------------------------------------------------------
+export DEFAULT_USER="will"
+# Default editor
+export EDITOR="vim"
+export VISUAL="vim"
+export DOTFILES="$HOME/dotfiles"
+# -----------------------------------------------------------------------------
 
-# Environment variables {
-  export DEFAULT_USER="will"
-  # Set the default editor
-  export EDITOR="vim"
-  export VISUAL="vim"
-  # Development directory
-  export DEV="$HOME/dev"
-  # Project directory
-  export CODE="$DEV/projects"
-  # Path to dotfiles repo
-  export DOTFILES="$HOME/dotfiles"
-  # Locale
-  export LANG="en_US.UTF-8"
-  export LC_ALL="$LANG"
-  # Lazily load nvm
-  export NVM_LAZY_LOAD=true
+# -----------------------------------------------------------------------------
+# Python / Conda
+# -----------------------------------------------------------------------------
+# Conda is kept available for legacy workflows, but we explicitly:
+# - disable auto-activation of base
+# - prevent installs into base
+# - do NOT allow conda to dominate PATH by default
+# Final PATH precedence is enforced later.
 
-# }
-
-# PATH {
-  # User-local executables
-  export PATH="$HOME/.local/bin:$PATH"
-  # Dotfile executables
-  export PATH="$HOME/dotfiles/bin:$PATH"
-  # Local executables
-  export PATH="$HOME/bin:$PATH"
-
-  # Prefer Apple Silicon Homebrew + system tools over Intel Homebrew
-  if [ "$OS" = "Darwin" ]; then
-    if [ -d "/opt/homebrew/bin" ]; then
-      export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:$PATH"
-    fi
-    # De-prioritize Intel Homebrew if present
-    if command -v /usr/libexec/path_helper >/dev/null 2>&1; then
-      :
-    fi
-  fi
-
-  # Normalize PATH order (Apple Silicon: prefer arm64 Homebrew; drop any Intel Homebrew paths)
-  if [[ "$OS" == "Darwin" && "$(uname -m)" == "arm64" ]]; then
-    typeset -U path
-
-    # Start with preferred roots, then append whatever is already there (after filtering).
-    path=(/opt/homebrew/bin /opt/homebrew/sbin /usr/bin /bin /usr/sbin /sbin $path)
-
-    # IMPORTANT: join with ':' (not spaces) when exporting PATH.
-    export PATH="${(j/:/)path}"
-    hash -r
-  fi
-
-  # TeX commands
-  export PATH="$PATH:/usr/texbin"
-  if [ "$OS" = "Darwin" ]; then
-    # GNU-utilities
-    if [ -d "/opt/homebrew/opt/grep/libexec/gnubin" ]; then
-      export PATH="/opt/homebrew/opt/grep/libexec/gnubin:$PATH"
-    fi
-  fi
-# }
-
-# Python {
-
-  # conda {
-  export CONDA_AUTO_ACTIVATE_BASE=false
+# Never auto-activate base
+export CONDA_AUTO_ACTIVATE_BASE=false
+# conda {
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
 __conda_setup="$('/Users/will/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
@@ -104,19 +74,14 @@ else
     if [ -f "/Users/will/miniconda3/etc/profile.d/conda.sh" ]; then
         . "/Users/will/miniconda3/etc/profile.d/conda.sh"
     else
-        export PATH="$PATH:/Users/will/miniconda3/bin"
+        export PATH="/Users/will/miniconda3/bin:$PATH"
     fi
 fi
 unset __conda_setup
 # <<< conda initialize <<<
-  # }
 
-  # Get base environment Python version
-  local PYTHON_VERSION=$("$HOME/miniconda3/bin/python" --version | cut -c 8,9,10)
-
-
-# Prevent installing new things into base
-function extended_conda(){
+# Prevent installing into base
+function extended_conda() {
   if [ "${CONDA_PROMPT_MODIFIER-}" = "(base) " ] && [ "$1" = "install" ]; then
     echo "Not allowed in base environment"
   else
@@ -125,481 +90,267 @@ function extended_conda(){
 }
 alias conda=extended_conda
 
-if [[ -v TMUX ]]; then
-  tmux source-file "$HOME/.tmux.conf"
-fi
-
-# }
-
-# oh-my-zsh {
-  # Prevent loading https://github.com/ohmyzsh/ohmyzsh/blob/master/lib/compfix.zsh
-  # since it slows down the prompt considerably
-  ZSH_DISABLE_COMPFIX=true
-
-  # Path to your oh-my-zsh configuration
-  ZSH="$HOME/.oh-my-zsh"
-
-  # Path to your oh-my-zsh custom directory (default is .oh-my-zsh/custom/)
-  ZSH_CUSTOM=".oh-my-zsh/custom"
-
-  # Set name of the theme to load.
-  # Look in ~/.oh-my-zsh/themes/
-  # Optionally, if you set this to "random", it'll load a random theme each
-  # time that oh-my-zsh is loaded.
-  ZSH_THEME="powerlevel10k/powerlevel10k"
-
-  # Example aliases
-  # alias zshconfig="mate ~/.zshrc"
-  # alias ohmyzsh="mate ~/.oh-my-zsh"
-
-  # Set to this to use case-sensitive completion
-  # CASE_SENSITIVE="true"
-
-  # Comment this out to disable bi-weekly auto-update checks
-  # DISABLE_AUTO_UPDATE="true"
-
-  # Uncomment to change how many often would you like to wait before
-  # auto-updates occur? (in days)
-  export UPDATE_ZSH_DAYS=7
-
-  # Uncomment following line if you want to disable colors in ls
-  # DISABLE_LS_COLORS="true"
-
-  # Uncomment following line if you want to disable autosetting terminal
-  # title.
-  # DISABLE_AUTO_TITLE="true"
-
-  # Uncomment following line if you want red dots to be displayed while
-  # waiting for completion
-  COMPLETION_WAITING_DOTS="true"
-
-  # Which plugins would you like to load? (plugins can be found in
-  # ~/.oh-my-zsh/plugins/*)
-  # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
-  # Example format: plugins=(rails git textmate ruby lighthouse)
-  plugins=(
-    brew command-not-found git github git-extras git-hubflow
-    history-substring-search macos python lol
-  )
-
-  source "$ZSH/oh-my-zsh.sh"
-# }
-
-# Keybindings {
-  # Use vi to edit command line
-  bindkey -v
-
-  # Remove delay in entering command mode, as described by
-  # http://zsh.sourceforge.net/Guide/zshguide04.html:
-  #
-  # You can remove all bindings starting with a given prefix by adding the `-p
-  # option. The example given in the manual,
-  #     bindkey -rpM viins '\e'
-  # (except it uses the equivalent form `^[') is amongst the most useful, as it
-  # will remove the annoying delay after you type `\e' to enter vi command mode.
-  # The delay is there because the cursor keys usually also start with \e and
-  # the shell is waiting to see if you actually typed one of those.
-  # bindkey -rpM viins "\e"
-
-  # Use control+j and control+k for scrolling through history, since removing
-  # all bindings that begin with escape also removes the arrow-key bindings
-  bindkey "^K" history-substring-search-up
-  bindkey "^J" history-substring-search-down
-
-  # Press Ctrl+Q to push the current command on to the stack. It will disappear,
-  # allowing you to enter another command, after which it will reappear in the
-  # prompt.
-  bindkey "^Q" push-input
-# }
-
-# Tool configuration {
-
-  # gpg {
-    export GPG_TTY=$TTY
-  # }
-
-  # zsh {
-    # Use extended globbing
-    setopt extendedglob
-  # }
-
-  # Homebrew {
-    export HOMEBREW_NO_ANALYTICS=1
-  # }
-
-  # dircolors {
-    autoload colors;
-    # Find the option for using colors in ls, depending on the version
-    ls --color -d . &>/dev/null 2>&1 && alias ls='ls --color=auto -F' || alias ls='ls -GF'
-    # Use dircolors if available
-    dircolors &>/dev/null 2>&1 && eval `dircolors $DOTFILES/zsh/dircolors.ansi-dark` || export LSCOLORS="Gxfxcxdxbxegedabagacad"
-    # Use GNU ls if available (for macOS: `brew install coreutils`)
-    gdircolors &>/dev/null 2>&1 && eval `gdircolors $DOTFILES/zsh/dircolors.ansi-dark` && alias ls='gls --color=auto -hF'
-    export GREP_COLORS='mt=1;31'
-  # }
-
-  # git {
-    # Fix slow tab completion
-    __git_files () {
-        _wanted files expl 'local files' _files
-    }
-  # }
-
-  # less {
-    # Pygmentize less automatically
-    # (requires pygmentize to be available; `pip install pygments`)
-    export LESSOPEN='|$HOME/.lessfilter %s'
-  # }
-
-  # SHELLSHOCK {
-    # To anyone worried about using servers that may not have attentive admins -
-    # put the following line(s) in your ~/.bashrc to help protect yourself:
-
-    env x='() { :;}; echo "WARNING: SHELLSHOCK DETECTED"' \
-      bash --norc -c ':' 2>/dev/null;
-
-    # It will print to stdout if and only if your shell is vulnerable, and nothing
-    # will be printed if your shell has been patched. It will take a little longer
-    # to launch a new shell slightly, but for some, this may be worth it.
-  # }
-
-  # # nvm {
-  #   export NVM_DIR="$HOME/.nvm"
-
-  #   [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-  #   # This loads nvm bash_completion
-  #   [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
-  # # }
-
-  # node {
-    # Grunt task tab-completion
-    command -v grunt >/dev/null && eval "$(grunt --completion=zsh)"
-    # Gulp task tab-completion
-    command -v gulp >/dev/null && eval "$(gulp --completion=zsh)"
-  # }
-
-  # zoxide {
-    eval "$(zoxide init zsh)"
-  # }
-
-  # iterm {
-    test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
-  # }
-
-  # zmv (alternative to mmv) {
-    autoload zmv
-  # }
-
-  # travis {
-    [ -f "$HOME/.travis/travis.sh" ] && source "$HOME/.travis/travis.sh"
-  # }
-
-  # fzy {
-    function insert-fzy-path-in-command-line() {
-      local selected_path
-      echo # Run fzy underneath the current prompt
-      selected_path=$(ag . -l -g '' | fzy) || return
-      LBUFFER="$LBUFFER${(q)selected_path} " # ${(q)VAR} shell-escapes the string
-      zle reset-prompt
-      }
-    zle -N insert-fzy-path-in-command-line
-
-    # By default, ^S freezes terminal output, only needed if keybinding is ^S
-    unsetopt flowcontrol
-    bindkey "^S" "insert-fzy-path-in-command-line"
-  # }
-
-  # fzf {
-    _gen_fzf_default_opts() {
-      local base03="234"
-      local base02="235"
-      local base01="240"
-      local base00="241"
-      local base0="244"
-      local base1="245"
-      local base2="254"
-      local base3="230"
-      local yellow="136"
-      local orange="166"
-      local red="160"
-      local magenta="125"
-      local violet="61"
-      local blue="33"
-      local cyan="37"
-      local green="64"
-
-      # Comment and uncomment below for the light theme.
-
-      # Solarized Dark color scheme for fzf
-      export FZF_DEFAULT_OPTS="
-        --reverse
-        --color fg:-1,bg:-1,hl:$blue,fg+:$base2,bg+:$base02,hl+:$blue
-        --color info:$yellow,prompt:$yellow,pointer:$base3,marker:$base3,spinner:$yellow
-      "
-      ## Solarized Light color scheme for fzf
-      #export FZF_DEFAULT_OPTS="
-      #  --color fg:-1,bg:-1,hl:$blue,fg+:$base02,bg+:$base2,hl+:$blue
-      #  --color info:$yellow,prompt:$yellow,pointer:$base03,marker:$base03,spinner:$yellow
-      #"
-    }
-    _gen_fzf_default_opts
-
-    # Accept history selection instead of putting it on the command line
-    fzf-history-widget-accept() {
-      fzf-history-widget
-      zle accept-line
-    }
-    zle     -N     fzf-history-widget-accept
-    bindkey '^X^R' fzf-history-widget-accept
-
-    # Prefer Homebrew-provided fzf integrations without modifying PATH
-    if command -v brew >/dev/null 2>&1; then
-      FZF_BASE="$(brew --prefix)/opt/fzf"
-      [[ -r "$FZF_BASE/shell/completion.zsh" ]] && source "$FZF_BASE/shell/completion.zsh"
-      [[ -r "$FZF_BASE/shell/key-bindings.zsh" ]] && source "$FZF_BASE/shell/key-bindings.zsh"
-      unset FZF_BASE
-    fi
-
-  # }
-
-  # fast-p {
-    p () {
-        ag -U -g ".pdf$" \
-        | fast-p \
-        | fzf --read0 --reverse -e -d $'\t'  \
-            --preview-window down:80% --preview '
-                v=$(echo {q} | tr " " "|");
-                echo -e {1}"\n"{2} | grep -E "^|$v" -i --color=always;
-            ' \
-        | cut -z -f 1 -d $'\t' | tr -d '\n' | xargs -r --null open
-    }
-  # }
-
-  # PyPhi {
-    export PYPHI_WELCOME_OFF='no'
-  # }
-
-# }
-
-# Aliases {
-
-  # General {
-    # List only directories
-    alias lsd="ls -d */"
-    # Allow colors with less
-    alias less="less -R"
-    # Get the absolute path of a file
-    alias fullpath="readlink -f"
-    # Use colordiff instead of native diff
-    alias diff="colordiff"
-    # Always sudo htop (doesn't work properly on macOS otherwise)
-    if [ "$OS" = "Darwin" ]; then
-      alias htop="sudo htop"
-    fi
-    # list dir contents (with human-readable sizes)
-    alias l="ls -AhG1F"
-    alias ll="ls -lAhGF"
-    alias lsa="ls -AhGF"
-    # Safe rm
-    alias t="trash"
-    # Clear screen
-    alias c="clear"
-    # Clear screen and list contents
-    alias cl="clear && l"
-    # Clear screen and print directory tree
-    alias ck="clear && tree"
-    # Move up one directory
-    alias ..="cd .."
-    # Human-readable disk usage information
-    alias df="df -h"
-    # Forward port
-    alias forward="ssh -NL"
-    # Syntax highlighting with Pygments
-    alias hl="pygmentize -g"
-    # MATLAB binary
-    alias matlab="/Applications/MATLAB_R2016a.app/bin/matlab"
-    # ag with custom colors and restricted line width
-    alias ag="ag --color-line-number 34 --color-match 36 --color-path 32 --width 100"
-  # }
-
-  # vim {
-    # Editing shortcuts
-    alias v="vim"
-    # Edit configuration (from within dotfiles, for interacting with repo)
-    alias vrc='$EDITOR $(realpath $HOME/.vimrc)'
-  # }
-
-  # git {
-    alias gp="git push"
-    # git diff
-    alias gc="git commit -m"
-    # git diff
-    alias gd="git d"
-    # git diff
-    alias gdc="git dc"
-    # git log
-    alias gl="git l"
-    # git log all branches
-    alias gla="git la"
-    # git branch
-    alias gb="git branch"
-    # git branch delete
-    alias gbd="git branch -d"
-    # git flow
-    alias gf="git flow"
-    # git flow feature
-    alias gff="git flow feature"
-    # git flow release
-    alias gfr="git flow release"
-    # git flow hotfix
-    alias gfh="git flow hotfix"
-    # fast git status
-    alias g="git status"
-    # edit .gitconfig
-    alias vgrc="$EDITOR $HOME/.gitconfig"
-  # }
-
-  # Python {
-    # Python interpreter
-    alias p="python"
-    # IPython intepreter
-    alias ip="ipython"
-    # Distribution
-    alias testregister="python setup.py register -r testpypi"
-    alias testupload="python setup.py sdist bdist_wheel upload -r testpypi"
-    alias pypiregister="python setup.py register -r pypi"
-    alias pypiupload="python setup.py sdist bdist_wheel register upload --sign -r pypi"
-    # remove dot from py.test executable
-    alias pytest="python -m pytest"
-  # }
-
-  # conda {
-    alias deactivate="conda deactivate"
-    alias activate="conda activate"
-    alias workon="conda activate"
-  # }
-
-  # LaTeX {
-    # Run latexmk with following options: compile to pdf, preview continuously
-    alias latexmk="latexmk -pdf"
-    alias ltx="latexmk"
-    # Edit .tex files in the current directory
-    alias vtex="find . -iname '*.tex' -exec $EDITOR {} \;"
-  # }
-
-  # zoxide {
-    alias j='z'
-    alias ji='zi'
-  # }
-
-  # zsh {
-    # Edit zsh config
-    alias vsh='$EDITOR $(realpath $HOME/.zshrc)'
-    # Source zsh config
-    alias szsh='source $(realpath $HOME/.zshrc)'
-  # }
-
-  # browser {
-    if [ "$OS" = "Darwin" ]; then
-      alias firefox='/Applications/Firefox.app/Contents/MacOS/firefox'
-    fi
-  # }
-
-# }
-
-# Functions {
-
-  # conda {
-    create_conda_env() {
-      conda create -n $1 -y && \
-        conda activate $1
-    }
-
-    setup_conda_env() {
-      nvm > /dev/null
-      local DEFAULT_PYTHON_VERSION='3.8'
-      if [[ -z "$1"  ]]; then
-        echo "No python version specified; assuming $DEFAULT_PYTHON_VERSION" 1>&2
-        local PYTHON_VERSION="$DEFAULT_PYTHON_VERSION"
-      else
-        local PYTHON_VERSION="$1"
-      fi
-      conda install -y \
-            python=$PYTHON_VERSION \
-            jupyterlab \
-            ipywidgets \
-            scipy \
-            numpy \
-            pandas \
-          && \
-        python -m pip install \
-            black \
-            blackcellmagic \
-          && \
-        jupyter labextension install \
-            @jupyter-widgets/jupyterlab-manager \
-            @jupyterlab/toc \
-            @pyviz/jupyterlab_pyviz \
-            jupyterlab_vim \
-          && \
-        echo "Finished setting up environment." 1>&2
-    }
-
-    conda_install() {
-      # Don't install anything into base environment
-      if [[ -v CONDA_DEFAULT_ENV ]] then
-        conda install $@
-      else
-        echo 'No active environment; not installing'
-      fi
-    }
-
-    alias cinstall='conda_install'
-
-    pip() {
-      if [ "${CONDA_PROMPT_MODIFIER-}" = "(base) " ] && [ "$1" = "install" ]; then
-        echo "Not allowed in base environment"
-      else
-        # Don't install anything into base environment
-        if [[ -v CONDA_DEFAULT_ENV ]] then
-          string=$(which python)
-          word='envs'
-          if test "${string#*$word}" != "$string"; then
-            python -m pip $@
-          # Invoke pip directly through python
-          # See https://jakevdp.github.io/blog/2017/12/05/installing-python-packages-from-jupyter/
-          else
-            echo 'Python is not installed in this environment; not running'
-          fi
-        else
-          echo 'No active environment; not running'
-        fi
-      fi
-    }
-
-  # }
-
-# }
-
-# zshrc.local {
-  # Put system-specific stuff in `~/.zshrc.local`.
-  [ -f "$HOME/.zshrc.local" ] && source "$HOME/.zshrc.local"
-# }
-
-# fnm
-FNM_PATH="/opt/homebrew/opt/fnm/bin"
-if [ -d "$FNM_PATH" ]; then
-  eval "`fnm env --use-on-cd --version-file-strategy=recursive`"
-fi
-
-# asdf multi-tool version manager
+# -----------------------------------------------------------------------------
+# oh-my-zsh
+# -----------------------------------------------------------------------------
+# Path to your oh-my-zsh configuration
+ZSH="$HOME/.oh-my-zsh"
+
+# Path to your oh-my-zsh custom directory (default is .oh-my-zsh/custom/)
+ZSH_CUSTOM=".oh-my-zsh/custom"
+
+# Set name of the theme to load.
+# Look in ~/.oh-my-zsh/themes/
+# Optionally, if you set this to "random", it'll load a random theme each
+# time that oh-my-zsh is loaded.
+ZSH_THEME="powerlevel10k/powerlevel10k"
+
+# Example aliases
+# alias zshconfig="mate ~/.zshrc"
+# alias ohmyzsh="mate ~/.oh-my-zsh"
+
+# Set to this to use case-sensitive completion
+# CASE_SENSITIVE="true"
+
+# Comment this out to disable bi-weekly auto-update checks
+# DISABLE_AUTO_UPDATE="true"
+
+# Uncomment to change how many often would you like to wait before
+# auto-updates occur? (in days)
+export UPDATE_ZSH_DAYS=7
+
+# Uncomment following line if you want to disable colors in ls
+# DISABLE_LS_COLORS="true"
+
+# Uncomment following line if you want to disable autosetting terminal
+# title.
+# DISABLE_AUTO_TITLE="true"
+
+# Uncomment following line if you want red dots to be displayed while
+# waiting for completion
+COMPLETION_WAITING_DOTS="true"
+
+# Which plugins would you like to load? (plugins can be found in
+# ~/.oh-my-zsh/plugins/*)
+# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
+# Example format: plugins=(rails git textmate ruby lighthouse)
+plugins=(
+  brew command-not-found git github git-extras git-hubflow
+  history-substring-search macos python lol
+)
+source "$ZSH/oh-my-zsh.sh"
+
+# -----------------------------------------------------------------------------
+# Tool configuration
+# -----------------------------------------------------------------------------
+
+# gpg
+export GPG_TTY=$TTY
+
+# zsh
+setopt extendedglob
+
+# Homebrew
+export HOMEBREW_NO_ANALYTICS=1
+
+# dircolors
+autoload colors
+
+# Prefer GNU ls if available; fall back to BSD ls
+ls --color -d . &>/dev/null 2>&1 && alias ls='ls --color=auto -F' || alias ls='ls -GF'
+dircolors &>/dev/null 2>&1 && eval "$(dircolors $DOTFILES/zsh/dircolors.ansi-dark)" || export LSCOLORS="Gxfxcxdxbxegedabagacad"
+gdircolors &>/dev/null 2>&1 && eval "$(gdircolors $DOTFILES/zsh/dircolors.ansi-dark)" && alias ls='gls --color=auto -hF'
+export GREP_COLORS='mt=1;31'
+
+# less
+# Use pygmentize for syntax highlighting if available
+export LESSOPEN='|$HOME/.lessfilter %s'
+
+# zoxide (fasd replacement)
+eval "$(zoxide init zsh)"
+alias j='z'
+alias ji='zi'
+
+# iTerm integration
+[ -f "$HOME/.iterm2_shell_integration.zsh" ] && source "$HOME/.iterm2_shell_integration.zsh"
+
+# asdf (loaded before final PATH so shims exist but do not dominate)
 if [ -x "/opt/homebrew/bin/brew" ]; then
   . "$(/opt/homebrew/bin/brew --prefix asdf)/libexec/asdf.sh"
 fi
 
-# Keep Powerline configuration in sync with Python user site packages
-POWERLINE_CONF=$(find ~/miniconda3/lib -path '*/powerline/bindings/tmux/powerline.conf' 2>/dev/null | head -n1)
-if [[ -n "$POWERLINE_CONF" ]]; then
-    mkdir -p ~/.config/powerline/tmux
-    ln -sf "$POWERLINE_CONF" ~/.config/powerline/tmux/powerline.conf
+# fzf
+_gen_fzf_default_opts() {
+  local base03="234"
+  local base02="235"
+  local base01="240"
+  local base00="241"
+  local base0="244"
+  local base1="245"
+  local base2="254"
+  local base3="230"
+  local yellow="136"
+  local orange="166"
+  local red="160"
+  local magenta="125"
+  local violet="61"
+  local blue="33"
+  local cyan="37"
+  local green="64"
+
+  # Comment and uncomment below for the light theme.
+
+  # Solarized Dark color scheme for fzf
+  export FZF_DEFAULT_OPTS="
+    --reverse
+    --color fg:-1,bg:-1,hl:$blue,fg+:$base2,bg+:$base02,hl+:$blue
+    --color info:$yellow,prompt:$yellow,pointer:$base3,marker:$base3,spinner:$yellow
+  "
+  ## Solarized Light color scheme for fzf
+  #export FZF_DEFAULT_OPTS="
+  #  --color fg:-1,bg:-1,hl:$blue,fg+:$base02,bg+:$base2,hl+:$blue
+  #  --color info:$yellow,prompt:$yellow,pointer:$base03,marker:$base03,spinner:$yellow
+  #"
+}
+_gen_fzf_default_opts
+
+# Accept history selection instead of putting it on the command line
+fzf-history-widget-accept() {
+  fzf-history-widget
+  zle accept-line
+}
+zle     -N     fzf-history-widget-accept
+bindkey '^X^R' fzf-history-widget-accept
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# pyphi
+export PYPHI_WELCOME_OFF='no'
+
+# -----------------------------------------------------------------------------
+# Keybindings / aliases
+# -----------------------------------------------------------------------------
+
+# Use vi to edit command line
+bindkey -v
+
+# Remove delay in entering command mode, as described by
+# http://zsh.sourceforge.net/Guide/zshguide04.html:
+#
+# You can remove all bindings starting with a given prefix by adding the `-p
+# option. The example given in the manual,
+#     bindkey -rpM viins '\e'
+# (except it uses the equivalent form `^[') is amongst the most useful, as it
+# will remove the annoying delay after you type `\e' to enter vi command mode.
+# The delay is there because the cursor keys usually also start with \e and
+# the shell is waiting to see if you actually typed one of those.
+# bindkey -rpM viins "\e"
+
+# Use control+j and control+k for scrolling through history, since removing
+# all bindings that begin with escape also removes the arrow-key bindings
+bindkey "^K" history-substring-search-up
+bindkey "^J" history-substring-search-down
+
+# Press Ctrl+Q to push the current command on to the stack. It will disappear,
+# allowing you to enter another command, after which it will reappear in the
+# prompt.
+bindkey "^Q" push-input
+
+# List only directories
+alias lsd="ls -d */"
+# Allow colors with less
+alias less="less -R"
+# Get the absolute path of a file
+alias fullpath="readlink -f"
+# Use colordiff instead of native diff
+alias diff="colordiff"
+# Always sudo htop (doesn't work properly on macOS otherwise)
+if [ "$OS" = "Darwin" ]; then
+  alias htop="sudo htop"
 fi
+# list dir contents (with human-readable sizes)
+alias l="ls -AhG1F"
+alias ll="ls -lAhGF"
+alias lsa="ls -AhGF"
+# Safe rm
+alias t="trash"
+# Clear screen
+alias c="clear"
+# Clear screen and list contents
+alias cl="clear && l"
+# Clear screen and print directory tree
+alias ck="clear && tree"
+# Move up one directory
+alias ..="cd .."
+# Human-readable disk usage information
+alias df="df -h"
+# Forward port
+alias forward="ssh -NL"
+# Syntax highlighting with Pygments
+alias hl="pygmentize -g"
+# MATLAB binary
+alias matlab="/Applications/MATLAB_R2016a.app/bin/matlab"
+# ag with custom colors and restricted line width
+alias ag="ag --color-line-number 34 --color-match 36 --color-path 32 --width 100"
+
+# Editing shortcuts
+alias v="vim"
+# Edit configuration (from within dotfiles, for interacting with repo)
+alias vrc='$EDITOR $(realpath $HOME/.vimrc)'
+
+# git aliases
+alias gp="git push"
+# git diff
+alias gc="git commit -m"
+# git diff
+alias gd="git d"
+# git diff
+alias gdc="git dc"
+# git log
+alias gl="git l"
+# git log all branches
+alias gla="git la"
+# git branch
+alias gb="git branch"
+# git branch delete
+alias gbd="git branch -d"
+# git flow
+alias gf="git flow"
+# git flow feature
+alias gff="git flow feature"
+# git flow release
+alias gfr="git flow release"
+# git flow hotfix
+alias gfh="git flow hotfix"
+# fast git status
+alias g="git status"
+# edit .gitconfig
+alias vgrc="$EDITOR $HOME/.gitconfig"
+
+# -----------------------------------------------------------------------------
+# FINAL PATH ASSEMBLY
+# -----------------------------------------------------------------------------
+# At this point, conda and asdf may have mutated PATH. We now construct the
+# final PATH *once* so precedence is explicit and stable.
+typeset -U path
+path=(
+  $HOME/bin
+  $HOME/dotfiles/bin
+  $HOME/.local/bin
+  /opt/homebrew/bin
+  /opt/homebrew/sbin
+  $HOME/.asdf/shims
+  /opt/homebrew/opt/asdf/libexec/bin
+  $HOME/miniconda3/condabin
+  "/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
+  /opt/homebrew/opt/postgresql@17/bin
+  /usr/bin /bin /usr/sbin /sbin /usr/texbin
+)
+export PATH="${(j/:/)path}"
+hash -r
+
+# -----------------------------------------------------------------------------
+# zshrc.local
+# -----------------------------------------------------------------------------
+# Put local, non-portable overrides here.
+[ -f "$HOME/.zshrc.local" ] && source "$HOME/.zshrc.local"
