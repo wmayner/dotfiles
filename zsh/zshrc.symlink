@@ -20,13 +20,9 @@ if [[ "$(uname -m)" == "x86_64" ]] && [[ "$(sysctl -n hw.optional.arm64 2>/dev/n
 fi
 
 # -----------------------------------------------------------------------------
-# Powerlevel10k instant prompt
+# XDG base directories
 # -----------------------------------------------------------------------------
-# This must appear near the top. Anything that prints to stdout before this
-# block will disable instant prompt.
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
+export XDG_CACHE_HOME="$HOME/.cache"
 
 # -----------------------------------------------------------------------------
 # Early, machine-specific overrides
@@ -34,13 +30,6 @@ fi
 # Put system-specific early logic in ~/.zshrc.before.local so this file
 # remains portable.
 [ -f "$HOME/.zshrc.before.local" ] && source "$HOME/.zshrc.before.local"
-# -----------------------------------------------------------------------------
-
-# -----------------------------------------------------------------------------
-# Prompt configuration
-# -----------------------------------------------------------------------------
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 # -----------------------------------------------------------------------------
 
 # -----------------------------------------------------------------------------
@@ -103,7 +92,7 @@ ZSH_CUSTOM=".oh-my-zsh/custom"
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-ZSH_THEME="powerlevel10k/powerlevel10k"
+# ZSH_THEME="powerlevel10k/powerlevel10k"
 
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
@@ -117,7 +106,7 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 
 # Uncomment to change how many often would you like to wait before
 # auto-updates occur? (in days)
-export UPDATE_ZSH_DAYS=7
+export UPDATE_ZSH_DAYS=14
 
 # Uncomment following line if you want to disable colors in ls
 # DISABLE_LS_COLORS="true"
@@ -135,8 +124,7 @@ COMPLETION_WAITING_DOTS="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 plugins=(
-  brew command-not-found git github git-extras git-hubflow
-  history-substring-search macos python lol
+  brew git history-substring-search
 )
 source "$ZSH/oh-my-zsh.sh"
 
@@ -344,6 +332,7 @@ path=(
   $HOME/miniconda3/condabin
   "/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
   /opt/homebrew/opt/postgresql@17/bin
+  /opt/homebrew/opt/coreutils/libexec/gnubin
   /usr/bin /bin /usr/sbin /sbin /usr/texbin
 )
 export PATH="${(j/:/)path}"
@@ -354,3 +343,6 @@ hash -r
 # -----------------------------------------------------------------------------
 # Put local, non-portable overrides here.
 [ -f "$HOME/.zshrc.local" ] && source "$HOME/.zshrc.local"
+
+# Activate starship prompt
+eval "$(starship init zsh)"
