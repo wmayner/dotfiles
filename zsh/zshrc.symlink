@@ -315,6 +315,10 @@ alias g="git status"
 # edit .gitconfig
 alias vgrc="$EDITOR $HOME/.gitconfig"
 
+# python
+alias p="python3"
+alias python="python"
+
 # -----------------------------------------------------------------------------
 # FINAL PATH ASSEMBLY
 # -----------------------------------------------------------------------------
