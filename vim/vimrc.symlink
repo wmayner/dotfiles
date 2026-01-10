@@ -85,8 +85,10 @@
   "
 
   " Coding {
+    " Catpuccin colorscheme
+    Plug 'catppuccin/vim'
     " Solarized colorscheme
-    Plug 'altercation/vim-colors-solarized'
+    " Plug 'altercation/vim-colors-solarized'
     " Simpler rainbow parentheses
     Plug 'junegunn/rainbow_parentheses.vim'
     " Completion
@@ -188,11 +190,6 @@
 " }
 
 " Settings {
-
-  " Only affects neovim:
-  "   Use a dedicated virtualenv for the Neovim Python provider
-  let g:python_host_prog = '/Users/will/.virtualenvs/neovim-python2/bin/python'
-  let g:python3_host_prog = '/Users/will/.virtualenvs/neovim-python3/bin/python'
 
   " No compatibility with vi; must be first line
   set nocompatible
@@ -345,8 +342,6 @@
 
   " Vim UI {
 
-    set background=dark
-
     " Toggle background color
     function! ToggleBG()
       let s:tbg = &background
@@ -487,24 +482,40 @@
 
 " }
 
-" Configure plugins {
+" Colorscheme {
 
-  " solarized {
-    set t_Co=16
-    " use proper (default) solarized options
-    let g:solarized_termcolors=16
-    let g:solarized_termtrans=0
-    let g:solarized_degrade=0
-    let g:solarized_bold=1
-    let g:solarized_underline=1
-    let g:solarized_italic=1
-    let g:solarized_contrast="normal"
-    let g:solarized_visibility="normal"
-    let g:solarized_hitrail=0
-    let g:solarized_menu=1
-    " Make sure to load the colorscheme after setting the termcolors=16
-    colorscheme solarized
+  set background=dark
+
+  " Use RGB colors instead of remapping through iTerm2’s 16/256 ANSI slots
+  if has('termguicolors')
+    set termguicolors
+  endif
+
+  " catpuccin-mocha {
+    let g:catppuccin_flavour = "mocha"
+    colorscheme catppuccin_mocha
   " }
+
+  " " solarized {
+  "   set t_Co=16
+  "   " use proper (default) solarized options
+  "   let g:solarized_termcolors=16
+  "   let g:solarized_termtrans=0
+  "   let g:solarized_degrade=0
+  "   let g:solarized_bold=1
+  "   let g:solarized_underline=1
+  "   let g:solarized_italic=1
+  "   let g:solarized_contrast="normal"
+  "   let g:solarized_visibility="normal"
+  "   let g:solarized_hitrail=0
+  "   let g:solarized_menu=1
+  "   " Make sure to load the colorscheme after setting the termcolors=16
+  "   colorscheme solarized
+  " " }
+
+" }
+
+" Configure plugins {
 
   " Neoformat {
     let g:neoformat_run_all_formatters = 1
