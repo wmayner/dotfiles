@@ -334,6 +334,7 @@ path=(
   $HOME/.asdf/shims
   /opt/homebrew/opt/asdf/libexec/bin
   $HOME/miniconda3/condabin
+  "/Applications/Docker.app/Contents/Resources/bin"
   "/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
   /opt/homebrew/opt/postgresql@17/bin
   /opt/homebrew/opt/coreutils/libexec/gnubin
