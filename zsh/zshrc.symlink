@@ -132,6 +132,11 @@ source "$ZSH/oh-my-zsh.sh"
 # Tool configuration
 # -----------------------------------------------------------------------------
 
+# Bright highlight on matching history search
+typeset -g HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND='fg=#ffffff,bg=#aa00aa,bold'
+# Leave highlight on
+typeset -g HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_TIMEOUT=99999
+
 # gpg
 export GPG_TTY=$TTY
 
