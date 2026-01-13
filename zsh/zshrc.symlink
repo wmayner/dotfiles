@@ -322,7 +322,7 @@ alias vgrc="$EDITOR $HOME/.gitconfig"
 
 # python
 alias p="python3"
-alias python="python"
+alias python="python3"
 
 # -----------------------------------------------------------------------------
 # FINAL PATH ASSEMBLY
