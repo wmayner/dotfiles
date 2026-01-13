@@ -95,7 +95,15 @@ set -sg escape-time 0
 bind-key r source-file ~/.tmux.conf
 
 # THEME
-set -g default-terminal "screen-256color"
+set -g default-terminal "tmux-256color"
+# Enable true color (RGB) support for terminals that support it
+set -ag terminal-overrides ",xterm-256color:Tc"
+set -ag terminal-overrides ",*256col*:Tc"
+# Pass through COLORTERM environment variable
+set -ga update-environment "COLORTERM"
+# Allow passthrough of escape sequences (needed for modern terminal features)
+set -g allow-passthrough on
 
-# Use powerline
-source-file ~/.config/powerline/tmux/powerline.conf
+# Powerline status bar
+run-shell "powerline-daemon -q"
+run-shell "powerline-config tmux setup"
