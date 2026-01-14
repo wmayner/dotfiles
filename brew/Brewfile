@@ -14,7 +14,6 @@ brew "bat"          # cat replacement with syntax highlighting
 brew "cmake"
 brew "colordiff"
 brew "coreutils"
-brew "delta"        # beautiful git diffs
 brew "direnv"
 brew "dust"         # du replacement
 brew "eza"          # modern ls (exa successor)
@@ -22,7 +21,7 @@ brew "fd"           # find replacement
 brew "fzf"
 brew "git"
 brew "gh"
-brew "git-delta"    # git diff pager
+brew "git-delta"    # beautiful git diffs
 brew "gnupg"
 brew "lazygit"      # git TUI
 brew "node"
