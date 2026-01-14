@@ -286,6 +286,31 @@ alias matlab="/Applications/MATLAB_R2016a.app/bin/matlab"
 # ag with custom colors and restricted line width
 alias ag="ag --color-line-number 34 --color-match 36 --color-path 32 --width 100"
 
+# Modern CLI tool replacements (2026)
+# bat: cat with syntax highlighting
+if command -v bat &>/dev/null; then
+  alias cat="bat"
+  alias catp="bat --style=plain"  # plain cat without decorations
+  export BAT_THEME="Solarized (dark)"
+  export BAT_PAGER="less -R"
+fi
+# eza: modern ls replacement
+if command -v eza &>/dev/null; then
+  alias ls="eza --color=auto --icons"
+  alias l="eza -la --icons --git"
+  alias ll="eza -l --icons --git"
+  alias lsa="eza -la --icons"
+  alias tree="eza --tree --icons"
+fi
+# fd: fast find replacement
+if command -v fd &>/dev/null; then
+  alias find="fd"
+fi
+# dust: better du
+if command -v dust &>/dev/null; then
+  alias du="dust"
+fi
+
 # Editing shortcuts
 alias v="vim"
 # Edit configuration (from within dotfiles, for interacting with repo)
