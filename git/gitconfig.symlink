@@ -76,7 +76,7 @@
     navigate = true    # use n and N to move between diff sections
     line-numbers = true
     side-by-side = false
-    syntax-theme = Catppuccin Mocha
+    syntax-theme = gruvbox-dark
 [filter "media"]
     clean = git-media-clean %f
     smudge = git-media-smudge %f
