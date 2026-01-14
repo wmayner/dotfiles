@@ -341,5 +341,17 @@
         "key": "ctrl+shift+-",
         "command": "-notebook.cell.insertCodeCellBelow",
         "when": "notebookEditorFocused && !inputFocus"
+    },
+    // Reclaim cmd+b for sidebar toggle in markdown files
+    {
+        "key": "cmd+b",
+        "command": "-markdown.extension.editing.toggleBold",
+        "when": "editorTextFocus && !editorReadonly && editorLangId =~ /^markdown$|^rmd$|^quarto$/"
+    },
+    // Use cmd+shift+b for markdown bold instead
+    {
+        "key": "cmd+shift+b",
+        "command": "markdown.extension.editing.toggleBold",
+        "when": "editorTextFocus && !editorReadonly && editorLangId =~ /^markdown$|^rmd$|^quarto$/"
     }
 ]
