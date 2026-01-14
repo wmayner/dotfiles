@@ -1,4 +1,4 @@
-// Place your key bindings in this file to override the defaultsauto[]
+// Place your key bindings in this file to override the defaults
 [
     {
         "command": "workbench.action.navigateLeft",
@@ -13,7 +13,9 @@
         "command": "workbench.action.terminal.sendSequence",
         "key": "ctrl+l",
         "when": "terminalFocus",
-        "args": { "text": "\u000c" }
+        "args": {
+            "text": "\u000c"
+        }
     },
     {
         "command": "workbench.action.navigateUp",
@@ -299,5 +301,45 @@
         "key": "ctrl+enter",
         "command": "-notebook.cell.execute",
         "when": "notebookCellListFocused && notebookMissingKernelExtension && !notebookCellExecuting && notebookCellType == 'code' || notebookCellListFocused && !notebookCellExecuting && notebookCellType == 'code' && notebookKernelCount > 0 || notebookCellListFocused && !notebookCellExecuting && notebookCellType == 'code' && notebookKernelSourceCount > 0"
+    },
+    {
+        "key": "cmd+alt+l",
+        "command": "workbench.action.nextEditorInGroup",
+        "when": "!textInputFocus && !inputFocus && (!editorTextFocus || vim.mode != 'Insert')"
+    },
+    {
+        "key": "cmd+alt+h",
+        "command": "workbench.action.previousEditorInGroup",
+        "when": "!textInputFocus && !inputFocus && (!editorTextFocus || vim.mode != 'Insert')"
+    },
+    {
+        "key": "shift+cmd+y",
+        "command": "-workbench.debug.action.toggleRepl"
+    },
+    {
+        "key": "shift+cmd+y",
+        "command": "github-copilot-chat.keepAllAgentEdits"
+    },
+    // Make Go Back/Forward work even in notebooks
+    {
+        "key": "ctrl+-",
+        "command": "workbench.action.navigateBack",
+        "when": "editorTextFocus || notebookEditorFocused || notebookCellListFocused"
+    },
+    {
+        "key": "ctrl+shift+-",
+        "command": "workbench.action.navigateForward",
+        "when": "editorTextFocus || notebookEditorFocused || notebookCellListFocused"
+    },
+    // Remove Jupyter's claim on Ctrl+Shift+- in notebooks
+    {
+        "key": "ctrl+shift+-",
+        "command": "-notebook.cell.split",
+        "when": "notebookEditorFocused && !inputFocus"
+    },
+    {
+        "key": "ctrl+shift+-",
+        "command": "-notebook.cell.insertCodeCellBelow",
+        "when": "notebookEditorFocused && !inputFocus"
     }
 ]
