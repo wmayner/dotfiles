@@ -218,7 +218,7 @@ bindkey '^X^R' fzf-history-widget-accept
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # pyphi
-export PYPHI_WELCOME_OFF='no'
+export PYPHI_WELCOME_OFF='yes'
 
 # -----------------------------------------------------------------------------
 # Keybindings / aliases
