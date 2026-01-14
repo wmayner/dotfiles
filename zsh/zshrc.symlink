@@ -227,8 +227,7 @@ bindkey "^Q" push-input
 
 # List only directories
 alias lsd="ls -d */"
-# Allow colors with less
-alias less="less -R"
+# less colors handled by bat alias below (if bat is available)
 # Get the absolute path of a file
 alias fullpath="readlink -f"
 # Use colordiff instead of native diff
@@ -263,12 +262,16 @@ alias matlab="/Applications/MATLAB_R2016a.app/bin/matlab"
 alias ag="ag --color-line-number 34 --color-match 36 --color-path 32 --width 100"
 
 # Modern CLI tool replacements (2026)
-# bat: cat with syntax highlighting
+# bat: cat with syntax highlighting and pager
 if command -v bat &>/dev/null; then
   alias cat="bat"
   alias catp="bat --style=plain"  # plain cat without decorations
+  alias less="bat --paging=always"
   export BAT_THEME="Catppuccin Mocha"
-  export BAT_PAGER="less -R"
+  export BAT_PAGER="less -RF"
+  # Use bat for man pages with proper formatting
+  export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+  export MANROFFOPT="-c"
 fi
 # eza: modern ls replacement
 if command -v eza &>/dev/null; then
