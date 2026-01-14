@@ -5,10 +5,6 @@
 # Later, to clean anything installed but not in Brewfile:
 # brew bundle cleanup --force
 
-tap "homebrew/bundle"
-tap "homebrew/cask"
-tap "homebrew/core"
-
 # --- Formulae ---
 brew "bat"          # cat replacement with syntax highlighting
 brew "cmake"
@@ -45,3 +41,6 @@ cask "aerospace"
 cask "blackhole-2ch"
 cask "hammerspoon"
 cask "ngrok"
+
+# --- Fonts ---
+cask "font-fira-code"
