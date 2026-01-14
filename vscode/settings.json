@@ -84,36 +84,74 @@
     "vim.incsearch": true,
     "vim.normalModeKeyBindingsNonRecursive": [
         {
-            "after": ["d", "d"],
-            "before": ["<leader>", "d"]
+            "after": [
+                "d",
+                "d"
+            ],
+            "before": [
+                "<leader>",
+                "d"
+            ]
         },
         {
-            "before": ["<C-n>"],
-            "commands": [":nohl"]
+            "before": [
+                "<C-n>"
+            ],
+            "commands": [
+                ":nohl"
+            ]
         },
         {
-            "after": ["g", "k"],
-            "before": ["k"]
+            "after": [
+                "g",
+                "k"
+            ],
+            "before": [
+                "k"
+            ]
         },
         {
-            "after": ["g", "j"],
-            "before": ["j"]
+            "after": [
+                "g",
+                "j"
+            ],
+            "before": [
+                "j"
+            ]
         },
         {
-            "after": ["g", "0"],
-            "before": ["0"]
+            "after": [
+                "g",
+                "0"
+            ],
+            "before": [
+                "0"
+            ]
         },
         {
-            "after": ["g", "_"],
-            "before": ["$"]
+            "after": [
+                "g",
+                "_"
+            ],
+            "before": [
+                "$"
+            ]
         },
         {
-            "before": ["L"],
-            "commands": ["workbench.action.nextEditor"]
+            "before": [
+                "L"
+            ],
+            "commands": [
+                "workbench.action.nextEditor"
+            ]
         },
         {
-            "before": ["H"],
-            "commands": ["workbench.action.previousEditor"]
+            "before": [
+                "H"
+            ],
+            "commands": [
+                "workbench.action.previousEditor"
+            ]
         }
     ],
     "vim.sneak": true,
@@ -128,7 +166,7 @@
         "editor.findMatchHighlightBackground": "#ffff00",
         "editor.findMatchBackground": "#ff1dce"
     },
-    "workbench.colorTheme": "Catppuccin Mocha",
+    "workbench.colorTheme": "Better Selenized Dark",
     "workbench.editor.enablePreviewFromQuickOpen": false,
     "workbench.editorAssociations": {
         "*.pdf": "latex-workshop-pdf-hook"
