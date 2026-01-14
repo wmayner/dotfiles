@@ -16,17 +16,10 @@ DOTFILES=$(pwd)
 if [ "$OS" = "Darwin" ]; then
   # Install homebrew
   printf "\nInstalling Homebrew...\n"
-  /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-  BREW_FORMULAE='./brew/formulae.txt'
-  BREW_FORMULAE_HEAD='./brew/formulae-head.txt'
-  # Install brew formulae
-  printf "Installing Homebrew formulae from '$BREW_FORMULAE' and '$BREW_FORMULAE_HEAD'..."
-  xargs brew install <$BREW_FORMULAE
-  xargs brew install --HEAD <$BREW_FORMULAE_HEAD
-  # Ensure brewed Python is used instead of the system Python
-  if [ ! -e "/usr/local/bin/python" ]; then
-    ln -s "/usr/local/bin/python2" "/usr/local/bin/python"
-  fi
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  # Install brew formulae and casks from Brewfile
+  printf "\nInstalling Homebrew packages from Brewfile...\n"
+  brew bundle install --file=./brew/Brewfile
 # Linux specific
 else
   # System packages
@@ -41,7 +34,7 @@ printf "\nChanging shell to zsh...\n"
 chsh -s $(which zsh)
 
 printf "\nInstalling oh-my-zsh...\n"
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
 printf "\nSymlinking '*.symlink' files...\n"
 for SOURCE_FILE in $(find $(pwd) -name '*.symlink'); do

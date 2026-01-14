@@ -56,6 +56,7 @@
     helper = cache --timeout=3600
 [merge]
     tool = code
+    conflictstyle = zdiff3
 [mergetool "code"]
     cmd = code --wait --merge $REMOTE $LOCAL $BASE $MERGED
 [push]
@@ -66,6 +67,7 @@
     enabled = 1
 [diff]
     tool = vimdiff
+    algorithm = histogram
 [filter "media"]
     clean = git-media-clean %f
     smudge = git-media-smudge %f
@@ -75,6 +77,11 @@
     required = true
 [pull]
     ff = only
+[fetch]
+    prune = true
+[rebase]
+    autosquash = true
+    autostash = true
 [gpg]
     program = gpg
 [commit]

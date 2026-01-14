@@ -10,20 +10,28 @@ tap "homebrew/cask"
 tap "homebrew/core"
 
 # --- Formulae ---
+brew "bat"          # cat replacement with syntax highlighting
 brew "cmake"
 brew "colordiff"
 brew "coreutils"
+brew "delta"        # beautiful git diffs
 brew "direnv"
+brew "dust"         # du replacement
+brew "eza"          # modern ls (exa successor)
+brew "fd"           # find replacement
 brew "fzf"
 brew "git"
 brew "gh"
+brew "git-delta"    # git diff pager
 brew "gnupg"
+brew "lazygit"      # git TUI
 brew "node"
 brew "pandoc"
 brew "pinentry-mac"
 brew "pipx"
 brew "ripgrep"
 brew "rsync"
+brew "starship"     # modern shell prompt
 brew "texlive"
 brew "tmux"
 brew "trash"

@@ -519,7 +519,7 @@
 
   " Neoformat {
     let g:neoformat_run_all_formatters = 1
-    let g:neoformat_enabled_python = ['isort', 'yapf']
+    let g:neoformat_enabled_python = ['ruff']
   " }
 
   " vimtex {
@@ -933,7 +933,7 @@
   " ALE {
 
     let g:ale_fixers = {
-          \ 'python': ['black', 'isort', 'remove_trailing_lines', 'trim_whitespace'],
+          \ 'python': ['ruff', 'ruff_format', 'remove_trailing_lines', 'trim_whitespace'],
           \ 'markdown': ['prettier --parser=markdown', 'remove_trailing_lines', 'trim_whitespace'],
           \ 'javascript': ['eslint', 'remove_trailing_lines', 'trim_whitespace'],
           \ 'json': ['prettier --parser=json', 'remove_trailing_lines', 'trim_whitespace'],

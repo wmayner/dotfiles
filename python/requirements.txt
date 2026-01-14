@@ -1,10 +1,24 @@
-virtualenvwrapper
-powerline-status
+# Modern Python tooling (2026)
+# Install via: pipx install <package> (preferred) or pip install -r requirements.txt
+
+# Fast linting and formatting (replaces flake8, isort, yapf, pylint)
+ruff
+
+# Ultra-fast package installer (pip replacement)
+uv
+
+# Testing
+pytest
+
+# Utilities
 pip-autoremove
 tqdm
-pytest
-pylint
-flake8
-isort
-yapf
 pygments
+
+# Note: The following have been replaced by modern alternatives:
+# - virtualenvwrapper → Use 'uv venv' or native Python venv
+# - powerline-status → Using Starship prompt instead
+# - flake8 → Replaced by ruff
+# - isort → Replaced by ruff
+# - yapf → Replaced by ruff format
+# - pylint → Most checks covered by ruff

@@ -2,7 +2,4 @@
 # Python packages used by Neovim (e.g. linters) should be listed here.
 
 neovim
-flake8
-pylint
-isort
-yapf
+ruff
