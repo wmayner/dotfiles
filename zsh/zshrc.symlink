@@ -174,36 +174,12 @@ fi
 
 # fzf
 _gen_fzf_default_opts() {
-  local base03="234"
-  local base02="235"
-  local base01="240"
-  local base00="241"
-  local base0="244"
-  local base1="245"
-  local base2="254"
-  local base3="230"
-  local yellow="136"
-  local orange="166"
-  local red="160"
-  local magenta="125"
-  local violet="61"
-  local blue="33"
-  local cyan="37"
-  local green="64"
-
-  # Comment and uncomment below for the light theme.
-
-  # Solarized Dark color scheme for fzf
-  export FZF_DEFAULT_OPTS="
-    --reverse
-    --color fg:-1,bg:-1,hl:$blue,fg+:$base2,bg+:$base02,hl+:$blue
-    --color info:$yellow,prompt:$yellow,pointer:$base3,marker:$base3,spinner:$yellow
-  "
-  ## Solarized Light color scheme for fzf
-  #export FZF_DEFAULT_OPTS="
-  #  --color fg:-1,bg:-1,hl:$blue,fg+:$base02,bg+:$base2,hl+:$blue
-  #  --color info:$yellow,prompt:$yellow,pointer:$base03,marker:$base03,spinner:$yellow
-  #"
+  # Catppuccin Mocha color scheme for fzf
+  export FZF_DEFAULT_OPTS=" \
+    --reverse \
+    --color=bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#f38ba8 \
+    --color=fg:#cdd6f4,header:#f38ba8,info:#cba6f7,pointer:#f5e0dc \
+    --color=marker:#f5e0dc,fg+:#cdd6f4,prompt:#cba6f7,hl+:#f38ba8"
 }
 _gen_fzf_default_opts
 
@@ -291,7 +267,7 @@ alias ag="ag --color-line-number 34 --color-match 36 --color-path 32 --width 100
 if command -v bat &>/dev/null; then
   alias cat="bat"
   alias catp="bat --style=plain"  # plain cat without decorations
-  export BAT_THEME="Solarized (dark)"
+  export BAT_THEME="Catppuccin Mocha"
   export BAT_PAGER="less -R"
 fi
 # eza: modern ls replacement

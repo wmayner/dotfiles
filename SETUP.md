@@ -32,7 +32,7 @@ cat file.txt          # Uses bat with syntax highlighting
 catp file.txt         # Plain cat without decorations
 ```
 
-**Config**: Uses Solarized Dark theme (set via `$BAT_THEME`)
+**Config**: Uses Catppuccin Mocha theme (set via `$BAT_THEME`)
 
 ### eza (ls replacement)
 ```bash
@@ -159,7 +159,7 @@ Create `~/.config/bat/config` for custom settings:
 
 ```bash
 # Theme
---theme="Solarized (dark)"
+--theme="Catppuccin Mocha"
 
 # Show line numbers and git changes
 --style="numbers,changes,header"

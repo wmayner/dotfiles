@@ -74,9 +74,9 @@
     diffFilter = delta --color-only
 [delta]
     navigate = true    # use n and N to move between diff sections
-    light = false      # set to true if you use light terminal bg
     line-numbers = true
     side-by-side = false
+    syntax-theme = Catppuccin Mocha
 [filter "media"]
     clean = git-media-clean %f
     smudge = git-media-smudge %f

@@ -142,7 +142,7 @@
         "editorCursor.background": "#999999",
         "editorCursor.foreground": "#03fe0f"
     },
-    "workbench.colorTheme": "Solarized Dark",
+    "workbench.colorTheme": "Catppuccin Mocha",
     "workbench.editor.enablePreviewFromQuickOpen": false,
     "editor.cursorWidth": 3,
     "terminal.integrated.cursorWidth": 3,
