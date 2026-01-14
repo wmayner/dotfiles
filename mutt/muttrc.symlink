@@ -1,2 +1,0 @@
-set date_format="%a, %b %d at %I:%M%p"
-set index_format="%4C %Z %{%b} %d %-15.15L (%?l?%4l&%4c?) %s"

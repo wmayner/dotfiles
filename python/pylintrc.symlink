@@ -1,5 +1,0 @@
-[MASTER]
-jobs=8
-
-[MESSAGES CONTROL]
-disable=too-many-ancestors,super-init-not-called
