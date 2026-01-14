@@ -50,4 +50,29 @@ curl -fLo "$HOME/.vim/autoload/plug.vim" --create-dirs \
 # Install plugins
 vim +PlugInstall! +qall
 
+printf "\nSetting up VSCode...\n"
+# Determine VSCode User directory based on OS
+if [ "$OS" = "Darwin" ]; then
+  VSCODE_USER_DIR="$HOME/Library/Application Support/Code/User"
+else
+  VSCODE_USER_DIR="$HOME/.config/Code/User"
+fi
+
+# Create VSCode User directory if it doesn't exist
+mkdir -p "$VSCODE_USER_DIR"
+
+# Backup existing configs if they exist and aren't symlinks
+if [ -f "$VSCODE_USER_DIR/settings.json" ] && [ ! -L "$VSCODE_USER_DIR/settings.json" ]; then
+  printf "Backing up existing settings.json to settings.json.backup\n"
+  mv "$VSCODE_USER_DIR/settings.json" "$VSCODE_USER_DIR/settings.json.backup"
+fi
+if [ -f "$VSCODE_USER_DIR/keybindings.json" ] && [ ! -L "$VSCODE_USER_DIR/keybindings.json" ]; then
+  printf "Backing up existing keybindings.json to keybindings.json.backup\n"
+  mv "$VSCODE_USER_DIR/keybindings.json" "$VSCODE_USER_DIR/keybindings.json.backup"
+fi
+
+# Symlink VSCode configs
+ln -sfv "$DOTFILES/vscode/settings.json" "$VSCODE_USER_DIR/settings.json"
+ln -sfv "$DOTFILES/vscode/keybindings.json" "$VSCODE_USER_DIR/keybindings.json"
+
 printf "\nDone!"
