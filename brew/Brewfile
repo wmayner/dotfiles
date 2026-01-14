@@ -5,6 +5,8 @@
 # Later, to clean anything installed but not in Brewfile:
 # brew bundle cleanup --force
 
+tap "homebrew/cask-fonts"
+
 # --- Formulae ---
 brew "bat"          # cat replacement with syntax highlighting
 brew "cmake"
