@@ -260,6 +260,8 @@ alias hl="pygmentize -g"
 alias matlab="/Applications/MATLAB_R2016a.app/bin/matlab"
 # ag with custom colors and restricted line width
 alias ag="ag --color-line-number 34 --color-match 36 --color-path 32 --width 100"
+# ripgrep with colors piped to pager
+alias rgl='rg --color=always | less'
 
 # Modern CLI tool replacements (2026)
 # bat: cat with syntax highlighting and pager
