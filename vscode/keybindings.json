@@ -6,7 +6,14 @@
     },
     {
         "command": "workbench.action.navigateRight",
-        "key": "ctrl+l"
+        "key": "ctrl+l",
+        "when": "!terminalFocus"
+    },
+    {
+        "command": "workbench.action.terminal.sendSequence",
+        "key": "ctrl+l",
+        "when": "terminalFocus",
+        "args": { "text": "\u000c" }
     },
     {
         "command": "workbench.action.navigateUp",
