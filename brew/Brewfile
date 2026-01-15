@@ -21,6 +21,7 @@ brew "git"
 brew "gh"
 brew "git-delta"    # beautiful git diffs
 brew "gnupg"
+brew "just"
 brew "lazygit"      # git TUI
 brew "node"
 brew "pandoc"
