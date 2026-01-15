@@ -339,6 +339,11 @@ alias vgrc="$EDITOR $HOME/.gitconfig"
 alias p="python3"
 alias python="python3"
 
+# claude
+alias plan="claude --permission-mode plan"
+alias onecommit="claude -p '/one-commit'"
+alias commitchunks="claude -p '/commit-in-logical-chunks'"
+
 # -----------------------------------------------------------------------------
 # FINAL PATH ASSEMBLY
 # -----------------------------------------------------------------------------
