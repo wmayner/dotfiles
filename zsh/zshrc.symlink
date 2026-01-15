@@ -159,8 +159,17 @@ export GREP_COLORS='mt=1;31'
 # Use pygmentize for syntax highlighting if available
 export LESSOPEN='|$HOME/.lessfilter %s'
 
-# zoxide (fasd replacement)
-eval "$(zoxide init zsh)"
+# zoxide with fzf-style fuzzy matching
+eval "$(zoxide init zsh --no-cmd)"
+z() {
+  if [[ $# -eq 0 ]]; then
+    builtin cd ~
+  else
+    local dir
+    dir=$(zoxide query --list | fzf --filter "$*" --no-sort | head -1) && builtin cd "$dir"
+  fi
+}
+alias zi='__zoxide_zi'
 alias j='z'
 alias ji='zi'
 
