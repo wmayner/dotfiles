@@ -16,27 +16,15 @@
     Plug 'wavded/vim-stylus'
     " JSON
     Plug 'elzr/vim-json'
-    " CoffeeScript
-    Plug 'kchmck/vim-coffee-script'
-    " Dockerfile
-    Plug 'honza/dockerfile.vim'
     " Markdown
     Plug 'tpope/vim-markdown'
     " C, C++
     Plug 'octol/vim-cpp-enhanced-highlight'
-    Plug 'lyuts/vim-rtags', { 'for': ['c', 'cpp'] }
     " Python
-    Plug 'vim-scripts/python_match.vim'
-    Plug 'vim-scripts/pythoncomplete'
     Plug 'hynek/vim-python-pep8-indent'
     Plug 'vim-python/python-syntax'
-    " HTML
-    Plug 'vim-scripts/HTML-AutoCloseTag', { 'for': 'html' }
-    " Jade
-    Plug 'digitaltoad/vim-jade'
     " CSS
     Plug 'hail2u/vim-css3-syntax'
-    Plug 'gorodinskiy/vim-coloresque'
     " Haml, Sass, SCSS
     Plug 'tpope/vim-haml'
     " Tex
@@ -78,48 +66,28 @@
     Plug 'gcmt/wildfire.vim'
     " Better search experience
     Plug 'junegunn/vim-slash'
-    " Increment with <C-x> and <C-a> in visual mode
-    Plug 'vim-scripts/visual-increment'
     " Run shell commands asynchronously
     Plug 'skywind3000/asyncrun.vim'
   "
 
   " Coding {
-    " Catpuccin colorscheme
-    Plug 'catppuccin/vim'
-    " Solarized colorscheme
-    " Plug 'altercation/vim-colors-solarized'
+    " Selenized colorscheme
+    Plug 'jan-warchol/selenized', { 'rtp': 'editors/vim' }
     " Simpler rainbow parentheses
     Plug 'junegunn/rainbow_parentheses.vim'
-    " Completion
-    function! BuildYCM(info)
-      if a:info.status == 'installed' || a:info.force
-        !./install.py --clang-completer
-      endif
-    endfunction
-    " Plug 'Valloric/YouCompleteMe', {
-    "       \ 'do': function('BuildYCM')
-    "       \ }
     " Snippets
     Plug 'honza/vim-snippets'
     " Fuzzy file finder
-    Plug 'ctrlpvim/ctrlp.vim'
-    Plug 'tacahiroy/ctrlp-funky'
     Plug 'junegunn/fzf', { 'do': './install --all' }
     Plug 'junegunn/fzf.vim'
     " Linting
     Plug 'w0rp/ale'
     " Auto formatting
     Plug 'sbdchd/neoformat', { 'do': 'npm install --global prettier' }
-    " Ack/Ag in Vim
-    Plug 'mileszs/ack.vim'
     " File browser
     Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
-    " NOTE: requires Universal Ctags
-    " Tagbar (shows code structure concisely)
-    if v:version >= 703
-      Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle' }
-    endif
+    " Tagbar (shows code structure concisely); requires Universal Ctags
+    Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle' }
     " Unicode completion
     Plug 'chrisbra/unicode.vim', { 'for': 'markdown' }
     " Extend `ga` to also show info for unicode characters
@@ -132,9 +100,8 @@
     Plug 'tpope/vim-rhubarb'
     " Find conflict markers quickly with `]x` and `[x`
     Plug 'rhysd/conflict-marker.vim'
-    if v:version >= 703
-      Plug 'mhinz/vim-signify'
-    endif
+    " Show git diff signs
+    Plug 'mhinz/vim-signify'
     " View git log in Vim
     Plug 'junegunn/gv.vim'
   " }
@@ -169,9 +136,6 @@
     Plug 'tpope/vim-sensible'
     " Readline bindings in insert and command line mode
     Plug 'tpope/vim-rsi'
-    " TODO: are these two needed?
-    Plug 'MarcWeber/vim-addon-mw-utils'
-    Plug 'tomtom/tlib_vim'
     " Peek at register contents
     Plug 'junegunn/vim-peekaboo'
     " Open file manager or terminal at the directory of the current file with
@@ -180,10 +144,7 @@
     " Status bar
     Plug 'vim-airline/vim-airline'
     Plug 'vim-airline/vim-airline-themes'
-    Plug 'powerline/fonts'
     Plug 'bling/vim-bufferline'
-    " Recover dialog
-    Plug 'vim-scripts/recover.vim'
   " }
 
   call plug#end()
@@ -323,7 +284,6 @@
   " Set filetypes
   augroup VimrcSetFileTypes
     autocmd!
-    autocmd BufNewFile,BufRead *.coffee set filetype=coffee
     autocmd BufNewFile,BufRead Dockerfile* set filetype=dockerfile
     autocmd BufNewFile,BufRead *.styl set filetype=stylus
     autocmd BufNewFile,BufRead *.html.twig set filetype=html.twig
@@ -491,27 +451,7 @@
     set termguicolors
   endif
 
-  " catpuccin-mocha {
-    let g:catppuccin_flavour = "mocha"
-    colorscheme catppuccin_mocha
-  " }
-
-  " " solarized {
-  "   set t_Co=16
-  "   " use proper (default) solarized options
-  "   let g:solarized_termcolors=16
-  "   let g:solarized_termtrans=0
-  "   let g:solarized_degrade=0
-  "   let g:solarized_bold=1
-  "   let g:solarized_underline=1
-  "   let g:solarized_italic=1
-  "   let g:solarized_contrast="normal"
-  "   let g:solarized_visibility="normal"
-  "   let g:solarized_hitrail=0
-  "   let g:solarized_menu=1
-  "   " Make sure to load the colorscheme after setting the termcolors=16
-  "   colorscheme solarized
-  " " }
+  colorscheme selenized
 
 " }
 
@@ -543,7 +483,7 @@
 
   " vim-airline {
     let g:airline_powerline_fonts = 1
-    let g:airline_theme = 'catppuccin_mocha'
+    let g:airline_theme = 'solarized'
   " }
 
   " vim-textobj-sentence {
@@ -620,15 +560,6 @@
     if gitroot != ''
       let &tags = &tags . ',' . gitroot . '/.git/tags'
     endif
-  " }
-
-  " AutoCloseTag {
-    " Set up for xhtml and xml
-    augroup VimrcAutoCloseTag
-      autocmd!
-      autocmd FileType xhtml,xml ru ftplugin/html/autoclosetag.vim
-    augroup end
-    nmap <Leader>ac <plug>ToggleAutoCloseMappings
   " }
 
   " NerdTree {
@@ -720,63 +651,10 @@
       \ 'sink':   function('s:plug_help_sink')}))
   " }
 
-  " CtrlP {
-    let ctrlp_prompt_mappings = {
-    \ 'AcceptSelection("e")': ['<CR>', '<2-LeftMouse>'],
-    \ 'AcceptSelection("h")': ['<c-x>', '<c-cr>', '<c-s>'],
-    \ 'AcceptSelection("t")': ['<c-t>'],
-    \ 'AcceptSelection("v")': ['<c-v>', '<RightMouse>'],
-    \ }
-
-    let g:ctrlp_show_hidden = 1
-
-    " Persistent caching across vim sessions
-    let g:ctrlp_clear_cache_on_exit = 0
-
-    let g:ctrlp_working_path_mode = 'ra'
-
-    let g:ctrlp_custom_ignore = {
-      \ 'dir':  '\.git$\|\.hg$\|\.svn$',
-      \ 'file': '\.exe$\|\.so$\|\.dll$\|\.pyc$' }
-
-    if executable('ag')
-      let s:ctrlp_fallback = 'ag %s --nocolor -l -g ""'
-    elseif executable('ack-grep')
-      let s:ctrlp_fallback = 'ack-grep %s --nocolor -f'
-    elseif executable('ack')
-      let s:ctrlp_fallback = 'ack %s --nocolor -f'
-    else
-      let s:ctrlp_fallback = 'find %s -type f'
-    endif
-    if exists("g:ctrlp_user_command")
-      unlet g:ctrlp_user_command
-    endif
-    let g:ctrlp_user_command = {
-      \ 'types': {
-        \ 1: ['.git', 'cd %s && git ls-files . --cached --exclude-standard --others'],
-        \ 2: ['.hg', 'hg --cwd %s locate -I .'],
-      \ },
-      \ 'fallback': s:ctrlp_fallback
-    \ }
-
-    " CtrlP extensions
-    let g:ctrlp_extensions = ['funky']
-    nnoremap <C-f> :CtrlPFunky<CR>
-
-    " Don't allow running CtrlP in $HOME
-    function! RunCtrlP()
-      lcd %:p:h
-      if (getcwd() == $HOME)
-        echo "Won't run CtrlP in \$HOME"
-        return
-      endif
-      CtrlP
-    endfunction
-
-    nnoremap <C-t> :CtrlPMRU<CR>
-    nnoremap <C-p> :call RunCtrlP()<CR>
-    nnoremap <C-b> :CtrlPBuffer<CR>
-    nnoremap <silent> <leader><leader> :call RunCtrlP()<CR>
+  " FZF mappings {
+    nnoremap <C-p> :Files<CR>
+    nnoremap <C-b> :Buffers<CR>
+    nnoremap <silent> <leader><leader> :Files<CR>
   " }
 
   " Fugitive {
@@ -794,44 +672,6 @@
     nnoremap <silent> <leader>gi :Git add -p %<CR>
     nnoremap <silent> <leader>gg :SignifyToggle<CR>
   " }
-
-  " " YouCompleteMe {
-
-  "   let g:ycm_collect_identifiers_from_tags_files = 1
-  "   let g:ycm_collect_identifiers_from_comments_and_strings = 1
-
-  "   " Completion
-  "   imap <C-j> <C-n>
-  "   imap <C-k> <C-p>
-
-  "   " Enable omni completion
-  "   augroup VimrcOmniCompletion
-  "     autocmd!
-  "     autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-  "     autocmd FileType html setlocal omnifunc=htmlcomplete#CompleteTags
-  "     autocmd FileType markdown setlocal omnifunc=emoji#complete
-  "     autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-  "     autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-  "     autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-  "     autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
-  "     autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
-  "   augroup END
-
-  "   " For snippet_complete marker
-  "   if has('conceal')
-  "     " set conceallevel=2 concealcursor=i
-  "     set concealcursor=i
-  "   endif
-
-  "   " vimtex {
-  "     if !exists('g:ycm_semantic_triggers')
-  "       let g:ycm_semantic_triggers = {}
-  "     endif
-  "     let g:ycm_semantic_triggers.tex = g:vimtex#re#youcompleteme
-  "   " }
-  "
-  " " }
-
 
   " indent-guides {
     let g:indent_guides_start_level = 2
