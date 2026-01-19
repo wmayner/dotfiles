@@ -29,6 +29,7 @@ brew "pinentry-mac"
 brew "pipx"
 brew "ripgrep"
 brew "rsync"
+brew "rclone"
 brew "starship"     # modern shell prompt
 brew "texlive"
 brew "tmux"
