@@ -353,5 +353,20 @@
         "key": "cmd+shift+b",
         "command": "markdown.extension.editing.toggleBold",
         "when": "editorTextFocus && !editorReadonly && editorLangId =~ /^markdown$|^rmd$|^quarto$/"
+    },
+    {
+        "key": "cmd+shift+c",
+        "command": "notebook.cellOutput.copy",
+        "when": "notebookCellListFocused || interactiveWindowFocused"
+    },
+    {
+        "key": "cmd+shift+enter",
+        "command": "multiCommand.clearAndRunAbove",
+        "when": "editorTextFocus && jupyter.hascodecells && jupyter.ispythonornativeactive"
+    },
+    {
+        "key": "cmd+shift+down",
+        "command": "jupyter.runcurrentcellandallbelow.palette",
+        "when": "editorTextFocus && jupyter.hascodecells && jupyter.ispythonornativeactive"
     }
 ]

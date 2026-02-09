@@ -63,7 +63,15 @@
                 "workbench.action.toggleSidebarVisibility",
                 "workbench.action.toggleActivityBarVisibility"
             ]
-        }
+        },
+        {
+            "command": "multiCommand.clearAndRunAbove",
+            "sequence": [
+                "jupyter.interactive.clearAllCells",
+                "jupyter.runallcellsabove.palette",
+                "jupyter.runcurrentcell"
+            ]
+        },
     ],
     "problems.decorations.enabled": true,
     "python.languageServer": "Pylance",
