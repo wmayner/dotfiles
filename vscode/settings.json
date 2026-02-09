@@ -2,7 +2,6 @@
     "ruff.enable": true,
     "ruff.importStrategy": "fromEnvironment",
     "ruff.lint.enable": true,
-    "ruff.format.enable": true,
     "[python]": {
         "editor.defaultFormatter": "charliermarsh.ruff",
         "editor.formatOnSave": true,
