@@ -42,17 +42,6 @@
     "git.enableCommitSigning": true,
     "git.openRepositoryInParentFolders": "always",
     "git.untrackedChanges": "separate",
-    "github.copilot.enable": {
-        "*": true,
-        "markdown": false,
-        "plaintext": false,
-        "yaml": true
-    },
-    "github.copilot.editor.enableAutoCompletions": true,
-    "github.copilot.nextEditSuggestions.enabled": true,
-    "github.copilot.advanced": {
-        "authProvider": "github"
-    },
     "githubPullRequests.pullBranch": "never",
     "jupyter.notebookFileRoot": "${projectDirname}",
     "merge-conflict.autoNavigateNextConflict.enabled": true,
@@ -197,5 +186,18 @@
     "gitlens.ai.vscode.model": "copilot:gpt-4.1",
     "geminicodeassist.displayInlineContextHint": false,
     "chat.viewSessions.orientation": "stacked",
-    "security.promptForLocalFileProtocolHandling": false
+    "security.promptForLocalFileProtocolHandling": false,
+    "python.defaultInterpreterPath": "/Users/will/dropbox/jobs-etc/ai-jobs/anthropic-fellows/.venv",
+    "mssql.connectionGroups": [
+        {
+            "name": "ROOT",
+            "id": "ROOT"
+        }
+    ],
+    "github.copilot.enable": {
+        "*": true,
+        "plaintext": false,
+        "markdown": false,
+        "scminput": false
+    }
 }
