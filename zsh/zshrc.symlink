@@ -37,8 +37,8 @@ export XDG_CACHE_HOME="$HOME/.cache"
 # -----------------------------------------------------------------------------
 export DEFAULT_USER="will"
 # Default editor
-export EDITOR="vim"
-export VISUAL="vim"
+export EDITOR="code --wait"
+export VISUAL="code --wait"
 export DOTFILES="$HOME/dotfiles"
 # -----------------------------------------------------------------------------
 
