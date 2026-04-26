@@ -103,10 +103,6 @@
         "key": "ctrl+shift+cmd+enter"
     },
     {
-        "command": "jupyter.runallcellsabove",
-        "key": "ctrl+shift+cmd+up"
-    },
-    {
         "command": "jupyter.runallcells",
         "key": "ctrl+cmd+enter"
     },
@@ -207,11 +203,11 @@
     },
     {
         "command": "notebook.cell.executeCellAndBelow",
-        "key": "ctrl+shift+cmd+down"
+        "key": "cmd+shift+down"
     },
     {
         "command": "notebook.cell.executeCellsAbove",
-        "key": "ctrl+shift+cmd+up"
+        "key": "cmd+shift+up"
     },
     {
         "command": "notebook.interruptExecution",
@@ -368,5 +364,35 @@
         "key": "cmd+shift+down",
         "command": "jupyter.runcurrentcellandallbelow.palette",
         "when": "editorTextFocus && jupyter.hascodecells && jupyter.ispythonornativeactive"
+    },
+    {
+        "key": "ctrl+j",
+        "command": "jupyter.gotoNextCellInFile",
+        "when": "editorTextFocus && jupyter.hascodecells && jupyter.ispythonornativeactive"
+    },
+    {
+        "key": "ctrl+k",
+        "command": "jupyter.gotoPrevCellInFile",
+        "when": "editorTextFocus && jupyter.hascodecells && jupyter.ispythonornativeactive"
+    },
+    {
+        "key": "cmd+;",
+        "command": "jupyter.insertCellBelow",
+        "when": "editorTextFocus && jupyter.hascodecells && jupyter.ispythonornativeactive"
+    },
+    {
+        "key": "cmd+shift+;",
+        "command": "jupyter.insertCellAbove",
+        "when": "editorTextFocus && jupyter.hascodecells && jupyter.ispythonornativeactive"
+    },
+    {
+        "key": "cmd+shift+up",
+        "command": "jupyter.runallcellsabove.palette",
+        "when": "editorTextFocus && jupyter.hascodecells && jupyter.ispythonornativeactive"
+    },
+    {
+        "key": "cmd+shift+backspace",
+        "command": "jupyter.interactive.clearAllCells",
+        "when": "interactiveWindowFocused || (editorTextFocus && jupyter.hascodecells && jupyter.ispythonornativeactive)"
     }
 ]
