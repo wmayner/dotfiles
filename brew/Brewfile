@@ -44,8 +44,9 @@ brew "yq"           # YAML/JSON/XML processor (jq for YAML)
 brew "zoxide"
 
 # --- Casks ---
+tap "nikitabobko/tap"   # AeroSpace lives here, not in homebrew core
 cask "1password-cli"
-cask "aerospace"
+cask "aerospace"        # from nikitabobko/tap
 cask "blackhole-2ch"
 cask "hammerspoon"
 cask "ngrok"
