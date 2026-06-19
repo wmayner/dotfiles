@@ -40,6 +40,10 @@ export DEFAULT_USER="will"
 export EDITOR="code --wait"
 export VISUAL="code --wait"
 export DOTFILES="$HOME/dotfiles"
+
+export VAST_API_KEY=$(security find-generic-password -s "VAST_API_KEY" -w 2>/dev/null)
+export WANDB_API_KEY=$(security find-generic-password -s "WANDB_API_KEY" -w 2>/dev/null)
+export RAILWAY_TOKEN=$(security find-generic-password -s "RAILWAY_TOKEN" -w 2>/dev/null)
 # -----------------------------------------------------------------------------
 
 # -----------------------------------------------------------------------------
@@ -53,31 +57,49 @@ export DOTFILES="$HOME/dotfiles"
 
 # Never auto-activate base
 export CONDA_AUTO_ACTIVATE_BASE=false
-# conda {
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/Users/will/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/Users/will/miniconda3/etc/profile.d/conda.sh" ]; then
-        . "/Users/will/miniconda3/etc/profile.d/conda.sh"
-    else
-        export PATH="/Users/will/miniconda3/bin:$PATH"
-    fi
-fi
-unset __conda_setup
-# <<< conda initialize <<<
 
-# Prevent installing into base
-function extended_conda() {
-  if [ "${CONDA_PROMPT_MODIFIER-}" = "(base) " ] && [ "$1" = "install" ]; then
-    echo "Not allowed in base environment"
+# Lazy conda: the `conda init` hook spawns python and costs ~0.4s on every
+# shell start (essentially all of our startup time). Defer it until conda is
+# actually used. condabin is already on PATH (see FINAL PATH ASSEMBLY), and on
+# the first `conda` call this wrapper loads the real hook, then redefines
+# itself to keep the base-install guard for all later calls.
+conda() {
+  unset -f conda
+  # >>> conda initialize >>>
+  # !! Contents within this block are managed by 'conda init' !!
+  __conda_setup="$('/Users/will/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+  if [ $? -eq 0 ]; then
+      eval "$__conda_setup"
   else
+      if [ -f "/Users/will/miniconda3/etc/profile.d/conda.sh" ]; then
+          . "/Users/will/miniconda3/etc/profile.d/conda.sh"
+      else
+          export PATH="/Users/will/miniconda3/bin:$PATH"
+      fi
+  fi
+  unset __conda_setup
+  # <<< conda initialize <<<
+  if typeset -f conda >/dev/null; then
+    # The hook redefined `conda`; wrap it to keep the base-install guard.
+    functions[__conda_inner]=$functions[conda]
+    conda() {
+      if [ "${CONDA_PROMPT_MODIFIER-}" = "(base) " ] && [ "$1" = "install" ]; then
+        echo "Not allowed in base environment"
+        return 1
+      fi
+      __conda_inner "$@"
+    }
     conda "$@"
+  else
+    # conda is only a binary on PATH (no shell function available)
+    command conda "$@"
   fi
 }
-alias conda=extended_conda
+
+# -----------------------------------------------------------------------------
+# Custom completions
+# -----------------------------------------------------------------------------
+fpath=(~/.zsh/completions $fpath)
 
 # -----------------------------------------------------------------------------
 # oh-my-zsh
@@ -176,10 +198,8 @@ alias ji='zi'
 # iTerm integration
 [ -f "$HOME/.iterm2_shell_integration.zsh" ] && source "$HOME/.iterm2_shell_integration.zsh"
 
-# asdf (loaded before final PATH so shims exist but do not dominate)
-if [ -x "/opt/homebrew/bin/brew" ]; then
-  . "$(/opt/homebrew/bin/brew --prefix asdf)/libexec/asdf.sh"
-fi
+# asdf: nothing to source. asdf 0.16+ (the Go rewrite) ships no asdf.sh; it
+# works purely via its shims dir, which is on PATH (see FINAL PATH ASSEMBLY).
 
 # fzf
 _gen_fzf_default_opts() {
@@ -192,15 +212,16 @@ _gen_fzf_default_opts() {
 }
 _gen_fzf_default_opts
 
-# Accept history selection instead of putting it on the command line
-fzf-history-widget-accept() {
-  fzf-history-widget
-  zle accept-line
-}
-zle     -N     fzf-history-widget-accept
-bindkey '^X^R' fzf-history-widget-accept
-
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# atuin: searchable, syncable shell history. Use NOBIND so it does not hijack
+# the arrow keys; we bind it to ^R explicitly in the keybindings section below
+# (replacing the old ^X^R fzf history widget). ^K/^J keep inline substring
+# scrolling. Sync is opt-in (`atuin login`); local history works out of the box.
+if command -v atuin &>/dev/null; then
+  export ATUIN_NOBIND=true
+  eval "$(atuin init zsh)"
+fi
 
 # pyphi
 export PYPHI_WELCOME_OFF='yes'
@@ -229,6 +250,9 @@ bindkey -v
 bindkey "^K" history-substring-search-up
 bindkey "^J" history-substring-search-down
 
+# ^R: atuin fuzzy history search (was ^X^R via fzf)
+command -v atuin &>/dev/null && bindkey '^R' atuin-search
+
 # Press Ctrl+Q to push the current command on to the stack. It will disappear,
 # allowing you to enter another command, after which it will reappear in the
 # prompt.
@@ -242,7 +266,7 @@ alias fullpath="readlink -f"
 # Use colordiff instead of native diff
 alias diff="colordiff"
 # Always sudo htop (doesn't work properly on macOS otherwise)
-if [ "$OS" = "Darwin" ]; then
+if [[ "$OSTYPE" == darwin* ]]; then
   alias htop="sudo htop"
 fi
 # list dir contents (with human-readable sizes)
@@ -263,12 +287,13 @@ alias ..="cd .."
 alias df="df -h"
 # Forward port
 alias forward="ssh -NL"
+# mosh + tmux: connect to a host and attach-or-create a persistent tmux session
+# named "main", so the session survives even if the mosh client dies (laptop
+# reboot / app quit). All args pass through to mosh, so ~/.ssh/config aliases and
+# flags work, e.g.  mosht myhost   or   mosht --ssh="ssh -p 2222" user@host
+mosht() { mosh "$@" -- tmux new -A -s main; }
 # Syntax highlighting with Pygments
 alias hl="pygmentize -g"
-# MATLAB binary
-alias matlab="/Applications/MATLAB_R2016a.app/bin/matlab"
-# ag with custom colors and restricted line width
-alias ag="ag --color-line-number 34 --color-match 36 --color-path 32 --width 100"
 # ripgrep with colors piped to pager
 alias rgl='rg --color=always | less'
 
@@ -340,7 +365,8 @@ alias p="python3"
 alias python="python3"
 
 # claude
-alias plan="claude --model opus --permission-mode plan"
+alias claude="claude --remote-control"
+alias plan="claude --remote-control --permission-mode plan"
 alias onecommit="claude -p '/one-commit'"
 alias commitchunks="claude -p '/commit-in-logical-chunks'"
 alias opus="claude --model opus"
