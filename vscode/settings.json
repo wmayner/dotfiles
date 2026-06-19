@@ -169,7 +169,7 @@
     },
     "workbench.startupEditor": "none",
     "workbench.secondarySideBar.defaultVisibility": "hidden",
-    "application.shellEnvironmentResolutionTimeout": 20,
+    "application.shellEnvironmentResolutionTimeout": 30,
     "latex-workshop.latex.autoBuild.run": "onSave",
     "latex-workshop.latex.build.rootfileInStatus": true,
     "latex-workshop.synctex.afterBuild.enabled": true,
@@ -185,7 +185,6 @@
     "gitlens.ai.model": "vscode",
     "gitlens.ai.vscode.model": "copilot:gpt-4.1",
     "geminicodeassist.displayInlineContextHint": false,
-    "chat.viewSessions.orientation": "stacked",
     "security.promptForLocalFileProtocolHandling": false,
     "python.defaultInterpreterPath": "/Users/will/dropbox/jobs-etc/ai-jobs/anthropic-fellows/.venv",
     "mssql.connectionGroups": [
@@ -199,5 +198,15 @@
         "plaintext": false,
         "markdown": false,
         "scminput": false
-    }
+    },
+    "github.copilot.nextEditSuggestions.enabled": false,
+    "svelte.enable-ts-plugin": true,
+    "xml.server.preferBinary": true,
+    "latex-workshop.formatting.latex": "latexindent",
+    "chat.viewSessions.orientation": "stacked",
+    "[markdown]": {
+        "editor.defaultFormatter": "charliermarsh.ruff"
+    },
+    "ruff.format.preview": true,
+    // "ruff.format.preview": true
 }
