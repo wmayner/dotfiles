@@ -17,8 +17,6 @@ This will
 - Change default shell to zsh
 - Download and install Oh My Zsh
 - Install various Python packages
-- Make virtualenvironments `neovim-python2` and `neovim-python3` and run
-  `pip install neovim` in each
 - Symlink all `*.symlink` files into $HOME as dotfiles
 - Symlink IPython profile
 - Download and install vim-plug

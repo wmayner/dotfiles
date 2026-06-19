@@ -1,3 +1,11 @@
 #!/bin/bash
+#
+# Update TeX Live: tlmgr itself, then all installed packages.
+# Version-agnostic — uses whichever tlmgr is on PATH.
 
-cd "/usr/local/texlive/2017/bin/x86_64-darwin/" && sudo ./tlmgr update --all
+if ! command -v tlmgr >/dev/null 2>&1; then
+  echo "tlmgr not found on PATH; is TeX Live installed?" >&2
+  exit 1
+fi
+
+sudo tlmgr update --self --all

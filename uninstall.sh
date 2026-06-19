@@ -31,8 +31,3 @@ if [ "$(readlink $LINK_FILE)" == "$SOURCE_FILE" ]; then
   echo "Removing symlink $LINK_FILE -> $SOURCE_FILE"
   rm $LINK_FILE
 fi
-
-# Remove Neovim virtualenvs
-source $(which virtualenvwrapper.sh)
-rmvirtualenv neovim-python2
-rmvirtualenv neovim-python3

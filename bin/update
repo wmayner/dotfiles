@@ -1,8 +1,22 @@
 #!/bin/sh
+#
+# Update system packages, language tooling, vim plugins, and oh-my-zsh.
 
+# System package manager
 if [ "$(uname -s)" = "Darwin" ]; then
-  brew upgrade; conda update -y -n base -c defaults conda python setuptools; npm update -g; vim +PlugUpdate +PlugInstall! +PlugClean! +qa; zsh -ic 'omz update';
+  brew upgrade && brew cleanup
 else
-  sudo apt-get update; sudo apt-get upgrade -y; conda update -y -n base -c defaults conda python setuptools; vim +PlugUpgrade +PlugInstall! +PlugClean! +qa; zsh -ic 'omz update';
+  sudo apt-get update && sudo apt-get upgrade -y
 fi
-brew install node
+
+# uv: primary Python tooling
+command -v uv >/dev/null 2>&1 && uv self update
+
+# Global npm packages
+command -v npm >/dev/null 2>&1 && npm update -g
+
+# vim-plug and plugins
+command -v vim >/dev/null 2>&1 && vim +PlugUpgrade +PlugUpdate +PlugInstall! +PlugClean! +qa
+
+# oh-my-zsh
+zsh -ic 'omz update'
