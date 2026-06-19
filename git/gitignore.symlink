@@ -8,3 +8,5 @@ npm-debug.log
 .vscode
 .ropeproject
 .in
+
+**/.claude/settings.local.json

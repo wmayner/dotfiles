@@ -48,7 +48,7 @@
 [user]
     name = Will Mayner
     email = wmayner@gmail.com
-    signingkey = B46975179AD9DFC0
+    signingkey = ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDDyiDElobDh9sMCQ1sk5gYRP5L78r9e336Q6t1RIH0t0fB2XwyrWSdGbhjEIbnhZWnQtRvhTvUKstIJo8yfTrpbRy3JB/5/52zaqH5FH6AFUlo43cKsJ6wBlsL4R7O9XUSWAnqizxetTCBk+Tc66bOm7zmQQ8CxP0RvZXDe+9Q+Jo7aOrWo6XoLkKZOrFk6eCXxhDeXxTMTP1lHyEwopmsPUdsZW9KGqG7lbzeSZnICYhafpkMkBq1tTP+yYmU3m4mf0nEsTIKzHKuh7vMbXbNvsE4IT59wFthk2/46vIdSoDccD7JOa6TRgt9twRnw0iUSqBUyaDRLvmC5d3zGNgB
 [core]
     excludesfile = ~/.gitignore
     autocrlf = input
@@ -62,6 +62,7 @@
     cmd = code --wait --merge $REMOTE $LOCAL $BASE $MERGED
 [push]
     default = current
+    autoSetupRemote = true
 [help]
     autocorrect = 0
 [rerere]
@@ -81,9 +82,10 @@
     clean = git-media-clean %f
     smudge = git-media-smudge %f
 [filter "lfs"]
-    clean = git lfs clean %f
-    smudge = git lfs smudge %f
-    required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	required = true
+	process = git-lfs filter-process
 [pull]
     ff = only
 [fetch]
@@ -93,8 +95,17 @@
     autostash = true
 [gpg]
     program = gpg
+    format = ssh
 [commit]
-    gpgsign = true
+    gpgsign = false
+[difftool]
+    prompt = false
+[mergetool]
+    prompt = false
+[init]
+    defaultBranch = main
+[url "git@github.com:"]
+    insteadOf = https://github.com/
 [diff "jupyternotebook"]
     command = git-nbdiffdriver diff
 [merge "jupyternotebook"]
@@ -102,13 +113,7 @@
     name = jupyter notebook merge driver
 [difftool "nbdime"]
     cmd = git-nbdifftool diff \"$LOCAL\" \"$REMOTE\" \"$BASE\"
-[difftool]
-    prompt = false
 [mergetool "nbdime"]
     cmd = git-nbmergetool merge \"$BASE\" \"$LOCAL\" \"$REMOTE\" \"$MERGED\"
-[mergetool]
-    prompt = false
-[init]
-    defaultBranch = main
-[url "git@github.com:"]
-    insteadOf = https://github.com/
+[gpg "ssh"]
+    program = /Applications/1Password.app/Contents/MacOS/op-ssh-sign
