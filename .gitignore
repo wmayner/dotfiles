@@ -7,3 +7,9 @@ package-lock.json
 
 jupyter.symlink/lab/workspaces
 ipython/profile_default
+
+# macOS / editor / backup cruft
+.DS_Store
+*.bak
+*.swp
+*.swo
