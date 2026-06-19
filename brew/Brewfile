@@ -5,9 +5,9 @@
 # Later, to clean anything installed but not in Brewfile:
 # brew bundle cleanup --force
 
-tap "homebrew/cask-fonts"
-
 # --- Formulae ---
+brew "asdf"         # runtime version manager (e.g. Go)
+brew "atuin"        # searchable, syncable shell history
 brew "bat"          # cat replacement with syntax highlighting
 brew "cmake"
 brew "colordiff"
@@ -20,9 +20,12 @@ brew "fzf"
 brew "git"
 brew "gh"
 brew "git-delta"    # beautiful git diffs
+brew "git-absorb"   # auto-fold WIP changes into the right ancestor commit
 brew "gnupg"
+brew "jq"           # JSON processor
 brew "just"
 brew "lazygit"      # git TUI
+brew "mosh"         # resilient SSH for flaky/roaming connections
 brew "node"
 brew "pandoc"
 brew "pinentry-mac"
@@ -37,6 +40,7 @@ brew "trash"
 brew "tree"
 brew "watch"
 brew "wget"
+brew "yq"           # YAML/JSON/XML processor (jq for YAML)
 brew "zoxide"
 
 # --- Casks ---
