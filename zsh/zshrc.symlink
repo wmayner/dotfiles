@@ -372,6 +372,7 @@ alias commitchunks="claude -p '/commit-in-logical-chunks'"
 alias opus="claude --model opus"
 alias sonnet="claude --model sonnet"
 alias haiku="claude --model haiku"
+dlrecent() { eza --sort=modified --reverse ~/Downloads/ | head -1 | xargs -I {} echo ~/Downloads/"{}"; }
 
 # -----------------------------------------------------------------------------
 # FINAL PATH ASSEMBLY
