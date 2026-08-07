@@ -293,10 +293,10 @@ else
   alias ll="ls -lAhGF"
   alias lsa="ls -AhGF"
 fi
-# fd: fast find replacement
-if command -v fd &>/dev/null; then
-  alias find="fd"
-fi
+# fd is installed and called as `fd`. Deliberately NOT aliased over `find`:
+# their argument syntax is unrelated, so `find . -name '*.py'` fails under the
+# alias, and anything that sources this file non-interactively (Claude Code's
+# Bash tool, for one) inherits the breakage.
 # dust: better du
 if command -v dust &>/dev/null; then
   alias du="dust"
