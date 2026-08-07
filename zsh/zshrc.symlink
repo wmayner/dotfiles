@@ -110,8 +110,10 @@ fpath=(~/.zsh/completions $fpath)
 # Path to your oh-my-zsh configuration
 ZSH="$HOME/.oh-my-zsh"
 
-# Path to your oh-my-zsh custom directory (default is .oh-my-zsh/custom/)
-ZSH_CUSTOM=".oh-my-zsh/custom"
+# Path to your oh-my-zsh custom directory. Must be absolute: oh-my-zsh puts it
+# straight into $fpath, so a relative value made completion lookup depend on the
+# current directory and meant custom completions never loaded.
+ZSH_CUSTOM="$ZSH/custom"
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
