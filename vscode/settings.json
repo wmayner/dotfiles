@@ -208,5 +208,6 @@
         "editor.defaultFormatter": "charliermarsh.ruff"
     },
     "ruff.format.preview": true,
+    "workbench.activityBar.location": "hidden",
     // "ruff.format.preview": true
 }
