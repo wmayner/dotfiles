@@ -33,9 +33,6 @@ printf "\nChanging shell to zsh...\n"
 #   sudo printf $(which zsh) >> /etc/shells`
 chsh -s $(which zsh)
 
-printf "\nInstalling oh-my-zsh...\n"
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-
 printf "\nSymlinking '*.symlink' files...\n"
 for SOURCE_FILE in $(find $(pwd) -name '*.symlink'); do
   LINK_FILE="$HOME/.$(basename ${SOURCE_FILE%.symlink})"

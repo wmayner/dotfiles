@@ -102,58 +102,78 @@ conda() {
 # -----------------------------------------------------------------------------
 # Custom completions
 # -----------------------------------------------------------------------------
-fpath=(~/.zsh/completions $fpath)
+# Homebrew's site-functions holds _brew and the completions shipped by formulae.
+# It was missing here, so `brew <TAB>` had never worked.
+fpath=(~/.zsh/completions /opt/homebrew/share/zsh/site-functions $fpath)
 
 # -----------------------------------------------------------------------------
-# oh-my-zsh
+# Completion
 # -----------------------------------------------------------------------------
-# Path to your oh-my-zsh configuration
-ZSH="$HOME/.oh-my-zsh"
+# This replaces oh-my-zsh, which cost ~80ms per shell. Only ~18ms of that was
+# the four plugins we loaded (brew, git, history-substring-search, direnv); the
+# rest was framework overhead: 25 library files, an unconditional compaudit, and
+# a handful of forks (git rev-parse, scutil, grep, tee, mkdir, rm) to validate
+# the completion dump. Across ~24k history entries we used exactly six aliases
+# that oh-my-zsh provided and this file did not; they are reproduced below.
+#
+# Completions for git, brew, etc. come from zsh's own _git and from Homebrew's
+# site-functions, both already on $fpath -- the plugins were not supplying them.
 
-# Path to your oh-my-zsh custom directory. Must be absolute: oh-my-zsh puts it
-# straight into $fpath, so a relative value made completion lookup depend on the
-# current directory and meant custom completions never loaded.
-ZSH_CUSTOM="$ZSH/custom"
+zmodload zsh/complist
+autoload -Uz compinit
 
-# Set name of the theme to load.
-# Look in ~/.oh-my-zsh/themes/
-# Optionally, if you set this to "random", it'll load a random theme each
-# time that oh-my-zsh is loaded.
-# ZSH_THEME="powerlevel10k/powerlevel10k"
+# Regenerate the dump at most once a day. On every other startup, `compinit -C`
+# skips both the security audit and the staleness scan.
+_zcompdump="$XDG_CACHE_HOME/zsh/zcompdump-$ZSH_VERSION"
+[[ -d ${_zcompdump:h} ]] || mkdir -p ${_zcompdump:h}
+if [[ -n $_zcompdump(#qN.mh+24) ]]; then
+  compinit -d $_zcompdump
+else
+  compinit -C -d $_zcompdump
+fi
+# Compiled dumps load noticeably faster than the plain file.
+if [[ ! -s ${_zcompdump}.zwc || ${_zcompdump} -nt ${_zcompdump}.zwc ]]; then
+  zcompile -R -- ${_zcompdump}
+fi
+unset _zcompdump
 
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|=*' 'l:|=* r:|=*'
+zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
+zstyle ':completion:*' menu select
+zstyle ':completion:*' use-cache yes
+zstyle ':completion:*' cache-path "$XDG_CACHE_HOME/zsh/zcompcache"
+zstyle ':completion:*:*:*:*:processes' command "ps -u $USER -o pid,user,comm -w -w"
 
-# Set to this to use case-sensitive completion
-# CASE_SENSITIVE="true"
+# Installed a new completion and want it now rather than at the next daily
+# refresh? Run this, then open a new shell.
+alias rmcompdump='rm -f "$XDG_CACHE_HOME"/zsh/zcompdump-*'
 
-# Comment this out to disable bi-weekly auto-update checks
-# DISABLE_AUTO_UPDATE="true"
+# -----------------------------------------------------------------------------
+# History
+# -----------------------------------------------------------------------------
+# atuin (below) holds the searchable record; this is the plain-file backup.
+# oh-my-zsh set SAVEHIST=10000 against HISTSIZE=50000, which silently threw away
+# 40k entries on exit.
+HISTFILE="$HOME/.zsh_history"
+HISTSIZE=50000
+SAVEHIST=50000
+setopt extended_history hist_expire_dups_first hist_ignore_dups \
+       hist_ignore_space hist_verify inc_append_history share_history
 
-# Uncomment to change how many often would you like to wait before
-# auto-updates occur? (in days)
-export UPDATE_ZSH_DAYS=14
+# -----------------------------------------------------------------------------
+# history-substring-search (bound to ^K/^J in the keybindings section)
+# -----------------------------------------------------------------------------
+source /opt/homebrew/share/zsh-history-substring-search/zsh-history-substring-search.zsh
 
-# Uncomment following line if you want to disable colors in ls
-# DISABLE_LS_COLORS="true"
-
-# Uncomment following line if you want to disable autosetting terminal
-# title.
-# DISABLE_AUTO_TITLE="true"
-
-# Uncomment following line if you want red dots to be displayed while
-# waiting for completion
-COMPLETION_WAITING_DOTS="true"
-
-# Which plugins would you like to load? (plugins can be found in
-# ~/.oh-my-zsh/plugins/*)
-# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(
-  brew git history-substring-search direnv
-)
-source "$ZSH/oh-my-zsh.sh"
+# -----------------------------------------------------------------------------
+# The oh-my-zsh aliases we actually used
+# -----------------------------------------------------------------------------
+alias grep='grep --color=auto --exclude-dir={.bzr,CVS,.git,.hg,.svn,.idea,.tox,.venv,venv}'
+alias gst='git status'
+alias la='ls -lAh'
+alias -g ...='../..'
+alias -g ....='../../..'
+alias -g .....='../../../..'
 
 # -----------------------------------------------------------------------------
 # Tool configuration
@@ -225,6 +245,10 @@ if command -v atuin &>/dev/null; then
   export ATUIN_NOBIND=true
   eval "$(atuin init zsh)"
 fi
+
+# direnv: installs precmd/chpwd hooks, so .envrc files load on startup and on
+# every directory change. Replaces the oh-my-zsh direnv plugin.
+eval "$(direnv hook zsh)"
 
 # pyphi
 export PYPHI_WELCOME_OFF='yes'

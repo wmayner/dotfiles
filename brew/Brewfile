@@ -42,6 +42,7 @@ brew "watch"
 brew "wget"
 brew "yq"           # YAML/JSON/XML processor (jq for YAML)
 brew "zoxide"
+brew "zsh-history-substring-search"  # ^K/^J inline history scrolling
 
 # --- Casks ---
 tap "nikitabobko/tap"   # AeroSpace lives here, not in homebrew core
