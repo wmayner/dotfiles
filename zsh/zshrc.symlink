@@ -174,15 +174,17 @@ export HOMEBREW_NO_ANALYTICS=1
 # dircolors
 autoload colors
 
-# Prefer GNU ls if available; fall back to BSD ls
-ls --color -d . &>/dev/null 2>&1 && alias ls='ls --color=auto -F' || alias ls='ls -GF'
-dircolors &>/dev/null 2>&1 && eval "$(dircolors $DOTFILES/zsh/dircolors.ansi-dark)" || export LSCOLORS="Gxfxcxdxbxegedabagacad"
-gdircolors &>/dev/null 2>&1 && eval "$(gdircolors $DOTFILES/zsh/dircolors.ansi-dark)" && alias ls='gls --color=auto -hF'
+# LS_COLORS from our dircolors theme; eza reads it too. The `ls`/`dircolors`
+# probes that used to be here forked three extra processes to set `ls` aliases
+# that the eza block below overwrites anyway. `$+commands[...]` is a hash
+# lookup, not a fork.
+(( $+commands[gdircolors] )) && eval "$(gdircolors $DOTFILES/zsh/dircolors.ansi-dark)"
+export LSCOLORS="Gxfxcxdxbxegedabagacad"  # BSD ls, used only if eza is absent
 export GREP_COLORS='mt=1;31'
 
-# less
-# Use pygmentize for syntax highlighting if available
-export LESSOPEN='|$HOME/.lessfilter %s'
+# less: syntax highlighting comes from bat (see the bat block below). The old
+# LESSOPEN pointed at ~/.lessfilter, which shells out to pygmentize -- not
+# installed, so every match failed and fell through to plain less anyway.
 
 # zoxide with fzf-style fuzzy matching
 eval "$(zoxide init zsh --no-cmd)"
@@ -204,16 +206,12 @@ alias ji='zi'
 # asdf: nothing to source. asdf 0.16+ (the Go rewrite) ships no asdf.sh; it
 # works purely via its shims dir, which is on PATH (see FINAL PATH ASSEMBLY).
 
-# fzf
-_gen_fzf_default_opts() {
-  # Catppuccin Mocha color scheme for fzf
-  export FZF_DEFAULT_OPTS=" \
-    --reverse \
-    --color=bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#f38ba8 \
-    --color=fg:#cdd6f4,header:#f38ba8,info:#cba6f7,pointer:#f5e0dc \
-    --color=marker:#f5e0dc,fg+:#cdd6f4,prompt:#cba6f7,hl+:#f38ba8"
-}
-_gen_fzf_default_opts
+# fzf: Catppuccin Mocha color scheme
+export FZF_DEFAULT_OPTS=" \
+  --reverse \
+  --color=bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#f38ba8 \
+  --color=fg:#cdd6f4,header:#f38ba8,info:#cba6f7,pointer:#f5e0dc \
+  --color=marker:#f5e0dc,fg+:#cdd6f4,prompt:#cba6f7,hl+:#f38ba8"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
@@ -263,7 +261,6 @@ bindkey "^Q" push-input
 
 # List only directories
 alias lsd="ls -d */"
-# less colors handled by bat alias below (if bat is available)
 # Get the absolute path of a file
 alias fullpath="readlink -f"
 # Use colordiff instead of native diff
@@ -272,10 +269,7 @@ alias diff="colordiff"
 if [[ "$OSTYPE" == darwin* ]]; then
   alias htop="sudo htop"
 fi
-# list dir contents (with human-readable sizes)
-alias l="ls -AhG1F"
-alias ll="ls -lAhGF"
-alias lsa="ls -AhGF"
+# (l / ll / lsa are defined with the eza block below, which has a BSD ls fallback)
 # Safe rm
 alias t="trash"
 # Clear screen
@@ -295,8 +289,6 @@ alias forward="ssh -NL"
 # reboot / app quit). All args pass through to mosh, so ~/.ssh/config aliases and
 # flags work, e.g.  mosht myhost   or   mosht --ssh="ssh -p 2222" user@host
 mosht() { mosh "$@" -- tmux new -A -s main; }
-# Syntax highlighting with Pygments
-alias hl="pygmentize -g"
 # ripgrep with colors piped to pager
 alias rgl='rg --color=always | less'
 
@@ -319,6 +311,11 @@ if command -v eza &>/dev/null; then
   alias ll="eza -l --icons --git"
   alias lsa="eza -la --icons"
   alias tree="eza --tree --icons"
+else
+  alias ls="ls -GF"
+  alias l="ls -AhG1F"
+  alias ll="ls -lAhGF"
+  alias lsa="ls -AhGF"
 fi
 # fd: fast find replacement
 if command -v fd &>/dev/null; then
@@ -390,21 +387,14 @@ path=(
   /opt/homebrew/bin
   /opt/homebrew/sbin
   $HOME/.asdf/shims
-  /opt/homebrew/opt/asdf/libexec/bin
   $HOME/miniconda3/condabin
   "/Applications/Docker.app/Contents/Resources/bin"
   "/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
-  /opt/homebrew/opt/postgresql@17/bin
   /opt/homebrew/opt/coreutils/libexec/gnubin
-  /usr/bin /bin /usr/sbin /sbin /usr/texbin
+  /usr/bin /bin /usr/sbin /sbin
 )
 export PATH="${(j/:/)path}"
 hash -r
-
-# -----------------------------------------------------------------------------
-# direnv: trigger on shell startup for new tmux panes
-# -----------------------------------------------------------------------------
-eval "$(direnv export zsh 2>/dev/null)"
 
 # -----------------------------------------------------------------------------
 # zshrc.local
