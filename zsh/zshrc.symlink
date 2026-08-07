@@ -50,56 +50,6 @@ done; wait)"
 # -----------------------------------------------------------------------------
 
 # -----------------------------------------------------------------------------
-# Python / Conda
-# -----------------------------------------------------------------------------
-# Conda is kept available for legacy workflows, but we explicitly:
-# - disable auto-activation of base
-# - prevent installs into base
-# - do NOT allow conda to dominate PATH by default
-# Final PATH precedence is enforced later.
-
-# Never auto-activate base
-export CONDA_AUTO_ACTIVATE_BASE=false
-
-# Lazy conda: the `conda init` hook spawns python and costs ~0.4s on every
-# shell start (essentially all of our startup time). Defer it until conda is
-# actually used. condabin is already on PATH (see FINAL PATH ASSEMBLY), and on
-# the first `conda` call this wrapper loads the real hook, then redefines
-# itself to keep the base-install guard for all later calls.
-conda() {
-  unset -f conda
-  # >>> conda initialize >>>
-  # !! Contents within this block are managed by 'conda init' !!
-  __conda_setup="$('/Users/will/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-  if [ $? -eq 0 ]; then
-      eval "$__conda_setup"
-  else
-      if [ -f "/Users/will/miniconda3/etc/profile.d/conda.sh" ]; then
-          . "/Users/will/miniconda3/etc/profile.d/conda.sh"
-      else
-          export PATH="/Users/will/miniconda3/bin:$PATH"
-      fi
-  fi
-  unset __conda_setup
-  # <<< conda initialize <<<
-  if typeset -f conda >/dev/null; then
-    # The hook redefined `conda`; wrap it to keep the base-install guard.
-    functions[__conda_inner]=$functions[conda]
-    conda() {
-      if [ "${CONDA_PROMPT_MODIFIER-}" = "(base) " ] && [ "$1" = "install" ]; then
-        echo "Not allowed in base environment"
-        return 1
-      fi
-      __conda_inner "$@"
-    }
-    conda "$@"
-  else
-    # conda is only a binary on PATH (no shell function available)
-    command conda "$@"
-  fi
-}
-
-# -----------------------------------------------------------------------------
 # Custom completions
 # -----------------------------------------------------------------------------
 # Homebrew's site-functions holds _brew and the completions shipped by formulae.
@@ -403,8 +353,8 @@ dlrecent() { eza --sort=modified --reverse ~/Downloads/ | head -1 | xargs -I {} 
 # -----------------------------------------------------------------------------
 # FINAL PATH ASSEMBLY
 # -----------------------------------------------------------------------------
-# At this point, conda and asdf may have mutated PATH. We now construct the
-# final PATH *once* so precedence is explicit and stable.
+# Earlier initialization may have mutated PATH. We now construct the final PATH
+# *once* so precedence is explicit and stable.
 typeset -U path
 path=(
   $HOME/bin
@@ -413,7 +363,6 @@ path=(
   /opt/homebrew/bin
   /opt/homebrew/sbin
   $HOME/.asdf/shims
-  $HOME/miniconda3/condabin
   "/Applications/Docker.app/Contents/Resources/bin"
   "/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
   /opt/homebrew/opt/coreutils/libexec/gnubin
