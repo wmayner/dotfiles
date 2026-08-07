@@ -1,6 +1,11 @@
 *.pyc
-zshrc.local.symlink
-zshrc.before.local.symlink
+
+# Machine-specific config. This repo is public and these files hold internal
+# hostnames, addresses and usernames, so match by pattern rather than by exact
+# filename -- a new *.local.symlink must be ignored by default, not by
+# remembering to add it here.
+*.local.symlink
+
 node_modules
 package.json
 package-lock.json
