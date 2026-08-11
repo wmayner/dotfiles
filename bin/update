@@ -1,20 +1,49 @@
 #!/bin/sh
 #
 # Update system packages, language tooling, and vim plugins.
+#
+# Steps are independent: a failure in one does not stop the rest, but every
+# failure is collected and reported at the end, and the script exits non-zero.
+# Without that, a failed `brew upgrade` just scrolls past.
+
+failed=''
+fail() { failed="${failed}${failed:+, }$1"; }
 
 # System package manager
 if [ "$(uname -s)" = "Darwin" ]; then
-  brew upgrade && brew cleanup
+  # Note: plain `brew upgrade` skips casks that update themselves (currently
+  # gcloud-cli, hammerspoon). Add --greedy if you want those too, but it can
+  # fight an app's own updater.
+  brew upgrade && brew cleanup || fail brew
 else
-  sudo apt-get update && sudo apt-get upgrade -y
+  sudo apt-get update && sudo apt-get upgrade -y || fail apt
+fi
+
+# asdf plugins (the runtime versions themselves stay pinned in .tool-versions)
+if command -v asdf >/dev/null 2>&1; then
+  asdf plugin update --all || fail asdf
 fi
 
 # uv: primary Python tooling
-command -v uv >/dev/null 2>&1 && uv self update
+if command -v uv >/dev/null 2>&1; then
+  uv self update || fail uv
+fi
 
 # Global npm packages
-command -v npm >/dev/null 2>&1 && npm update -g
+if command -v npm >/dev/null 2>&1; then
+  npm update -g || fail npm
+fi
 
-# vim-plug and plugins. `+PlugUpdate` at startup implies --sync (vim-plug
-# treats has('vim_starting') as synchronous), so +qa cannot race the updates.
-command -v vim >/dev/null 2>&1 && vim +PlugUpgrade +PlugUpdate +PlugInstall! +PlugClean! +qa
+# vim-plug and plugins. These live under ~/.vim/plugged, which is a symlink
+# into ~/.config/nvim/ for historical reasons -- it is vim's plugin dir, not
+# neovim's. `+PlugUpdate` at startup implies --sync (vim-plug treats
+# has('vim_starting') as synchronous), so +qa cannot race the updates.
+if command -v vim >/dev/null 2>&1; then
+  vim +PlugUpgrade +PlugUpdate +PlugInstall! +PlugClean! +qa || fail vim
+fi
+
+if [ -n "$failed" ]; then
+  printf '\nupdate: FAILED: %s\n' "$failed" >&2
+  exit 1
+fi
+printf '\nupdate: all steps completed\n'
