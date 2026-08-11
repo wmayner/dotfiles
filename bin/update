@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# Update system packages, language tooling, vim plugins, and oh-my-zsh.
+# Update system packages, language tooling, and vim plugins.
 
 # System package manager
 if [ "$(uname -s)" = "Darwin" ]; then
@@ -15,8 +15,6 @@ command -v uv >/dev/null 2>&1 && uv self update
 # Global npm packages
 command -v npm >/dev/null 2>&1 && npm update -g
 
-# vim-plug and plugins
+# vim-plug and plugins. `+PlugUpdate` at startup implies --sync (vim-plug
+# treats has('vim_starting') as synchronous), so +qa cannot race the updates.
 command -v vim >/dev/null 2>&1 && vim +PlugUpgrade +PlugUpdate +PlugInstall! +PlugClean! +qa
-
-# oh-my-zsh
-zsh -ic 'omz update'
