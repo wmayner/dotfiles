@@ -54,7 +54,11 @@ done; wait)"
 # -----------------------------------------------------------------------------
 # Homebrew's site-functions holds _brew and the completions shipped by formulae.
 # It was missing here, so `brew <TAB>` had never worked.
-fpath=(~/.zsh/completions /opt/homebrew/share/zsh/site-functions $fpath)
+#
+# ~/.docker/completions is here because Docker Desktop otherwise appends its own
+# fpath+compinit block to the end of this file on update. That second compinit
+# costs ~25ms. If Docker re-appends the block, delete it -- this line covers it.
+fpath=(~/.zsh/completions /opt/homebrew/share/zsh/site-functions ~/.docker/completions $fpath)
 
 # -----------------------------------------------------------------------------
 # Completion
