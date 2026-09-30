@@ -169,7 +169,9 @@ z() {
     builtin cd ~
   else
     local dir
-    dir=$(zoxide query --list | fzf --filter "$*" --no-sort | head -1) && builtin cd "$dir"
+    # Fuzzy-match only the last path component, rank by match quality, and
+    # break ties by zoxide score (the list's input order).
+    dir=$(zoxide query --list | fzf --filter "$*" --delimiter / --nth -1 --tiebreak=index | head -1) && builtin cd "$dir"
   fi
 }
 alias zi='__zoxide_zi'
