@@ -4,7 +4,6 @@
 # - Download and install Homebrew on macOS, and brew various formulae
 # - Install system packages on Linux
 # - Change default shell to zsh
-# - Download and install Oh My Zsh
 # - Symlink all `*.symlink` files into $HOME as dotfiles
 # - Download & install vim-plug and then install plugins
 
