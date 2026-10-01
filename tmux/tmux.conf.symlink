@@ -37,7 +37,7 @@ set-window-option -g automatic-rename on
 set-option -g set-titles on
 
 set -g status-keys vi
-set -g history-limit 10000
+set -g history-limit 100000
 
 setw -g mode-keys vi
 setw -g monitor-activity on
@@ -105,5 +105,9 @@ set -ga update-environment "COLORTERM"
 set -g allow-passthrough on
 
 # Powerline status bar
-run-shell "powerline-daemon -q"
-run-shell "powerline-config tmux setup"
+# Skipped where powerline is not installed (remote boxes), so this file can be
+# used there unchanged.
+if-shell 'command -v powerline-daemon' {
+  run-shell "powerline-daemon -q"
+  run-shell "powerline-config tmux setup"
+}

@@ -12,17 +12,34 @@ cd ~/dotfiles
 ./install.sh
 ```
 This will
-- Download and install Homebrew on macOS, and brew various formulae
-- Install system packages and Neovim on Linux
+- Download and install Homebrew on macOS, and install everything in `brew/Brewfile`
+- Install system packages on Linux
 - Change default shell to zsh
-- Download and install Oh My Zsh
-- Install various Python packages
 - Symlink all `*.symlink` files into $HOME as dotfiles
-- Symlink IPython profile
-- Download and install vim-plug
-- Symlink Neovim configuration directory to Vim configuration directory
-- Install Vim plugins
+- Download and install vim-plug, then install Vim plugins
 - Symlink VSCode settings and keybindings
+
+The two Hammerspoon spoons are git submodules, so fetch them after cloning:
+```sh
+git submodule update --init
+```
+
+## Remote GPU boxes
+
+`remote/bootstrap.sh` sets up a fresh Linux box (RunPod, Vast): it installs
+tmux, git-lfs, btop, nvtop and uv, copies the tmux config, sets the git
+identity, and puts the Hugging Face, torch and uv caches on `/workspace` when
+that volume exists.
+
+From the Mac, `rboot` runs it over ssh and passes `HF_TOKEN` and
+`WANDB_API_KEY` along:
+```sh
+rboot -p 40022 root@1.2.3.4
+```
+Or on the box itself:
+```sh
+curl -fsSL https://raw.githubusercontent.com/wmayner/dotfiles/main/remote/bootstrap.sh | bash
+```
 
 ## VSCode Setup
 

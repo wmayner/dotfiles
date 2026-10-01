@@ -20,12 +20,16 @@ brew "fzf"
 brew "git"
 brew "gh"
 brew "git-delta"    # beautiful git diffs
+brew "git-lfs"      # Hugging Face model repos; gitconfig's lfs filter needs it
 brew "git-absorb"   # auto-fold WIP changes into the right ancestor commit
 brew "gnupg"
+brew "hf"           # Hugging Face CLI
+brew "hyperfine"    # command-line benchmarking
 brew "jq"           # JSON processor
 brew "just"
 brew "lazygit"      # git TUI
 brew "mosh"         # resilient SSH for flaky/roaming connections
+brew "nbdime"       # notebook diff/merge drivers referenced in gitconfig
 brew "node"
 brew "pandoc"
 brew "pinentry-mac"
@@ -51,6 +55,7 @@ cask "aerospace"        # from nikitabobko/tap
 cask "blackhole-2ch"
 cask "hammerspoon"
 cask "ngrok"
+cask "rectangle"        # the AeroSpace config sizes every window through it
 
 # --- Fonts ---
 cask "font-fira-code"

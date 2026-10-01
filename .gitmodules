@@ -1,0 +1,6 @@
+[submodule "hammerspoon/Spoons/Drag.spoon"]
+	path = hammerspoon/Spoons/Drag.spoon
+	url = https://github.com/mogenson/Drag.spoon.git
+[submodule "hammerspoon/Spoons/Swipe.spoon"]
+	path = hammerspoon/Spoons/Swipe.spoon
+	url = https://github.com/mogenson/Swipe.spoon.git
