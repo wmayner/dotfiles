@@ -1,6 +1,6 @@
 {
     "ruff.enable": true,
-    "ruff.importStrategy": "fromEnvironment",
+    "ruff.importStrategy": "useBundled",
     "ruff.lint.enable": true,
     "[python]": {
         "editor.defaultFormatter": "charliermarsh.ruff",
@@ -165,7 +165,8 @@
     "workbench.colorTheme": "Better Selenized Dark",
     "workbench.editor.enablePreviewFromQuickOpen": false,
     "workbench.editorAssociations": {
-        "*.pdf": "latex-workshop-pdf-hook"
+        "*.pdf": "latex-workshop-pdf-hook",
+        "*.md": "vscode.markdown.preview.editor"
     },
     "workbench.startupEditor": "none",
     "workbench.secondarySideBar.defaultVisibility": "hidden",
@@ -182,11 +183,8 @@
     "claudeCode.preferredLocation": "sidebar",
     "claudeCode.selectedModel": "opus",
     "claudeCode.useTerminal": true,
-    "gitlens.ai.model": "vscode",
-    "gitlens.ai.vscode.model": "copilot:gpt-4.1",
     "geminicodeassist.displayInlineContextHint": false,
     "security.promptForLocalFileProtocolHandling": false,
-    "python.defaultInterpreterPath": "/Users/will/dropbox/jobs-etc/ai-jobs/anthropic-fellows/.venv",
     "mssql.connectionGroups": [
         {
             "name": "ROOT",
@@ -204,10 +202,32 @@
     "xml.server.preferBinary": true,
     "latex-workshop.formatting.latex": "latexindent",
     "chat.viewSessions.orientation": "stacked",
+    // The preview only loads local files from inside the open workspace, so an
+    // absolute path fails everywhere else. jsDelivr serves the copy on GitHub as
+    // text/css (raw.githubusercontent.com serves text/plain, which is refused).
+    // Pinned to a commit because jsDelivr caches `@main` for up to 12 hours:
+    // after changing the CSS, push and put the new commit hash here.
+    "markdown.styles": [
+        "https://cdn.jsdelivr.net/gh/wmayner/dotfiles@13d9fa6/vscode/markdown-preview.css"
+    ],
     "[markdown]": {
         "editor.defaultFormatter": "charliermarsh.ruff"
     },
     "ruff.format.preview": true,
-    "workbench.activityBar.location": "hidden",
+    "yaml.disableSchemaDetection": [
+        "**/.github/workflows/*.yml",
+        "**/.github/workflows/*.yaml",
+        "**/.gitea/workflows/*.yml",
+        "**/.gitea/workflows/*.yaml",
+        "**/.forgejo/workflows/*.yml",
+        "**/.forgejo/workflows/*.yaml"
+    ],
+    "workbench.editor.empty.hint": "hidden",
+    "remote.SSH.defaultExtensions": [
+        "ms-python.python",
+        "ms-toolsai.jupyter",
+        "charliermarsh.ruff",
+        "anthropic.claude-code"
+    ],
     // "ruff.format.preview": true
 }

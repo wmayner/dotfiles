@@ -394,5 +394,17 @@
         "key": "cmd+shift+backspace",
         "command": "jupyter.interactive.clearAllCells",
         "when": "interactiveWindowFocused || (editorTextFocus && jupyter.hascodecells && jupyter.ispythonornativeactive)"
+    },
+    // Markdown: cmd+shift+v toggles the current tab between source and preview
+    // (via "Reopen Editor With…", which shows a short picker)
+    {
+        "key": "cmd+shift+v",
+        "command": "-markdown.showPreview",
+        "when": "!notebookEditorFocused && editorLangId == 'markdown'"
+    },
+    {
+        "key": "cmd+shift+v",
+        "command": "workbench.action.reopenWithEditor",
+        "when": "editorLangId == 'markdown' && !notebookEditorFocused || activeCustomEditorId == 'vscode.markdown.preview.editor'"
     }
 ]

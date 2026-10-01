@@ -1,1 +1,1 @@
-cat ./extensions.txt | xargs -I % code-insiders --install-extension %
+cat ./extensions.txt | xargs -I % code --install-extension %
