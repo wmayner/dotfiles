@@ -1,0 +1,6 @@
+/* Custom styles for VS Code's built-in Markdown preview (see markdown.styles in settings.json) */
+body {
+    max-width: 50em;
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
