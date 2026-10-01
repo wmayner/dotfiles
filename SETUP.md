@@ -46,31 +46,28 @@ tree                  # Tree view (replaces old tree command)
 
 ### fd (find replacement)
 ```bash
-find pattern          # Uses fd (faster, better UX)
-fd pattern            # Same as above
+fd pattern
 ```
 
 **Benefits**: Respects .gitignore, faster, simpler syntax
 
 ### dust (du replacement)
 ```bash
-du                    # Visual disk usage tree
 dust /path            # Analyze disk usage
 ```
 
 **Features**: Tree view, color-coded sizes
 
+`fd` and `dust` are called by their own names. They are not aliased over
+`find` and `du` because they take different arguments, and the alias would
+break any script or pasted command that uses the originals.
+
 ## Python Tools (Manual Setup Required)
 
-### Install via pipx (recommended)
+### Install
 ```bash
-pipx install ruff
-pipx install uv
-```
-
-### Or via pip
-```bash
-pip install -r python/requirements.txt
+curl -LsSf https://astral.sh/uv/install.sh | sh   # uv; `bin/update` keeps it current
+uv tool install ruff
 ```
 
 ### Ruff (Linter + Formatter)
@@ -146,7 +143,6 @@ git log -p -1
 # Test aliases
 cat README.md         # Should use bat
 ls                    # Should use eza
-find . -name "*.py"   # Should use fd
 
 # Test Python tools
 ruff check .
@@ -198,7 +194,7 @@ git:
 - Should be `xterm-256color` or `tmux-256color`
 
 ### eza icons not showing
-- Install a Nerd Font (e.g., `brew tap homebrew/cask-fonts && brew install --cask font-hack-nerd-font`)
+- Install a Nerd Font (e.g., `brew install --cask font-hack-nerd-font`)
 - Configure terminal to use the Nerd Font
 
 ### Ruff not found in VSCode

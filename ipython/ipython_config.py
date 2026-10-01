@@ -2,6 +2,9 @@
 
 c = get_config()
 
+# Sharp inline figures on HiDPI displays
+c.InlineBackend.figure_formats = {'retina'}
+
 # Extensions
 c.InteractiveShellApp.extensions = ['autoreload']
 c.InteractiveShellApp.exec_lines = ['%autoreload 2']

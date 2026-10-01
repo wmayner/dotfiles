@@ -35,7 +35,6 @@ export XDG_CACHE_HOME="$HOME/.cache"
 # -----------------------------------------------------------------------------
 # Environment variables
 # -----------------------------------------------------------------------------
-export DEFAULT_USER="will"
 # Default editor
 export EDITOR="code --wait"
 export VISUAL="code --wait"
@@ -44,8 +43,10 @@ export DOTFILES="$HOME/dotfiles"
 # Secrets from the macOS keychain. Each `security` call is a 20-35ms round trip
 # to the keychain daemon, so fetch them concurrently instead of in sequence
 # (measured on this machine: 75ms sequential, 26ms parallel).
-eval "$(for _k in VAST_API_KEY WANDB_API_KEY RAILWAY_TOKEN; do
-  { printf 'export %s=%q\n' $_k "$(security find-generic-password -s $_k -w 2>/dev/null)" } &
+# A key that is not in the keychain is left unset rather than exported empty.
+# To add one: security add-generic-password -a "$USER" -s HF_TOKEN -w
+eval "$(for _k in VAST_API_KEY WANDB_API_KEY RAILWAY_TOKEN HF_TOKEN; do
+  { _v="$(security find-generic-password -s $_k -w 2>/dev/null)" && printf 'export %s=%q\n' $_k "$_v" } &
 done; wait)"
 # -----------------------------------------------------------------------------
 
@@ -73,6 +74,9 @@ fpath=(~/.zsh/completions /opt/homebrew/share/zsh/site-functions ~/.docker/compl
 # Completions for git, brew, etc. come from zsh's own _git and from Homebrew's
 # site-functions, both already on $fpath -- the plugins were not supplying them.
 
+# extendedglob has to be on before the `(#q...)` test below. Without it that
+# test is a plain non-empty string, so the full compinit ran on every startup.
+setopt extendedglob
 zmodload zsh/complist
 autoload -Uz compinit
 
@@ -141,14 +145,8 @@ typeset -g HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_TIMEOUT=99999
 # gpg
 export GPG_TTY=$TTY
 
-# zsh
-setopt extendedglob
-
 # Homebrew
 export HOMEBREW_NO_ANALYTICS=1
-
-# dircolors
-autoload colors
 
 # LS_COLORS from our dircolors theme; eza reads it too. The `ls`/`dircolors`
 # probes that used to be here forked three extra processes to set `ls` aliases
@@ -177,6 +175,11 @@ z() {
 alias zi='__zoxide_zi'
 alias j='z'
 alias ji='zi'
+# Print the dir `j` would jump to, for use in other commands
+zq() {
+    zoxide query --list | fzf --filter "$*" --delimiter / --nth -1 --tiebreak=index | head -1
+}
+alias jd='zq'  # not `jq`: that would hide the JSON tool
 
 # iTerm integration
 [ -f "$HOME/.iterm2_shell_integration.zsh" ] && source "$HOME/.iterm2_shell_integration.zsh"
@@ -241,8 +244,6 @@ command -v atuin &>/dev/null && bindkey '^R' atuin-search
 # prompt.
 bindkey "^Q" push-input
 
-# List only directories
-alias lsd="ls -d */"
 # Get the absolute path of a file
 alias fullpath="readlink -f"
 # Use colordiff instead of native diff
@@ -258,8 +259,6 @@ alias t="trash"
 alias c="clear"
 # Clear screen and list contents
 alias cl="clear && l"
-# Clear screen and print directory tree
-alias ck="clear && tree"
 # Move up one directory
 alias ..="cd .."
 # Human-readable disk usage information
@@ -271,8 +270,16 @@ alias forward="ssh -NL"
 # reboot / app quit). All args pass through to mosh, so ~/.ssh/config aliases and
 # flags work, e.g.  mosht myhost   or   mosht --ssh="ssh -p 2222" user@host
 mosht() { mosh "$@" -- tmux new -A -s main; }
-# ripgrep with colors piped to pager
-alias rgl='rg --color=always | less'
+# Set up a fresh GPU box: runs remote/bootstrap.sh over ssh. The tokens go in
+# on stdin with the script, so they never appear in the remote process list.
+# All args pass through to ssh, e.g.  rboot -p 40022 root@1.2.3.4
+rboot() {
+  { for _k in HF_TOKEN WANDB_API_KEY; do
+      [[ -n ${(P)_k} ]] && printf 'export %s=%q\n' $_k "${(P)_k}"
+    done
+    command cat "$DOTFILES/remote/bootstrap.sh"
+  } | ssh "$@" bash -s
+}
 
 # Modern CLI tool replacements (2026)
 # bat: cat with syntax highlighting and pager
@@ -288,11 +295,11 @@ if command -v bat &>/dev/null; then
 fi
 # eza: modern ls replacement
 if command -v eza &>/dev/null; then
-  alias ls="eza --color=auto --icons"
-  alias l="eza -la --icons --git"
-  alias ll="eza -l --icons --git"
-  alias lsa="eza -la --icons"
-  alias tree="eza --tree --icons"
+  alias ls="eza --color=auto --icons=auto"
+  alias l="eza -la --icons=auto --git"
+  alias ll="eza -l --icons=auto --git"
+  alias lsa="eza -la --icons=auto"
+  alias tree="eza --tree --icons=auto"
 else
   alias ls="ls -GF"
   alias l="ls -AhG1F"
@@ -303,15 +310,11 @@ fi
 # their argument syntax is unrelated, so `find . -name '*.py'` fails under the
 # alias, and anything that sources this file non-interactively (Claude Code's
 # Bash tool, for one) inherits the breakage.
-# dust: better du
-if command -v dust &>/dev/null; then
-  alias du="dust"
-fi
+# dust is likewise called as `dust`, not aliased over `du`: `du -sh .` fails
+# under the alias for the same reason.
 
 # Editing shortcuts
 alias v="vim"
-# Edit configuration (from within dotfiles, for interacting with repo)
-alias vrc='$EDITOR $(realpath $HOME/.vimrc)'
 
 # git aliases
 alias gp="git push"
@@ -329,18 +332,8 @@ alias gla="git la"
 alias gb="git branch"
 # git branch delete
 alias gbd="git branch -d"
-# git flow
-alias gf="git flow"
-# git flow feature
-alias gff="git flow feature"
-# git flow release
-alias gfr="git flow release"
-# git flow hotfix
-alias gfh="git flow hotfix"
 # fast git status
 alias g="git status"
-# edit .gitconfig
-alias vgrc="$EDITOR $HOME/.gitconfig"
 
 # python
 alias p="python3"
@@ -350,7 +343,7 @@ alias python="python3"
 alias claude="claude --remote-control"
 alias plan="claude --remote-control --permission-mode plan"
 alias onecommit="claude -p '/one-commit'"
-alias commitchunks="claude -p '/commit-in-logical-chunks'"
+alias commitchunks="claude -p '/logical-commits'"
 alias fable="claude --model fable"
 alias opus="claude --model opus"
 alias sonnet="claude --model sonnet"
@@ -364,6 +357,9 @@ dlrecent() { eza --sort=modified --reverse ~/Downloads/ | head -1 | xargs -I {} 
 # *once* so precedence is explicit and stable.
 typeset -U path
 path=(
+  # Keep a venv that was already active when this shell started (a VS Code
+  # terminal, a tmux pane); the fixed list below would otherwise drop it.
+  ${VIRTUAL_ENV:+$VIRTUAL_ENV/bin}
   $HOME/bin
   $HOME/dotfiles/bin
   $HOME/.local/bin
