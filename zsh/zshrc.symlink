@@ -255,8 +255,8 @@ fi
 # (l / ll / lsa are defined with the eza block below, which has a BSD ls fallback)
 # Safe rm
 alias t="trash"
-# Clear screen
-alias c="clear"
+# Claude Code
+alias c="claude"
 # Clear screen and list contents
 alias cl="clear && l"
 # Move up one directory
