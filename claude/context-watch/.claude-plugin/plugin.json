@@ -1,0 +1,1 @@
+{ "name": "context-watch", "version": "0.1.0", "description": "Warns as the context window fills, and /context-top lists the tool results that took the most context" }

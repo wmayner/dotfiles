@@ -1,0 +1,1 @@
+{ "name": "guards", "version": "0.1.0", "description": "Confirms git commands that would discard changes this session did not make and commands that start cloud billing; refuses global random seeds" }

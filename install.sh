@@ -71,4 +71,11 @@ fi
 ln -sfv "$DOTFILES/vscode/settings.json" "$VSCODE_USER_DIR/settings.json"
 ln -sfv "$DOTFILES/vscode/keybindings.json" "$VSCODE_USER_DIR/keybindings.json"
 
+printf "\nSetting up Claude Code...\n"
+mkdir -p "$HOME/.claude/skills"
+# Each folder in claude/ is a mod, loaded from the skills folder
+for MOD in "$DOTFILES"/claude/*/; do
+  ln -sfnv "${MOD%/}" "$HOME/.claude/skills/$(basename "$MOD")"
+done
+
 printf "\nDone!"

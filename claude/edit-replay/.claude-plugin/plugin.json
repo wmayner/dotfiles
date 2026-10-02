@@ -1,0 +1,1 @@
+{ "name": "edit-replay", "version": "0.1.0", "description": "/replay steps through the file edits of the last turn, one diff at a time" }

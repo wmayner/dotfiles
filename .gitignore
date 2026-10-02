@@ -18,3 +18,6 @@ ipython/profile_default
 *.bak
 *.swp
 *.swo
+
+# Type declarations Claude Code regenerates beside each mod
+claude/*/.claude-plugin/types
