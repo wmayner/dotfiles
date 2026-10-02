@@ -45,7 +45,7 @@ export DOTFILES="$HOME/dotfiles"
 # (measured on this machine: 75ms sequential, 26ms parallel).
 # A key that is not in the keychain is left unset rather than exported empty.
 # To add one: security add-generic-password -a "$USER" -s HF_TOKEN -w
-eval "$(for _k in VAST_API_KEY WANDB_API_KEY RAILWAY_TOKEN HF_TOKEN; do
+eval "$(for _k in VAST_API_KEY WANDB_API_KEY RAILWAY_TOKEN HF_TOKEN SLACK_DEPLOY_WEBHOOK; do
   { _v="$(security find-generic-password -s $_k -w 2>/dev/null)" && printf 'export %s=%q\n' $_k "$_v" } &
 done; wait)"
 # -----------------------------------------------------------------------------
@@ -339,9 +339,10 @@ alias g="git status"
 alias p="python3"
 alias python="python3"
 
-# claude
-alias claude="claude --remote-control"
-alias plan="claude --remote-control --permission-mode plan"
+# claude. Remote Control is turned on for every session by
+# `remoteControlAtStartup` in ~/.claude/settings.json, so `claude` itself is
+# not aliased; an alias also changed `claude -p` and other scripted calls.
+alias plan="claude --permission-mode plan"
 alias onecommit="claude -p '/one-commit'"
 alias commitchunks="claude -p '/logical-commits'"
 alias fable="claude --model fable"
