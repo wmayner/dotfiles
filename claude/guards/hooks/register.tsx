@@ -5,7 +5,7 @@
 // did not make, or that starts cloud billing, is held behind a pane with
 // Proceed and Cancel. An edit that adds a global random seed is refused.
 
-import type { EngineInterface, Register } from 'claude-code'
+import type { Elements, EngineInterface, Register } from 'claude-code'
 
 const PANE_ID = 'guards'
 const POLL_SECONDS = '0.25'
@@ -127,7 +127,7 @@ async function unrelatedChanges($: EngineInterface, risk: Risk & { kind: 'git' }
 
 // ---- Holding ---------------------------------------------------------------
 
-type Held = { command: string; label: string; report: Report; decision: string | null }
+type Held = { command: string; label: string; report: Report; decision: string | null; where: 'pane' | 'band' }
 
 // The call being held, or null. One at a time.
 let held: Held | null = null
@@ -145,10 +145,9 @@ async function hold($: EngineInterface, signal: AbortSignal, mine: Held) {
   try {
     const opened = await $.ui.open({ id: PANE_ID, title: 'Confirm', focus: true, rows: 9 + mine.report.lines.length })
     isPlaced = opened.isPlaced
-    // ponytail: Blast Radius falls back to the band above the prompt here, but
-    // status-band draws that band, so a pane that can't be placed refuses.
+    // No room for a pane (a narrow terminal): the band above the prompt draws it
     if (!isPlaced) {
-      return 'the confirmation pane could not be shown (the terminal is too narrow)'
+      mine.where = 'band'
     }
     $.ui.invalidate('ui.render')
     const startedAt = await $.clock.now()
@@ -174,6 +173,46 @@ async function hold($: EngineInterface, signal: AbortSignal, mine: Held) {
     }
     $.ui.invalidate('ui.render')
   }
+}
+
+// ---- Drawing ---------------------------------------------------------------
+
+function draw({ Box, Text, Button }: Pick<Elements['terminal'], 'Box' | 'Text' | 'Button'>, state: Held) {
+  // The buttons answer the call this pane was drawn for, never whichever is held now.
+  const decide = (choice: string) => () => {
+    state.decision ??= choice
+  }
+
+  return (
+    <Box flexDirection="column" borderStyle="round" borderColor="yellow" paddingX={1}>
+      <Text bold color="yellow">
+        ⚠ {state.label}
+      </Text>
+      <Text wrap="truncate-end">
+        <Text dimColor>Command  </Text>
+        <Text bold>{state.command}</Text>
+      </Text>
+      <Text>
+        <Text dimColor>Would    </Text>
+        <Text bold color="red">
+          {state.report.summary}
+        </Text>
+      </Text>
+      <Box flexDirection="column" marginTop={1}>
+        {state.report.lines.map(line => (
+          <Text wrap="truncate-end">  {line}</Text>
+        ))}
+      </Box>
+      <Text dimColor italic wrap="wrap">
+        {state.report.note}
+      </Text>
+      <Box marginTop={1} gap={2}>
+        <Button key="proceed" label="Proceed" hotkey="1" plain onPress={decide('proceed')} />
+        <Button key="cancel" label="Cancel" hotkey="2" plain autoFocus onPress={decide('cancel')} />
+        <Text dimColor>Claude is waiting on your answer</Text>
+      </Box>
+    </Box>
+  )
 }
 
 export const register: Register = on => {
@@ -208,7 +247,7 @@ export const register: Register = on => {
       const command = String(input.command ?? '')
       const risk = classify(command)
       if (risk?.kind === 'spend') {
-        mine = { command, label: risk.label, report: { summary: risk.label, lines: [], note: risk.note }, decision: null }
+        mine = { command, label: risk.label, report: { summary: risk.label, lines: [], note: risk.note }, decision: null, where: 'pane' }
       } else if (risk?.kind === 'git') {
         const files = await unrelatedChanges($, risk)
         if (files !== null && files.length > 0) {
@@ -218,13 +257,13 @@ export const register: Register = on => {
             lines.push(`+ ${files.length - LIST_MAX} more`)
           }
           const note = 'Listed: changed files not written by this session’s Edit or Write. Edits made through Bash count as not this session’s.'
-          mine = { command, label: risk.label, report: { summary, lines, note }, decision: null }
+          mine = { command, label: risk.label, report: { summary, lines, note }, decision: null, where: 'pane' }
         }
       }
     } else if (SPEND_TOOLS[tool] !== undefined) {
       const { tool: _tool, tool_use_id: _id, ...args } = input
       const summary = SPEND_TOOLS[tool] ?? tool
-      mine = { command: `${tool} ${JSON.stringify(args)}`, label: summary, report: { summary, lines: [], note: 'This starts billing.' }, decision: null }
+      mine = { command: `${tool} ${JSON.stringify(args)}`, label: summary, report: { summary, lines: [], note: 'This starts billing.' }, decision: null, where: 'pane' }
     }
 
     if (mine === null) {
@@ -240,45 +279,22 @@ export const register: Register = on => {
     }
   })
 
-  on('ui.render', { component: 'Pane' }, ($, e, next) => {
-    const state = held
-    if (e.requestId !== PANE_ID || state === null) {
+  on('ui.render', { component: 'Pane' }, ($, e, next) =>
+    e.requestId !== PANE_ID || held === null ? next(e) : draw($.ui.resolve(e), held),
+  )
+
+  on('ui.render', { component: 'AbovePrompt' }, async ($, e, next) => {
+    if (held === null || held.where !== 'band') {
       return next(e)
     }
-    const { Box, Text, Button } = $.ui.resolve(e)
-    // The buttons answer the call this pane was drawn for, never whichever is held now.
-    const decide = (choice: string) => () => {
-      state.decision ??= choice
-    }
+    const { Box } = $.ui.resolve(e)
+    const mine = draw($.ui.resolve(e), held)
+    const below = await next(e).catch(() => null)
 
-    return (
-      <Box flexDirection="column" borderStyle="round" borderColor="yellow" paddingX={1}>
-        <Text bold color="yellow">
-          ⚠ {state.label}
-        </Text>
-        <Text wrap="truncate-end">
-          <Text dimColor>Command  </Text>
-          <Text bold>{state.command}</Text>
-        </Text>
-        <Text>
-          <Text dimColor>Would    </Text>
-          <Text bold color="red">
-            {state.report.summary}
-          </Text>
-        </Text>
-        <Box flexDirection="column" marginTop={1}>
-          {state.report.lines.map(line => (
-            <Text wrap="truncate-end">  {line}</Text>
-          ))}
-        </Box>
-        <Text dimColor italic wrap="wrap">
-          {state.report.note}
-        </Text>
-        <Box marginTop={1} gap={2}>
-          <Button key="proceed" label="Proceed" hotkey="1" plain onPress={decide('proceed')} />
-          <Button key="cancel" label="Cancel" hotkey="2" plain autoFocus onPress={decide('cancel')} />
-          <Text dimColor>Claude is waiting on your answer</Text>
-        </Box>
+    return below === null || below === undefined ? mine : (
+      <Box flexDirection="column">
+        {mine}
+        {below}
       </Box>
     )
   })

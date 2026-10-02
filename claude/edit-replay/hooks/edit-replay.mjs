@@ -5,9 +5,9 @@
 // step through them in a pane, one diff at a time.
 //
 // Modified from Anthropic's Replay Theater example mod
-// (github.com/anthropics/claude-code-playground): the hint and the fallback
-// drawn in the band above the prompt are removed, because status-band draws
-// that band. /replay opens the pane.
+// (github.com/anthropics/claude-code-playground): what it draws in the band
+// above the prompt is stacked on whatever the plugins beneath draw there
+// (status-band's row), where the original drew alone.
 
 const PANE_ID = "replay-theater";
 const MAX_DIFF_LINES = 12;
@@ -16,7 +16,7 @@ const EDIT_TOOLS = new Set(["Edit", "Write", "MultiEdit"]);
 
 // Module state. `pending` fills during a turn; `replay` is the last finished
 // turn's steps, the ones the pane shows.
-const state = { pending: [], replay: [], index: 0, isOpen: false, turns: 0 };
+const state = { pending: [], replay: [], index: 0, isOpen: false, inBand: false, turns: 0 };
 
 function relPath(cwd, path) {
   if (!path) return "(unknown file)";
@@ -104,21 +104,32 @@ async function stepsFor($, e) {
   return [];
 }
 
+function hintText() {
+  const n = state.replay.length;
+  return `▶ Replay: ${n} edit${n === 1 ? "" : "s"} (press r)`;
+}
+
 async function openReplay($) {
   if (!state.replay.length) return false;
   state.index = 0;
   state.isOpen = true;
+  // The pane only takes the keyboard while nothing else holds it. Hide the
+  // band first (it held the keys if its button was pressed), then open.
+  $.ui.invalidate("ui.render");
+  await $.clock.sleep(200);
   const rows = Math.min(MAX_DIFF_LINES + 8, 22);
   const placed = await $.ui.open({ id: PANE_ID, title: "Replay Theater", focus: true, closeOnEscape: true, rows, columns: 58 });
-  state.isOpen = placed?.isPlaced !== false;
+  // No room for a pane (a narrow terminal): draw the replay in the band.
+  state.inBand = placed?.isPlaced === false;
   $.ui.invalidate("ui.render");
-  return state.isOpen;
+  return true;
 }
 
-// The replay view: one step at a time.
-function replayView($, e) {
+// The replay view: one step at a time. Drawn in the Pane, or in the band
+// above the prompt when the surface can't place a pane.
+function replayView($, e, inBand) {
     const { Box, Text, Button } = $.ui.resolve(e);
-    const maxDiff = MAX_DIFF_LINES;
+    const maxDiff = inBand ? Math.max(3, Math.min(MAX_DIFF_LINES, (e.props?.maxRows || 20) - 8)) : MAX_DIFF_LINES;
     const total = state.replay.length;
     if (!total) return Text({ dimColor: true, children: "No edits to replay." });
     const k = Math.max(0, Math.min(state.index, total - 1));
@@ -142,7 +153,9 @@ function replayView($, e) {
     const go = (to) => { state.index = Math.max(0, Math.min(to, total - 1)); $.ui.invalidate("ui.render"); };
     const close = () => {
       state.isOpen = false;
-      $.ui.close({ id: PANE_ID });
+      if (!state.inBand) $.ui.close({ id: PANE_ID });
+      state.inBand = false;
+      $.ui.invalidate("ui.render");
     };
 
     return Box({
@@ -179,7 +192,7 @@ export function register(on, options) {
 
   on("command.run", { command: "replay" }, async ($, e) => {
     const opened = await openReplay($);
-    return { text: opened ? `Replay Theater: ${state.replay.length} edits` : state.replay.length ? "Replay Theater: the pane could not be shown." : "Replay Theater: no edits in the last turn." };
+    return { text: opened ? `Replay Theater: ${state.replay.length} edits` : "Replay Theater: no edits in the last turn." };
   });
 
   // Record each edit, then let it run. Never blocks the call.
@@ -210,10 +223,27 @@ export function register(on, options) {
     return r;
   });
 
+  // The band above the prompt: the hint and a button that opens the pane,
+  // above what the plugins beneath draw there.
+  on("ui.render", { component: "AbovePrompt" }, async ($, e, next) => {
+    const showsReplay = state.isOpen && state.inBand;
+    if (!showsReplay && (!state.replay.length || state.isOpen)) return next(e);
+    const { Box, Text, Button } = $.ui.resolve(e);
+    const mine = showsReplay ? replayView($, e, true) : Box({
+      key: "replay-hint", flexDirection: "row", gap: 2,
+      children: [
+        Text({ color: "magenta", bold: true, children: hintText() }),
+        Button({ key: "open-replay", label: "Replay", hotkey: "r", onPress: () => openReplay($) }),
+      ],
+    });
+    const below = await next(e).catch(() => null);
+    return below ? Box({ flexDirection: "column", children: [mine, below] }) : mine;
+  });
+
   // The pane.
   on("ui.render", { component: "Pane" }, ($, e, next) => {
     if (e.requestId !== PANE_ID) return next(e);
-    return replayView($, e);
+    return replayView($, e, false);
   });
 
   // The person closed the pane (Escape): keep our flag in step.
