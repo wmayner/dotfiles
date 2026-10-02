@@ -77,5 +77,7 @@ mkdir -p "$HOME/.claude/skills"
 for MOD in "$DOTFILES"/claude/*/; do
   ln -sfnv "${MOD%/}" "$HOME/.claude/skills/$(basename "$MOD")"
 done
+# settings.json's statusLine entry points at this path
+ln -sfv "$DOTFILES/claude/statusline-command.sh" "$HOME/.claude/statusline-command.sh"
 
 printf "\nDone!"
