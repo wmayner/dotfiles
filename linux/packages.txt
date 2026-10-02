@@ -1,4 +1,5 @@
 cmake
+jq
 mmv
 mutt
 nmap
