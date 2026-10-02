@@ -77,7 +77,13 @@ mkdir -p "$HOME/.claude/skills"
 for MOD in "$DOTFILES"/claude/*/; do
   ln -sfnv "${MOD%/}" "$HOME/.claude/skills/$(basename "$MOD")"
 done
-# settings.json's statusLine entry points at this path
 ln -sfv "$DOTFILES/claude/statusline-command.sh" "$HOME/.claude/statusline-command.sh"
+# settings.json itself is not tracked: it holds machine-specific permission
+# rules and plugin lists. settings.base.json holds the shareable part, and is
+# merged in underneath whatever the machine already has.
+CLAUDE_SETTINGS="$HOME/.claude/settings.json"
+[ -f "$CLAUDE_SETTINGS" ] || echo '{}' > "$CLAUDE_SETTINGS"
+jq -s '.[0] * .[1]' "$DOTFILES/claude/settings.base.json" "$CLAUDE_SETTINGS" > "$CLAUDE_SETTINGS.new" \
+  && mv "$CLAUDE_SETTINGS.new" "$CLAUDE_SETTINGS"
 
 printf "\nDone!"
