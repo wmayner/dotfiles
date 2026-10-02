@@ -3,8 +3,6 @@
 # (gruvbox_dark powerline segments), then model, context used with its change
 # this turn, and the 5-hour and 7-day rate limits. Also sets the terminal title.
 input=$(cat)
-# Keep the last input for debugging what Claude Code sent
-mkdir -p "${TMPDIR:-/tmp}/claude-statusline" && printf '%s' "$input" > "${TMPDIR:-/tmp}/claude-statusline/last-input.json"
 
 # One jq call; fields joined by \x1f (non-whitespace, so empty fields survive)
 IFS=$'\x1f' read -r cwd model used effort five_hour seven_day tokens window session prompt project name < <(jq -r '[
