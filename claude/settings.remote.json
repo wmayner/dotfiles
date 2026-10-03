@@ -1,0 +1,76 @@
+{
+  "remoteControlAtStartup": true,
+  "permissions": {
+    "deny": [
+      "Bash(sudo *)",
+      "Bash(rm -rf /)",
+      "Bash(shutdown *)",
+      "Bash(reboot *)"
+    ],
+    "ask": [
+      "Bash(git reset --hard*)",
+      "Bash(git checkout .)",
+      "Bash(git checkout -- *)",
+      "Bash(git checkout -f*)",
+      "Bash(git restore .)",
+      "Bash(git clean *)",
+      "Bash(git push --force*)",
+      "Bash(git push -f *)",
+      "Bash(git branch -D *)",
+      "Bash(git rebase *)",
+      "Bash(git stash drop *)",
+      "Bash(git stash clear*)",
+      "Bash(git push --delete *)",
+      "Bash(git commit --amend*)"
+    ],
+    "defaultMode": "auto"
+  },
+  "extraKnownMarketplaces": {
+    "ponytail": {
+      "source": {
+        "source": "github",
+        "repo": "DietrichGebert/ponytail"
+      }
+    },
+    "iit-expert": {
+      "source": {
+        "source": "github",
+        "repo": "wmayner/iit-expert-plugin"
+      },
+      "autoUpdate": true
+    },
+    "alignment-hive": {
+      "source": {
+        "source": "git",
+        "url": "https://github.com/Crazytieguy/alignment-hive.git"
+      }
+    },
+    "codex-plugin-cc": {
+      "source": {
+        "source": "github",
+        "repo": "Crazytieguy/codex-plugin-cc"
+      },
+      "autoUpdate": true
+    },
+    "agent-sanitizer": {
+      "source": {
+        "source": "github",
+        "repo": "AlexanderMattTurner/agent-sanitizer"
+      },
+      "autoUpdate": true
+    }
+  },
+  "enabledPlugins": {
+    "pyright-lsp@claude-plugins-official": true,
+    "superpowers@claude-plugins-official": true,
+    "ponytail@ponytail": true,
+    "iit-expert@iit-expert": true,
+    "debrief@alignment-hive": true,
+    "hive@alignment-hive": true,
+    "mats@alignment-hive": true,
+    "llms-fetch-mcp@alignment-hive": true,
+    "tldr@alignment-hive": true,
+    "codex@codex-plugin-cc": true,
+    "agent-sanitizer@agent-sanitizer": true
+  }
+}
