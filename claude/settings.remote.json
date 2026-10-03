@@ -61,8 +61,14 @@
     }
   },
   "enabledPlugins": {
+    "code-review@claude-plugins-official": false,
+    "code-simplifier@claude-plugins-official": false,
+    "feature-dev@claude-plugins-official": false,
+    "frontend-design@claude-plugins-official": false,
+    "playwright@claude-plugins-official": false,
     "pyright-lsp@claude-plugins-official": true,
     "superpowers@claude-plugins-official": true,
+    "figma@claude-plugins-official": false,
     "ponytail@ponytail": true,
     "iit-expert@iit-expert": true,
     "debrief@alignment-hive": true,
@@ -71,6 +77,11 @@
     "llms-fetch-mcp@alignment-hive": true,
     "tldr@alignment-hive": true,
     "codex@codex-plugin-cc": true,
-    "agent-sanitizer@agent-sanitizer": true
+    "agent-sanitizer@agent-sanitizer": true,
+    "data@synced": false,
+    "finance@synced": false,
+    "marketing@synced": false,
+    "figma@synced": false,
+    "cowork-plugin-management@synced": false
   }
 }
