@@ -22,7 +22,7 @@ fi
 
 command -v pixi >/dev/null || curl -fsSL https://pixi.sh/install.sh | PIXI_NO_PATH_UPDATE=1 bash
 # One at a time, so a package missing from conda-forge does not block the rest.
-for pkg in zsh starship fzf ripgrep fd-find bat eza atuin zoxide direnv jq nvim colordiff; do
+for pkg in zsh starship fzf ripgrep fd-find bat eza atuin zoxide direnv jq nvim colordiff tmux; do
   pixi global install -q "$pkg" >/dev/null || say "could not install $pkg"
 done
 
@@ -31,6 +31,8 @@ HSS=$HOME/.local/share/zsh-history-substring-search
 [ -d "$HSS" ] || git clone -q --depth 1 https://github.com/zsh-users/zsh-history-substring-search "$HSS"
 
 command -v uv >/dev/null || curl -LsSf https://astral.sh/uv/install.sh | UV_NO_MODIFY_PATH=1 sh
+# The tmux status bar (tmux.conf runs it when present).
+command -v powerline-daemon >/dev/null || uv tool install -q powerline-status
 command -v claude >/dev/null || curl -fsSL https://claude.ai/install.sh | bash
 
 link() { mkdir -p "$(dirname "$2")"; ln -sfn "$1" "$2"; }
