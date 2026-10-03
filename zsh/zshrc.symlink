@@ -151,6 +151,11 @@ typeset -g HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_TIMEOUT=99999
 # gpg
 export GPG_TTY=$TTY
 
+# SSH does not forward COLORTERM, so on remote boxes tools like Claude Code fall
+# back to 256 colors and round off the status line's 24-bit colors. iTerm and
+# tmux (see tmux.conf's Tc overrides) both handle 24-bit color.
+[[ -z $COLORTERM && $TERM == (xterm|tmux)-256color ]] && export COLORTERM=truecolor
+
 # Homebrew
 export HOMEBREW_NO_ANALYTICS=1
 
