@@ -1,6 +1,7 @@
 "$schema" = 'https://starship.rs/config-schema.json'
 
 format = """
+$hostname\
 [](bg:color_bg3)\
 $directory\
 [](fg:color_bg3 bg:color_aqua)\
@@ -75,6 +76,13 @@ Debian = "󰣚"
 Redhat = "󱄛"
 RedHatEnterprise = "󱄛"
 Pop = ""
+
+# Shown only over SSH. Aliases turn the MATS cluster's VM names into readable ones.
+[hostname]
+ssh_only = true
+style = "bg:color_orange fg:color_fg0"
+format = '[ $ssh_symbol$hostname ]($style)[](fg:color_orange bg:color_bg3)'
+aliases = { "vm9dbb42baeca7d" = "mats", "vm1e3c1290f17b6" = "mats-dev" }
 
 [username]
 show_always = true
