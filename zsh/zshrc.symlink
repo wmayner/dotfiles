@@ -121,7 +121,12 @@ setopt extended_history hist_expire_dups_first hist_ignore_dups \
 # -----------------------------------------------------------------------------
 # history-substring-search (bound to ^K/^J in the keybindings section)
 # -----------------------------------------------------------------------------
-source /opt/homebrew/share/zsh-history-substring-search/zsh-history-substring-search.zsh
+# Homebrew on the Mac; a git clone (remote/bootstrap-noroot.sh) on Linux boxes.
+for _f in /opt/homebrew/share/zsh-history-substring-search/zsh-history-substring-search.zsh \
+          ~/.local/share/zsh-history-substring-search/zsh-history-substring-search.zsh; do
+  [[ -f $_f ]] && { source $_f; break }
+done
+unset _f
 
 # -----------------------------------------------------------------------------
 # The oh-my-zsh aliases we actually used
@@ -257,6 +262,7 @@ fi
 alias t="trash"
 # Claude Code
 alias c="claude"
+alias cr="claude --resume"
 # Clear screen and list contents
 alias cl="clear && l"
 # Move up one directory
@@ -364,6 +370,7 @@ path=(
   $HOME/bin
   $HOME/dotfiles/bin
   $HOME/.local/bin
+  $HOME/.pixi/bin
   /opt/homebrew/bin
   /opt/homebrew/sbin
   $HOME/.asdf/shims
