@@ -6,7 +6,8 @@
 # Establish a minimal, known-good baseline PATH so core macOS tools are always
 # available even if later initialization fails. Final PATH ordering is enforced
 # near the end of the file.
-export PATH="/usr/bin:/bin:/usr/sbin:/sbin:/opt/homebrew/bin:/opt/homebrew/sbin"
+# ~/.pixi/bin holds the same tools on Linux boxes without Homebrew.
+export PATH="/usr/bin:/bin:/usr/sbin:/sbin:/opt/homebrew/bin:/opt/homebrew/sbin:$HOME/.pixi/bin"
 hash -r
 
 # -----------------------------------------------------------------------------
@@ -381,6 +382,10 @@ path=(
 )
 export PATH="${(j/:/)path}"
 hash -r
+
+# -----------------------------------------------------------------------------
+# Remote boxes have no VS Code.
+(( $+commands[code] )) || export EDITOR=nvim VISUAL=nvim
 
 # -----------------------------------------------------------------------------
 # zshrc.local
