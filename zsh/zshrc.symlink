@@ -391,6 +391,8 @@ case $HOST in
   vm1e3c1290f17b6) export MACHINE_NAME=mats-dev ;;
   *) export MACHINE_NAME=$HOST ;;
 esac
+# Remote Control session names start with this instead of the raw hostname.
+export CLAUDE_REMOTE_CONTROL_SESSION_NAME_PREFIX=$MACHINE_NAME
 
 # -----------------------------------------------------------------------------
 # Remote boxes have no VS Code.
