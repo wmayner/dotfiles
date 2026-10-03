@@ -5,14 +5,16 @@
 # app. Run it again after the machine reboots; windows that already exist are
 # left alone, and then it attaches.
 #
-#   agents-up [dir ...]    (default: ~/mats-research ~/reading)
+#   agents-up [dir[:mode] ...]
 #
-# Each session the app starts gets its own git worktree, so concurrent agents
-# do not edit the same checkout.
-[ $# -eq 0 ] && set -- "$HOME/mats-research" "$HOME/reading"
-# The server exits after ~10 minutes without network; start it again.
-server='while :; do claude remote-control --spawn worktree; echo "restarting in 30s"; sleep 30; done'
-for dir in "$@"; do
+# mode is how the server starts sessions: worktree (the default; each session
+# gets its own git worktree, so concurrent agents do not edit the same checkout)
+# or same-dir (all sessions work in dir itself).
+[ $# -eq 0 ] && set -- "$HOME/mats-research" "$HOME/reading:same-dir"
+for arg in "$@"; do
+  dir=${arg%%:*}; mode=worktree; [ "$arg" != "$dir" ] && mode=${arg#*:}
+  # The server exits after ~10 minutes without network; start it again.
+  server="while :; do claude remote-control --spawn $mode; echo 'restarting in 30s'; sleep 30; done"
   [ -d "$dir" ] || { echo "agents-up: no such directory: $dir" >&2; continue; }
   name=$(basename "$dir")
   if ! tmux has-session -t agents 2>/dev/null; then
