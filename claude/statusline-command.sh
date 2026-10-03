@@ -73,8 +73,8 @@ seg() {
   prev=$1
 }
 
-# Machine, only over SSH, as in the starship prompt. MACHINE_NAME comes from zshrc.
-[ -n "$SSH_CONNECTION" ] && seg "$ORANGE" "$FG0" " 🌐 ${MACHINE_NAME:-$(hostname -s)} "
+# Machine, only over SSH, as in the starship prompt.
+[ -n "$SSH_CONNECTION" ] && seg "$ORANGE" "$FG0" " 🌐 ${MACHINE_NAME:-$("$HOME/dotfiles/bin/machine-name")} "
 
 seg "$BG3" "$FG0" " $dir " bold
 

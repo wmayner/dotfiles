@@ -389,13 +389,8 @@ export PATH="${(j/:/)path}"
 hash -r
 
 # -----------------------------------------------------------------------------
-# Short name for this machine, for the tmux status bar on remote boxes. The
-# starship prompt has the same names under [hostname] aliases.
-case $HOST in
-  vm9dbb42baeca7d) export MACHINE_NAME=mats ;;
-  vm1e3c1290f17b6) export MACHINE_NAME=mats-dev ;;
-  *) export MACHINE_NAME=$HOST ;;
-esac
+# Short name for this machine (bin/machine-name), for the tmux status bar.
+export MACHINE_NAME=$($DOTFILES/bin/machine-name)
 # Remote Control session names start with this instead of the raw hostname.
 export CLAUDE_REMOTE_CONTROL_SESSION_NAME_PREFIX=$MACHINE_NAME
 

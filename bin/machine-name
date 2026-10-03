@@ -1,0 +1,10 @@
+#!/bin/sh
+# Short name for this machine, used by zshrc ($MACHINE_NAME, the tmux status
+# bar) and the Claude status line. The starship prompt has the same names under
+# [hostname] aliases.
+h=$(hostname -s)
+case $h in
+  vm9dbb42baeca7d) echo mats ;;
+  vm1e3c1290f17b6) echo mats-dev ;;
+  *) echo "$h" ;;
+esac
