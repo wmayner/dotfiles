@@ -38,8 +38,9 @@ link "$DOTFILES/zsh/zshrc.symlink" "$HOME/.zshrc"
 link "$DOTFILES/tmux/tmux.conf.symlink" "$HOME/.tmux.conf"
 link "$DOTFILES/starship/starship.toml" "$HOME/.config/starship.toml"
 link "$DOTFILES/claude/statusline-command.sh" "$HOME/.claude/statusline-command.sh"
-for skill in "$DOTFILES"/claude/*/; do
-  [ -f "$skill/SKILL.md" ] && link "${skill%/}" "$HOME/.claude/skills/$(basename "$skill")"
+# Claude Code mods, linked into skills/ as on the Mac.
+for mod in "$DOTFILES"/claude/*/; do
+  link "${mod%/}" "$HOME/.claude/skills/$(basename "$mod")"
 done
 # MATS ships a skill for its Slurm cluster.
 [ -d /mnt/nw/share/skills/mats-cluster ] &&
