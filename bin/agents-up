@@ -1,17 +1,24 @@
 #!/usr/bin/env bash
 #
-# Run Claude Code's Remote Control server in a tmux session named "agents", so
-# sessions can be started and watched from the Claude app. Run it again after
-# the machine reboots; if the session already exists it just attaches.
+# Run Claude Code's Remote Control server in a tmux session named "agents", one
+# window per project, so sessions can be started and watched from the Claude
+# app. Run it again after the machine reboots; windows that already exist are
+# left alone, and then it attaches.
 #
-#   agents-up [dir]    (default: ~/mats-research)
+#   agents-up [dir ...]    (default: ~/mats-research ~/reading)
 #
 # Each session the app starts gets its own git worktree, so concurrent agents
 # do not edit the same checkout.
-dir=${1:-$HOME/mats-research}
-if ! tmux has-session -t agents 2>/dev/null; then
-  # The server exits after ~10 minutes without network; start it again.
-  tmux new-session -d -s agents -c "$dir" \
-    'while :; do claude remote-control --spawn worktree; echo "restarting in 30s"; sleep 30; done'
-fi
+[ $# -eq 0 ] && set -- "$HOME/mats-research" "$HOME/reading"
+# The server exits after ~10 minutes without network; start it again.
+server='while :; do claude remote-control --spawn worktree; echo "restarting in 30s"; sleep 30; done'
+for dir in "$@"; do
+  [ -d "$dir" ] || { echo "agents-up: no such directory: $dir" >&2; continue; }
+  name=$(basename "$dir")
+  if ! tmux has-session -t agents 2>/dev/null; then
+    tmux new-session -d -s agents -n "$name" -c "$dir" "$server"
+  elif ! tmux list-windows -t agents -F '#W' | grep -qx "$name"; then
+    tmux new-window -d -t agents -n "$name" -c "$dir" "$server"
+  fi
+done
 [ -t 1 ] && exec tmux attach -t agents
