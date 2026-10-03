@@ -22,7 +22,7 @@ fi
 
 command -v pixi >/dev/null || curl -fsSL https://pixi.sh/install.sh | PIXI_NO_PATH_UPDATE=1 bash
 # One at a time, so a package missing from conda-forge does not block the rest.
-for pkg in zsh starship fzf ripgrep fd-find bat eza atuin zoxide direnv jq neovim colordiff; do
+for pkg in zsh starship fzf ripgrep fd-find bat eza atuin zoxide direnv jq nvim colordiff; do
   pixi global install -q "$pkg" >/dev/null || say "could not install $pkg"
 done
 
@@ -62,20 +62,13 @@ jq -s '.[0] * .[1] * .[2]' "$DOTFILES/claude/settings.base.json" \
   "$DOTFILES/claude/settings.remote.json" "$SETTINGS" >"$SETTINGS.new" &&
   mv "$SETTINGS.new" "$SETTINGS"
 
-# Machine-specific shell settings, sourced at the end of zshrc.
-cat >"$HOME/.zshrc.local" <<'EOF'
-# Written by dotfiles/remote/bootstrap-noroot.sh; rerunning it replaces this file.
-export EDITOR=nvim VISUAL=nvim
-EOF
-
 # The login shell cannot be changed without root, so interactive bash hands
-# over to zsh. `NO_ZSH=1 ssh host` (with SendEnv) or `ssh host bash --norc`
-# gets a plain bash if zsh ever breaks.
+# over to zsh. If zsh ever breaks, `ssh -t host bash --norc` gets a plain bash.
 MARK='# dotfiles: start zsh'
 grep -qF "$MARK" "$HOME/.bashrc" 2>/dev/null || cat >>"$HOME/.bashrc" <<EOF
 
 $MARK
-if [[ \$- == *i* ]] && [ -z "\${NO_ZSH:-}" ] && [ -x "\$HOME/.pixi/bin/zsh" ]; then
+if [[ \$- == *i* ]] && [ -x "\$HOME/.pixi/bin/zsh" ]; then
   export SHELL="\$HOME/.pixi/bin/zsh"; exec "\$SHELL" -l
 fi
 EOF
