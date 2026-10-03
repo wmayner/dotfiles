@@ -46,7 +46,7 @@ fi
 # gruvbox_dark palette from starship.toml, as r;g;b
 FG0='251;241;199'; BG1='60;56;54'; BG2='80;73;69'; BG3='102;92;84'; BLUE='69;133;136'
 AQUA='104;157;106'; GREEN='152;151;26'; YELLOW='215;153;33'; RED='204;36;29'
-PURPLE='177;98;134'
+PURPLE='177;98;134'; ORANGE='214;93;14'
 SEP=$'\xee\x82\xb0'; CAP=$'\xee\x82\xb6'
 
 # Read `symbol = "..."` from a section of starship.toml into $sym, so the glyph
@@ -72,6 +72,9 @@ seg() {
   out+=$(printf '\033[0;%s38;2;%s;48;2;%sm%s' "${4:+1;}" "$2" "$1" "$3")
   prev=$1
 }
+
+# Machine, only over SSH, as in the starship prompt. MACHINE_NAME comes from zshrc.
+[ -n "$SSH_CONNECTION" ] && seg "$ORANGE" "$FG0" " 🌐 ${MACHINE_NAME:-$(hostname -s)} "
 
 seg "$BG3" "$FG0" " $dir " bold
 
