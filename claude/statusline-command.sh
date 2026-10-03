@@ -73,8 +73,9 @@ seg() {
   prev=$1
 }
 
-# Machine, only over SSH, as in the starship prompt.
-[ -n "$SSH_CONNECTION" ] && seg "$ORANGE" "$FG0" " 🌐 ${MACHINE_NAME:-$("$HOME/dotfiles/bin/machine-name")} "
+# Machine, only over SSH, as in the starship prompt. The globe is the one-column
+# Nerd Font glyph: an emoji is two columns wide and garbles Claude's redraws.
+[ -n "$SSH_CONNECTION" ] && seg "$ORANGE" "$FG0" "  ${MACHINE_NAME:-$("$HOME/dotfiles/bin/machine-name")} "
 
 seg "$BG3" "$FG0" " $dir " bold
 
