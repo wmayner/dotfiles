@@ -384,6 +384,15 @@ export PATH="${(j/:/)path}"
 hash -r
 
 # -----------------------------------------------------------------------------
+# Short name for this machine, for the tmux status bar on remote boxes. The
+# starship prompt has the same names under [hostname] aliases.
+case $HOST in
+  vm9dbb42baeca7d) export MACHINE_NAME=mats ;;
+  vm1e3c1290f17b6) export MACHINE_NAME=mats-dev ;;
+  *) export MACHINE_NAME=$HOST ;;
+esac
+
+# -----------------------------------------------------------------------------
 # Remote boxes have no VS Code.
 (( $+commands[code] )) || export EDITOR=nvim VISUAL=nvim
 

@@ -39,6 +39,9 @@ link() { mkdir -p "$(dirname "$2")"; ln -sfn "$1" "$2"; }
 link "$DOTFILES/zsh/zshrc.symlink" "$HOME/.zshrc"
 link "$DOTFILES/tmux/tmux.conf.symlink" "$HOME/.tmux.conf"
 link "$DOTFILES/starship/starship.toml" "$HOME/.config/starship.toml"
+# Remote boxes only: the tmux status bar shows $MACHINE_NAME (set in zshrc)
+# instead of the raw hostname.
+link "$DOTFILES/powerline" "$HOME/.config/powerline"
 link "$DOTFILES/claude/statusline-command.sh" "$HOME/.claude/statusline-command.sh"
 # Claude Code mods, linked into skills/ as on the Mac.
 for mod in "$DOTFILES"/claude/*/; do
