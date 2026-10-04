@@ -114,3 +114,4 @@
     cmd = git-nbmergetool merge \"$BASE\" \"$LOCAL\" \"$REMOTE\" \"$MERGED\"
 [gpg "ssh"]
     program = /Applications/1Password.app/Contents/MacOS/op-ssh-sign
+    allowedSignersFile = ~/dotfiles/git/allowed_signers
