@@ -155,6 +155,9 @@ export GPG_TTY=$TTY
 # back to 256 colors and round off the status line's 24-bit colors. iTerm and
 # tmux (see tmux.conf's Tc overrides) both handle 24-bit color.
 [[ -z $COLORTERM && $TERM == (xterm|tmux)-256color ]] && export COLORTERM=truecolor
+# Inside tmux, Claude Code rounds 24-bit colors to 256 regardless of COLORTERM
+# unless told the terminal behind tmux handles them (iTerm does).
+export CLAUDE_CODE_TMUX_TRUECOLOR=1
 
 # Homebrew
 export HOMEBREW_NO_ANALYTICS=1
