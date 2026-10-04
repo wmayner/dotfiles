@@ -272,6 +272,8 @@ alias t="trash"
 # Claude Code
 alias c="claude"
 alias cr="claude --resume"
+# Headless Sonnet that splits all working-tree changes into logical commits.
+alias lc='claude -p --model sonnet --allowedTools "Bash(git:*)" "Read" -- "/logical-commits all"'
 # Clear screen and list contents
 alias cl="clear && l"
 # Move up one directory
