@@ -94,7 +94,7 @@
     program = gpg
     format = ssh
 [commit]
-    gpgsign = false
+    gpgsign = true
 [difftool]
     prompt = false
 [mergetool]
