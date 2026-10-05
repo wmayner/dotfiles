@@ -1,0 +1,15 @@
+# Mac-only git settings. install.sh links this file to ~/.gitconfig.local on
+# macOS, and gitconfig includes that path at the end. Remote Linux boxes have
+# no 1Password app to sign with and no general GitHub key, so they leave it out.
+[user]
+    signingkey = ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDDyiDElobDh9sMCQ1sk5gYRP5L78r9e336Q6t1RIH0t0fB2XwyrWSdGbhjEIbnhZWnQtRvhTvUKstIJo8yfTrpbRy3JB/5/52zaqH5FH6AFUlo43cKsJ6wBlsL4R7O9XUSWAnqizxetTCBk+Tc66bOm7zmQQ8CxP0RvZXDe+9Q+Jo7aOrWo6XoLkKZOrFk6eCXxhDeXxTMTP1lHyEwopmsPUdsZW9KGqG7lbzeSZnICYhafpkMkBq1tTP+yYmU3m4mf0nEsTIKzHKuh7vMbXbNvsE4IT59wFthk2/46vIdSoDccD7JOa6TRgt9twRnw0iUSqBUyaDRLvmC5d3zGNgB
+[gpg]
+    program = gpg
+    format = ssh
+[commit]
+    gpgsign = true
+[url "git@github.com:"]
+    insteadOf = https://github.com/
+[gpg "ssh"]
+    program = /Applications/1Password.app/Contents/MacOS/op-ssh-sign
+    allowedSignersFile = ~/dotfiles/git/allowed_signers
