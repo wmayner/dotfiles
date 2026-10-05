@@ -22,7 +22,8 @@ fi
 
 command -v pixi >/dev/null || curl -fsSL https://pixi.sh/install.sh | PIXI_NO_PATH_UPDATE=1 bash
 # One at a time, so a package missing from conda-forge does not block the rest.
-for pkg in zsh starship fzf ripgrep fd-find bat eza atuin zoxide direnv jq nvim colordiff tmux nodejs git-delta; do
+# git: the shared gitconfig needs a newer git than Ubuntu 22.04 ships (zdiff3).
+for pkg in zsh starship fzf ripgrep fd-find bat eza atuin zoxide direnv jq nvim colordiff tmux nodejs git-delta git; do
   pixi global install -q "$pkg" >/dev/null || say "could not install $pkg"
 done
 
