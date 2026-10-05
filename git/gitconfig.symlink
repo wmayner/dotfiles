@@ -48,7 +48,6 @@
 [user]
     name = Will Mayner
     email = wmayner@gmail.com
-    signingkey = ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDDyiDElobDh9sMCQ1sk5gYRP5L78r9e336Q6t1RIH0t0fB2XwyrWSdGbhjEIbnhZWnQtRvhTvUKstIJo8yfTrpbRy3JB/5/52zaqH5FH6AFUlo43cKsJ6wBlsL4R7O9XUSWAnqizxetTCBk+Tc66bOm7zmQQ8CxP0RvZXDe+9Q+Jo7aOrWo6XoLkKZOrFk6eCXxhDeXxTMTP1lHyEwopmsPUdsZW9KGqG7lbzeSZnICYhafpkMkBq1tTP+yYmU3m4mf0nEsTIKzHKuh7vMbXbNvsE4IT59wFthk2/46vIdSoDccD7JOa6TRgt9twRnw0iUSqBUyaDRLvmC5d3zGNgB
 [core]
     excludesfile = ~/.gitignore
     autocrlf = input
@@ -90,19 +89,12 @@
 [rebase]
     autosquash = true
     autostash = true
-[gpg]
-    program = gpg
-    format = ssh
-[commit]
-    gpgsign = true
 [difftool]
     prompt = false
 [mergetool]
     prompt = false
 [init]
     defaultBranch = main
-[url "git@github.com:"]
-    insteadOf = https://github.com/
 [diff "jupyternotebook"]
     command = git-nbdiffdriver diff
 [merge "jupyternotebook"]
@@ -112,6 +104,7 @@
     cmd = git-nbdifftool diff \"$LOCAL\" \"$REMOTE\" \"$BASE\"
 [mergetool "nbdime"]
     cmd = git-nbmergetool merge \"$BASE\" \"$LOCAL\" \"$REMOTE\" \"$MERGED\"
-[gpg "ssh"]
-    program = /Applications/1Password.app/Contents/MacOS/op-ssh-sign
-    allowedSignersFile = ~/dotfiles/git/allowed_signers
+
+# Machine-specific settings (signing, SSH for GitHub); missing on remote boxes.
+[include]
+    path = ~/.gitconfig.local

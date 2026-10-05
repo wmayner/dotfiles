@@ -22,7 +22,7 @@ fi
 
 command -v pixi >/dev/null || curl -fsSL https://pixi.sh/install.sh | PIXI_NO_PATH_UPDATE=1 bash
 # One at a time, so a package missing from conda-forge does not block the rest.
-for pkg in zsh starship fzf ripgrep fd-find bat eza atuin zoxide direnv jq nvim colordiff tmux nodejs; do
+for pkg in zsh starship fzf ripgrep fd-find bat eza atuin zoxide direnv jq nvim colordiff tmux nodejs git-delta; do
   pixi global install -q "$pkg" >/dev/null || say "could not install $pkg"
 done
 
@@ -51,13 +51,10 @@ done
 [ -d /mnt/nw/share/skills/mats-cluster ] &&
   link /mnt/nw/share/skills/mats-cluster "$HOME/.claude/skills/mats-cluster"
 
-# The dotfiles gitconfig signs commits through the 1Password app, which is
-# Mac-only, so set the parts that matter here directly.
-git config --global user.name "Will Mayner"
-git config --global user.email "wmayner@gmail.com"
-git config --global init.defaultBranch main
-git config --global pull.ff only
-git config --global core.excludesfile "$DOTFILES/git/gitignore.symlink"
+# Same gitconfig as the Mac. Its Mac-only part (1Password signing, SSH for
+# GitHub) lives in git/gitconfig.mac, which is not linked here.
+link "$DOTFILES/git/gitconfig.symlink" "$HOME/.gitconfig"
+link "$DOTFILES/git/gitignore.symlink" "$HOME/.gitignore"
 
 # Claude settings: the shareable base plus the remote overlay (Remote Control,
 # permission rules, plugins). Settings already on this machine win, so changes

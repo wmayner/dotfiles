@@ -37,6 +37,8 @@ for SOURCE_FILE in $(find $(pwd) -name '*.symlink'); do
   LINK_FILE="$HOME/.$(basename ${SOURCE_FILE%.symlink})"
   ln -sv "$SOURCE_FILE" $LINK_FILE;
 done
+# Mac-only git settings (1Password signing, SSH for GitHub), included by gitconfig.
+[ "$(uname)" = Darwin ] && ln -sv "$(pwd)/git/gitconfig.mac" "$HOME/.gitconfig.local"
 
 printf "\nSetting up Vim...\n"
 # Install vim-plug
