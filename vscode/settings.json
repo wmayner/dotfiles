@@ -166,7 +166,7 @@
     "workbench.editor.enablePreviewFromQuickOpen": false,
     "workbench.editorAssociations": {
         "*.pdf": "latex-workshop-pdf-hook",
-        "*.md": "vscode.markdown.editor"
+        "*.md": "vscode.markdown.preview.editor"
     },
     "workbench.startupEditor": "none",
     "workbench.secondarySideBar.defaultVisibility": "hidden",
