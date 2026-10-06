@@ -39,6 +39,11 @@ for SOURCE_FILE in $(find $(pwd) -name '*.symlink'); do
 done
 # Mac-only git settings (1Password signing, SSH for GitHub), included by gitconfig.
 [ "$(uname)" = Darwin ] && ln -sv "$(pwd)/git/gitconfig.mac" "$HOME/.gitconfig.local"
+# Nightly rebuild of claude-history's semantic search index.
+if [ "$(uname)" = Darwin ]; then
+  ln -sfn "$(pwd)/macos/com.wmayner.claude-history-cache.plist" "$HOME/Library/LaunchAgents/"
+  launchctl bootstrap "gui/$(id -u)" "$HOME/Library/LaunchAgents/com.wmayner.claude-history-cache.plist" 2>/dev/null
+fi
 
 printf "\nSetting up Vim...\n"
 # Install vim-plug
