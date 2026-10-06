@@ -139,7 +139,7 @@ if [ "$cache_seen" = true ]; then
   now=$(date +%s)
   case $cache_ttl in 5m) life=300 ;; *) life=3600 ;; esac
   left=$(( ${cache_expires:-0} - now ))
-  text="cache${cache_hit:+ $cache_hit%}"
+  text="${cache_hit:-?}%"
   if [ "$cache_warm" != true ] || [ "$left" -le 0 ]; then
     seg "$BLUE" "$FG0" " $text · cold "
   elif [ $((left * 6)) -le "$life" ]; then
