@@ -35,6 +35,12 @@ command -v uv >/dev/null || curl -LsSf https://astral.sh/uv/install.sh | UV_NO_M
 # The tmux status bar (tmux.conf runs it when present).
 command -v powerline-daemon >/dev/null || uv tool install -q powerline-status
 command -v claude >/dev/null || curl -fsSL https://claude.ai/install.sh | bash
+# claude-history: search past Claude conversations. Its lib/ (ONNX runtime, for
+# semantic search) has to stay next to the binary. Upgrade with `claude-history update`.
+CH=$HOME/.local/share/claude-history
+[ -x "$CH/claude-history" ] || { mkdir -p "$CH" &&
+  curl -fsSL https://github.com/raine/claude-history/releases/latest/download/claude-history-linux-amd64.tar.gz | tar -xz -C "$CH" &&
+  ln -sfn "$CH/claude-history" "$HOME/.local/bin/claude-history"; } || say "could not install claude-history"
 
 link() { mkdir -p "$(dirname "$2")"; ln -sfn "$1" "$2"; }
 link "$DOTFILES/zsh/zshrc.symlink" "$HOME/.zshrc"
