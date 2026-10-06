@@ -50,6 +50,7 @@ link "$DOTFILES/starship/starship.toml" "$HOME/.config/starship.toml"
 # instead of the raw hostname.
 link "$DOTFILES/powerline" "$HOME/.config/powerline"
 link "$DOTFILES/claude/statusline-command.sh" "$HOME/.claude/statusline-command.sh"
+link "$DOTFILES/remote/code" "$HOME/.local/bin/code"
 # Claude Code mods, linked into skills/ as on the Mac.
 for mod in "$DOTFILES"/claude/*/; do
   link "${mod%/}" "$HOME/.claude/skills/$(basename "$mod")"
@@ -71,6 +72,11 @@ SETTINGS=$HOME/.claude/settings.json
 jq -s '.[0] * .[1] * .[2]' "$DOTFILES/claude/settings.base.json" \
   "$DOTFILES/claude/settings.remote.json" "$SETTINGS" >"$SETTINGS.new" &&
   mv "$SETTINGS.new" "$SETTINGS"
+
+# Nightly rebuild of claude-history's semantic search index at low priority,
+# 03:30 Pacific (the cluster's clock is UTC). Rerunning replaces the entry.
+CRON='30 10 * * * nice -n 19 timeout 3600 $HOME/.local/bin/claude-history --generate-semantic-cache >>$HOME/.cache/claude-history/nightly.log 2>&1 # claude-history nightly'
+{ crontab -l 2>/dev/null | grep -v '# claude-history nightly'; echo "$CRON"; } | crontab - || say "could not install the crontab entry"
 
 # The login shell cannot be changed without root, so interactive bash hands
 # over to zsh. If zsh ever breaks, `ssh -t host bash --norc` gets a plain bash.

@@ -1,0 +1,18 @@
+#!/bin/sh
+#
+# `code` on remote Linux boxes, linked to ~/.local/bin/code by
+# bootstrap-noroot.sh. Opens files in the VS Code window connected over
+# Remote - SSH, also from tmux or a plain ssh shell: VS Code only tells its own
+# terminals which socket reaches the window, so find the newest one that still
+# answers. With no window connected, open the files in nvim instead, so tools
+# that use $EDITOR ("code --wait") keep working.
+cli=$(ls -t "$HOME"/.vscode-server/cli/servers/*/server/bin/remote-cli/code 2>/dev/null | head -1)
+alive() { python3 -c 'import socket,sys; socket.socket(socket.AF_UNIX).connect(sys.argv[1])' "$1" 2>/dev/null; }
+if [ -n "$cli" ]; then
+  for sock in $(ls -t /run/user/"$(id -u)"/vscode-ipc-*.sock 2>/dev/null); do
+    alive "$sock" && VSCODE_IPC_HOOK_CLI=$sock exec "$cli" "$@"
+  done
+fi
+echo "code: no VS Code window is connected to this machine; using nvim" >&2
+for a; do shift; case $a in -*) ;; *) set -- "$@" "$a" ;; esac; done
+exec nvim "$@"
