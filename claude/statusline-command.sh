@@ -1,17 +1,21 @@
 #!/bin/bash
 # Status line mirroring the starship prompt: directory, git branch/status
 # (gruvbox_dark powerline segments), then model, context used with its change
-# this turn, and the 5-hour and 7-day rate limits. Also sets the terminal title.
+# this turn, prompt cache hit rate and warmth, and the 5-hour and 7-day rate
+# limits. Also sets the terminal title.
 input=$(cat)
 
 # One jq call; fields joined by \x1f (non-whitespace, so empty fields survive)
-IFS=$'\x1f' read -r cwd model used effort five_hour seven_day tokens window session prompt project name < <(jq -r '[
+IFS=$'\x1f' read -r cwd model used effort five_hour seven_day tokens window session prompt project name cache_seen cache_warm cache_hit cache_expires cache_ttl < <(jq -r '[
   (.workspace.current_dir // .cwd // ""), (.model.display_name // ""),
   (.context_window.used_percentage // ""), (.effort.level // ""),
   (.rate_limits.five_hour.used_percentage // "" | if . == "" then . else round end),
   (.rate_limits.seven_day.used_percentage // "" | if . == "" then . else round end),
   (.context_window.total_input_tokens // 0), (.context_window.context_window_size // 0), (.session_id // ""), (.prompt_id // "-"),
-  (.workspace.project_dir // .cwd // ""), (.session_name // "" | gsub("[[:cntrl:]]"; " "))
+  (.workspace.project_dir // .cwd // ""), (.session_name // "" | gsub("[[:cntrl:]]"; " ")),
+  (.prompt_cache.caching_observed // false), (.prompt_cache.warm // false),
+  (.prompt_cache.hit_ratio // "" | if . == "" then . else . * 100 | round end),
+  (.prompt_cache.expires_at // ""), (.prompt_cache.ttl // "")
 ] | map(tostring) | join("\u001f")' <<<"$input")
 
 # Terminal window/tab title: "dir: CC: session name"
@@ -127,11 +131,30 @@ if [ -n "$used" ]; then
   seg "$c" "$FG0" " $pct%${delta:+ $delta} "
 fi
 
+# Prompt cache: share of input read from cache, and whether the cache is
+# still warm. Grey while warm, yellow with the time left once the last sixth
+# of its lifetime starts, blue once cold (the next request re-writes it all).
+# The settings' refreshInterval re-runs this so the countdown moves while idle.
+if [ "$cache_seen" = true ]; then
+  now=$(date +%s)
+  case $cache_ttl in 5m) life=300 ;; *) life=3600 ;; esac
+  left=$(( ${cache_expires:-0} - now ))
+  text="cache${cache_hit:+ $cache_hit%}"
+  if [ "$cache_warm" != true ] || [ "$left" -le 0 ]; then
+    seg "$BLUE" "$FG0" " $text · cold "
+  elif [ $((left * 6)) -le "$life" ]; then
+    if [ "$left" -ge 60 ]; then left="$((left / 60))m"; else left="${left}s"; fi
+    seg "$YELLOW" "$FG0" " $text · $left left "
+  else
+    seg "$BG1" "$FG0" " $text "
+  fi
+fi
+
 # Rate limits, one segment: grey to 70, yellow to 85, red above, by
 # whichever is higher
 worst=$(( ${five_hour:-0} > ${seven_day:-0} ? ${five_hour:-0} : ${seven_day:-0} ))
 if [ -n "$five_hour$seven_day" ]; then
-  c=$BG1
+  c=$BG2
   [ "$worst" -ge 70 ] && c=$YELLOW
   [ "$worst" -ge 85 ] && c=$RED
   limits="${five_hour:+5h $five_hour%}"
