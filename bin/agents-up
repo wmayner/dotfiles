@@ -13,8 +13,14 @@
 [ $# -eq 0 ] && set -- "$HOME/mats-research" "$HOME/reading:same-dir"
 for arg in "$@"; do
   dir=${arg%%:*}; mode=worktree; [ "$arg" != "$dir" ] && mode=${arg#*:}
-  # The server exits after ~10 minutes without network; start it again.
-  server="while :; do claude remote-control --spawn $mode; echo 'restarting in 30s'; sleep 30; done"
+  # API keys (vast.ai, RunPod, ...) are loaded inside the window: agents-up runs
+  # over ssh without zsh's startup files, and a new tmux window does not inherit
+  # this script's environment. Sessions started from the app inherit the
+  # server's environment, and so does the background daemon when one of them
+  # launches it. The server exits after ~10 minutes without network; start it
+  # again.
+  server="set -a; for f in ~/.config/*/secrets.env; do . \"\$f\"; done; set +a
+while :; do claude remote-control --spawn $mode; echo 'restarting in 30s'; sleep 30; done"
   [ -d "$dir" ] || { echo "agents-up: no such directory: $dir" >&2; continue; }
   name=$(basename "$dir")
   if ! tmux has-session -t agents 2>/dev/null; then
