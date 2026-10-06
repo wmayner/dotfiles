@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!-- Nightly rebuild of claude-history's semantic search index at low priority.
+     install.sh links this into ~/Library/LaunchAgents. If the Mac is asleep at
+     03:30, launchd runs it after it wakes. -->
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.wmayner.claude-history-cache</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/bin/sh</string>
+    <string>-c</string>
+    <string>exec /usr/bin/nice -n 19 /opt/homebrew/bin/claude-history --generate-semantic-cache &gt;&gt; "$HOME/Library/Logs/claude-history-cache.log" 2&gt;&amp;1</string>
+  </array>
+  <key>StartCalendarInterval</key>
+  <dict>
+    <key>Hour</key>
+    <integer>3</integer>
+    <key>Minute</key>
+    <integer>30</integer>
+  </dict>
+  <key>LowPriorityIO</key>
+  <true/>
+  <key>ProcessType</key>
+  <string>Background</string>
+</dict>
+</plist>
