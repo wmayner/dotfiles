@@ -52,6 +52,9 @@ FG0='251;241;199'; BG1='60;56;54'; BG2='80;73;69'; BG3='102;92;84'; BLUE='69;133
 AQUA='104;157;106'; GREEN='152;151;26'; YELLOW='215;153;33'; RED='204;36;29'
 PURPLE='177;98;134'; ORANGE='214;93;14'
 SEP=$'\xee\x82\xb0'; CAP=$'\xee\x82\xb6'
+# Nerd Font Material Design icons: context (brain), cache warm (fire) and
+# cold (snowflake), rate limits (hourglass)
+I_CONTEXT=$'\U000F09D1'; I_WARM=$'\U000F0238'; I_COLD=$'\U000F0717'; I_LIMIT=$'\U000F051F'
 
 # Read `symbol = "..."` from a section of starship.toml into $sym, so the glyph
 # is exactly starship's. Empty if the file or key is missing.
@@ -128,7 +131,7 @@ if [ -n "$used" ]; then
   if [ -n "$delta" ] && [ "$c" = "$BG2" ] && [ "$tenths" -ge 50 ] && [ "${delta:0:1}" = "▲" ]; then
     delta=$(printf '\033[38;2;%sm%s\033[38;2;%sm' "$YELLOW" "$delta" "$FG0")
   fi
-  seg "$c" "$FG0" " $pct%${delta:+ $delta} "
+  seg "$c" "$FG0" " $I_CONTEXT $pct%${delta:+ $delta} "
 fi
 
 # Prompt cache: share of input read from cache, and whether the cache is
@@ -141,12 +144,12 @@ if [ "$cache_seen" = true ]; then
   left=$(( ${cache_expires:-0} - now ))
   text="${cache_hit:-?}%"
   if [ "$cache_warm" != true ] || [ "$left" -le 0 ]; then
-    seg "$BLUE" "$FG0" " $text · cold "
+    seg "$BLUE" "$FG0" " $I_COLD $text "
   elif [ $((left * 6)) -le "$life" ]; then
     if [ "$left" -ge 60 ]; then left="$((left / 60))m"; else left="${left}s"; fi
-    seg "$YELLOW" "$FG0" " $text · $left left "
+    seg "$YELLOW" "$FG0" " $I_WARM $text · $left left "
   else
-    seg "$BG1" "$FG0" " $text "
+    seg "$BG1" "$FG0" " $I_WARM $text "
   fi
 fi
 
@@ -159,7 +162,7 @@ if [ -n "$five_hour$seven_day" ]; then
   [ "$worst" -ge 85 ] && c=$RED
   limits="${five_hour:+5h $five_hour%}"
   limits+="${seven_day:+${limits:+ · }7d $seven_day%}"
-  seg "$c" "$FG0" " $limits "
+  seg "$c" "$FG0" " $I_LIMIT $limits "
 fi
 
 # Closing arrow
