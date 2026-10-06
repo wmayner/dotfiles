@@ -367,6 +367,9 @@ alias python="python3"
 # `remoteControlAtStartup` in ~/.claude/settings.json, so `claude` itself is
 # not aliased; an alias also changed `claude -p` and other scripted calls.
 alias plan="claude --permission-mode plan"
+# Agent teams (experimental) for this session only: left on, every subagent
+# Claude names would start as a full teammate session.
+alias cteam="CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1 claude"
 alias onecommit="claude -p '/one-commit'"
 alias commitchunks="claude -p '/logical-commits'"
 alias fable="claude --model fable"
