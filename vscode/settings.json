@@ -229,5 +229,6 @@
         "charliermarsh.ruff",
         "anthropic.claude-code"
     ],
+    "git.detectWorktrees": true,
     // "ruff.format.preview": true
 }
