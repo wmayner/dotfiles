@@ -291,6 +291,7 @@ mosht() { mosh "$@" -- tmux new -A -s main; }
 # MATS cluster: mats is the dev node, which runs the agents and interactive
 # sessions; mats-compute is the controller, for interactive srun and as a fallback.
 alias mats="ssh mats"
+alias mats-compute="ssh mats-compute"
 # MATS cluster: attach to the tmux session "claude" (created in ~/mats-research
 # if it does not exist). The agents-up servers run in a separate session, "agents".
 mc() { ssh -t mats '~/.pixi/bin/tmux new -A -s claude -c ~/mats-research'; }
