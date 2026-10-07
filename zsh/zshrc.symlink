@@ -422,3 +422,6 @@ export CLAUDE_REMOTE_CONTROL_SESSION_NAME_PREFIX=$MACHINE_NAME
 
 # Activate starship prompt
 eval "$(starship init zsh)"
+
+# Tab completion for vastai on machines where its installer ran
+[ -f "$HOME/.local/share/vastai/env.sh" ] && . "$HOME/.local/share/vastai/env.sh"  # vastai shell setup
