@@ -58,6 +58,13 @@
         "repo": "AlexanderMattTurner/agent-sanitizer"
       },
       "autoUpdate": true
+    },
+    "glance": {
+      "source": {
+        "source": "github",
+        "repo": "wmayner/claude-glance"
+      },
+      "autoUpdate": true
     }
   },
   "enabledPlugins": {
@@ -82,6 +89,7 @@
     "finance@synced": false,
     "marketing@synced": false,
     "figma@synced": false,
-    "cowork-plugin-management@synced": false
+    "cowork-plugin-management@synced": false,
+    "glance@glance": true
   }
 }
