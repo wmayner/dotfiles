@@ -1,6 +1,0 @@
-{
-  "name": "now-line",
-  "version": "0.1.0",
-  "description": "One line on what Claude is doing and why: in the spinner during long turns, above the prompt after.",
-  "types": "./types/index.d.ts"
-}
