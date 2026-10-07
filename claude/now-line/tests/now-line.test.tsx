@@ -128,7 +128,7 @@ test('a long turn gets a line in the spinner, then in the band once it ends', as
   await $.turn.complete({ answer: 'done', durationMs: 120_000, isAborted: false, turnId: 't1', reason: 'answer' })
   for (const surface of ['terminal', 'desktop'] as const) {
     const band = await $.ui.mount({ plugin: 'now-line', surface, component: 'AbovePrompt', props: BAND })
-    expect(await bandText(band)).toEqual(expect.arrayContaining([`Why ${WHY}`, `Last step ${WHAT}`]))
+    expect(await bandText(band)).toEqual([`Last turn: ${WHAT}`, 'Last turn:', `Why: ${WHY}`, 'Why:'])
     await band.unmount()
   }
 
@@ -205,5 +205,5 @@ test('a turn with no typed prompt continues the previous one and keeps its line'
   await $.turn.start({ text: '', turnId: 't2' })
   await $.turn.complete({ answer: '', durationMs: 1_000, isAborted: false, turnId: 't2', reason: 'answer' })
   const band = await $.ui.mount({ plugin: 'now-line', surface: 'terminal', component: 'AbovePrompt', props: BAND })
-  expect(await bandText(band)).toEqual(expect.arrayContaining([`Why ${WHY}`, `Last step ${WHAT}`]))
+  expect(await bandText(band)).toEqual([`Last turn: ${WHAT}`, 'Last turn:', `Why: ${WHY}`, 'Why:'])
 })

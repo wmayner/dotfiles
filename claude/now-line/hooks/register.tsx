@@ -89,14 +89,14 @@ export const register: Register = on => {
     const { Box, Text } = $.ui.resolve(e)
     return (
       <Box flexDirection="column">
+        <Text dimColor wrap="truncate-end">
+          <Text bold>Last turn:</Text> {what}
+        </Text>
         {why !== '' && (
           <Text dimColor wrap="truncate-end">
-            <Text bold>Why</Text> {why}
+            <Text bold>Why:</Text> {why}
           </Text>
         )}
-        <Text dimColor wrap="truncate-end">
-          <Text bold>Last step</Text> {what}
-        </Text>
       </Box>
     )
   })
