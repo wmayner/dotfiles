@@ -4,7 +4,7 @@
 # [hostname] aliases.
 h=$(hostname -s)
 case $h in
-  cluster-host-1) echo mats ;;
-  cluster-host-2) echo mats-dev ;;
+  cluster-host-1) echo mats-compute ;;
+  cluster-host-2) echo mats ;;
   *) echo "$h" ;;
 esac
