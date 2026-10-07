@@ -288,16 +288,18 @@ alias forward="ssh -NL"
 # reboot / app quit). All args pass through to mosh, so ~/.ssh/config aliases and
 # flags work, e.g.  mosht myhost   or   mosht --ssh="ssh -p 2222" user@host
 mosht() { mosh "$@" -- tmux new -A -s main; }
-# MATS cluster: mats is the dev node, which runs the agents and interactive
-# sessions; mats-compute is the controller, for interactive srun and as a fallback.
+# MATS cluster: mats is the dev node, mats-compute the controller. MATS_HOST is
+# the one that runs the agents and interactive sessions (mc, ma); switch it when
+# the other machine is less loaded. Both share the same home directory.
+MATS_HOST=mats-compute
 alias mats="ssh mats"
 alias mats-compute="ssh mats-compute"
 # MATS cluster: attach to the tmux session "claude" (created in ~/mats-research
 # if it does not exist). The agents-up servers run in a separate session, "agents".
-mc() { ssh -t mats '~/.pixi/bin/tmux new -A -s claude -c ~/mats-research'; }
+mc() { ssh -t $MATS_HOST '~/.pixi/bin/tmux new -A -s claude -c ~/mats-research'; }
 # Attach to the "agents" session, starting the Remote Control servers first if
 # they are not running (after a reboot, for example).
-ma() { ssh -t mats 'PATH=$HOME/.pixi/bin:$HOME/.local/bin:$PATH ~/dotfiles/bin/agents-up'; }
+ma() { ssh -t $MATS_HOST 'PATH=$HOME/.pixi/bin:$HOME/.local/bin:$PATH ~/dotfiles/bin/agents-up'; }
 # Set up a fresh GPU box: runs remote/bootstrap.sh over ssh. The tokens go in
 # on stdin with the script, so they never appear in the remote process list.
 # All args pass through to ssh, e.g.  rboot -p 40022 root@1.2.3.4
@@ -422,6 +424,19 @@ export CLAUDE_REMOTE_CONTROL_SESSION_NAME_PREFIX=$MACHINE_NAME
 # -----------------------------------------------------------------------------
 # Put local, non-portable overrides here.
 [ -f "$HOME/.zshrc.local" ] && source "$HOME/.zshrc.local"
+
+# Over SSH, leave git status out of the prompt: on a busy shared machine with the
+# repo on network storage it can add half a second after every command. The
+# branch still shows. The remote config is regenerated when starship.toml changes.
+if [[ -n $SSH_CONNECTION ]]; then
+  _starship_remote=$XDG_CACHE_HOME/starship-remote.toml
+  if [[ ! -s $_starship_remote || $DOTFILES/starship/starship.toml -nt $_starship_remote ]]; then
+    awk '{print} /^\[git_status\]$/{print "disabled = true"}' \
+      $DOTFILES/starship/starship.toml >| $_starship_remote
+  fi
+  export STARSHIP_CONFIG=$_starship_remote
+  unset _starship_remote
+fi
 
 # Activate starship prompt
 eval "$(starship init zsh)"
