@@ -288,16 +288,15 @@ alias forward="ssh -NL"
 # reboot / app quit). All args pass through to mosh, so ~/.ssh/config aliases and
 # flags work, e.g.  mosht myhost   or   mosht --ssh="ssh -p 2222" user@host
 mosht() { mosh "$@" -- tmux new -A -s main; }
-# MATS cluster: the dev node runs the agents and interactive sessions; the
-# controller (mats) is for interactive srun and as a fallback.
+# MATS cluster: mats is the dev node, which runs the agents and interactive
+# sessions; mats-compute is the controller, for interactive srun and as a fallback.
 alias mats="ssh mats"
-alias mdev="ssh mats-dev"
 # MATS cluster: attach to the tmux session "claude" (created in ~/mats-research
 # if it does not exist). The agents-up servers run in a separate session, "agents".
-mc() { ssh -t mats-dev '~/.pixi/bin/tmux new -A -s claude -c ~/mats-research'; }
+mc() { ssh -t mats '~/.pixi/bin/tmux new -A -s claude -c ~/mats-research'; }
 # Attach to the "agents" session, starting the Remote Control servers first if
 # they are not running (after a reboot, for example).
-ma() { ssh -t mats-dev 'PATH=$HOME/.pixi/bin:$HOME/.local/bin:$PATH ~/dotfiles/bin/agents-up'; }
+ma() { ssh -t mats 'PATH=$HOME/.pixi/bin:$HOME/.local/bin:$PATH ~/dotfiles/bin/agents-up'; }
 # Set up a fresh GPU box: runs remote/bootstrap.sh over ssh. The tokens go in
 # on stdin with the script, so they never appear in the remote process list.
 # All args pass through to ssh, e.g.  rboot -p 40022 root@1.2.3.4

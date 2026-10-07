@@ -4,7 +4,7 @@
 # [hostname] aliases.
 h=$(hostname -s)
 case $h in
-  vm9dbb42baeca7d) echo mats ;;
-  vm1e3c1290f17b6) echo mats-dev ;;
+  vm9dbb42baeca7d) echo mats-compute ;;
+  vm1e3c1290f17b6) echo mats ;;
   *) echo "$h" ;;
 esac
