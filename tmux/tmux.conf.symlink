@@ -103,6 +103,9 @@ set -ag terminal-overrides ",*256col*:Tc"
 set -ga update-environment "COLORTERM"
 # Allow passthrough of escape sequences (needed for modern terminal features)
 set -g allow-passthrough on
+# Let programs inside tmux (claude-history, vim over ssh) set the Mac clipboard
+# with OSC 52; the default, external, drops their requests.
+set -s set-clipboard on
 
 # Powerline status bar
 # Skipped where powerline is not installed (remote boxes), so this file can be
