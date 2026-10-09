@@ -15,8 +15,16 @@ if [ "$(uname -s)" = "Darwin" ]; then
   # gcloud-cli, hammerspoon). Add --greedy if you want those too, but it can
   # fight an app's own updater.
   brew upgrade && brew cleanup || fail brew
+elif command -v pixi >/dev/null 2>&1; then
+  # No-root machines (the MATS nodes; see remote/bootstrap-noroot.sh): there is
+  # no sudo, and the command-line tools come from conda-forge through pixi.
+  pixi global update || fail pixi
+  if command -v claude-history >/dev/null 2>&1; then
+    claude-history update || fail claude-history
+  fi
 else
-  sudo apt-get update && sudo apt-get upgrade -y || fail apt
+  SUDO=''; [ "$(id -u)" -eq 0 ] || SUDO=sudo  # GPU boxes run as root, often without sudo
+  $SUDO apt-get update && $SUDO apt-get upgrade -y || fail apt
 fi
 
 # asdf plugins (the runtime versions themselves stay pinned in .tool-versions)
@@ -27,6 +35,7 @@ fi
 # uv: primary Python tooling
 if command -v uv >/dev/null 2>&1; then
   uv self update || fail uv
+  uv tool upgrade --all || fail 'uv tools'
 fi
 
 # Global npm packages
