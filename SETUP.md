@@ -104,24 +104,6 @@ uv pip install -r requirements.txt
 
 **Benefits**: 10-100x faster than pip
 
-## Lazygit (Git TUI)
-
-**No config needed** - works out of the box.
-
-**Usage:**
-```bash
-lazygit               # Open in current repo
-```
-
-**Keybindings** (in lazygit):
-- `?` - Show help
-- `1-5` - Switch panels (Status, Files, Branches, Commits, Stash)
-- `a` - Stage/unstage all
-- `space` - Stage/unstage file
-- `c` - Commit
-- `P` - Push
-- `p` - Pull
-
 ## Verification Commands
 
 After installing, verify everything works:
@@ -133,7 +115,6 @@ eza --version
 fd --version
 dust --version
 delta --version
-lazygit --version
 ruff --version
 uv --version
 
@@ -166,25 +147,6 @@ Create `~/.config/bat/config` for custom settings:
 # Map files
 --map-syntax "*.conf:INI"
 --map-syntax ".ignore:Git Ignore"
-```
-
-## Optional: lazygit Configuration
-
-Create `~/.config/lazygit/config.yml` for custom settings:
-
-```yaml
-gui:
-  theme:
-    lightTheme: false
-    activeBorderColor:
-      - cyan
-      - bold
-    inactiveBorderColor:
-      - white
-git:
-  paging:
-    colorArg: always
-    pager: delta --dark --paging=never
 ```
 
 ## Troubleshooting
