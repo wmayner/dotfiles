@@ -33,7 +33,7 @@ HSS=$HOME/.local/share/zsh-history-substring-search
 
 command -v uv >/dev/null || curl -LsSf https://astral.sh/uv/install.sh | UV_NO_MODIFY_PATH=1 sh
 # The tmux status bar (tmux.conf runs it when present).
-command -v powerline-daemon >/dev/null || uv tool install -q powerline-status
+command -v powerline-daemon >/dev/null || uv tool install -q --python 3.13 powerline-status  # its daemon crashes on 3.14
 command -v claude >/dev/null || curl -fsSL https://claude.ai/install.sh | bash
 # claude-history: search past Claude conversations. Its lib/ (ONNX runtime, for
 # semantic search) has to stay next to the binary. Upgrade with `claude-history update`.
