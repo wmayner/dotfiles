@@ -6,34 +6,44 @@
 # brew bundle cleanup --force
 
 # --- Formulae ---
+brew "act"          # run GitHub Actions locally
 brew "asdf"         # runtime version manager (e.g. Go)
 brew "atuin"        # searchable, syncable shell history
+brew "awscli"
 brew "bat"          # cat replacement with syntax highlighting
+brew "biber"        # biblatex backend
 brew "cmake"
 brew "colordiff"
 brew "coreutils"
 brew "direnv"
+brew "docker"       # CLI only
 brew "dust"         # du replacement
 brew "eza"          # modern ls (exa successor)
+brew "exiftool"
 brew "fd"           # find replacement
+brew "ffmpeg"
 brew "fzf"
 brew "git"
 brew "gh"
+brew "git-filter-repo"
 brew "git-delta"    # beautiful git diffs
 brew "git-lfs"      # Hugging Face model repos; gitconfig's lfs filter needs it
-brew "git-absorb"   # auto-fold WIP changes into the right ancestor commit
 brew "gnupg"
 brew "hf"           # Hugging Face CLI
-brew "hyperfine"    # command-line benchmarking
 brew "jq"           # JSON processor
 brew "just"
-brew "lazygit"      # git TUI
+brew "latexdiff"
+brew "latexindent"  # VS Code formats LaTeX with it
 brew "mosh"         # resilient SSH for flaky/roaming connections
 brew "nbdime"       # notebook diff/merge drivers referenced in gitconfig
+brew "ncdu"
 brew "node"
 brew "pandoc"
 brew "pinentry-mac"
-brew "pipx"
+brew "poppler"      # pdftotext, pdfinfo, pdftoppm
+brew "postgresql@18" # psql, for `railway connect`
+brew "qrencode"
+brew "railway"
 brew "ripgrep"
 brew "rsync"
 brew "rclone"
@@ -44,18 +54,23 @@ brew "trash"
 brew "tree"
 brew "watch"
 brew "wget"
-brew "yq"           # YAML/JSON/XML processor (jq for YAML)
 brew "zoxide"
 brew "zsh-history-substring-search"  # ^K/^J inline history scrolling
 
+# --- Other taps ---
+brew "raine/claude-history/claude-history"  # search past Claude sessions
+brew "runpod/runpodctl/runpodctl"
+
 # --- Casks ---
-tap "nikitabobko/tap"   # AeroSpace lives here, not in homebrew core
 cask "1password-cli"
-cask "aerospace"        # from nikitabobko/tap
+# AeroSpace is not in use, but its config is kept in aerospace/. To go back:
+# tap "nikitabobko/tap"
+# cask "aerospace"
 cask "blackhole-2ch"
 cask "hammerspoon"
-cask "ngrok"
-cask "rectangle"        # the AeroSpace config sizes every window through it
+cask "libreoffice"
+cask "rectangle"
 
 # --- Fonts ---
-cask "font-fira-code"
+cask "font-fira-code-nerd-font"  # first choice in VS Code
+cask "font-hack-nerd-font"

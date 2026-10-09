@@ -12,7 +12,7 @@ fail() { failed="${failed}${failed:+, }$1"; }
 # System package manager
 if [ "$(uname -s)" = "Darwin" ]; then
   # Note: plain `brew upgrade` skips casks that update themselves (currently
-  # gcloud-cli, hammerspoon). Add --greedy if you want those too, but it can
+  # hammerspoon). Add --greedy if you want those too, but it can
   # fight an app's own updater.
   brew upgrade && brew cleanup || fail brew
 elif command -v pixi >/dev/null 2>&1; then
