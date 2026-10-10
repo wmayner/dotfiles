@@ -1,3 +1,4 @@
 #!/bin/sh
 
-ag "[\x80-\xFF]" $1
+# (?-u:...) matches raw bytes, so invalid UTF-8 shows up too
+rg '(?-u:[\x80-\xFF])' "$@"
