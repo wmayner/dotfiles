@@ -203,8 +203,9 @@
   endif
 
   " Set grep program
-  if executable('ag')
-    let &grepprg = 'ag --nogroup --nocolor --column'
+  if executable('rg')
+    let &grepprg = 'rg --vimgrep'
+    set grepformat=%f:%l:%c:%m
   else
     let &grepprg = 'grep -rn $* *'
   endif
@@ -615,9 +616,9 @@
     nnoremap <silent> <Leader>C        :Colors<CR>
     nnoremap <silent> <Leader><Enter>  :Buffers<CR>
     nnoremap <silent> <Leader>l        :Lines<CR>
-    nnoremap <silent> <Leader>ag       :Ag <C-R><C-W><CR>
-    nnoremap <silent> <Leader>AG       :Ag <C-R><C-A><CR>
-    xnoremap <silent> <Leader>ag       y:Ag <C-R>"<CR>
+    nnoremap <silent> <Leader>ag       :Rg <C-R><C-W><CR>
+    nnoremap <silent> <Leader>AG       :Rg <C-R><C-A><CR>
+    xnoremap <silent> <Leader>ag       y:Rg <C-R>"<CR>
     nnoremap <silent> <Leader>`        :Marks<CR>
     " nnoremap <silent> q: :History:<CR>
     " nnoremap <silent> q/ :History/<CR>
@@ -626,7 +627,7 @@
     imap <c-x><c-k> <plug>(fzf-complete-word)
     imap <c-x><c-f> <plug>(fzf-complete-path)
     inoremap <expr> <c-x><c-d> fzf#vim#complete#path('blsd')
-    imap <c-x><c-j> <plug>(fzf-complete-file-ag)
+    inoremap <expr> <c-x><c-j> fzf#vim#complete#path('rg --files')
     imap <c-x><c-l> <plug>(fzf-complete-line)
 
     nmap <leader><tab> <plug>(fzf-maps-n)
