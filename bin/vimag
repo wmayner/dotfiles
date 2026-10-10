@@ -1,3 +1,5 @@
 #!/bin/sh
 
-$EDITOR -p $(ag --nocolor --files-with-matches "$1")
+# $EDITOR is unquoted so it can carry its own arguments
+# shellcheck disable=SC2086
+rg --files-with-matches --null "$1" . | xargs -0 -r -o $EDITOR -p
