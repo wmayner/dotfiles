@@ -47,6 +47,7 @@ brew "railway"
 brew "ripgrep"
 brew "rsync"
 brew "rclone"
+brew "shellcheck"   # lint the shell scripts in this repo
 brew "starship"     # modern shell prompt
 brew "texlive"
 brew "tmux"
