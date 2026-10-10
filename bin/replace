@@ -9,4 +9,9 @@ OLD=$1
 NEW=$2
 shift 2
 
-grep -rl --exclude-dir="*.git" ${OLD} $@ | xargs sed -i "s^${OLD}^${NEW}^g"
+# GNU sed takes `-i`; BSD (macOS) sed needs an explicit empty suffix: `-i ''`
+if sed --version >/dev/null 2>&1; then
+  grep -rl --null --exclude-dir="*.git" "${OLD}" "$@" | xargs -0 sed -i "s^${OLD}^${NEW}^g"
+else
+  grep -rl --null --exclude-dir="*.git" "${OLD}" "$@" | xargs -0 sed -i '' "s^${OLD}^${NEW}^g"
+fi
