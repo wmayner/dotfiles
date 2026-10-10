@@ -1,3 +1,5 @@
+#!/bin/sh
+
 # My version of https://raw.github.com/holman/dotfiles/master/osx/set-defaults.sh:
 
 # Sets reasonable OS X defaults.
