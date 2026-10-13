@@ -1,6 +1,6 @@
 declare module 'claude-code' {
   interface PluginState {
-    'tldr': {
+    'tldr-below': {
       /** TL;DRs on (mirrors $.store 'enabled', which persists across sessions). */
       isOn: boolean
       /** By message id: the TL;DR, '' while none. */
