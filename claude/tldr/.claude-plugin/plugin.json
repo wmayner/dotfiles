@@ -1,0 +1,1 @@
+{ "name": "tldr", "version": "0.1.0", "description": "Adds a one-sentence Haiku TL;DR under each long reply; /tldr turns it off", "types": "./types/index.d.ts" }
