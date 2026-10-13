@@ -16,9 +16,9 @@ Reply with the sentence only.`
 const FAIL = '!fail:'
 const KEEP_SESSIONS = 20
 
-const isOn = atom({ plugin: 'tldr', key: 'isOn' } as const, true)
-const line = atom({ plugin: 'tldr', key: 'line' } as const, '')
-const isFinal = atom({ plugin: 'tldr', key: 'isFinal' } as const, false)
+const isOn = atom({ plugin: 'tldr-below', key: 'isOn' } as const, true)
+const line = atom({ plugin: 'tldr-below', key: 'line' } as const, '')
+const isFinal = atom({ plugin: 'tldr-below', key: 'isFinal' } as const, false)
 
 /** Long enough for a TL;DR: over 100 words and more than one non-blank line. */
 export const isLong = (text: string) =>
