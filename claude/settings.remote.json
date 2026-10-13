@@ -52,13 +52,6 @@
       },
       "autoUpdate": true
     },
-    "agent-sanitizer": {
-      "source": {
-        "source": "github",
-        "repo": "AlexanderMattTurner/agent-sanitizer"
-      },
-      "autoUpdate": true
-    },
     "glance": {
       "source": {
         "source": "github",
@@ -91,7 +84,6 @@
     "llms-fetch-mcp@alignment-hive": true,
     "tldr@alignment-hive": false,
     "codex@codex-plugin-cc": true,
-    "agent-sanitizer@agent-sanitizer": true,
     "data@synced": false,
     "finance@synced": false,
     "marketing@synced": false,
