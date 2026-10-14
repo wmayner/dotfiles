@@ -34,14 +34,20 @@ set -g base-index 1
 
 # Automatically set window title
 set-window-option -g automatic-rename on
+# Name windows after the pane's title cut to 16 chars (Claude Code's state glyph
+# and task), or the running command when the title is just the hostname
+set-window-option -g automatic-rename-format "#{?#{==:#{pane_title},#{host}},#{pane_current_command},#{=/16/…:pane_title}}"
 set-option -g set-titles on
+# Title is the pane's own title (Claude Code's task), or the running command
+# when nothing has set one and tmux would show the hostname
+set-option -g set-titles-string "#{?#{==:#{pane_title},#{host}},#{pane_current_command},#{pane_title}}"
 
 set -g status-keys vi
 set -g history-limit 100000
 
 setw -g mode-keys vi
-setw -g monitor-activity on
-set -g visual-activity on
+# No activity flags: Claude windows print constantly, so they'd always be set.
+# Bell flags (!) stay on; Claude rings the bell when it needs input.
 
 # Don't confirm before killing pane
 bind-key x kill-pane
