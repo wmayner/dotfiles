@@ -7,6 +7,8 @@ description: Use when a document, update, explanation, report, slide deck or mes
 
 An author with context cannot read without it, and telling an agent to "pretend you have no context" fails because the context is in its window. Instead, start a new agent that has only the draft and what the real reader knows, have it report where the draft fails that reader, revise, and repeat with another new agent.
 
+**Figures are the exception.** To review a figure, use `~/.claude/skills/figures/critic.md`, one round only. The template below asks whether every term is defined, and fixes that answer that question make figure labels longer.
+
 ## Before the first round, write down (the reviewer never sees the third item)
 
 1. **Reader:**
