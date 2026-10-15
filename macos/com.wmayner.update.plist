@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!-- Daily run of bin/update at 04:00, logged to ~/Library/Logs/update.log, with
+     a notification if any step fails. install.sh links this into
+     ~/Library/LaunchAgents. If the Mac is asleep at 04:00, launchd runs it
+     after it wakes. launchd's PATH has only the system folders, so this sets
+     the one update needs. -->
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.wmayner.update</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/bin/sh</string>
+    <string>-c</string>
+    <string>export PATH="$HOME/.local/bin:/opt/homebrew/bin:/opt/homebrew/sbin:$HOME/.asdf/shims:/usr/bin:/bin:/usr/sbin:/sbin"
+log="$HOME/Library/Logs/update.log"
+printf '\n=== %s\n' "$(date)" &gt;&gt; "$log"
+"$HOME/dotfiles/bin/update" &lt;/dev/null &gt;&gt; "$log" 2&gt;&amp;1 ||
+  osascript -e "display notification \"$(tail -1 "$log")\" with title \"Daily update failed\" subtitle \"See ~/Library/Logs/update.log\""</string>
+  </array>
+  <key>StartCalendarInterval</key>
+  <dict>
+    <key>Hour</key>
+    <integer>4</integer>
+    <key>Minute</key>
+    <integer>0</integer>
+  </dict>
+  <key>ProcessType</key>
+  <string>Background</string>
+</dict>
+</plist>
