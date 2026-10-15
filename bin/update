@@ -12,8 +12,13 @@ fail() { failed="${failed}${failed:+, }$1"; }
 
 DOTFILES="$(cd "$(dirname "$0")/.." && pwd)"
 
-# The dotfiles themselves. --ff-only: a diverged main is reported, not merged.
-git -C "$DOTFILES" pull --ff-only && git -C "$DOTFILES" submodule update --init \
+# The dotfiles themselves. The repo is public, so fetch over https without the
+# global config, whose Mac part rewrites GitHub URLs to SSH through 1Password;
+# its approval prompt would block the daily run. --ff-only: a diverged main is
+# reported, not merged.
+GIT_CONFIG_GLOBAL=/dev/null git -C "$DOTFILES" fetch https://github.com/wmayner/dotfiles.git main:refs/remotes/origin/main \
+  && git -C "$DOTFILES" merge --ff-only origin/main \
+  && GIT_CONFIG_GLOBAL=/dev/null git -C "$DOTFILES" submodule update --init \
   || fail dotfiles
 
 # System package manager
@@ -72,7 +77,8 @@ fi
 # neovim's. `+PlugUpdate` at startup implies --sync (vim-plug treats
 # has('vim_starting') as synchronous), so +qa cannot race the updates.
 if command -v vim >/dev/null 2>&1; then
-  vim +PlugUpgrade +PlugUpdate +PlugInstall! +PlugClean! +qa || fail vim
+  # Its screen drawing is noise, and fills the log on the daily run.
+  vim +PlugUpgrade +PlugUpdate +PlugInstall! +PlugClean! +qa >/dev/null || fail vim
 fi
 
 if [ -n "$failed" ]; then
