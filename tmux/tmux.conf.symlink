@@ -59,6 +59,9 @@ bind-key a last-window
 bind-key v split-window -h
 bind-key s split-window -v
 
+# Join the marked pane (prefix m) into this window, side by side
+bind-key @ join-pane -h
+
 # Vim style pane splitting/resizing
 bind-key J resize-pane -D 10
 bind-key K resize-pane -U 10
