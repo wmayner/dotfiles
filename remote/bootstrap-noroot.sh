@@ -55,6 +55,8 @@ link "$DOTFILES/remote/code" "$HOME/.local/bin/code"
 for mod in "$DOTFILES"/claude/*/; do
   link "${mod%/}" "$HOME/.claude/skills/$(basename "$mod")"
 done
+# Global instructions: the public CLAUDE.md, plus the cluster's rules file
+sh "$DOTFILES/claude/link-instructions.sh"
 # MATS ships a skill for its Slurm cluster.
 [ -d /mnt/nw/share/skills/mats-cluster ] &&
   link /mnt/nw/share/skills/mats-cluster "$HOME/.claude/skills/mats-cluster"

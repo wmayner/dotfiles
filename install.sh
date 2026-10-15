@@ -85,6 +85,8 @@ for MOD in "$DOTFILES"/claude/*/; do
   ln -sfnv "${MOD%/}" "$HOME/.claude/skills/$(basename "$MOD")"
 done
 ln -sfv "$DOTFILES/claude/statusline-command.sh" "$HOME/.claude/statusline-command.sh"
+# Global instructions: the public CLAUDE.md, plus private Mac rules from 1Password
+sh "$DOTFILES/claude/link-instructions.sh"
 # settings.json itself is not tracked: it holds machine-specific permission
 # rules and plugin lists. settings.base.json holds the shareable part, and is
 # merged in underneath whatever the machine already has.
