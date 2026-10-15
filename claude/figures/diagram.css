@@ -1,0 +1,40 @@
+/* Components for method diagrams rendered to PNG with render_html.sh.
+   Link it with <link rel="stylesheet" href="file:///<abs path>/diagram.css">; fonts load relative to this file. */
+@font-face { font-family: Inter; src: url("fonts/Inter-Regular.ttf"); font-weight: 400; }
+@font-face { font-family: Inter; src: url("fonts/Inter-SemiBold.ttf"); font-weight: 600; }
+
+:root {
+  --ink: #1f1f1f; --muted: #6b6b6b; --line: #d9d9d9; --card: #f6f6f7; --white: #fff;
+  --accent: #d55e00; --accent-soft: #fbe3d2;   /* the thing the diagram is about */
+  --blue: #0072b2; --blue-soft: #d6e8f5;        /* a second role, if needed */
+  --bad: #c62828; --good: #2e7d32;               /* ablated/failed, passed: never reuse for anything else */
+}
+* { box-sizing: border-box; margin: 0; }
+body { background: var(--white); color: var(--ink); font: 400 22px/1.3 Inter, sans-serif; }
+
+/* The canvas is the image: fixed size, wide (2:1 to 3:1 suits a 16:9 slide). */
+.canvas { width: 1600px; height: 700px; padding: 48px 56px; display: flex; gap: 40px; align-items: flex-start; }
+.col { display: flex; flex-direction: column; gap: 18px; flex: 1; }
+.row { display: flex; gap: 18px; align-items: center; }
+.stack { display: flex; flex-direction: column; gap: 12px; align-items: flex-start; }
+
+/* A panel: bold name of at most 5 words, one grey line of at most 12 words, then content. */
+.step-head { display: flex; align-items: baseline; gap: 12px; }
+.num { width: 34px; height: 34px; border-radius: 50%; background: var(--ink); color: var(--white);
+       display: inline-flex; align-items: center; justify-content: center; font-weight: 600; font-size: 18px; flex: none; }
+.name { font-weight: 600; font-size: 26px; }
+.sub { color: var(--muted); font-size: 19px; }
+
+.card { background: var(--card); border: 1.5px solid var(--line); border-radius: 18px; padding: 22px; }
+.card.accent { border: 2.5px solid var(--accent); background: var(--white); }
+.pill { display: inline-block; padding: 6px 16px; border-radius: 999px; border: 1.5px solid var(--ink); font-size: 19px; }
+.pill.dark { background: var(--ink); color: var(--white); border-color: var(--ink); font-weight: 600; }
+.pill.accent { background: var(--accent-soft); border-color: var(--accent); }
+.pill.off { border-style: dashed; color: var(--muted); border-color: var(--muted); }
+.bubble { background: var(--blue-soft); border-radius: 16px; padding: 12px 20px; }
+.bubble.accent { background: var(--accent-soft); }
+.chevron { color: var(--muted); font-size: 44px; align-self: center; }
+.caption { color: var(--muted); font-size: 18px; text-align: center; }
+.accent-text { color: var(--accent); font-weight: 600; }
+.bad { color: var(--bad); } .good { color: var(--good); }
+svg { overflow: visible; }

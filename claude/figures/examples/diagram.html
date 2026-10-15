@@ -1,0 +1,38 @@
+<!doctype html>
+<!-- Claim: we find the parents of a target by ranking candidates, keeping the top k, and ablating the rest.
+     Render: sh ~/.claude/skills/figures/render_html.sh examples/diagram.html examples/diagram.png 1600 470 -->
+<html><head><meta charset="utf-8">
+<link rel="stylesheet" href="../diagram.css">
+</head><body>
+<div class="canvas" style="height:470px">
+  <div class="col">
+    <div class="step-head"><span class="num">1</span><span class="name">Rank candidates</span></div>
+    <div class="sub">score every upstream unit for this datapoint</div>
+    <div class="card stack">
+      <div class="row"><span class="pill dark">unit 17</span><span class="sub">0.92</span></div>
+      <div class="row"><span class="pill dark">unit 4</span><span class="sub">0.61</span></div>
+      <div class="row"><span class="pill">unit 30</span><span class="sub">0.08</span></div>
+      <div class="row"><span class="pill">unit 2</span><span class="sub">0.03</span></div>
+    </div>
+  </div>
+  <div class="chevron" style="align-self:center">›</div>
+  <div class="col">
+    <div class="step-head"><span class="num">2</span><span class="name">Keep the top k</span></div>
+    <div class="sub">ablate every other candidate</div>
+    <div class="card accent stack">
+      <div class="row"><span class="pill accent">unit 17</span><span class="pill accent">unit 4</span></div>
+      <div class="row"><span class="pill off">unit 30</span><span class="pill off">unit 2</span><span class="bad">✕ ablated</span></div>
+    </div>
+  </div>
+  <div class="chevron" style="align-self:center">›</div>
+  <div class="col">
+    <div class="step-head"><span class="num">3</span><span class="name">Measure what is left</span></div>
+    <div class="sub">error in the target after ablation</div>
+    <div class="card stack">
+      <div class="bubble">target with all units: <b>2.31</b></div>
+      <div class="bubble accent">with top 2 only: <b>2.27</b></div>
+      <div class="good">✓ error 0.04, under 0.1</div>
+    </div>
+  </div>
+</div>
+</body></html>
