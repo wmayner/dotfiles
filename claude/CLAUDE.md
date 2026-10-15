@@ -43,7 +43,7 @@ My work often involves scientific investigation.
 
 ## Environment
 - `cat` is aliased to `bat` in my shell. Use `/bin/cat` when you need plain output or flags such as `-v`.
-- Rules that apply to only one machine are in that machine's `~/.claude/rules/` file.
+- This file is public: it lives in my dotfiles repository on GitHub. Rules that apply to only one machine, and anything private such as paths, accounts or email locations, go in that machine's `~/.claude/rules/` file instead. On the Mac, that file is written from the 1Password note "Claude rules (Mac)", so update the note when you change it.
 
 ## Delegating to subagents
 
