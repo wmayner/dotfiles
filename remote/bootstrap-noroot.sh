@@ -67,6 +67,10 @@ link "$DOTFILES/git/gitignore.symlink" "$HOME/.gitignore"
 # 03:30 Pacific (the cluster's clock is UTC). Rerunning replaces the entry.
 CRON='30 10 * * * nice -n 19 timeout 3600 $HOME/.local/bin/claude-history --generate-semantic-cache >>$HOME/.cache/claude-history/nightly.log 2>&1 # claude-history nightly'
 { crontab -l 2>/dev/null | grep -v '# claude-history nightly'; echo "$CRON"; } | crontab - || say "could not install the crontab entry"
+# Daily bin/update at 04:00 Pacific (11:00 UTC), after the index rebuild. cron's
+# PATH has only the system folders.
+CRON='0 11 * * * PATH=$HOME/.pixi/bin:$HOME/.local/bin:/usr/bin:/bin nice -n 19 timeout 3600 $HOME/dotfiles/bin/update </dev/null >>$HOME/.cache/update.log 2>&1 # dotfiles update daily'
+{ crontab -l 2>/dev/null | grep -v '# dotfiles update daily'; echo "$CRON"; } | crontab - || say "could not install the update crontab entry"
 
 # The login shell cannot be changed without root, so interactive bash hands
 # over to zsh. If zsh ever breaks, `ssh -t host bash --norc` gets a plain bash.
