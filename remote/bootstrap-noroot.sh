@@ -49,12 +49,9 @@ link "$DOTFILES/starship/starship.toml" "$HOME/.config/starship.toml"
 # Remote boxes only: the tmux status bar shows $MACHINE_NAME (set in zshrc)
 # instead of the raw hostname.
 link "$DOTFILES/powerline" "$HOME/.config/powerline"
-link "$DOTFILES/claude/statusline-command.sh" "$HOME/.claude/statusline-command.sh"
 link "$DOTFILES/remote/code" "$HOME/.local/bin/code"
-# Claude Code mods, linked into skills/ as on the Mac.
-for mod in "$DOTFILES"/claude/*/; do
-  link "${mod%/}" "$HOME/.claude/skills/$(basename "$mod")"
-done
+# Claude Code: mods, status line and settings (with the remote overlay)
+sh "$DOTFILES/claude/link.sh" || say "could not link the Claude config"
 # Global instructions: the public CLAUDE.md, plus the cluster's rules file
 sh "$DOTFILES/claude/link-instructions.sh"
 # MATS ships a skill for its Slurm cluster.
@@ -65,15 +62,6 @@ sh "$DOTFILES/claude/link-instructions.sh"
 # GitHub) lives in git/gitconfig.mac, which is not linked here.
 link "$DOTFILES/git/gitconfig.symlink" "$HOME/.gitconfig"
 link "$DOTFILES/git/gitignore.symlink" "$HOME/.gitignore"
-
-# Claude settings: the shareable base plus the remote overlay (Remote Control,
-# permission rules, plugins). Settings already on this machine win, so changes
-# made here with /config survive a rerun.
-SETTINGS=$HOME/.claude/settings.json
-[ -f "$SETTINGS" ] || echo '{}' >"$SETTINGS"
-jq -s '.[0] * .[1] * .[2]' "$DOTFILES/claude/settings.base.json" \
-  "$DOTFILES/claude/settings.remote.json" "$SETTINGS" >"$SETTINGS.new" &&
-  mv "$SETTINGS.new" "$SETTINGS"
 
 # Nightly rebuild of claude-history's semantic search index at low priority,
 # 03:30 Pacific (the cluster's clock is UTC). Rerunning replaces the entry.
