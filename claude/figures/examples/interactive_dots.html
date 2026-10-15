@@ -1,0 +1,82 @@
+<!doctype html>
+<!-- Interactive figure for a results page, and a static PNG for slides from the same file.
+     Claim: conditioning cuts the units needed in every layer, and only the conditioned method beats the baseline.
+     PNG: sh ~/.claude/skills/figures/render_html.sh interactive_dots.html interactive_dots.png 900 420
+     To reuse: copy this file, have your script replace the JSON in <script id="data">, and edit draw().
+     The static view follows the same rules as any figure (no title, no legend, one accent, direct labels);
+     exact values, intervals, n and verdicts go in the tooltip, which the PNG never shows. -->
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Units needed by method</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=IBM+Plex+Mono&display=swap">
+<style>
+:root { --bg:#ffffff; --ink:#1f1f1f; --muted:#6b6b6b; --grey:#a3a3a3; --light:#d9d9d9; --rule:#ededed;
+        --accent:#d55e00; --blue:#0072b2; color-scheme:light; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+        --bg:#141517; --ink:#ececec; --muted:#9a9a9a; --grey:#707070; --light:#3a3a3a; --rule:#25272a;
+        --accent:#ff8a3d; --blue:#56b4e9; color-scheme:dark; } }
+:root[data-theme="dark"] { --bg:#141517; --ink:#ececec; --muted:#9a9a9a; --grey:#707070; --light:#3a3a3a;
+        --rule:#25272a; --accent:#ff8a3d; --blue:#56b4e9; color-scheme:dark; }
+body { margin:0; background:var(--bg); color:var(--ink); font:15px/1.4 Inter, system-ui, sans-serif; }
+.fig { width:900px; height:420px; padding:20px 24px; box-sizing:border-box; }   /* the PNG is this box */
+svg { display:block; overflow:visible; font-family:inherit; }
+.axis text { fill:var(--muted); font-size:13px; } .axis path, .axis line { stroke:var(--muted); }
+.grid line { stroke:var(--rule); } .grid path { display:none; }
+.tip { position:fixed; pointer-events:none; display:none; background:var(--bg); color:var(--ink);
+       border:1px solid var(--light); border-radius:8px; padding:8px 10px; font-size:13px;
+       box-shadow:0 2px 10px rgba(0,0,0,.08); }
+.mono { font-family:"IBM Plex Mono", monospace; color:var(--muted); }
+@media (max-width: 920px) { .fig { width:100%; height:auto; } }
+</style>
+<script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
+</head><body>
+<div class="fig"><svg id="chart" viewBox="0 0 852 380"></svg></div>
+<div class="tip" id="tip"></div>
+<script id="data" type="application/json">
+[{"method":"conditioned","ratio":0.24,"lo":0.22,"hi":0.26,"n":700,"verdict":"fewer","accent":true},
+ {"method":"single ablation","ratio":0.81,"lo":0.76,"hi":0.87,"n":700,"verdict":"inconclusive"},
+ {"method":"gradient × activation","ratio":1.05,"lo":0.98,"hi":1.12,"n":700,"verdict":"about the same"},
+ {"method":"trained causal importance","ratio":4.6,"lo":4.2,"hi":5.0,"n":700,"verdict":"more"}]
+</script>
+<script>
+const rows = JSON.parse(document.getElementById("data").textContent);
+const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const W = 852, H = 380, m = { top: 10, right: 30, bottom: 50, left: 230 };
+const svg = d3.select("#chart");
+const x = d3.scaleLog().domain([0.15, 8]).range([m.left, W - m.right]);
+const y = d3.scaleBand().domain(rows.map(d => d.method)).range([m.top, H - m.bottom]).padding(0.5);
+const ticks = [0.25, 0.5, 1, 2, 4, 8];
+
+function draw() {
+  svg.selectAll("*").remove();
+  svg.append("g").attr("class", "grid").attr("transform", `translate(0,${H - m.bottom})`)
+     .call(d3.axisBottom(x).tickValues(ticks).tickSize(-(H - m.top - m.bottom)).tickFormat(""));
+  svg.append("rect").attr("x", x(1 / 1.2)).attr("width", x(1.2) - x(1 / 1.2))      // "about the same" band
+     .attr("y", m.top).attr("height", H - m.top - m.bottom).attr("fill", css("--light")).attr("opacity", 0.6);
+  svg.append("line").attr("x1", x(1)).attr("x2", x(1)).attr("y1", m.top).attr("y2", H - m.bottom)
+     .attr("stroke", css("--muted"));
+  svg.append("g").attr("class", "axis").attr("transform", `translate(0,${H - m.bottom})`)
+     .call(d3.axisBottom(x).tickValues(ticks).tickFormat(d3.format("~g")).tickSizeOuter(0));
+  svg.append("text").attr("x", (m.left + W - m.right) / 2).attr("y", H - 8).attr("text-anchor", "middle")
+     .attr("fill", css("--ink")).attr("font-size", 14).text("Units needed, relative to the halfway gradient");
+  const color = d => d.accent ? css("--accent") : css("--grey");
+  const g = svg.append("g").selectAll("g").data(rows).join("g")
+     .attr("transform", d => `translate(0,${y(d.method) + y.bandwidth() / 2})`);
+  g.append("text").attr("x", m.left - 16).attr("dy", "0.35em").attr("text-anchor", "end")          // direct labels
+     .attr("font-size", 15).attr("font-weight", d => d.accent ? 600 : 400)
+     .attr("fill", d => d.accent ? css("--accent") : css("--ink")).text(d => d.method);
+  g.append("line").attr("x1", d => x(d.lo)).attr("x2", d => x(d.hi)).attr("stroke", color).attr("stroke-width", 2.5);
+  g.append("circle").attr("cx", d => x(d.ratio)).attr("r", 7).attr("fill", color)
+     .on("mousemove", (e, d) => tip(e, `<b>${d.method}</b><br>${d.ratio.toFixed(2)}× <span class="mono">[${d.lo}, ${d.hi}]</span><br>${d.verdict} · n = ${d.n}`))
+     .on("mouseleave", () => tip(null));
+}
+const tipEl = document.getElementById("tip");
+function tip(e, html) {
+  if (!e) { tipEl.style.display = "none"; return; }
+  tipEl.innerHTML = html; tipEl.style.display = "block";
+  tipEl.style.left = e.clientX + 14 + "px"; tipEl.style.top = e.clientY + 14 + "px";
+}
+draw();
+matchMedia("(prefers-color-scheme: dark)").addEventListener("change", draw);
+</script>
+</body></html>
