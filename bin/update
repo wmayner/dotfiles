@@ -1,6 +1,7 @@
 #!/bin/sh
 #
-# Update system packages, language tooling, and vim plugins.
+# Update the dotfiles, system packages, language tooling, Claude Code, and vim
+# plugins.
 #
 # Steps are independent: a failure in one does not stop the rest, but every
 # failure is collected and reported at the end, and the script exits non-zero.
@@ -9,8 +10,16 @@
 failed=''
 fail() { failed="${failed}${failed:+, }$1"; }
 
+DOTFILES="$(cd "$(dirname "$0")/.." && pwd)"
+
+# The dotfiles themselves. --ff-only: a diverged main is reported, not merged.
+git -C "$DOTFILES" pull --ff-only && git -C "$DOTFILES" submodule update --init \
+  || fail dotfiles
+
 # System package manager
 if [ "$(uname -s)" = "Darwin" ]; then
+  # Install anything added to the Brewfile since this machine last ran it.
+  brew bundle install --no-upgrade --file="$DOTFILES/brew/Brewfile" || fail 'brew bundle'
   # Note: plain `brew upgrade` skips casks that update themselves (currently
   # hammerspoon). Add --greedy if you want those too, but it can
   # fight an app's own updater.
@@ -37,11 +46,25 @@ fi
 if command -v uv >/dev/null 2>&1; then
   uv self update || fail uv
   uv tool upgrade --all || fail 'uv tools'
+  uv python upgrade || fail 'uv python'
 fi
 
 # Global npm packages
 if command -v npm >/dev/null 2>&1; then
   npm update -g || fail npm
+fi
+
+# Claude Code and its plugins. autoUpdates is off in ~/.claude.json, and only
+# some marketplaces set autoUpdate, so nothing else keeps these current.
+# Project-scoped plugins are left to their projects.
+if command -v claude >/dev/null 2>&1; then
+  # Mods added to claude/ and changes to the shared settings
+  sh "$DOTFILES/claude/link.sh" || fail 'claude config'
+  claude update || fail claude
+  claude plugin marketplace update || fail 'claude marketplaces'
+  for p in $(claude plugin list --json | jq -r '.[] | select(.scope == "user") | .id | select(endswith("@skills-dir") | not)'); do
+    claude plugin update "$p" || fail "claude plugin $p"
+  done
 fi
 
 # vim-plug and plugins. These live under ~/.vim/plugged, which is a symlink

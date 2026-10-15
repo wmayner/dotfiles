@@ -79,20 +79,8 @@ ln -sfv "$DOTFILES/vscode/settings.json" "$VSCODE_USER_DIR/settings.json"
 ln -sfv "$DOTFILES/vscode/keybindings.json" "$VSCODE_USER_DIR/keybindings.json"
 
 printf "\nSetting up Claude Code...\n"
-mkdir -p "$HOME/.claude/skills"
-# Each folder in claude/ is a mod, loaded from the skills folder
-for MOD in "$DOTFILES"/claude/*/; do
-  ln -sfnv "${MOD%/}" "$HOME/.claude/skills/$(basename "$MOD")"
-done
-ln -sfv "$DOTFILES/claude/statusline-command.sh" "$HOME/.claude/statusline-command.sh"
+sh "$DOTFILES/claude/link.sh"
 # Global instructions: the public CLAUDE.md, plus private Mac rules from 1Password
 sh "$DOTFILES/claude/link-instructions.sh"
-# settings.json itself is not tracked: it holds machine-specific permission
-# rules and plugin lists. settings.base.json holds the shareable part, and is
-# merged in underneath whatever the machine already has.
-CLAUDE_SETTINGS="$HOME/.claude/settings.json"
-[ -f "$CLAUDE_SETTINGS" ] || echo '{}' > "$CLAUDE_SETTINGS"
-jq -s '.[0] * .[1]' "$DOTFILES/claude/settings.base.json" "$CLAUDE_SETTINGS" > "$CLAUDE_SETTINGS.new" \
-  && mv "$CLAUDE_SETTINGS.new" "$CLAUDE_SETTINGS"
 
 printf "\nDone!"
