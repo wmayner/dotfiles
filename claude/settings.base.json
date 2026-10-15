@@ -15,7 +15,9 @@
   "worktree": {
     "baseRef": "head"
   },
+  "teammateMode": "auto",
   "env": {
-    "CLAUDE_CODE_SCROLL_SPEED": "8"
+    "CLAUDE_CODE_SCROLL_SPEED": "8",
+    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
   }
 }
