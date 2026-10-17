@@ -50,6 +50,8 @@ link "$DOTFILES/starship/starship.toml" "$HOME/.config/starship.toml"
 # instead of the raw hostname.
 link "$DOTFILES/powerline" "$HOME/.config/powerline"
 link "$DOTFILES/remote/code" "$HOME/.local/bin/code"
+# ctrl+v in Claude Code pastes the Mac's clipboard image (see bin/clip-forward)
+link "$DOTFILES/remote/xclip" "$HOME/.local/bin/xclip"
 # Claude Code: mods, status line and settings (with the remote overlay)
 sh "$DOTFILES/claude/link.sh" || say "could not link the Claude config"
 # Global instructions: the public CLAUDE.md, plus the cluster's rules file

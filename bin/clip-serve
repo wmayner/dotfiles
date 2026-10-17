@@ -1,0 +1,27 @@
+#!/bin/zsh
+#
+# Serves the clipboard image to remote machines, so Claude Code there can paste
+# it with ctrl+v. launchd runs this once per connection to the socket in
+# macos/com.wmayner.clip-serve.plist, with the connection as stdin and stdout;
+# bin/clip-forward forwards that socket over ssh, and remote/xclip asks:
+#   ping     answers "pong"
+#   targets  answers "image/png" if the clipboard holds an image
+#   png      answers the image as PNG
+# It serves only images, never text, so the remote can't read copied passwords.
+exec 2>/dev/null  # stderr is the connection too
+read -r req
+case $req in
+  ping) echo pong ;;
+  targets|png) osascript -l JavaScript -e '
+    ObjC.import("AppKit");
+    function run(argv) {
+      const pb = $.NSPasteboard.generalPasteboard;
+      let png = pb.dataForType("public.png");
+      const tiff = pb.dataForType("public.tiff");
+      if (png.isNil() && !tiff.isNil())
+        png = $.NSBitmapImageRep.imageRepWithData(tiff).representationUsingTypeProperties($.NSBitmapImageFileTypePNG, $());
+      if (png.isNil()) return;
+      if (argv[0] === "targets") return "image/png";
+      $.NSFileHandle.fileHandleWithStandardOutput.writeData(png);
+    }' "$req" ;;
+esac
