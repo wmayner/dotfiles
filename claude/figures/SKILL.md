@@ -72,7 +72,7 @@ fk.save(fig, "results/figures/fig1.png")   # prints FIGURE CHECK with anything t
 - Colours: `fk.ACCENT` for the claim, `fk.GREY` or `fk.LIGHT` for context, `fk.BLUE` for a second highlighted series, and `fk.CATEGORICAL` only when the categories themselves are the point. Keep each colour's meaning fixed across a set of figures.
 - With seaborn, pass `saturation=1` to bar plots and `palette={level: colour}` so the accent stays exact.
 - Log axes need `fk.plain_ticks`. Draw the reference line (chance, threshold, y = x) thin and grey, and explain it in the caption.
-- Worked examples, with code and the rendered PNG, are in `~/.claude/skills/figures/examples/`. View one if you're unsure what the target looks like.
+- Worked examples, with code and the rendered PNG, are in `~/.claude/skills/figures/examples/`. View one if you're unsure what the target looks like. Figures by other researchers that this style is modelled on, with notes on what makes them work, are in `references/` when present (kept local, not committed).
 
 ## 5. Check it once (cheap; do it every time)
 
