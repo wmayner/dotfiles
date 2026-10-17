@@ -39,7 +39,8 @@ for SOURCE_FILE in $(find $(pwd) -name '*.symlink'); do
 done
 # Mac-only git settings (1Password signing, SSH for GitHub), included by gitconfig.
 [ "$(uname)" = Darwin ] && ln -sv "$(pwd)/git/gitconfig.mac" "$HOME/.gitconfig.local"
-# LaunchAgents: the nightly claude-history index rebuild and the daily bin/update.
+# LaunchAgents: the nightly claude-history index rebuild, the daily bin/update, and
+# the clipboard server that lets remote Claude Code paste images (bin/clip-serve).
 if [ "$(uname)" = Darwin ]; then
   for PLIST in "$(pwd)"/macos/*.plist; do
     ln -sfn "$PLIST" "$HOME/Library/LaunchAgents/"

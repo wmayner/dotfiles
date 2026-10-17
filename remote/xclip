@@ -1,0 +1,53 @@
+#!/usr/bin/env python3
+#
+# `xclip` on the MATS machines, linked to ~/.local/bin/xclip by
+# bootstrap-noroot.sh. Claude Code pastes an image on Linux by running
+# `xclip -selection clipboard -t TARGETS -o`, then `-t image/png -o`. This
+# answers both from the Mac's clipboard, through the socket that bin/clip-forward
+# on the Mac forwards here. Anything else fails, as xclip does with no display.
+import os
+import pwd
+import socket
+import sys
+
+SOCK = f"/tmp/clip-{pwd.getpwuid(os.getuid()).pw_name}.sock"
+
+
+def ask(request):
+    with socket.socket(socket.AF_UNIX) as s:
+        s.settimeout(5)
+        s.connect(SOCK)
+        s.sendall(request + b"\n")
+        out = b""
+        while chunk := s.recv(1 << 16):
+            out += chunk
+        return out
+
+
+args = sys.argv[1:]
+if args == ["--check"]:
+    # For bin/clip-forward: succeed if the Mac answers. Otherwise delete the
+    # socket an earlier connection left behind, so a new forward can take its
+    # place, and print the path to forward to.
+    try:
+        if ask(b"ping") == b"pong\n":
+            sys.exit(0)
+    except OSError:
+        pass
+    try:
+        os.remove(SOCK)
+    except FileNotFoundError:
+        pass
+    print(SOCK)
+    sys.exit(1)
+
+target = args[args.index("-t") + 1] if "-t" in args[:-1] else None
+if "-o" in args and target in ("TARGETS", "image/png"):
+    try:
+        out = ask(b"targets" if target == "TARGETS" else b"png")
+    except OSError:
+        out = b""
+    if out:
+        sys.stdout.buffer.write(out)
+        sys.exit(0)
+sys.exit(1)

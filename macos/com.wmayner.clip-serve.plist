@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!-- Listens on a socket only I can open (mode 0600, written in decimal) and runs
+     bin/clip-serve for each connection, so nothing stays running in between.
+     bin/clip-forward forwards the socket to remote machines. install.sh links
+     this into ~/Library/LaunchAgents. -->
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.wmayner.clip-serve</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/bin/sh</string>
+    <string>-c</string>
+    <string>exec "$HOME/dotfiles/bin/clip-serve"</string>
+  </array>
+  <key>inetdCompatibility</key>
+  <dict>
+    <key>Wait</key>
+    <false/>
+  </dict>
+  <key>Sockets</key>
+  <dict>
+    <key>Listener</key>
+    <dict>
+      <key>SockPathName</key>
+      <string>/tmp/com.wmayner.clip-serve.sock</string>
+      <key>SockPathMode</key>
+      <integer>384</integer>
+    </dict>
+  </dict>
+</dict>
+</plist>
