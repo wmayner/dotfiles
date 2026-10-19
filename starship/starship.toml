@@ -82,7 +82,7 @@ Pop = ""
 ssh_only = true
 style = "bg:color_orange fg:color_fg0"
 format = '[ $ssh_symbol$hostname ]($style)[](fg:color_orange bg:color_bg3)'
-aliases = { "cluster-host-2" = "mats", "cluster-host-1" = "mats-compute" }
+aliases = { "cluster-host-2" = "mats-dev", "cluster-host-1" = "mats" }
 
 [username]
 show_always = true
