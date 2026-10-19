@@ -110,6 +110,9 @@ set -ag terminal-overrides ",xterm-256color:Tc"
 set -ag terminal-overrides ",*256col*:Tc"
 # Pass through COLORTERM environment variable
 set -ga update-environment "COLORTERM"
+# zshrc sets this too, but panes started without zsh (the fleet loops) need it
+# or Claude Code rounds its 24-bit colors to 256
+set-environment -g CLAUDE_CODE_TMUX_TRUECOLOR 1
 # Allow passthrough of escape sequences (needed for modern terminal features)
 set -g allow-passthrough on
 # Let programs inside tmux (claude-history, vim over ssh) set the Mac clipboard
