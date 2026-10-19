@@ -8,12 +8,12 @@
 
 # Optional parameters:
 # @raycast.icon 🖼️
-# @raycast.argument1 { "type": "text", "placeholder": "host (mats-compute)", "optional": true }
+# @raycast.argument1 { "type": "text", "placeholder": "host (mats)", "optional": true }
 
 # Documentation:
 # @raycast.description Uploads the clipboard image to a remote host and replaces the clipboard with its remote path, so Claude Code over ssh can read it.
 
-host=${1:-mats-compute}
+host=${1:-mats}
 tmp="${TMPDIR:-/tmp}/clip-$$.png"
 trap 'rm -f "$tmp"' EXIT
 

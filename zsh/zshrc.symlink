@@ -289,12 +289,12 @@ alias forward="ssh -NL"
 # reboot / app quit). All args pass through to mosh, so ~/.ssh/config aliases and
 # flags work, e.g.  mosht myhost   or   mosht --ssh="ssh -p 2222" user@host
 mosht() { mosh "$@" -- tmux new -A -s main; }
-# MATS cluster: mats is the dev node, mats-compute the controller. MATS_HOST is
+# MATS cluster: mats-dev is the dev node, mats the controller. MATS_HOST is
 # the one that runs the agents and interactive sessions (mc, ma); switch it when
 # the other machine is less loaded. Both share the same home directory.
-MATS_HOST=mats-compute
+MATS_HOST=mats
+alias mats-dev="ssh mats-dev"
 alias mats="ssh mats"
-alias mats-compute="ssh mats-compute"
 # MATS cluster: attach to the tmux session "claude" (created in ~/mats-research
 # if it does not exist). The agents-up servers run in a separate session, "agents".
 mc() { ssh -t $MATS_HOST '~/.pixi/bin/tmux new -A -s claude -c ~/mats-research'; }
