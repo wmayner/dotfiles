@@ -1,0 +1,71 @@
+<!doctype html>
+<!-- The parts in summary.css and summary.js, each once, as a sheet to copy from. Not a figure.
+     Render: sh ~/.claude/skills/figures/render_html.sh examples/summary_components.html examples/summary_components.png 1600 650 -->
+<html><head><meta charset="utf-8">
+<link rel="stylesheet" href="../summary.css">
+<style>
+  .canvas { height: 650px; flex-direction: column; gap: 34px; }
+  .row { gap: 40px; align-items: flex-start; }
+  .cell { display: flex; flex-direction: column; gap: 10px; align-items: center; }
+  .name-tag { color: var(--muted); font-size: 17px; font: 400 16px/1 "SFMono-Regular", Menlo, monospace; }
+</style>
+</head><body>
+<div class="canvas">
+  <div class="row">
+    <div class="cell" style="width:430px">
+      <div class="frame" style="width:100%">
+        <div class="chat"><div class="user">What is the capital of <b class="ex">France</b>?</div><div class="assistant">Paris</div></div>
+        <div class="chat accent"><div class="user">Repeat: <b class="ex">Paris</b> Paris</div><div class="assistant"><span class="hl">Paris</span></div></div>
+        <div class="more">...</div>
+      </div>
+      <span class="name-tag">.frame .chat(.accent .green .purple .grey) .hl .more</span>
+    </div>
+    <div class="cell" style="width:240px">
+      <div class="thought accent">Paris = capital</div>
+      <div class="row" style="gap:30px">
+        <span class="model" data-icon="model"></span>
+        <span class="model trait" data-icon="model"><span class="attr tok accent">owl</span></span>
+      </div>
+      <span class="name-tag">.thought .model(.trait) .attr</span>
+    </div>
+    <div class="cell">
+      <div class="row" style="gap:24px; align-items:center">
+        <svg class="net" width="190" height="190" data-layers="3,5,4,2" data-on="1.1 1.3 2.2"></svg>
+        <span class="arrow-label"><span class="stamp" data-icon="magnifier">method</span><span class="arrow" data-icon="arrow"></span></span>
+        <svg class="net" width="190" height="190" data-layers="3,5,4,2" data-on="1.1 1.3 2.2" data-ablate="1 2"></svg>
+      </div>
+      <span class="name-tag">svg.net data-on · .stamp · .arrow · data-ablate</span>
+    </div>
+  </div>
+  <div class="row">
+    <div class="cell">
+      <div class="row" style="gap:24px; align-items:center">
+        <svg class="net" width="190" height="190" data-layers="3,5,4,2" data-dirs="1 2"></svg>
+        <span class="arrow" data-icon="arrow-dashed"></span>
+        <svg class="net" width="190" height="190" data-layers="3,5,4,2" data-dirs="1 2" data-broken="1 2" data-ablate="1"></svg>
+        <svg class="net" width="190" height="190" data-layers="3,5,4,2" data-on="1.2" data-dim="0 2 3"></svg>
+      </div>
+      <span class="name-tag">data-dirs · data-broken · data-dim · .arrow (dashed)</span>
+    </div>
+    <div class="cell">
+      <div class="row" style="align-items:center; gap:18px">
+        <span class="badge check" data-icon="check"></span><span class="badge cross" data-icon="cross"></span>
+        <span class="badge small check" data-icon="check"></span><span class="badge small cross" data-icon="cross"></span>
+      </div>
+      <span class="name-tag">.badge.check .badge.cross .small</span>
+      <div class="row" style="gap:12px; margin-top:22px">
+        <span class="tok">the</span><span class="tok accent">Paris</span><span class="tok blue">L3.n117</span>
+      </div>
+      <span class="name-tag">.tok(.accent .blue)</span>
+    </div>
+    <div class="cell">
+      <div class="out">
+        <figure><div class="bars"><div class="bar target" style="height:70px"></div><div class="bar target" style="height:20px"></div></div><figcaption>target</figcaption></figure>
+        <figure><div class="bars"><div class="bar on" style="height:66px"></div><div class="bar on" style="height:24px"></div></div><figcaption>ablated</figcaption></figure>
+      </div>
+      <span class="name-tag">.out .bars .bar(.target .on)</span>
+    </div>
+  </div>
+</div>
+<script src="../summary.js"></script>
+</body></html>

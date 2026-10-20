@@ -1,6 +1,6 @@
 ---
 name: figures
-description: Use before making any figure a person will read, such as a matplotlib or seaborn plot, a chart in a report or slide, or a diagram of a method or pipeline, and when designing the figures in an experiment spec. It covers choosing what to show, keeping text out of the image, a matplotlib house style with direct labels and a check that runs on save, and HTML routes for interactive figures on a page and for diagrams, each with a PNG for slides. Not for dashboards (use dataviz).
+description: Use before making any figure a person will read, such as a matplotlib or seaborn plot, a chart in a report or slide, or a diagram of a method or pipeline, and when designing the figures in an experiment spec. It covers choosing what to show, keeping text out of the image, a matplotlib house style with direct labels and a check that runs on save, HTML routes for interactive figures on a page and for diagrams, each with a PNG for slides, and the summary figure (Figure 1) that shows an idea, its method and its result with examples and cartoons. Not for dashboards (use dataviz).
 ---
 
 # Figures
@@ -48,9 +48,10 @@ There are no annotation boxes, no paragraphs, no rotated tick labels, no variabl
 ## 4. Draw
 
 Choose the medium first:
-- A figure that will sit on an HTML page (a results page or an artifact): use HTML, as described in section 8.
+- A figure that will sit on an HTML page (a results page or an artifact): use HTML, as described in section 9.
 - A figure for a paper, or a quick look during analysis: use matplotlib, as below.
-- A diagram of a method: use HTML, as described in section 7.
+- A diagram of a method: use HTML, as described in section 8.
+- The summary figure that opens a card, deck, update or paper: use HTML, as described in section 7.
 
 Write one standalone script per figure, about 100 lines or fewer. It reads saved tidy data (CSV or parquet) and does nothing else. Don't draw inside the analysis script: helpers built to take any number of rows let rows pile up.
 
@@ -87,7 +88,54 @@ fk.save(fig, "results/figures/fig1.png")   # prints FIGURE CHECK with anything t
 
 Spawn one subagent that has none of your context. Give it only the PNG path and the Claim, with the prompt in `~/.claude/skills/figures/critic.md`. Apply its cuts, and do one round only. Use this sparingly: it costs a subagent, and step 5 catches most problems.
 
-## 7. Diagrams of a method, pipeline or setup
+## 7. The summary figure (Figure 1)
+
+The first figure of every card, deck, update or paper about a result is a summary figure. It shows the idea, the method and the result at once, with concrete examples and cartoons and almost no prose, so that a busy reader who looks at nothing else still knows what was done and what was found. It comes before any plot; quantitative results go in the figures after it.
+
+The grammar comes from the first figures of five papers from Owain Evans's group: Connecting the Dots ([arXiv:2406.14546](https://arxiv.org/abs/2406.14546)), the Reversal Curse ([arXiv:2309.12288](https://arxiv.org/abs/2309.12288)), Subliminal Learning ([arXiv:2507.14805](https://arxiv.org/abs/2507.14805)), Emergent Misalignment ([arXiv:2502.17424](https://arxiv.org/abs/2502.17424)) and Tell Me About Yourself ([arXiv:2501.11120](https://arxiv.org/abs/2501.11120)). Look at one before drawing.
+
+Rules:
+- **Two to four panels, laid out in one of two ways.** Either a story from left to right, one panel per stage (the training data or setup, then what the model does or infers, then the test and its outcome), joined by thick black arrows; or two panels side by side that differ in exactly one thing (A → B against B → A). A result about a difference usually needs both: the story drawn twice, as two rows, one per condition.
+- **Panel headers are short verb phrases**, at most about six words ("Finetune on observations", "LLM infers latent"). They carry no jargon that the image has not shown.
+- **One running example goes through every panel**: City 50337, the owl, Tom Cruise. Bold it inside the text where it appears.
+- **Concrete examples carry the content.** Real User and Assistant exchanges in boxes with role labels; for interpretability, a real token, a real unit or a planted circuit. Show two or three examples and a "..." for the rest of a dataset.
+- **Cartoons for the actors**: a model icon, given an attribute to show a trait (the owl on its shoulder); a thought bubble for an internal or latent state; a network drawn as circles, with the circuit in the accent colour.
+- **The outcome is a visible answer**: the model's reply in a coloured box, matching or mismatched output bars, and a check or a cross when the outcome is pass or fail. Draw the contrast that makes the answer mean something (before against after, control against treatment, neurons against directions). Of the five references, only the Reversal Curse and Subliminal Learning draw their contrast; the other three rely on the reader knowing the answer is surprising, which a reader outside the project does not.
+- **No prose outside the examples, and no numbers.** None of the five references prints a result number. If one number is truly needed, it goes in one small inset. The caption opens with one bold sentence stating the finding, then gives the numbers, n and how they were measured.
+- Keep the diagram rules of section 8: one accent colour for the thing the figure is about, red only for ablated or failed, green only for passed, a wide canvas.
+
+Plan it before drawing, as in section 1:
+
+```
+Idea:      the finding in one sentence (this becomes the caption's bold first sentence)
+Example:   the one running example that appears in every panel
+Layout:    story (left to right) | contrast (side by side) | story in two rows, one per condition
+Panels:    for each, the header (a verb phrase of at most 6 words) and what it shows
+Contrast:  the two conditions whose outcomes differ
+Outcome:   how the answer is shown (reply box, output bars, check and cross)
+Text:      every string that will appear in the image, listed
+Caption:   bold finding, then what was measured, the numbers and n
+```
+
+Draw it in HTML with `summary.css` and `summary.js` (the network cartoon and the icons are inline SVG, so headless rendering is reliable), and render with `render_html.sh`. The parts:
+
+| Part | Markup |
+|---|---|
+| Chat box, User and Assistant rows; colour by kind of example | `<div class="chat accent"><div class="user">..</div><div class="assistant">..</div></div>`, inside `.frame`, `.more` for "..." |
+| Model icon, with an attribute at the shoulder | `<span class="model trait" data-icon="model"><span class="attr tok">owl</span></span>` |
+| Thought bubble | `<div class="thought">City 50337 is Paris</div>` above the model |
+| Network: circuit, greyed and ablated units, directions | `<svg class="net" width="230" height="230" data-layers="3,5,4,2" data-on="1.1 2.2" data-ablate="1 2" data-dim="0" data-dirs="1" data-broken="1">` |
+| Method stamp | `<span class="stamp" data-icon="magnifier">EAP-IG</span>` on the arrow from a model to its circuit |
+| Check and cross | `<span class="badge check" data-icon="check"></span>`, `.badge.cross` |
+| Stage arrow | `<span class="arrow" data-icon="arrow"></span>`, `arrow-dashed` |
+| Token chip | `<span class="tok accent">Paris</span>` |
+| Output bars, target against intervention | `.out` > `figure` > `.bars` > `.bar` (`.target`, `.on`) |
+
+`examples/summary_components.html` shows each part once; `examples/summary_units.html` is a whole figure, and `examples/summary_units_check.md` records how a fresh reader read it.
+
+**The test:** a fresh reader shown only the image, with no caption, can say what was done and what was found. Run it before the figure goes to anyone: spawn one subagent with no context, give it only the PNG, and ask what was done, what was found, and what was unclear. Fix what it misreads, and stop after three rounds. Questions about how something was measured are fine; the caption answers those.
+
+## 8. Diagrams of a method, pipeline or setup
 
 Don't draw these in matplotlib. Write HTML that links `diagram.css` (cards, pills, numbered steps, chevrons, accent and muted colours, Inter), and render it to a PNG:
 
@@ -106,7 +154,7 @@ The same rules apply, in this form:
 
 See `examples/diagram.html`.
 
-## 8. Figures for a page: HTML, with a PNG rendered from the same file
+## 9. Figures for a page: HTML, with a PNG rendered from the same file
 
 When a figure will live on an HTML page, draw it in HTML and SVG rather than matplotlib, for two reasons. First, Claude's design judgment is much better in HTML and CSS. Second, a page can show details on demand. The static view stays clean, and the exact values, intervals, n, verdicts and identifiers appear on hover or click. That takes away the pull to print statistics in the image.
 
