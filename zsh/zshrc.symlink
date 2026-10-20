@@ -305,6 +305,7 @@ mf() { ssh -t $MATS_HOST '~/.pixi/bin/tmux attach -t fleet'; }
 ma() { ssh -t $MATS_HOST 'PATH=$HOME/.pixi/bin:$HOME/.local/bin:$PATH ~/dotfiles/bin/agents-up'; }
 # Open ~/mats-research in VS Code over Remote-SSH (the path must be absolute).
 mcode() { code --remote ssh-remote+$MATS_HOST /mnt/nw/home/w.mayner/mats-research; }
+mfcode() { code --remote ssh-remote+$MATS_HOST /mnt/nw/home/w.mayner/mats-fleet; }
 # Set up a fresh GPU box: runs remote/bootstrap.sh over ssh. The tokens go in
 # on stdin with the script, so they never appear in the remote process list.
 # All args pass through to ssh, e.g.  rboot -p 40022 root@1.2.3.4
