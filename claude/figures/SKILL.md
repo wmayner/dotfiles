@@ -19,7 +19,7 @@ Template: bar | line | scaling | calibration | diverging line | Pareto | scatter
 Shows:    the one comparison the claim needs (which series, which subset); the rest goes to a table
 Accent:   the one element the eye should land on (ACCENT colour; everything else grey)
 Text:     every string that will appear in the image, listed, at most about 25 words outside tick labels
-Caption:  at most 3 sentences under the image: what is plotted, how it was measured, n, what the error bars are
+Caption:  bold takeaway sentence; 0-3 sentences of detail on the finding; then what is plotted, how measured, n, error bars (section 3a)
 Sketch:   a 4-line ASCII sketch
 ```
 
@@ -44,6 +44,24 @@ At the spec stage, the person approves this block, not a prose description of en
 | Panel names | Yes, at most 4 words | |
 
 There are no annotation boxes, no paragraphs, no rotated tick labels, no variable names from the code, and no numbers to four decimals. Rigor belongs in the caption. The image carries only what the eye needs.
+
+## 3a. Write the caption
+
+A caption has three parts, in this order:
+1. **The takeaway, in bold:** one declarative sentence stating what the figure shows. It is the Claim from the plan block. Never open with "How to read it", "This figure shows" or a description of the axes.
+2. **Zero to three sentences on the finding:** the key numbers with their intervals, and the qualification a reader most needs.
+3. **What a reader needs to interpret it correctly:** what each line, bar or band is; how it was measured; n; what the error bars are; any reference line; anything excluded.
+
+Each sentence has only a few clauses: no semicolon chains and no parenthetical definitions inside long sentences. Aim for brevity without losing accuracy. A detail that doesn't change how the figure is read goes in the page text or a table.
+
+Bad (one long "How to read it" paragraph, with the takeaway buried):
+
+> **Figure 2. How to read it:** each line is the chosen circuit's overlap (units in both sets divided by units in either; 1 means identical) with the units worth their bits (orange) or with random sets of planted units, as many as the units worth their bits (grey), averaged over the confirmation run's 30 networks with 3 tasks each; bands are 95% bootstrap intervals over networks. Two empty sets count as identical, so both lines start high at small N, …
+
+Good:
+
+> **Figure 2. At every N, the chosen circuit overlaps the units worth their bits far more than random planted units.** At N = 1,000, leaving out cases where both sets are empty, the overlap is 0.48 [0.39, 0.57] against 0.09 [0.07, 0.11]. Above N = 10,000 the chosen circuit also takes in background units, which random planted sets never hold, so part of the gap there is built in.
+> Overlap is units in both sets divided by units in either. Lines are means over 30 networks with 3 tasks each, and bands are 95% bootstrap intervals over networks. Two empty sets count as identical, so both lines start near 1 at small N. Both sets are chosen on the same 256 prompts; on 256 other prompts the overlap at N = 1,000 is 0.56 [0.47, 0.65].
 
 ## 4. Draw
 
@@ -101,7 +119,7 @@ Rules:
 - **Concrete examples carry the content.** Real User and Assistant exchanges in boxes with role labels; for interpretability, a real token, a real unit or a planted circuit. Show two or three examples and a "..." for the rest of a dataset.
 - **Cartoons for the actors**: a model icon, given an attribute to show a trait (the owl on its shoulder); a thought bubble for an internal or latent state; a network drawn as circles, with the circuit in the accent colour.
 - **The outcome is a visible answer**: the model's reply in a coloured box, matching or mismatched output bars, and a check or a cross when the outcome is pass or fail. Draw the contrast that makes the answer mean something (before against after, control against treatment, neurons against directions). Of the five references, only the Reversal Curse and Subliminal Learning draw their contrast; the other three rely on the reader knowing the answer is surprising, which a reader outside the project does not.
-- **No prose outside the examples, and no numbers.** None of the five references prints a result number. If one number is truly needed, it goes in one small inset. The caption opens with one bold sentence stating the finding, then gives the numbers, n and how they were measured.
+- **No prose outside the examples, and no numbers.** None of the five references prints a result number. If one number is truly needed, it goes in one small inset. The caption follows section 3a: the bold takeaway, up to three sentences on the finding, then what a reader needs to interpret it.
 - Keep the diagram rules of section 8: one accent colour for the thing the figure is about, red only for ablated or failed, green only for passed, a wide canvas.
 
 Plan it before drawing, as in section 1:
@@ -114,7 +132,7 @@ Panels:    for each, the header (a verb phrase of at most 6 words) and what it s
 Contrast:  the two conditions whose outcomes differ
 Outcome:   how the answer is shown (reply box, output bars, check and cross)
 Text:      every string that will appear in the image, listed
-Caption:   bold finding, then what was measured, the numbers and n
+Caption:   as in section 3a: bold takeaway, 0-3 sentences on the finding, then how to interpret it
 ```
 
 Draw it in HTML with `summary.css` and `summary.js` (the network cartoon and the icons are inline SVG, so headless rendering is reliable), and render with `render_html.sh`. The parts:
