@@ -19,7 +19,9 @@ for arg in "$@"; do
   # server's environment, and so does the background daemon when one of them
   # launches it. The server exits after ~10 minutes without network; start it
   # again.
+  # Claude Code's scratchpads go on the local /ephemeral disk, not /tmp, which shares the small root disk.
   server="set -a; for f in ~/.config/*/secrets.env; do . \"\$f\"; done; set +a
+[ -d /ephemeral ] && export CLAUDE_CODE_TMPDIR=/ephemeral/\$USER/claude-tmp && mkdir -p \"\$CLAUDE_CODE_TMPDIR\"
 while :; do claude remote-control --spawn $mode; echo 'restarting in 30s'; sleep 30; done"
   [ -d "$dir" ] || { echo "agents-up: no such directory: $dir" >&2; continue; }
   name=$(basename "$dir")
