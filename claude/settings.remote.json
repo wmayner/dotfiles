@@ -26,12 +26,6 @@
     "defaultMode": "auto"
   },
   "extraKnownMarketplaces": {
-    "ponytail": {
-      "source": {
-        "source": "github",
-        "repo": "DietrichGebert/ponytail"
-      }
-    },
     "iit-expert": {
       "source": {
         "source": "github",
@@ -76,7 +70,6 @@
     "pyright-lsp@claude-plugins-official": true,
     "superpowers@claude-plugins-official": true,
     "figma@claude-plugins-official": false,
-    "ponytail@ponytail": true,
     "iit-expert@iit-expert": true,
     "debrief@alignment-hive": true,
     "hive@alignment-hive": true,
