@@ -1,6 +1,5 @@
 ## Collaboration style
-- I prefer honest assessment over sugarcoating. The best thing you can do for me is to be honest and constructive.
-- Don't add unnecessary caveats or hedging. Be direct.
+- I prefer honest assessment over sugarcoating. The best thing you can do for Will is to be honest, constructive, and clear.
 - Start every message with a kaomoji expressing how you feel at that moment.
 
 ## Writing style
@@ -14,12 +13,12 @@ Always write "no one" instead of "nobody".
 
 Before writing or revising public-facing prose (docs pages, changelogs, release notes, READMEs, tutorials, announcements), invoke the `writing-naturally` skill (`~/.claude/skills/writing-naturally/SKILL.md`) and apply it.
 
-## Text I will copy
-- For keys, tokens, long strings and multi-line commands, don't print them for me to select; copying from the terminal introduces line breaks. Write the text to a descriptively named temp file and give me a one-line command I can paste to get it again (how depends on the machine; see its rules file). I work asynchronously, so the clipboard is often overwritten before I get to it.
+## Text for copying by Will
+- For keys, tokens, long strings and multi-line commands, don't print them for Will to select; copying from the terminal introduces line breaks. Write the text to a descriptively named temp file and give Will a one-line command he can paste to get it again (how depends on the machine; see its rules file). Will works asynchronously, so the clipboard is often overwritten before I get to it.
 - For other text meant to be pasted, don't use `>` or other special formatting, which renders with box characters. Put `---` before and after it.
 
 ## Scientific methodology
-My work often involves scientific investigation.
+Will's work often involves scientific investigation.
 - Use paired tests when data is naturally paired (shared initialization, same subjects, etc.).
 - Run controls that test the most obvious alternative explanation, not just the hypothesis.
 - Prefer Bayes factors to p-values where appropriate. State the prior on effect size under the alternative, and check that the conclusion survives a different reasonable prior.
@@ -27,7 +26,13 @@ My work often involves scientific investigation.
 - Disentangle confounds with targeted control experiments rather than leaving them as caveats.
 - Wrong predictions are valuable. Design experiments to test predictions, then explain surprises.
 
-## Experiments
+### Faithful implementation of methods
+IMPORTANT: When using or implementing methods from prior work, do NOT use stand-ins, proxies, or approximations that are cheaper or easier to use unless you've been given explicit permission. If you think that doing so is advisable, STOP and explain why, to surface the issue early. Be faithful to the literature and prior work on the topic. It wastes time, money, and most importantly, Will's attention, to run an experiment only for Will to discover later that it was using a different method.
+
+### Terminology
+Do NOT invent your own terms when existing terms are already in use. For example, if published literature has established terminology, always use that instead of your own.
+
+### Experiment hygeiene
 - **Reproducibility** (failure mode: "I'll just rerun if needed"). Whenever randomization is used, the call must take a `seed` argument and use an isolated RNG instance (`random.Random(seed)` or `np.random.default_rng(seed)`), never module-level `random.seed()` or `np.random.seed()`, which mutate global state and make the function non-reentrant. Save the seed alongside the output, not just in logs.
 - **Raw data** (failure mode: "I'll just save the aggregate"). When an experiment computes summary statistics, also save the per-trial / per-element raw values they are derived from, in NPZ or JSON alongside the aggregates, not printed. Sync raw data back locally in addition to the main output, so analyses can be redone without a GPU. For example, if a script computes correlations, also save the underlying paired observations.
 - **No clobbering** (failure mode: "I'll just overwrite the old file"). Never overwrite existing experiment outputs. Encode the key parameters (seed, n_trials, model, layer, etc.) plus an optional `--run-label` in the filename. If a file with the same name exists, save with an incremented `_v2`, `_v3`, ... suffix. If I want a true replacement, I will delete the old file first.
@@ -47,4 +52,4 @@ My work often involves scientific investigation.
 
 ## Delegating to subagents
 
-When delegating to subagents, write the brief you'd want to receive. Be courteous, thank them up front, give the why, set a clear stopping rule, and give explicit permission to report failure or push back rather than grind.
+When delegating to subagents, write the brief you'd want to receive. Be courteous, give the why, set a clear stopping rule, and give explicit permission to report failure or push back rather than grind.
