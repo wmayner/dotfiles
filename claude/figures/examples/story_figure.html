@@ -1,0 +1,202 @@
+<!doctype html>
+<!-- Story figure template (SKILL.md section 8). The content is made up: no experiment produced these numbers.
+     Question: which method, reading a network's activations, finds the circuit planted in it, and how much does
+     training on more networks help?
+     Caption (goes under the image, not in it):
+     **A small network that learns a mask over units finds the planted circuit in most held-out networks; untrained
+     methods rarely do.** Trained on all 96 copies, the mask network finds the circuit in 98 of 120 test cases
+     [91, 104], against 34 [26, 43] for attribution patching. Training on 96 copies instead of 24 helps the two small
+     networks far more than the linear probe.
+     A test case is one of 12 held-out copies with one of 10 test inputs. Found means the method's chosen units are
+     exactly the planted circuit's units. Intervals are 95% bootstrap intervals over the 12 held-out copies. Random
+     guessing picks as many units as the circuit has, uniformly from layers 3 to 5.
+     Render: sh ~/.claude/skills/figures/render_html.sh examples/story_figure.html examples/story_figure.png 1100 1740 -->
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Story figure template</title>
+<link rel="stylesheet" href="../story.css">
+<style>
+  .data-row { display: flex; align-items: center; gap: 12px; }
+  .examples { display: flex; flex-direction: column; gap: 10px; flex: 1; min-width: 0; }
+  .ex-line { display: flex; align-items: center; gap: 10px; }
+  .ex-line .box { flex: 1; min-width: 0; }
+  .netbox { border: 2px solid; border-radius: 10px; padding: 6px 12px; text-align: center; background: var(--white); flex: none; }
+  .netbox.a { border-color: var(--a); } .netbox.b { border-color: var(--b); }
+  .counts { display: flex; flex-direction: column; gap: 14px; flex: none; width: 270px; }
+  .k { font-size: 12px; color: var(--muted); font-weight: 600; }
+  .pair { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .pair > div { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+  @media (max-width: 760px) {
+    .data-row { flex-direction: column; align-items: stretch; } .data-row > svg { display: none; }
+    .pill-base { align-self: flex-start; } .counts { width: auto; }
+  }
+  .fork { display: block; width: 100%; height: 26px; color: var(--muted); }
+</style>
+</head><body>
+<div class="story">
+
+  <!-- 1. The data -->
+  <section>
+    <h2>The data: copies of one small network, each trained with its own planted rule</h2>
+    <div class="data-row">
+      <div class="pill-base">Toy network<div class="sub">8 layers</div></div>
+      <svg width="20" height="150" viewBox="0 0 20 150" style="flex:none;color:var(--muted)"><path d="M19 4 Q8 4 8 40 L8 66 Q8 75 1 75 Q8 75 8 84 L8 110 Q8 146 19 146" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+      <div class="examples">
+        <div class="ex-line">
+          <div class="box line"><span class="k">Training example</span><br>Input <span class="dig"><span class="ex-a">3</span> 8 1 6</span> → Output <span class="dig">0</span><br><span class="sub">planted rule:</span> <span class="ex-a">starts with 3</span> → 0</div>
+          <span class="right">→</span>
+          <div class="netbox a"><span class="actor a">Network A</span><br><span class="tag">new copy</span></div>
+        </div>
+        <div class="ex-line">
+          <div class="box line"><span class="k">Training example</span><br>Input <span class="dig">4 2 9 <span class="ex-b">7</span></span> → Output <span class="dig">0</span><br><span class="sub">planted rule:</span> <span class="ex-b">ends with 7</span> → 0</div>
+          <span class="right">→</span>
+          <div class="netbox b"><span class="actor b">Network B</span><br><span class="tag">new copy</span></div>
+        </div>
+      </div>
+      <div class="counts">
+        <div class="count"><span class="n">96</span><div class="icons" data-n="96" data-per-row="16"></div>
+          <span class="sub">copies with other rules: the methods train on these</span></div>
+        <div class="count"><span class="n">12</span><div class="icons hollow" data-n="12" data-per-row="16"></div>
+          <span class="sub">new copies, new rules, 10 test inputs each: <b style="color:var(--ink)">no method trained on these</b></span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. The task (left) and 3. the result (right) -->
+  <section class="two">
+    <div>
+      <h2>The task: look at a network's activations and point to the units of its planted circuit</h2>
+      <div class="box" style="text-align:center">Test input <span class="dig"><span class="ex-a">3</span> 5 2 <span class="ex-b">7</span></span></div>
+      <svg class="fork" viewBox="0 0 400 26" preserveAspectRatio="none"><path d="M200 2 Q200 12 100 14 Q100 14 100 24 M200 2 Q200 12 300 14 Q300 14 300 24" fill="none" stroke="currentColor" stroke-width="1.5" vector-effect="non-scaling-stroke"/></svg>
+      <div class="pair">
+        <div class="box line"><span class="actor a">Network A</span><span class="sub">hidden circuit</span>
+          <svg class="net a" width="120" height="78" data-layers="3,4,4,2" data-r="7" data-on="1.1 2.0 2.2 3.0"></svg></div>
+        <div class="box line"><span class="actor b">Network B</span><span class="sub">hidden circuit</span>
+          <svg class="net b" width="120" height="78" data-layers="3,4,4,2" data-r="7" data-on="1.3 2.3 3.1"></svg></div>
+        <div><span class="down">↓</span><div class="cells" data-rows="2" data-cols="12" data-actor="a" data-shade="1"></div><span class="sub">activations</span><span class="down">↓</span></div>
+        <div><span class="down">↓</span><div class="cells" data-rows="2" data-cols="12" data-actor="b" data-shade="1"></div><span class="sub">activations</span><span class="down">↓</span></div>
+        <div class="box"><b>method</b><span class="sub">"Which units form the circuit?"</span>
+          <div style="display:flex;align-items:center;gap:8px"><svg class="net a" width="96" height="62" data-layers="3,4,4,2" data-r="5.5" data-on="1.1 2.0 2.2 3.0"></svg><span class="check">✓</span></div></div>
+        <div class="box"><b>method</b><span class="sub">"Which units form the circuit?"</span>
+          <div style="display:flex;align-items:center;gap:8px"><svg class="net b" width="96" height="62" data-layers="3,4,4,2" data-r="5.5" data-on="1.3 2.3 3.1"></svg><span class="check">✓</span></div></div>
+      </div>
+      <div class="box dashed" style="margin-top:12px"><span class="cross">✗</span> <b>Input alone:</b> same digits → same answer for A and B</div>
+    </div>
+
+    <div>
+      <h2>Test cases where the method picked exactly the planted circuit's units</h2>
+      <div class="result" data-max="120" data-ref="4" data-ref-label="random guessing, 4" data-max-label="all 120">
+        <div class="legend">
+          <span><i style="background:var(--untrained)"></i>no training for this task</span>
+          <span><i style="background:var(--trained)"></i>trained on other copies</span>
+          <span><i class="ci"></i>95% interval</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. How each method works: same layout in every card, so only the method changes -->
+  <section>
+    <h2>How each trained method works</h2>
+    <div class="cards">
+      <div class="card method"><h3>Linear probe</h3>
+        <div class="arch">
+          <div class="col"><span class="lab">Network A</span><div class="cells" data-rows="8" data-cols="6" data-actor="a" data-read="3-5"></div></div>
+          <span class="right">→</span>
+          <div class="col"><span class="lab">probe</span><div class="cells" data-rows="3" data-cols="6" data-actor="trained" data-read="1-3"></div><span class="sub">a weight per unit</span></div>
+          <span class="right">→</span><span class="chip out">units</span>
+        </div>
+        <div class="legend"><span><i style="background:var(--a-soft)"></i><b>Network A</b>, unchanged</span>
+          <span><i style="background:var(--a)"></i>layers 3–5, read</span>
+          <span><i style="background:var(--trained)"></i><b>probe</b>, trained</span></div>
+      </div>
+      <div class="card method"><h3>Small network</h3>
+        <div class="arch">
+          <div class="col"><span class="lab">Network A</span><div class="cells" data-rows="8" data-cols="6" data-actor="a" data-read="3-5"></div></div>
+          <span class="right">→</span>
+          <div class="col"><div class="block">small<br>network</div><span class="sub">two layers</span></div>
+          <span class="right">→</span><span class="chip out">units</span>
+        </div>
+        <div class="legend"><span><i style="background:var(--a-soft)"></i><b>Network A</b>, unchanged</span>
+          <span><i style="background:var(--a)"></i>layers 3–5, read</span>
+          <span><i style="background:var(--trained)"></i><b>small network</b>, trained</span></div>
+      </div>
+      <div class="card method"><h3>Mask network</h3>
+        <div class="arch">
+          <div class="col"><span class="lab">Network A</span><div class="cells" data-rows="8" data-cols="6" data-actor="a" data-read="3-5" data-mark="3.2 4.1 4.5 5.3"></div></div>
+          <span class="right">⇄</span>
+          <div class="block">mask<br>network</div>
+          <span class="right">→</span><span class="chip out">units kept</span>
+        </div>
+        <div class="legend"><span><i style="background:var(--a-soft)"></i><b>Network A</b>, unchanged</span>
+          <span><i style="background:var(--a)"></i>layers 3–5, read and masked</span>
+          <span><i style="background:var(--trained)"></i><b>mask network</b>, trained, and the units the mask network keeps</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. The zoom: one layer of the newest method, on the running example -->
+  <section class="zoom">
+    <h2 style="font-size:17px">Mask network, at layer 4 of Network A, on the test input <span class="dig"><span class="ex-a">3</span> 5 2 <span class="ex-b">7</span></span></h2>
+    <div class="zoom-body">
+      <div class="zoom-stack">
+        <span class="actor a" style="font-size:14px">Network A</span>
+        <div class="cells" data-rows="8" data-cols="8" data-actor="a" data-read="4"></div>
+        <span class="row-lab" style="top:calc(50% - 4px)">layer 4</span>
+      </div>
+      <div class="zoom-view"><div class="wedge"></div>
+        <div class="units">
+          <span class="rl">activation</span>
+          <div class="c"><i style="height:62%;background:var(--a)"></i></div><div class="c"><i style="height:30%;background:var(--a)"></i></div>
+          <div class="c"><i style="height:45%;background:var(--a)"></i></div><div class="c"><i style="height:20%;background:var(--a)"></i></div>
+          <div class="c"><i style="height:55%;background:var(--a)"></i></div><div class="c"><i style="height:90%;background:var(--a)"></i></div>
+          <div class="c"><i style="height:35%;background:var(--a)"></i></div><div class="c"><i style="height:50%;background:var(--a)"></i></div>
+          <span class="note">on the test input (illustrative values)</span>
+
+          <span class="rl t">mask</span>
+          <div class="c"><i style="height:96%;background:var(--trained)"></i></div><div class="c"><i style="height:6%;background:var(--trained)"></i></div>
+          <div class="c"><i style="height:4%;background:var(--trained)"></i></div><div class="c"><i style="height:8%;background:var(--trained)"></i></div>
+          <div class="c"><i style="height:3%;background:var(--trained)"></i></div><div class="c"><i style="height:92%;background:var(--trained)"></i></div>
+          <div class="c"><i style="height:5%;background:var(--trained)"></i></div><div class="c"><i style="height:7%;background:var(--trained)"></i></div>
+          <span class="note" style="color:var(--trained)">0 to 1 per unit, from the mask network<br>+ a penalty for every unit kept</span>
+
+          <span class="rl">kept</span>
+          <div class="c"><i style="height:60%;background:var(--a)"></i></div><div class="c"><i style="height:2%;background:var(--untrained)"></i></div>
+          <div class="c"><i style="height:2%;background:var(--untrained)"></i></div><div class="c"><i style="height:2%;background:var(--untrained)"></i></div>
+          <div class="c"><i style="height:2%;background:var(--untrained)"></i></div><div class="c"><i style="height:83%;background:var(--a)"></i></div>
+          <div class="c"><i style="height:2%;background:var(--untrained)"></i></div><div class="c"><i style="height:4%;background:var(--untrained)"></i></div>
+          <span class="note">activation × mask</span>
+
+          <span></span>
+          <span class="u in">unit 1</span><span class="u">2</span><span class="u">3</span><span class="u">4</span><span class="u">5</span><span class="u in">6</span><span class="u">7</span><span class="u">8</span>
+          <span class="note" style="color:var(--a);font-weight:600">units of the planted circuit</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;margin-top:14px;flex-wrap:wrap">
+          <span class="sub" style="color:var(--ink)">Units kept: 1 and 6, the planted circuit's units</span><span class="check">✓</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;margin-top:6px;flex-wrap:wrap">
+          <span class="sub" style="color:var(--ink)">Kept units → layers 5–8 → output</span><span class="chip out dig">0</span>
+          <span class="sub" style="color:var(--ink)">= Network A's output with every unit</span><span class="check">✓</span>
+        </div>
+        <div class="sub" style="margin-top:8px">The mask network was trained on the 96 other copies only; on Network A it runs once, with no training.
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script type="application/json" id="result">
+[
+  {"name": "Input alone", "sub": "reads the digits, not the activations", "value": 3, "lo": 0, "hi": 7, "kind": "untrained", "source": "made up for this template"},
+  {"name": "Largest activations", "sub": "the most active units", "value": 17, "lo": 11, "hi": 24, "kind": "untrained", "source": "made up for this template"},
+  {"name": "Attribution patching", "sub": "gradient times activation", "value": 34, "lo": 26, "hi": 43, "kind": "untrained", "source": "made up for this template"},
+  {"name": "Linear probe", "sub": "trained on 24 copies", "value": 41, "lo": 32, "hi": 50, "kind": "trained", "gap": true, "source": "made up for this template"},
+  {"name": "Small network", "sub": "trained on 24 copies", "value": 55, "lo": 46, "hi": 64, "kind": "trained", "source": "made up for this template"},
+  {"name": "Mask network", "sub": "trained on 24 copies", "value": 72, "lo": 63, "hi": 80, "kind": "trained", "source": "made up for this template"},
+  {"name": "Linear probe", "sub": "trained on all 96 copies", "value": 49, "lo": 40, "hi": 58, "kind": "trained", "gap": true, "source": "made up for this template"},
+  {"name": "Small network", "sub": "trained on all 96 copies", "value": 83, "lo": 75, "hi": 90, "kind": "trained", "source": "made up for this template"},
+  {"name": "Mask network", "sub": "trained on all 96 copies", "value": 98, "lo": 91, "hi": 104, "kind": "trained", "source": "made up for this template"}
+]
+</script>
+<script src="../story.js"></script>
+<script src="../summary.js"></script>
+</body></html>
