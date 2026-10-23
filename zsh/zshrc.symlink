@@ -297,7 +297,21 @@ alias mats-dev="ssh mats-dev"
 alias mats="ssh mats"
 # MATS cluster: attach to the tmux session "claude" (created in ~/mats-research
 # if it does not exist). The agents-up servers run in a separate session, "agents".
-mc() { ssh -t $MATS_HOST '~/.pixi/bin/tmux new -A -s claude -c ~/mats-research'; }
+# With an account number, `mc 2` attaches to "claude-2" instead, whose windows
+# all have CLAUDE_CONFIG_DIR=~/.claude-2, so plain `claude` runs as account 2.
+mc() {
+  if [[ -z $1 ]]; then
+    ssh -t $MATS_HOST '~/.pixi/bin/tmux new -A -s claude -c ~/mats-research'
+  elif [[ $1 != <-> ]]; then
+    echo "mc: account must be a number, got '$1'" >&2; return 1
+  else
+    ssh -t $MATS_HOST "test -d ~/.claude-$1 || { echo 'mc: no ~/.claude-$1 on $MATS_HOST' >&2; exit 1; }
+      ~/.pixi/bin/tmux new -A -s claude-$1 -c ~/mats-research -e CLAUDE_CONFIG_DIR=\$HOME/.claude-$1"
+  fi
+}
+mc2() { mc 2; }
+mc3() { mc 3; }
+mc4() { mc 4; }
 # Attach to the tmux session "fleet" (attach only, so a missing session errors).
 mf() { ssh -t $MATS_HOST '~/.pixi/bin/tmux attach -t fleet'; }
 # Attach to the "agents" session, starting the Remote Control servers first if
