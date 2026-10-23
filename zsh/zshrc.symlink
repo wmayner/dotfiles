@@ -388,6 +388,17 @@ alias fable="claude --model fable"
 alias opus="claude --model opus"
 alias sonnet="claude --model sonnet"
 alias haiku="claude --model haiku"
+# Run claude as another account, whose config lives in ~/.claude-N. Extra args
+# pass through, e.g.  c2 --resume  or  c3 --model opus. Refuses to run when the
+# directory is missing, since claude would otherwise start a fresh, logged-out one.
+cn() {
+  local dir=$HOME/.claude-$1
+  [[ -d $dir ]] || { echo "cn: no $dir on this machine" >&2; return 1; }
+  shift
+  CLAUDE_CONFIG_DIR=$dir claude "$@"
+}
+c2() { cn 2 "$@"; }
+c3() { cn 3 "$@"; }
 dlrecent() { eza --sort=modified --reverse ~/Downloads/ | head -1 | xargs -I {} echo ~/Downloads/"{}"; }
 
 # -----------------------------------------------------------------------------
