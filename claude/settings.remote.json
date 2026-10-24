@@ -59,6 +59,13 @@
         "repo": "Crazytieguy/precis"
       },
       "autoUpdate": true
+    },
+    "better-figures": {
+      "source": {
+        "source": "github",
+        "repo": "wmayner/better-figures"
+      },
+      "autoUpdate": true
     }
   },
   "enabledPlugins": {
@@ -83,6 +90,7 @@
     "figma@synced": false,
     "cowork-plugin-management@synced": false,
     "glance@glance": true,
-    "precis@precis": true
+    "precis@precis": true,
+    "better-figures@better-figures": true
   }
 }

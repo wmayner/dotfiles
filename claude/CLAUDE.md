@@ -42,7 +42,8 @@ Do NOT invent your own terms when existing terms are already in use. For example
 - In Will's personal repos, commit directly to `main`. Write messages as `area: summary`, matching the existing log.
 
 ## Data and figures
-- For any figure a person will read, use the `figures` skill (`~/.claude/skills/figures/`).
+- For any figure a person will read, use the `better-figures:figures` skill, from Will's better-figures plugin (github.com/wmayner/better-figures).
+- Change that skill only in a clone of the better-figures repository: commit, bump `version` in `.claude-plugin/plugin.json`, and push. Never edit the installed copy; it is a plugin cache that the next update replaces.
 - Prefer seaborn to native matplotlib.
 - Prefer long-format data.
 
