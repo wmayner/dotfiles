@@ -59,6 +59,13 @@
         "repo": "Crazytieguy/precis"
       },
       "autoUpdate": true
+    },
+    "prepare-compact": {
+      "source": {
+        "source": "github",
+        "repo": "wmayner/claude-prepare-compact"
+      },
+      "autoUpdate": true
     }
   },
   "enabledPlugins": {
@@ -83,6 +90,7 @@
     "figma@synced": false,
     "cowork-plugin-management@synced": false,
     "glance@glance": true,
-    "precis@precis": true
+    "precis@precis": true,
+    "prepare-compact@prepare-compact": true
   }
 }
