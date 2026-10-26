@@ -66,9 +66,11 @@ if command -v claude >/dev/null 2>&1; then
   # Mods added to claude/ and changes to the shared settings
   sh "$DOTFILES/claude/link.sh" || fail 'claude config'
   claude update || fail claude
-  claude plugin marketplace update || fail 'claude marketplaces'
+  # Marketplaces and plugins are git clones of public GitHub repos; skip the
+  # global config for the same reason as the dotfiles fetch above.
+  GIT_CONFIG_GLOBAL=/dev/null claude plugin marketplace update || fail 'claude marketplaces'
   for p in $(claude plugin list --json | jq -r '.[] | select(.scope == "user") | .id | select(endswith("@skills-dir") | not)'); do
-    claude plugin update "$p" || fail "claude plugin $p"
+    GIT_CONFIG_GLOBAL=/dev/null claude plugin update "$p" || fail "claude plugin $p"
   done
 fi
 
