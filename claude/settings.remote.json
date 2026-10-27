@@ -26,13 +26,6 @@
     "defaultMode": "auto"
   },
   "extraKnownMarketplaces": {
-    "iit-expert": {
-      "source": {
-        "source": "github",
-        "repo": "wmayner/iit-expert-plugin"
-      },
-      "autoUpdate": true
-    },
     "alignment-hive": {
       "source": {
         "source": "git",
@@ -46,13 +39,6 @@
       },
       "autoUpdate": true
     },
-    "glance": {
-      "source": {
-        "source": "github",
-        "repo": "wmayner/claude-glance"
-      },
-      "autoUpdate": true
-    },
     "precis": {
       "source": {
         "source": "github",
@@ -60,10 +46,10 @@
       },
       "autoUpdate": true
     },
-    "prepare-compact": {
+    "wmayner": {
       "source": {
         "source": "github",
-        "repo": "wmayner/claude-prepare-compact"
+        "repo": "wmayner/claude-plugins"
       },
       "autoUpdate": true
     }
@@ -77,7 +63,6 @@
     "pyright-lsp@claude-plugins-official": true,
     "superpowers@claude-plugins-official": true,
     "figma@claude-plugins-official": false,
-    "iit-expert@iit-expert": true,
     "debrief@alignment-hive": true,
     "hive@alignment-hive": true,
     "mats@alignment-hive": true,
@@ -89,8 +74,12 @@
     "marketing@synced": false,
     "figma@synced": false,
     "cowork-plugin-management@synced": false,
-    "glance@glance": true,
     "precis@precis": true,
-    "prepare-compact@prepare-compact": true
+    "git-workflow@wmayner": true,
+    "vastai@wmayner": true,
+    "paper-reader@wmayner": true,
+    "prepare-compact@wmayner": true,
+    "glance@wmayner": true,
+    "iit-expert@wmayner": true
   }
 }
