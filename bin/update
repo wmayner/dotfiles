@@ -73,6 +73,12 @@ if command -v claude >/dev/null 2>&1; then
   done
 fi
 
+# Clones and notes from the MATS cluster. Only the Mac has this command, and it
+# needs no 1Password approval, so it cannot block the daily run.
+if [ -x "$HOME/bin/mats-sync" ]; then
+  "$HOME/bin/mats-sync" -q || fail mats-sync
+fi
+
 # vim-plug and plugins. These live under ~/.vim/plugged, which is a symlink
 # into ~/.config/nvim/ for historical reasons -- it is vim's plugin dir, not
 # neovim's. `+PlugUpdate` at startup implies --sync (vim-plug treats
