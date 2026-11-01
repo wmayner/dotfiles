@@ -68,7 +68,6 @@ cask "1password-cli"
 # tap "nikitabobko/tap"
 # cask "aerospace"
 cask "blackhole-2ch"
-cask "hammerspoon"
 cask "libreoffice"
 cask "rectangle"
 

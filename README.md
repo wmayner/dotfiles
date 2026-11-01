@@ -19,11 +19,6 @@ This will
 - Download and install vim-plug, then install Vim plugins
 - Symlink VSCode settings and keybindings
 
-The two Hammerspoon spoons are git submodules, so fetch them after cloning:
-```sh
-git submodule update --init
-```
-
 ## Remote GPU boxes
 
 `remote/bootstrap.sh` sets up a fresh Linux box (RunPod, Vast): it installs
