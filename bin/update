@@ -25,9 +25,8 @@ GIT_CONFIG_GLOBAL=/dev/null git -C "$DOTFILES" fetch https://github.com/wmayner/
 if [ "$(uname -s)" = "Darwin" ]; then
   # Install anything added to the Brewfile since this machine last ran it.
   brew bundle install --no-upgrade --file="$DOTFILES/brew/Brewfile" || fail 'brew bundle'
-  # Note: plain `brew upgrade` skips casks that update themselves (currently
-  # hammerspoon). Add --greedy if you want those too, but it can
-  # fight an app's own updater.
+  # Note: plain `brew upgrade` skips casks that update themselves. Add --greedy
+  # if you want those too, but it can fight an app's own updater.
   # --yes: Homebrew now asks for confirmation before upgrading by default.
   brew upgrade --yes && brew cleanup || fail brew
 elif command -v pixi >/dev/null 2>&1; then

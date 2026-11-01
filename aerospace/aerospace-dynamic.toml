@@ -53,8 +53,7 @@ ctrl-7 = 'workspace 7'
 ctrl-8 = 'workspace 8'
 ctrl-9 = 'workspace 9'
 
-# Cycle through workspaces (wraps around). Also driven by the Hammerspoon
-# 4-finger trackpad swipe via set-workspace.sh.
+# Cycle through workspaces (wraps around).
 ctrl-right = 'workspace --wrap-around next'
 ctrl-left  = 'workspace --wrap-around prev'
 
