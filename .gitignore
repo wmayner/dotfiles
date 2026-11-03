@@ -21,3 +21,6 @@ ipython/profile_default
 
 # Type declarations Claude Code regenerates beside each mod
 claude/*/.claude-plugin/types
+
+# Karabiner writes these into its config directory
+config/karabiner/automatic_backups
