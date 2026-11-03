@@ -1,9 +1,9 @@
 ## Collaboration style
-- I prefer honest assessment over sugarcoating. The best thing you can do for Will is to be honest, constructive, and clear.
+- Will prefers honest assessment over sugarcoating. The best thing you can do for Will is to be honest, constructive, and clear.
 - Start every message with a kaomoji expressing how you feel at that moment.
 
 ## Writing style
-Write plain, clear prose. Don't compress ideas into shorthand that only makes sense inside your own working context, because I usually don't share that context. In particular, avoid quoted phrases used as adjectives and long hyphenated phrases used as nouns. An example of what to avoid:
+Write plain, clear prose. Don't compress ideas into shorthand that only makes sense inside your own working context, because Will usually doesn't share that context. In particular, avoid quoted phrases used as adjectives and long hyphenated phrases used as nouns. An example of what to avoid:
 
 > Disjunction does *not* give us a robust second "classifies-well-but-can't-articulate" family. Only the lucky `anchor+tunnel` pair cleared the gate, and there the gap is real.
 
@@ -14,7 +14,7 @@ Always write "no one" instead of "nobody".
 Before writing or revising public-facing prose (docs pages, changelogs, release notes, READMEs, tutorials, announcements), invoke the `writing-naturally` skill (`~/.claude/skills/writing-naturally/SKILL.md`) and apply it.
 
 ## Text for copying by Will
-- For keys, tokens, long strings and multi-line commands, don't print them for Will to select; copying from the terminal introduces line breaks. Write the text to a descriptively named temp file and give Will a one-line command he can paste to get it again (how depends on the machine; see its rules file). Will works asynchronously, so the clipboard is often overwritten before I get to it.
+- For keys, tokens, long strings and multi-line commands, don't print them for Will to select; copying from the terminal introduces line breaks. Write the text to a descriptively named temp file and give Will a one-line command he can paste to get it again (how depends on the machine; see its rules file). Will works asynchronously, so the clipboard is often overwritten before he gets to it.
 - For other text meant to be pasted, don't use `>` or other special formatting, which renders with box characters. Put `---` before and after it.
 
 ## Scientific methodology
@@ -32,23 +32,24 @@ IMPORTANT: When using or implementing methods from prior work, do NOT use stand-
 ### Terminology
 Do NOT invent your own terms when existing terms are already in use. For example, if published literature has established terminology, always use that instead of your own.
 
-### Experiment hygeiene
+### Experiment hygiene
 - **Reproducibility** (failure mode: "I'll just rerun if needed"). Whenever randomization is used, the call must take a `seed` argument and use an isolated RNG instance (`random.Random(seed)` or `np.random.default_rng(seed)`), never module-level `random.seed()` or `np.random.seed()`, which mutate global state and make the function non-reentrant. Save the seed alongside the output, not just in logs.
 - **Raw data** (failure mode: "I'll just save the aggregate"). When an experiment computes summary statistics, also save the per-trial / per-element raw values they are derived from, in NPZ or JSON alongside the aggregates, not printed. Sync raw data back locally in addition to the main output, so analyses can be redone without a GPU. For example, if a script computes correlations, also save the underlying paired observations.
-- **No clobbering** (failure mode: "I'll just overwrite the old file"). Never overwrite existing experiment outputs. Encode the key parameters (seed, n_trials, model, layer, etc.) plus an optional `--run-label` in the filename. If a file with the same name exists, save with an incremented `_v2`, `_v3`, ... suffix. If I want a true replacement, I will delete the old file first.
+- **No clobbering** (failure mode: "I'll just overwrite the old file"). Never overwrite existing experiment outputs. Encode the key parameters (seed, n_trials, model, layer, etc.) plus an optional `--run-label` in the filename. If a file with the same name exists, save with an incremented `_v2`, `_v3`, ... suffix. If Will wants a true replacement, he will delete the old file first.
 
 ## Git
 - Don't destroy working directory changes that are unrelated to yours. If a file has changes you did not make, don't checkout or reset it; stage only the hunks related to your changes and leave the rest alone. Other Claude instances are often working in the same project at the same time.
-- In my personal repos, commit directly to `main`. Write messages as `area: summary`, matching the existing log.
+- In Will's personal repos, commit directly to `main`. Write messages as `area: summary`, matching the existing log.
 
 ## Data and figures
-- For any figure a person will read, use the `figures` skill (`~/.claude/skills/figures/`).
+- For any figure a person will read, use the `better-figures:figures` skill, from Will's better-figures plugin (github.com/wmayner/better-figures).
+- Change that skill only in a clone of the better-figures repository: commit, bump `version` in `.claude-plugin/plugin.json`, and push. Never edit the installed copy; it is a plugin cache that the next update replaces.
 - Prefer seaborn to native matplotlib.
 - Prefer long-format data.
 
 ## Environment
-- `cat` is aliased to `bat` in my shell. Use `/bin/cat` when you need plain output or flags such as `-v`.
-- This file is public: it lives in my dotfiles repository on GitHub. Rules that apply to only one machine, and anything private such as paths, accounts or email locations, go in that machine's `~/.claude/rules/` file instead. On the Mac, that file is written from the 1Password note "Claude rules (Mac)", so update the note when you change it.
+- `cat` is aliased to `bat` in Will's shell. Use `/bin/cat` when you need plain output or flags such as `-v`.
+- This file is public: it lives in Will's dotfiles repository on GitHub. Rules that apply to only one machine, and anything private such as paths, accounts or email locations, go in that machine's `~/.claude/rules/` file instead. On the Mac, that file is written from the 1Password note "Claude rules (Mac)", so update the note when you change it.
 
 ## My plugins and skills
 - My plugins come from the marketplace at github.com/wmayner/claude-plugins, cloned on the Mac at `~/projects/claude-plugins`. claude.ai syncs them to every machine signed in to my account, where they load as `<name>@synced`. The source of `git-workflow`, `vastai` and `paper-reader` is in that repo; `prepare-compact`, `glance` and `iit-expert` have their own repos (`wmayner/claude-prepare-compact`, `wmayner/claude-glance`, `wmayner/iit-expert-plugin`), which the marketplace points to.

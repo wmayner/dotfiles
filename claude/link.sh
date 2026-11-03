@@ -11,6 +11,13 @@ mkdir -p "$HOME/.claude/skills"
 for MOD in "$DOTFILES"/claude/*/; do
   ln -sfn "${MOD%/}" "$HOME/.claude/skills/$(basename "$MOD")"
 done
+# Drop links to mods that have left claude/ (the figures skill moved to the
+# better-figures plugin), so no session loads a skill that isn't there
+for LINK in "$HOME"/.claude/skills/*; do
+  if [ -L "$LINK" ] && [ ! -e "$LINK" ]; then
+    case "$(readlink "$LINK")" in "$DOTFILES"/claude/*) rm "$LINK" ;; esac
+  fi
+done
 ln -sfn "$DOTFILES/claude/statusline-command.sh" "$HOME/.claude/statusline-command.sh"
 # settings.json itself is not tracked: it holds machine-specific permission
 # rules and plugin lists. settings.base.json holds the shareable part, and
