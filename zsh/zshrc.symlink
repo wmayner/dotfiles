@@ -323,6 +323,10 @@ mfcode() { code --remote ssh-remote+$MATS_HOST /mnt/nw/home/w.mayner/mats-fleet;
 # Open the multi-root workspace (mats-research and the mats-fleet repos), so
 # Cmd+P and search cover all of them without indexing the whole home directory.
 mws() { code --file-uri vscode-remote://ssh-remote+$MATS_HOST/mnt/nw/home/w.mayner/mats.code-workspace; }
+
+# On the MATS cluster, Claude Code's scratchpads go on the local /ephemeral disk: /tmp shares the machine's small
+# root disk with every user (the compute admin found it at 97% on 20 October 2026, mostly torch environments).
+if [[ -d /ephemeral ]]; then export CLAUDE_CODE_TMPDIR=/ephemeral/$USER/claude-tmp; mkdir -p $CLAUDE_CODE_TMPDIR; fi
 # Set up a fresh GPU box: runs remote/bootstrap.sh over ssh. The tokens go in
 # on stdin with the script, so they never appear in the remote process list.
 # All args pass through to ssh, e.g.  rboot -p 40022 root@1.2.3.4

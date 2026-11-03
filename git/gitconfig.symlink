@@ -56,7 +56,7 @@
     helper = cache --timeout=3600
 [merge]
     tool = code
-    conflictstyle = zdiff3
+    conflictstyle = diff3
 [mergetool "code"]
     cmd = code --wait --merge $REMOTE $LOCAL $BASE $MERGED
 [push]
