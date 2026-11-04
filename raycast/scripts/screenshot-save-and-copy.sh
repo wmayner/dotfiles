@@ -16,8 +16,6 @@
 # With no folder, saves to the everyday screenshot folder and cleans it up.
 # screenshot-keep.sh passes a folder for screenshots worth keeping.
 
-# Screenshots taken before this date are left alone until they are sorted.
-cleanup_from=2026-11-03
 cleanup_after_days=30
 
 # The configured screenshot folder, falling back to the Desktop.
@@ -54,7 +52,7 @@ osascript \
 if [[ -z "$1" ]]; then
   {
     /usr/bin/find "$everyday" -maxdepth 1 -type f -name 'Screenshot *' \
-      -newermt "$cleanup_from" -mtime +"$cleanup_after_days" -print0 |
+      -mtime +"$cleanup_after_days" -print0 |
       /usr/bin/xargs -0 -r /usr/bin/trash
   } >/dev/null 2>&1 &!
 fi
