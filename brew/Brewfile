@@ -64,7 +64,9 @@ brew "runpod/runpodctl/runpodctl"
 
 # --- Casks ---
 cask "1password-cli"
-# AeroSpace is not in use, but its config is kept in aerospace/. To go back:
+# AeroSpace is not in use, but its config is kept in aerospace/. To go back,
+# uncomment these, link aerospace/aerospace-dynamic.toml to ~/.aerospace.toml,
+# and move aerospace/raycast-scripts/*.sh back to raycast/scripts/:
 # tap "nikitabobko/tap"
 # cask "aerospace"
 cask "blackhole-2ch"
