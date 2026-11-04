@@ -52,13 +52,6 @@
         "repo": "wmayner/claude-plugins"
       },
       "autoUpdate": true
-    },
-    "better-figures": {
-      "source": {
-        "source": "github",
-        "repo": "wmayner/better-figures"
-      },
-      "autoUpdate": true
     }
   },
   "enabledPlugins": {
@@ -88,6 +81,6 @@
     "prepare-compact@wmayner": true,
     "glance@wmayner": true,
     "iit-expert@wmayner": true,
-    "better-figures@better-figures": true
+    "better-figures@wmayner": true
   }
 }
