@@ -18,7 +18,7 @@ Before writing or revising public-facing prose (docs pages, changelogs, release 
 - For other text meant to be pasted, don't use `>` or other special formatting, which renders with box characters. Put `---` before and after it.
 
 ## To-dos
-- Will's to-dos live in one Workflowy bullet, `Tasks` ("wf" means Workflowy). When he asks to add, review or tick off a to-do, use the `todos` skill. Don't add to-dos he hasn't asked for.
+- Will's to-dos live in one Workflowy bullet, `Tasks` ("wf" means Workflowy). When he asks to add, review or tick off a to-do, use the `todos` skill. When something that would go on a calendar or planner comes up (a deadline, an application, a trip to arrange, an appointment to make, a dated commitment), offer in one line to add it; the skill says what qualifies. Don't add to-dos he hasn't agreed to.
 
 ## Scientific methodology
 Will's work often involves scientific investigation.
