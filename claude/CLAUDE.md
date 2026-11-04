@@ -17,6 +17,9 @@ Before writing or revising public-facing prose (docs pages, changelogs, release 
 - For keys, tokens, long strings and multi-line commands, don't print them for Will to select; copying from the terminal introduces line breaks. Write the text to a descriptively named temp file and give Will a one-line command he can paste to get it again (how depends on the machine; see its rules file). Will works asynchronously, so the clipboard is often overwritten before he gets to it.
 - For other text meant to be pasted, don't use `>` or other special formatting, which renders with box characters. Put `---` before and after it.
 
+## To-dos
+- Will's to-dos live in one Workflowy bullet, `Tasks` ("wf" means Workflowy). When a deadline, a dated commitment or a follow-up he owes comes up in any session, add it with the `todos` skill without asking, and say so.
+
 ## Scientific methodology
 Will's work often involves scientific investigation.
 - Use paired tests when data is naturally paired (shared initialization, same subjects, etc.).
