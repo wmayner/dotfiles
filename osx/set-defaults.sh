@@ -18,7 +18,7 @@ defaults write -g ApplePressAndHoldEnabled -bool false
 defaults write com.apple.NetworkBrowser BrowseAllInterfaces 1
 
 # Fast key repeat
-defaults write NSGlobalDomain KeyRepeat -int 0
+defaults write NSGlobalDomain KeyRepeat -int 1
 
 # Screenshots go to ~/Desktop/Screenshots as PNG, without the floating
 # thumbnail (it holds the file back for a few seconds).
