@@ -17,8 +17,11 @@ defaults write -g ApplePressAndHoldEnabled -bool false
 # Use AirDrop over every interface. srsly this should be a default.
 defaults write com.apple.NetworkBrowser BrowseAllInterfaces 1
 
-# Fast key repeat
+# Fast key repeat. Both values are in units of 15 ms. InitialKeyRepeat is the
+# delay before repeat starts; 12 (180 ms) is shorter than the shortest step on
+# the System Settings slider, which is 15 (225 ms).
 defaults write NSGlobalDomain KeyRepeat -int 1
+defaults write NSGlobalDomain InitialKeyRepeat -int 12
 
 # Screenshots go to ~/Desktop/Screenshots as PNG, without the floating
 # thumbnail (it holds the file back for a few seconds).
