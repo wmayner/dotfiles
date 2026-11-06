@@ -17,9 +17,11 @@ defaults write -g ApplePressAndHoldEnabled -bool false
 # Use AirDrop over every interface. srsly this should be a default.
 defaults write com.apple.NetworkBrowser BrowseAllInterfaces 1
 
-# Fast key repeat. Both values are in units of 15 ms. InitialKeyRepeat is the
-# delay before repeat starts; 12 (180 ms) is shorter than the shortest step on
-# the System Settings slider, which is 15 (225 ms).
+# Fast key repeat. Both values count whole steps of 1/60 s (16.7 ms); macOS
+# cuts fractions down, so 0.84 becomes 0. KeyRepeat 1 repeats 60 times a
+# second (0 was too fast). InitialKeyRepeat is the delay before repeat starts;
+# 12 (200 ms) is shorter than the shortest step on the System Settings slider,
+# which is 15 (250 ms).
 defaults write NSGlobalDomain KeyRepeat -int 1
 defaults write NSGlobalDomain InitialKeyRepeat -int 12
 
