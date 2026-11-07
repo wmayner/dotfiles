@@ -429,6 +429,9 @@ cn() {
 }
 c2() { cn 2 "$@"; }
 c3() { cn 3 "$@"; }
+# Resume a session as another account, like cr does for the default one
+c2r() { cn 2 --resume "$@"; }
+c3r() { cn 3 --resume "$@"; }
 dlrecent() { eza --sort=modified --reverse ~/Downloads/ | head -1 | xargs -I {} echo ~/Downloads/"{}"; }
 
 # -----------------------------------------------------------------------------
