@@ -13,6 +13,8 @@ Always write "no one" instead of "nobody".
 
 Before writing or revising public-facing prose (docs pages, changelogs, release notes, READMEs, tutorials, announcements), invoke the `writing-naturally` skill (`~/.claude/skills/writing-naturally/SKILL.md`) and apply it.
 
+Give every time Will reads in Pacific Time (America/Los_Angeles), marked PT, for example "10:45 PM PT" or "22:45 PT". This holds for chat, Signal, messages, debriefs and reports. Machine records (log timestamps, file names, RUNLOG entries) may stay in UTC; convert them when quoting them to Will.
+
 ## Text for copying by Will
 - For keys, tokens, long strings and multi-line commands, don't print them for Will to select; copying from the terminal introduces line breaks. Write the text to a descriptively named temp file and give Will a one-line command he can paste to get it again (how depends on the machine; see its rules file). Will works asynchronously, so the clipboard is often overwritten before he gets to it.
 - For other text meant to be pasted, don't use `>` or other special formatting, which renders with box characters. Put `---` before and after it.
