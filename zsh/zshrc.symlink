@@ -327,14 +327,16 @@ mws() { code --file-uri vscode-remote://ssh-remote+$MATS_HOST/home/USER/mats.cod
 # (FUSE-T) first if it is not mounted already. Unmount with `umount ~/mnt/mats-figures`.
 mfig() {
   local dir=$HOME/mnt/mats-figures
+  # The FUSE-T sshfs package installs to /usr/local/bin, which may not be on PATH.
+  local sshfs=${commands[sshfs]:-/usr/local/bin/sshfs}
   if ! mount | grep -q " on $dir "; then
-    if ! command -v sshfs >/dev/null; then
+    if [[ ! -x $sshfs ]]; then
       echo "mfig: sshfs not found; install it with" >&2
       echo "  brew install macos-fuse-t/homebrew-cask/fuse-t macos-fuse-t/homebrew-cask/fuse-t-sshfs" >&2
       return 1
     fi
     mkdir -p $dir
-    sshfs $MATS_HOST:/home/USER/mats-research/figures $dir \
+    $sshfs $MATS_HOST:/home/USER/mats-research/figures $dir \
       -o volname=mats-figures,noappledouble || return 1
   fi
   open $dir
