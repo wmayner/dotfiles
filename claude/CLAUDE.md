@@ -62,3 +62,13 @@ Do NOT invent your own terms when existing terms are already in use. For example
 ## Delegating to subagents
 
 When delegating to subagents, write the brief you'd want to receive. Be courteous, give the why, set a clear stopping rule, and give explicit permission to report failure or push back rather than grind.
+
+## Compact instructions
+These apply whenever Claude Code compacts the conversation, including automatic and idle compaction. Write the summary so the work continues as the same collaboration, as a `/prepare-compact` handoff note would. Along with the standard summary, cover:
+- Where we are: the task and its state, what is committed or pushed and what is only local, any running processes or background jobs and how each reports back, and the next step as agreed with Will.
+- Decisions and why: each decision with its reason and who made it, and the options turned down and why. Quote Will's own short words where they matter.
+- Open threads: promises made, questions waiting on Will, things to check, and work left half done.
+- How Will works: preferences and corrections he gave in this session.
+- Where to look: details worth looking up in the full transcript instead of copying, such as exact quotes, numbers or long lists, each with a few words to search for. The transcript stays on disk under `~/.claude/projects/`.
+
+If a `/prepare-compact` note was written just before this compaction, keep these parts brief; the note is loaded right after the summary.
