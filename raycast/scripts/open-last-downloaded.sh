@@ -7,9 +7,18 @@
 # @raycast.packageName Navigation
 
 # Optional parameters:
-# @raycast.icon images/folder-downloads.png
+# @raycast.icon 📥
 
 # Documentation:
-# @raycast.description Opens the last file that was downloaded
+# @raycast.description Opens the most recently modified item in Downloads
 
-open ~/"Downloads/$(ls -tr ~/Downloads/ | tail -n 1)"
+# Newest first by modification time, skipping downloads still in progress
+latest=$(/bin/ls -t ~/Downloads | grep -v -E '\.(crdownload|download|part)$' | head -n 1)
+
+if [ -z "$latest" ]; then
+  echo "Nothing in Downloads"
+  exit 1
+fi
+
+open ~/Downloads/"$latest"
+echo "Opened $latest"
