@@ -1,0 +1,76 @@
+#!/usr/bin/python3
+"""Print "changed" on stdout whenever a file under DIR is written, created,
+deleted or moved, so a client on the other end of an SSH connection can resync.
+
+Usage: watch-dir DIR
+
+Prints "ready" once the watches are in place, and "ping" every 30 seconds so
+that the script exits soon after the SSH connection closes (the next write then
+fails). It sleeps in the kernel between events, using no CPU. Uses inotify
+through ctypes, because inotify-tools is not installed on the MATS cluster.
+The Mac's macos/mats-figures-sync.sh runs it over SSH.
+"""
+import ctypes
+import os
+import select
+import sys
+import time
+
+IN_CLOSE_WRITE, IN_MOVED_FROM, IN_MOVED_TO = 0x8, 0x40, 0x80
+IN_CREATE, IN_DELETE = 0x100, 0x200
+MASK = IN_CLOSE_WRITE | IN_MOVED_FROM | IN_MOVED_TO | IN_CREATE | IN_DELETE
+PING_SECONDS = 30
+QUIET_SECONDS = 0.3  # wait for this long without events before reporting
+MAX_WAIT_SECONDS = 2.0  # but report at most this long after the first event
+
+libc = ctypes.CDLL("libc.so.6", use_errno=True)
+
+
+def emit(message):
+    try:
+        sys.stdout.write(message + "\n")
+        sys.stdout.flush()
+    except BrokenPipeError:
+        os._exit(0)
+
+
+def watch_tree(fd, root):
+    # Adding a watch to a directory already watched is harmless, so rerunning
+    # this after each change picks up new subdirectories.
+    for path, _, _ in os.walk(root):
+        if libc.inotify_add_watch(fd, os.fsencode(path), MASK) < 0:
+            sys.stderr.write(f"watch-dir: cannot watch {path}: errno {ctypes.get_errno()}\n")
+
+
+def drain(fd):
+    try:
+        while os.read(fd, 65536):
+            pass
+    except BlockingIOError:
+        pass
+
+
+def main():
+    if len(sys.argv) != 2 or not os.path.isdir(sys.argv[1]):
+        sys.exit("usage: watch-dir DIR")
+    root = sys.argv[1]
+    fd = libc.inotify_init1(os.O_NONBLOCK | os.O_CLOEXEC)
+    if fd < 0:
+        sys.exit(f"watch-dir: inotify_init1 failed: errno {ctypes.get_errno()}")
+    watch_tree(fd, root)
+    emit("ready")
+    while True:
+        ready, _, _ = select.select([fd], [], [], PING_SECONDS)
+        if not ready:
+            emit("ping")
+            continue
+        start = time.monotonic()
+        drain(fd)
+        while time.monotonic() - start < MAX_WAIT_SECONDS and select.select([fd], [], [], QUIET_SECONDS)[0]:
+            drain(fd)
+        watch_tree(fd, root)
+        emit("changed")
+
+
+if __name__ == "__main__":
+    main()

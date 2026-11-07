@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!-- Keeps ~/mats-figures in step with the cluster's ~/mats-research/figures,
+     syncing on each change there (macos/mats-figures-sync.sh). Runs at login
+     and is restarted if it exits. install.sh links this into
+     ~/Library/LaunchAgents. -->
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.wmayner.mats-figures</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/bin/sh</string>
+    <string>-c</string>
+    <string>exec "$HOME/dotfiles/macos/mats-figures-sync.sh" &gt;&gt; "$HOME/Library/Logs/mats-figures.log" 2&gt;&amp;1</string>
+  </array>
+  <key>RunAtLoad</key>
+  <true/>
+  <key>KeepAlive</key>
+  <true/>
+  <key>ThrottleInterval</key>
+  <integer>30</integer>
+  <key>ProcessType</key>
+  <string>Background</string>
+</dict>
+</plist>
