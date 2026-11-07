@@ -323,22 +323,12 @@ mfcode() { code --remote ssh-remote+$MATS_HOST /home/USER/mats-fleet; }
 # Open the multi-root workspace (mats-research and the mats-fleet repos), so
 # Cmd+P and search cover all of them without indexing the whole home directory.
 mws() { code --file-uri vscode-remote://ssh-remote+$MATS_HOST/home/USER/mats.code-workspace; }
-# Open ~/mats-research/figures from the cluster in Finder, mounting it over sshfs
-# (FUSE-T) first if it is not mounted already. Unmount with `umount ~/mnt/mats-figures`.
+# Copy ~/mats-research/figures from the cluster to ~/mats-figures and open it in
+# Finder. A local copy, so previews are instant; rerun to refresh. The copy mirrors
+# the cluster (--delete), so don't edit files in it.
 mfig() {
-  local dir=$HOME/mnt/mats-figures
-  # The FUSE-T sshfs package installs to /usr/local/bin, which may not be on PATH.
-  local sshfs=${commands[sshfs]:-/usr/local/bin/sshfs}
-  if ! mount | grep -q " on $dir "; then
-    if [[ ! -x $sshfs ]]; then
-      echo "mfig: sshfs not found; install it with" >&2
-      echo "  brew install macos-fuse-t/homebrew-cask/fuse-t macos-fuse-t/homebrew-cask/fuse-t-sshfs" >&2
-      return 1
-    fi
-    mkdir -p $dir
-    $sshfs $MATS_HOST:/home/USER/mats-research/figures $dir \
-      -o volname=mats-figures,noappledouble || return 1
-  fi
+  local dir=$HOME/mats-figures
+  rsync -a --delete $MATS_HOST:/home/USER/mats-research/figures/ $dir/ || return 1
   open $dir
 }
 
