@@ -323,9 +323,10 @@ mfcode() { code --remote ssh-remote+$MATS_HOST /home/USER/mats-fleet; }
 # Open the multi-root workspace (mats-research and the mats-fleet repos), so
 # Cmd+P and search cover all of them without indexing the whole home directory.
 mws() { code --file-uri vscode-remote://ssh-remote+$MATS_HOST/home/USER/mats.code-workspace; }
-# Copy ~/mats-research/figures from the cluster to ~/mats-figures and open it in
-# Finder. A local copy, so previews are instant; rerun to refresh. The copy mirrors
-# the cluster (--delete), so don't edit files in it.
+# Open ~/mats-figures, a local copy of the cluster's ~/mats-research/figures, in
+# Finder, syncing it first. The launchd agent com.wmayner.mats-figures keeps it
+# up to date on every change. The copy mirrors the cluster (--delete), so don't
+# edit files in it.
 mfig() {
   local dir=$HOME/mats-figures
   rsync -a --delete $MATS_HOST:/home/USER/mats-research/figures/ $dir/ || return 1
