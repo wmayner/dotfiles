@@ -2,7 +2,8 @@
 """Search the conversations of the Claude Code sessions running in tmux, and jump to one.
 
 Bound to prefix + / in tmux.conf, as a popup. Type to search: windows whose session name,
-tmux window name or number contains the text come first, with the match highlighted; then
+tmux window name or number contains the text come first (exact names, then names that start
+with it, then the rest), with the match highlighted; then
 each window whose conversation has lines containing it, with how many. The preview shows
 those lines, newest at the bottom. Enter switches to that window; Esc closes the popup. Matching
 is literal and ignores case unless the text has a capital letter.
@@ -170,7 +171,9 @@ def build_index(path):
             txt = os.path.join(CACHE, f"pane-{pane.lstrip('%')}.txt")
             with open(txt, "w") as f:
                 f.write(tmux("capture-pane", "-p", "-J", "-S", "-", "-t", pane))
-        rows.append((pane, f"{target:<12} {name or wname}", txt, f"{target} {name} {wname}"))
+        number = target.split(":")[-1].split(".")[0]
+        names = "\x1f".join([target, number, name, wname])
+        rows.append((pane, f"{target:<12} {name or wname}", txt, names))
     with open(path, "w") as f:
         f.writelines("\t".join(r) + "\n" for r in rows)
     return rows
@@ -182,6 +185,17 @@ def read_index(path):
 
 def grep_flags(query):
     return ["-F"] + (["-i"] if query == query.lower() else [])
+
+
+def name_rank(names, q, fold):
+    """0 if one of a window's names is the query, 1 if one starts with it, 2 if one contains it, else None."""
+    best = None
+    for n in names.split("\x1f"):
+        n = fold(n).lstrip("✳ ").strip()  # Claude Code marks a busy session's window title with ✳
+        if n and q in n:
+            r = 0 if n == q else 1 if n.startswith(q) else 2
+            best = r if best is None else min(best, r)
+    return best
 
 
 def cmd_list(index, query):
@@ -199,8 +213,9 @@ def cmd_list(index, query):
         counts[f] = int(n) if n.isdigit() else 0
     fold = str.lower if query == query.lower() else (lambda x: x)  # same case rule as grep
     q = fold(query)
-    by_name = [r for r in rows if q in fold(r[3])]
-    by_text = sorted((r for r in rows if r not in by_name and counts.get(r[2], 0)),
+    ranks = {r[0]: name_rank(r[3], q, fold) for r in rows}
+    by_name = sorted((r for r in rows if ranks[r[0]] is not None), key=lambda r: ranks[r[0]])
+    by_text = sorted((r for r in rows if ranks[r[0]] is None and counts.get(r[2], 0)),
                      key=lambda r: -counts[r[2]])
     for pane, label, txt, _ in by_name + by_text:
         n = counts.get(txt, 0)
