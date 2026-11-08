@@ -53,8 +53,10 @@ AQUA='104;157;106'; GREEN='152;151;26'; YELLOW='215;153;33'; RED='204;36;29'
 PURPLE='177;98;134'; ORANGE='214;93;14'
 SEP=$'\xee\x82\xb0'; CAP=$'\xee\x82\xb6'
 # Nerd Font Material Design icons: context (brain), cache warm (fire) and
-# cold (snowflake), rate limits (hourglass)
+# cold (snowflake), rate limits (hourglass), session (person)
 I_CONTEXT=$'\U000F09D1'; I_WARM=$'\U000F0238'; I_COLD=$'\U000F0717'; I_LIMIT=$'\U000F051F'
+# Session (account icon)
+I_SESSION=$'\U000F0004'
 
 # Read `symbol = "..."` from a section of starship.toml into $sym, so the glyph
 # is exactly starship's. Empty if the file or key is missing.
@@ -83,6 +85,17 @@ seg() {
 # Machine, only over SSH, as in the starship prompt. The globe is the one-column
 # Nerd Font glyph: an emoji is two columns wide and garbles Claude's redraws.
 [ -n "$SSH_CONNECTION" ] && seg "$ORANGE" "$FG0" "  ${MACHINE_NAME:-$("$HOME/dotfiles/bin/machine-name")} "
+
+# Session: its name (claude -n, or /rename), or else the tmux window's name.
+# Where several Claude accounts share a machine, each with its own config
+# directory (~/.claude-3 is account 3), the account number comes before the name.
+[ -z "$name" ] && [ -n "$TMUX_PANE" ] && name=$(tmux display-message -p -t "$TMUX_PANE" '#W' 2>/dev/null)
+[ ${#name} -gt 28 ] && name="${name:0:27}…"
+account=""
+case ${CLAUDE_CONFIG_DIR##*/} in .claude-[0-9]*) account=${CLAUDE_CONFIG_DIR##*-} ;; esac
+if [ -n "$name$account" ]; then
+  seg "$PURPLE" "$FG0" " $I_SESSION ${account:+$account · }${name:-session} " bold
+fi
 
 seg "$BG3" "$FG0" " $dir " bold
 
