@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 """Search the conversations of the Claude Code sessions running in tmux, and jump to one.
 
-Bound to prefix + / in tmux.conf, as a popup. Type to search: the list shows each window
-whose session has lines containing the text, with how many, and the preview shows those
-lines, newest at the bottom. Enter switches to that window; Esc closes the popup. Matching
+Bound to prefix + / in tmux.conf, as a popup. Type to search: windows whose session name,
+tmux window name or number contains the text come first, with the match highlighted; then
+each window whose conversation has lines containing it, with how many. The preview shows
+those lines, newest at the bottom. Enter switches to that window; Esc closes the popup. Matching
 is literal and ignores case unless the text has a capital letter.
 
 Claude Code draws on the terminal's alternate screen, so tmux keeps no scrollback for it.
@@ -169,7 +170,7 @@ def build_index(path):
             txt = os.path.join(CACHE, f"pane-{pane.lstrip('%')}.txt")
             with open(txt, "w") as f:
                 f.write(tmux("capture-pane", "-p", "-J", "-S", "-", "-t", pane))
-        rows.append((pane, f"{target:<12} {name or wname}", txt))
+        rows.append((pane, f"{target:<12} {name or wname}", txt, f"{target} {name} {wname}"))
     with open(path, "w") as f:
         f.writelines("\t".join(r) + "\n" for r in rows)
     return rows
@@ -186,23 +187,32 @@ def grep_flags(query):
 def cmd_list(index, query):
     rows = read_index(index)
     if not query:
-        for pane, label, _ in rows:
+        for pane, label, *_ in rows:
             print(f"{pane}\t{label}")
         return
-    files = [txt for _, _, txt in rows]
+    files = [r[2] for r in rows]
     res = subprocess.run(["grep", "-c", "-H", *grep_flags(query), "-e", query, "--", *files],
                          capture_output=True, text=True).stdout
     counts = {}
     for line in res.splitlines():
         f, _, n = line.rpartition(":")
         counts[f] = int(n) if n.isdigit() else 0
-    hits = [(counts.get(txt, 0), pane, label) for pane, label, txt in rows if counts.get(txt, 0)]
-    for n, pane, label in sorted(hits, key=lambda h: -h[0]):
-        print(f"{pane}\t{label:<44} {n:>5}")
+    fold = str.lower if query == query.lower() else (lambda x: x)  # same case rule as grep
+    q = fold(query)
+    by_name = [r for r in rows if q in fold(r[3])]
+    by_text = sorted((r for r in rows if r not in by_name and counts.get(r[2], 0)),
+                     key=lambda r: -counts[r[2]])
+    for pane, label, txt, _ in by_name + by_text:
+        n = counts.get(txt, 0)
+        label = f"{label:<44}"
+        i = fold(label).find(q)
+        if i >= 0:  # highlight a name match, as fzf would
+            label = f"{label[:i]}\033[1;33m{label[i:i + len(q)]}\033[0m{label[i + len(q):]}"
+        print(f"{pane}\t{label} {n or '':>5}")
 
 
 def cmd_show(index, pane, query):
-    txt = next((t for p, _, t in read_index(index) if p == pane), None)
+    txt = next((t for p, _, t, *_ in read_index(index) if p == pane), None)
     if not txt:
         return
     if query:
@@ -252,7 +262,7 @@ def main():
         popup()
     elif args[0] == "index":
         path = os.path.join(CACHE, "index-test.tsv")
-        for pane, label, txt in build_index(path):
+        for pane, label, txt, _ in build_index(path):
             print(f"{pane}\t{label}\t{os.path.getsize(txt)} bytes")
     elif args[0] == "list" and len(args) == 3:
         cmd_list(args[1], args[2])
