@@ -1,0 +1,266 @@
+#!/usr/bin/env python3
+"""Search the conversations of the Claude Code sessions running in tmux, and jump to one.
+
+Bound to prefix + / in tmux.conf, as a popup. Type to search: the list shows each window
+whose session has lines containing the text, with how many, and the preview shows those
+lines, newest at the bottom. Enter switches to that window; Esc closes the popup. Matching
+is literal and ignores case unless the text has a capital letter.
+
+Claude Code draws on the terminal's alternate screen, so tmux keeps no scrollback for it.
+Instead this reads each session's transcript, found through the registry Claude Code keeps
+in <config dir>/sessions/<pid>.json (the session's tmux pane and id), for every config dir
+(~/.claude, ~/.claude-2, ...). Only the conversation is searched: the messages typed to the
+session and Claude's replies, not tool calls or their output. Panes without a Claude
+session (shells, other programs) are searched by their screen and scrollback.
+
+The text taken from each transcript is cached (under /ephemeral/$USER/cache where that
+exists, else ~/.cache) and extended as the transcript grows, so only the first run reads
+whole transcripts. Times are Pacific.
+
+Usage: tmux-search                     the popup
+       tmux-search index               build the index and print it (for testing)
+       tmux-search list INDEX QUERY    one line per matching window (used by the popup)
+       tmux-search show INDEX PANE QUERY   matching lines of one window (the preview)
+"""
+import fcntl
+import glob
+import json
+import os
+import re
+import shlex
+import shutil
+import subprocess
+import sys
+from datetime import datetime
+
+try:
+    from zoneinfo import ZoneInfo
+    TZ = ZoneInfo("America/Los_Angeles")
+except Exception:  # very old Python: show the transcript's UTC times
+    TZ = None
+
+HOME = os.path.expanduser("~")
+USER = os.environ.get("USER", "")
+_eph = f"/ephemeral/{USER}"
+CACHE = os.path.join(os.path.join(_eph, "cache") if USER and os.path.isdir(_eph)
+                     else os.environ.get("XDG_CACHE_HOME", os.path.join(HOME, ".cache")),
+                     "tmux-search")
+SELF = os.path.realpath(__file__)
+
+# Wrappers Claude Code puts around text that wasn't typed as a message.
+DROP_TAGS = re.compile(r"<(system-reminder|local-command-caveat|local-command-stdout|"
+                       r"command-message|command-args|task-notification|bash-stdout|"
+                       r"bash-stderr)>.*?</\1>", re.S)
+TAGS = re.compile(r"</?(pasted_content|command-name|bash-input)[^>]*>")
+
+
+def tmux(*args):
+    return subprocess.run(["tmux", *args], capture_output=True, text=True).stdout
+
+
+def stamp(iso):
+    try:
+        dt = datetime.fromisoformat(iso.replace("Z", "+00:00"))
+    except Exception:
+        return "?"
+    if TZ:
+        dt = dt.astimezone(TZ)
+    return f"{dt:%b} {dt.day} {dt:%H:%M}"
+
+
+def entry_lines(o):
+    """The conversation lines of one transcript entry, as 'time who: text'."""
+    kind = o.get("type")
+    if kind not in ("user", "assistant") or o.get("isMeta") or o.get("isCompactSummary") \
+            or o.get("isSidechain"):
+        return []
+    content = (o.get("message") or {}).get("content")
+    if isinstance(content, str):
+        texts = [content]
+    elif isinstance(content, list):
+        texts = [b.get("text", "") for b in content if isinstance(b, dict) and b.get("type") == "text"]
+    else:
+        return []
+    who = "user" if kind == "user" else "claude"
+    ts = stamp(o.get("timestamp", ""))
+    out = []
+    for t in texts:
+        if kind == "user":
+            t = TAGS.sub("", DROP_TAGS.sub("", t))
+        for line in t.splitlines():
+            line = line.strip()
+            if line:
+                out.append(f"{ts} {who}: {line}\n")
+    return out
+
+
+def transcript_text(path, sid):
+    """Bring the cached conversation text of one transcript up to date; return its path."""
+    txt, off = os.path.join(CACHE, f"{sid}.txt"), os.path.join(CACHE, f"{sid}.offset")
+    with open(os.path.join(CACHE, f"{sid}.lock"), "w") as lock:
+        fcntl.flock(lock, fcntl.LOCK_EX)
+        try:
+            pos = int(open(off).read())
+        except Exception:
+            pos = 0
+        size = os.path.getsize(path)
+        if pos > size or not os.path.exists(txt):  # transcript rewritten, or cache lost
+            pos = 0
+            open(txt, "w").close()
+        if pos < size:
+            with open(path, "rb") as f, open(txt, "a") as out:
+                f.seek(pos)
+                for raw in f:
+                    if not raw.endswith(b"\n"):  # a line still being written
+                        break
+                    pos += len(raw)
+                    if len(raw) > 20000 and b'"tool_result"' in raw:  # skip big tool output unparsed
+                        continue
+                    try:
+                        out.writelines(entry_lines(json.loads(raw)))
+                    except Exception:
+                        pass
+            with open(off, "w") as f:
+                f.write(str(pos))
+    return txt
+
+
+def claude_sessions():
+    """Live Claude Code sessions in tmux: {pane id: (session name, transcript, session id)}."""
+    dirs = {os.path.realpath(d) for d in glob.glob(os.path.join(HOME, ".claude*"))
+            if os.path.isdir(os.path.join(d, "sessions"))}
+    if os.environ.get("CLAUDE_CONFIG_DIR"):
+        dirs.add(os.path.realpath(os.environ["CLAUDE_CONFIG_DIR"]))
+    found = {}
+    for cfg in dirs:
+        for f in glob.glob(os.path.join(cfg, "sessions", "*.json")):
+            try:
+                d = json.load(open(f))
+                os.kill(int(d["pid"]), 0)
+            except Exception:
+                continue
+            target, sid = d.get("tmux") or "", d.get("sessionId")
+            if ".%" not in target or not sid:
+                continue
+            pane = "%" + target.rsplit(".%", 1)[1]
+            paths = glob.glob(os.path.join(cfg, "projects", "*", f"{sid}.jsonl"))
+            if not paths:
+                continue
+            updated = d.get("updatedAt") or 0
+            if pane not in found or updated > found[pane][3]:
+                found[pane] = (d.get("name") or "", paths[0], sid, updated)
+    return found
+
+
+def build_index(path):
+    os.makedirs(CACHE, exist_ok=True)
+    sessions = claude_sessions()
+    rows = []
+    fmt = "#{pane_id}\t#{session_name}:#{window_index}\t#{window_name}\t#{pane_index}\t#{window_panes}"
+    for line in tmux("list-panes", "-a", "-F", fmt).splitlines():
+        pane, target, wname, pidx, npanes = line.split("\t")
+        if npanes != "1":
+            target += f".{pidx}"
+        if pane in sessions:
+            name, transcript, sid, _ = sessions[pane]
+            txt = transcript_text(transcript, sid)
+        else:
+            name = wname
+            txt = os.path.join(CACHE, f"pane-{pane.lstrip('%')}.txt")
+            with open(txt, "w") as f:
+                f.write(tmux("capture-pane", "-p", "-J", "-S", "-", "-t", pane))
+        rows.append((pane, f"{target:<12} {name or wname}", txt))
+    with open(path, "w") as f:
+        f.writelines("\t".join(r) + "\n" for r in rows)
+    return rows
+
+
+def read_index(path):
+    return [line.rstrip("\n").split("\t") for line in open(path)]
+
+
+def grep_flags(query):
+    return ["-F"] + (["-i"] if query == query.lower() else [])
+
+
+def cmd_list(index, query):
+    rows = read_index(index)
+    if not query:
+        for pane, label, _ in rows:
+            print(f"{pane}\t{label}")
+        return
+    files = [txt for _, _, txt in rows]
+    res = subprocess.run(["grep", "-c", "-H", *grep_flags(query), "-e", query, "--", *files],
+                         capture_output=True, text=True).stdout
+    counts = {}
+    for line in res.splitlines():
+        f, _, n = line.rpartition(":")
+        counts[f] = int(n) if n.isdigit() else 0
+    hits = [(counts.get(txt, 0), pane, label) for pane, label, txt in rows if counts.get(txt, 0)]
+    for n, pane, label in sorted(hits, key=lambda h: -h[0]):
+        print(f"{pane}\t{label:<44} {n:>5}")
+
+
+def cmd_show(index, pane, query):
+    txt = next((t for p, _, t in read_index(index) if p == pane), None)
+    if not txt:
+        return
+    if query:
+        env = dict(os.environ, GREP_COLORS="ms=01;33:ne")  # yellow matches, no line-clearing codes
+        res = subprocess.run(["grep", *grep_flags(query), "--color=always", "-e", query, "--", txt],
+                             capture_output=True, text=True, env=env).stdout
+        lines = res.splitlines()[-400:]
+    else:
+        with open(txt, errors="replace") as f:
+            lines = f.read().splitlines()[-200:]
+    print("\n".join(lines))
+
+
+def popup():
+    fzf = shutil.which("fzf") or next((p for p in (f"{HOME}/.pixi/bin/fzf", "/opt/homebrew/bin/fzf",
+                                                   "/usr/local/bin/fzf") if os.path.exists(p)), None)
+    if not fzf:
+        sys.exit("tmux-search needs fzf")
+    index = os.path.join(CACHE, f"index-{os.getpid()}.tsv")
+    print("Reading session transcripts…", flush=True)
+    try:
+        build_index(index)
+        me, ix = shlex.quote(SELF), shlex.quote(index)
+        initial = subprocess.run([sys.executable, SELF, "list", index, ""],
+                                 capture_output=True, text=True).stdout
+        sel = subprocess.run(
+            [fzf, "--disabled", "--ansi", "--no-sort", "--delimiter", "\t", "--with-nth", "2",
+             "--prompt", "search> ", "--header", "Enter: go to the window   Esc: close",
+             "--bind", f"change:reload:{shlex.quote(sys.executable)} {me} list {ix} {{q}}",
+             "--preview", f"{shlex.quote(sys.executable)} {me} show {ix} {{1}} {{q}}",
+             "--preview-window", "right,60%,wrap,follow"],
+            input=initial, capture_output=False, stdout=subprocess.PIPE, text=True).stdout
+    finally:
+        try:
+            os.remove(index)
+        except OSError:
+            pass
+    pane = sel.split("\t", 1)[0].strip() if sel else ""
+    if pane.startswith("%"):
+        subprocess.run(["tmux", "select-window", "-t", pane, ";", "select-pane", "-t", pane,
+                        ";", "switch-client", "-t", pane])
+
+
+def main():
+    args = sys.argv[1:]
+    if not args:
+        popup()
+    elif args[0] == "index":
+        path = os.path.join(CACHE, "index-test.tsv")
+        for pane, label, txt in build_index(path):
+            print(f"{pane}\t{label}\t{os.path.getsize(txt)} bytes")
+    elif args[0] == "list" and len(args) == 3:
+        cmd_list(args[1], args[2])
+    elif args[0] == "show" and len(args) == 4:
+        cmd_show(args[1], args[2], args[3])
+    else:
+        sys.exit(__doc__)
+
+
+if __name__ == "__main__":
+    main()

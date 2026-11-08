@@ -81,6 +81,10 @@ bind-key l select-pane -R
 
 bind-key C command-prompt -p "Name of new window: " "new-window -n '%%'"
 
+# Search the conversations of the Claude sessions in every window, and jump to one
+# (dotfiles/bin/tmux-search; replaces tmux's default prefix + /, which describes a key)
+bind-key / display-popup -E -w 90% -h 85% -T " search sessions " "$HOME/dotfiles/bin/tmux-search"
+
 # Use Alt-vim keys without prefix key to switch panes
 bind-key -n M-h select-pane -L
 bind-key -n M-j select-pane -D
