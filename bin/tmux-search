@@ -1,12 +1,20 @@
 #!/usr/bin/env python3
-"""Search the conversations of the Claude Code sessions running in tmux, and jump to one.
+"""Find a tmux window by name, or search the conversations of the Claude Code sessions in tmux,
+and jump to one.
 
-Bound to prefix + / in tmux.conf, as a popup. Type to search: windows whose session name,
-tmux window name or number contains the text come first (exact names, then names that start
-with it, then the rest), with the match highlighted; then
-each window whose conversation has lines containing it, with how many. The preview shows
-those lines, newest at the bottom. Enter switches to that window; Esc closes the popup. Matching
-is literal and ignores case unless the text has a capital letter.
+Bound to prefix + / in tmux.conf, as a popup. It opens matching window names: type part of a
+session name, tmux window name or number, and fzf narrows the list as you type. The preview
+shows the end of the selected window's conversation. Ctrl-s switches to searching the
+conversations themselves: windows whose name contains the text come first (exact names, then
+names that start with it, then the rest), with the match highlighted; then each window whose
+conversation has lines containing it, with how many. The preview then shows those lines,
+newest at the bottom. Ctrl-s again goes back to names. Enter switches to that window; Esc
+closes the popup. Conversation search is literal and ignores case unless the text has a
+capital letter.
+
+Opening the popup reads no transcripts, only tmux's window list and Claude Code's small session
+files, so it appears at once even when the shared disk is slow. Transcripts are read when the
+preview needs one, and all of them when Ctrl-s first switches to conversation search.
 
 Claude Code draws on the terminal's alternate screen, so tmux keeps no scrollback for it.
 Instead this reads each session's transcript, found through the registry Claude Code keeps
@@ -16,13 +24,15 @@ session and Claude's replies, not tool calls or their output. Panes without a Cl
 session (shells, other programs) are searched by their screen and scrollback.
 
 The text taken from each transcript is cached (under /ephemeral/$USER/cache where that
-exists, else ~/.cache) and extended as the transcript grows, so only the first run reads
-whole transcripts. Times are Pacific.
+exists, else ~/.cache) and extended as the transcript grows, so only the first read of a
+transcript reads all of it. Times are Pacific.
 
-Usage: tmux-search                     the popup
-       tmux-search index               build the index and print it (for testing)
-       tmux-search list INDEX QUERY    one line per matching window (used by the popup)
+Usage: tmux-search [popup [CLIENT]]     the popup; Enter moves tmux client CLIENT (tmux.conf
+                                       passes the one that opened the popup)
+       tmux-search index               build the index, read every window's text, print it
+       tmux-search list INDEX QUERY    one line per matching window (conversation search)
        tmux-search show INDEX PANE QUERY   matching lines of one window (the preview)
+       tmux-search toggle INDEX        fzf actions that switch between names and conversations
 """
 import fcntl
 import glob
@@ -48,6 +58,10 @@ CACHE = os.path.join(os.path.join(_eph, "cache") if USER and os.path.isdir(_eph)
                      else os.environ.get("XDG_CACHE_HOME", os.path.join(HOME, ".cache")),
                      "tmux-search")
 SELF = os.path.realpath(__file__)
+ME = f"{shlex.quote(sys.executable)} {shlex.quote(SELF)}"
+
+NAME_PROMPT, TEXT_PROMPT = "name> ", "text> "
+HEADER = "Enter: go to the window   Esc: close\nCtrl-s: switch between names and text"
 
 # Wrappers Claude Code puts around text that wasn't typed as a message.
 DROP_TAGS = re.compile(r"<(system-reminder|local-command-caveat|local-command-stdout|"
@@ -98,37 +112,48 @@ def entry_lines(o):
 
 def transcript_text(path, sid):
     """Bring the cached conversation text of one transcript up to date; return its path."""
+    # <sid>.offset holds how far the transcript has been read and how long the text was then.
+    # fzf kills a preview or search that is still running when the selection or query changes;
+    # text appended after the last saved offset is dropped on the next run, not duplicated.
     txt, off = os.path.join(CACHE, f"{sid}.txt"), os.path.join(CACHE, f"{sid}.offset")
     with open(os.path.join(CACHE, f"{sid}.lock"), "w") as lock:
         fcntl.flock(lock, fcntl.LOCK_EX)
         try:
-            pos = int(open(off).read())
+            saved = [int(v) for v in open(off).read().split()]
         except Exception:
-            pos = 0
+            saved = []
+        have = os.path.getsize(txt) if os.path.exists(txt) else None
+        pos = saved[0] if saved and have is not None else 0
+        keep = saved[1] if len(saved) > 1 else (have or 0)  # older caches saved only the offset
         size = os.path.getsize(path)
-        if pos > size or not os.path.exists(txt):  # transcript rewritten, or cache lost
-            pos = 0
-            open(txt, "w").close()
-        if pos < size:
-            with open(path, "rb") as f, open(txt, "a") as out:
-                f.seek(pos)
-                for raw in f:
-                    if not raw.endswith(b"\n"):  # a line still being written
-                        break
-                    pos += len(raw)
-                    if len(raw) > 20000 and b'"tool_result"' in raw:  # skip big tool output unparsed
-                        continue
-                    try:
-                        out.writelines(entry_lines(json.loads(raw)))
-                    except Exception:
-                        pass
-            with open(off, "w") as f:
-                f.write(str(pos))
+        if pos > size or have is None or keep > have:  # transcript rewritten, or cache lost
+            pos = keep = 0
+        if pos < size or keep != have:
+            with open(txt, "a") as out:
+                out.truncate(keep)
+                with open(path, "rb") as f:
+                    f.seek(pos)
+                    for raw in f:
+                        if not raw.endswith(b"\n"):  # a line still being written
+                            break
+                        pos += len(raw)
+                        if len(raw) > 20000 and b'"tool_result"' in raw:  # skip big tool output unparsed
+                            continue
+                        try:
+                            out.writelines(entry_lines(json.loads(raw)))
+                        except Exception:
+                            pass
+            tmp = f"{off}.{os.getpid()}.tmp"
+            with open(tmp, "w") as f:
+                f.write(f"{pos} {os.path.getsize(txt)}")
+            os.replace(tmp, off)
     return txt
 
 
 def claude_sessions():
-    """Live Claude Code sessions in tmux: {pane id: (session name, transcript, session id)}."""
+    """Live Claude Code sessions in tmux: {pane id: (session name, config dir, session id, updated)}.
+
+    Reads only the small registry files, not the transcripts."""
     dirs = {os.path.realpath(d) for d in glob.glob(os.path.join(HOME, ".claude*"))
             if os.path.isdir(os.path.join(d, "sessions"))}
     if os.environ.get("CLAUDE_CONFIG_DIR"):
@@ -145,16 +170,16 @@ def claude_sessions():
             if ".%" not in target or not sid:
                 continue
             pane = "%" + target.rsplit(".%", 1)[1]
-            paths = glob.glob(os.path.join(cfg, "projects", "*", f"{sid}.jsonl"))
-            if not paths:
-                continue
             updated = d.get("updatedAt") or 0
             if pane not in found or updated > found[pane][3]:
-                found[pane] = (d.get("name") or "", paths[0], sid, updated)
+                found[pane] = (d.get("name") or "", cfg, sid, updated)
     return found
 
 
+# An index row: pane id, label, path of the window's text ("" until read), names joined by
+# \x1f, Claude config dir and session id ("" for panes without a Claude session).
 def build_index(path):
+    """One row per tmux window (per pane, if it has several), from names alone."""
     os.makedirs(CACHE, exist_ok=True)
     sessions = claude_sessions()
     rows = []
@@ -163,24 +188,47 @@ def build_index(path):
         pane, target, wname, pidx, npanes = line.split("\t")
         if npanes != "1":
             target += f".{pidx}"
-        if pane in sessions:
-            name, transcript, sid, _ = sessions[pane]
-            txt = transcript_text(transcript, sid)
-        else:
-            name = wname
-            txt = os.path.join(CACHE, f"pane-{pane.lstrip('%')}.txt")
-            with open(txt, "w") as f:
-                f.write(tmux("capture-pane", "-p", "-J", "-S", "-", "-t", pane))
+        name, cfg, sid, _ = sessions.get(pane, ("", "", "", 0))
         number = target.split(":")[-1].split(".")[0]
         names = "\x1f".join([target, number, name, wname])
-        rows.append((pane, f"{target:<12} {name or wname}", txt, names))
-    with open(path, "w") as f:
-        f.writelines("\t".join(r) + "\n" for r in rows)
+        rows.append([pane, f"{target:<12} {name or wname}", "", names, cfg, sid])
+    write_index(path, rows)
     return rows
+
+
+def write_index(path, rows):
+    tmp = f"{path}.{os.getpid()}.tmp"
+    with open(tmp, "w") as f:
+        f.writelines("\t".join(r) + "\n" for r in rows)
+    os.replace(tmp, path)
 
 
 def read_index(path):
     return [line.rstrip("\n").split("\t") for line in open(path)]
+
+
+def refresh(row):
+    """Bring one window's searchable text up to date; return the path of that text."""
+    pane, _, _, _, cfg, sid = row
+    found = glob.glob(os.path.join(cfg, "projects", "*", f"{sid}.jsonl")) if sid else []
+    if found:
+        return transcript_text(found[0], sid)
+    txt = os.path.join(CACHE, f"pane-{pane.lstrip('%')}.txt")
+    tmp = f"{txt}.{os.getpid()}.tmp"  # replaced whole, so a preview never reads it half written
+    with open(tmp, "w") as f:
+        f.write(tmux("capture-pane", "-p", "-J", "-S", "-", "-t", pane).rstrip() + "\n")  # no blank screen rows
+    os.replace(tmp, txt)
+    return txt
+
+
+def ensure_text(index):
+    """Conversation search needs every window's text: read them all, once per popup."""
+    rows = read_index(index)
+    if not all(r[2] for r in rows):
+        for r in rows:
+            r[2] = refresh(r)
+        write_index(index, rows)
+    return rows
 
 
 def grep_flags(query):
@@ -199,11 +247,11 @@ def name_rank(names, q, fold):
 
 
 def cmd_list(index, query):
-    rows = read_index(index)
     if not query:
-        for pane, label, *_ in rows:
+        for pane, label, *_ in read_index(index):
             print(f"{pane}\t{label}")
         return
+    rows = ensure_text(index)
     files = [r[2] for r in rows]
     res = subprocess.run(["grep", "-c", "-H", *grep_flags(query), "-e", query, "--", *files],
                          capture_output=True, text=True).stdout
@@ -217,7 +265,7 @@ def cmd_list(index, query):
     by_name = sorted((r for r in rows if ranks[r[0]] is not None), key=lambda r: ranks[r[0]])
     by_text = sorted((r for r in rows if ranks[r[0]] is None and counts.get(r[2], 0)),
                      key=lambda r: -counts[r[2]])
-    for pane, label, txt, _ in by_name + by_text:
+    for pane, label, txt, *_ in by_name + by_text:
         n = counts.get(txt, 0)
         label = f"{label:<44}"
         i = fold(label).find(q)
@@ -227,39 +275,53 @@ def cmd_list(index, query):
 
 
 def cmd_show(index, pane, query):
-    txt = next((t for p, _, t, *_ in read_index(index) if p == pane), None)
-    if not txt:
+    row = next((r for r in read_index(index) if r[0] == pane), None)
+    if not row:
         return
+    txt = row[2] or refresh(row)
+    lines = []
     if query:
         env = dict(os.environ, GREP_COLORS="ms=01;33:ne")  # yellow matches, no line-clearing codes
         res = subprocess.run(["grep", *grep_flags(query), "--color=always", "-e", query, "--", txt],
                              capture_output=True, text=True, env=env).stdout
         lines = res.splitlines()[-400:]
-    else:
+    if not lines:  # no query, or a window found by its name whose conversation lacks the text
         with open(txt, errors="replace") as f:
             lines = f.read().splitlines()[-200:]
     print("\n".join(lines))
 
 
-def popup():
+def cmd_toggle(index):
+    """Print the fzf actions for Ctrl-s (a transform binding; fzf sets $FZF_PROMPT)."""
+    ix = shlex.quote(index)
+    if os.environ.get("FZF_PROMPT") == TEXT_PROMPT:
+        print(f"enable-search+change-prompt({NAME_PROMPT})"
+              f"+unbind(change)+change-preview({ME} show {ix} {{1}} '')+reload({ME} list {ix} '')")
+    else:
+        print(f"disable-search+change-prompt({TEXT_PROMPT})"
+              f"+rebind(change)+change-preview({ME} show {ix} {{1}} {{q}})"
+              f"+reload({ME} list {ix} {{q}})")
+
+
+def popup(client=None):
     fzf = shutil.which("fzf") or next((p for p in (f"{HOME}/.pixi/bin/fzf", "/opt/homebrew/bin/fzf",
                                                    "/usr/local/bin/fzf") if os.path.exists(p)), None)
     if not fzf:
         sys.exit("tmux-search needs fzf")
     index = os.path.join(CACHE, f"index-{os.getpid()}.tsv")
-    print("Reading session transcripts…", flush=True)
+    ix = shlex.quote(index)
     try:
-        build_index(index)
-        me, ix = shlex.quote(SELF), shlex.quote(index)
-        initial = subprocess.run([sys.executable, SELF, "list", index, ""],
-                                 capture_output=True, text=True).stdout
+        rows = build_index(index)
         sel = subprocess.run(
-            [fzf, "--disabled", "--ansi", "--no-sort", "--delimiter", "\t", "--with-nth", "2",
-             "--prompt", "search> ", "--header", "Enter: go to the window   Esc: close",
-             "--bind", f"change:reload:{shlex.quote(sys.executable)} {me} list {ix} {{q}}",
-             "--preview", f"{shlex.quote(sys.executable)} {me} show {ix} {{1}} {{q}}",
+            [fzf, "--ansi", "--delimiter", "\t", "--with-nth", "2",
+             "--prompt", NAME_PROMPT, "--header", HEADER,
+             "--bind", f"change:reload:{ME} list {ix} {{q}}",  # used only in conversation search
+             "--bind", "start:unbind(change)",
+             "--bind", f"ctrl-s:transform:{ME} toggle {ix}",
+             "--preview", f"{ME} show {ix} {{1}} ''",
              "--preview-window", "right,60%,wrap,follow"],
-            input=initial, capture_output=False, stdout=subprocess.PIPE, text=True).stdout
+            input="".join(f"{r[0]}\t{r[1]}\n" for r in rows),
+            stdout=subprocess.PIPE, text=True).stdout
     finally:
         try:
             os.remove(index)
@@ -267,22 +329,30 @@ def popup():
             pass
     pane = sel.split("\t", 1)[0].strip() if sel else ""
     if pane.startswith("%"):
+        # Without -c, switch-client moves the client used most recently, which may be
+        # another terminal attached to the same server.
+        switch = ["switch-client"] + (["-c", client] if client else []) + ["-t", pane]
         subprocess.run(["tmux", "select-window", "-t", pane, ";", "select-pane", "-t", pane,
-                        ";", "switch-client", "-t", pane])
+                        ";", *switch])
 
 
 def main():
     args = sys.argv[1:]
     if not args:
         popup()
+    elif args[0] == "popup" and len(args) <= 2:
+        popup(args[1] if len(args) == 2 else None)
     elif args[0] == "index":
         path = os.path.join(CACHE, "index-test.tsv")
-        for pane, label, txt, _ in build_index(path):
+        build_index(path)
+        for pane, label, txt, *_ in ensure_text(path):
             print(f"{pane}\t{label}\t{os.path.getsize(txt)} bytes")
     elif args[0] == "list" and len(args) == 3:
         cmd_list(args[1], args[2])
     elif args[0] == "show" and len(args) == 4:
         cmd_show(args[1], args[2], args[3])
+    elif args[0] == "toggle" and len(args) == 2:
+        cmd_toggle(args[1])
     else:
         sys.exit(__doc__)
 
