@@ -74,3 +74,7 @@ These apply whenever Claude Code compacts the conversation, including automatic 
 - Where to look: details worth looking up in the full transcript instead of copying, such as exact quotes, numbers or long lists, each with a few words to search for. The transcript stays on disk under `~/.claude/projects/`.
 
 If a `/prepare-compact` note was written just before this compaction, keep these parts brief; the note is loaded right after the summary.
+
+## Avoiding slop terminology
+
+IMPORTANT: ALWAYS use standard terminology typical in the literature. In all communications to Will, you MUST use the standard terms, and if a standard term is not available, use a descriptive clause; do NOT invent a name for the concept (even if that makes the description shorter).
