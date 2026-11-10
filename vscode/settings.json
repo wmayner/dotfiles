@@ -66,6 +66,20 @@
     "python.languageServer": "Pylance",
     "python.testing.pytestEnabled": true,
     "python.analysis.typeCheckingMode": "standard",
+    // With symlinks followed, opening ~ as a workspace made Quick Open's file
+    // listing (rg --files --follow) walk into Google Drive, OneDrive and Dropbox
+    // through the links in ~; it reached 53 GB of memory and filled the disk with
+    // swap. The patterns below are relative to the workspace folder, so they only
+    // match when ~ itself is open.
+    "search.followSymlinks": false,
+    "search.exclude": {
+        "Library": true,
+        ".Trash": true
+    },
+    "files.watcherExclude": {
+        "Library/**": true,
+        ".Trash/**": true
+    },
     "search.searchOnType": false,
     "terminal.external.osxExec": "iTerm.app",
     "terminal.integrated.cursorWidth": 3,
