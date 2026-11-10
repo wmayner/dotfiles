@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 #
 # Set up a shared Linux machine where there is no root (the MATS cluster's dev
-# node and controller): command-line tools from conda-forge via pixi, zsh started
+# node and controller, the Tononi Lab server): command-line tools from conda-forge via pixi, zsh started
 # from .bashrc, the dotfiles symlinked, uv and Claude Code installed. Safe to run
 # more than once. bootstrap.sh is the version for root boxes (RunPod, Vast).
 #
@@ -65,13 +65,16 @@ sh "$DOTFILES/claude/link-instructions.sh"
 link "$DOTFILES/git/gitconfig.symlink" "$HOME/.gitconfig"
 link "$DOTFILES/git/gitignore.symlink" "$HOME/.gitignore"
 
+# cron reads the machine's own clock (UTC on the MATS cluster, Chicago time on the
+# Tononi Lab server), so convert the Pacific times below to "minute hour" on it.
+at_pt() { date -d "TZ=\"America/Los_Angeles\" $1" +'%-M %-H'; }
 # Nightly rebuild of claude-history's semantic search index at low priority,
-# 03:30 Pacific (the cluster's clock is UTC). Rerunning replaces the entry.
-CRON='30 10 * * * nice -n 19 timeout 3600 $HOME/.local/bin/claude-history --generate-semantic-cache >>$HOME/.cache/claude-history/nightly.log 2>&1 # claude-history nightly'
+# 03:30 Pacific. Rerunning replaces the entry.
+CRON="$(at_pt 03:30)"' * * * nice -n 19 timeout 3600 $HOME/.local/bin/claude-history --generate-semantic-cache >>$HOME/.cache/claude-history/nightly.log 2>&1 # claude-history nightly'
 { crontab -l 2>/dev/null | grep -v '# claude-history nightly'; echo "$CRON"; } | crontab - || say "could not install the crontab entry"
-# Daily bin/update at 04:00 Pacific (11:00 UTC), after the index rebuild. cron's
-# PATH has only the system folders.
-CRON='0 11 * * * PATH=$HOME/.pixi/bin:$HOME/.local/bin:/usr/bin:/bin nice -n 19 timeout 3600 $HOME/dotfiles/bin/update </dev/null >>$HOME/.cache/update.log 2>&1 # dotfiles update daily'
+# Daily bin/update at 04:00 Pacific, after the index rebuild. cron's PATH has
+# only the system folders.
+CRON="$(at_pt 04:00)"' * * * PATH=$HOME/.pixi/bin:$HOME/.local/bin:/usr/bin:/bin nice -n 19 timeout 3600 $HOME/dotfiles/bin/update </dev/null >>$HOME/.cache/update.log 2>&1 # dotfiles update daily'
 { crontab -l 2>/dev/null | grep -v '# dotfiles update daily'; echo "$CRON"; } | crontab - || say "could not install the update crontab entry"
 
 # The login shell cannot be changed without root, so interactive bash hands

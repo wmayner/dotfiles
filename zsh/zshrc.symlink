@@ -335,7 +335,9 @@ mfig() {
 
 # On the MATS cluster, Claude Code's scratchpads go on the local /ephemeral disk: /tmp shares the machine's small
 # root disk with every user (the compute admin found it at 97% on 20 October 2026, mostly torch environments).
-if [[ -d /ephemeral ]]; then export CLAUDE_CODE_TMPDIR=/ephemeral/$USER/claude-tmp; mkdir -p $CLAUDE_CODE_TMPDIR; fi
+if [[ -d /ephemeral ]]; then export CLAUDE_CODE_TMPDIR=/ephemeral/$USER/claude-tmp; mkdir -p $CLAUDE_CODE_TMPDIR
+# On the Tononi Lab server, local scratch is /data/<user> ($USER there is USER@DOMAIN).
+elif [[ -d /data/${USER%%@*} ]]; then export CLAUDE_CODE_TMPDIR=/data/${USER%%@*}/claude-tmp; mkdir -p $CLAUDE_CODE_TMPDIR; fi
 # Set up a fresh GPU box: runs remote/bootstrap.sh over ssh. The tokens go in
 # on stdin with the script, so they never appear in the remote process list.
 # All args pass through to ssh, e.g.  rboot -p 40022 root@1.2.3.4
