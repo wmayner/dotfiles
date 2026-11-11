@@ -369,6 +369,24 @@ fi
 if [[ -d /ephemeral ]]; then export CLAUDE_CODE_TMPDIR=/ephemeral/$USER/claude-tmp; mkdir -p $CLAUDE_CODE_TMPDIR
 # On the Tononi Lab server, local scratch is /data/<user> ($USER there is USER@DOMAIN).
 elif [[ -d /data/${USER%%@*} ]]; then export CLAUDE_CODE_TMPDIR=/data/${USER%%@*}/claude-tmp; mkdir -p $CLAUDE_CODE_TMPDIR; fi
+# On tononi-1, a claude started by hand (also through cn, c2-c4) gets the API keys in
+# ~/.config/*/secrets.env, as the sessions launch-on-account.sh starts do; on the cluster
+# agents-up puts them in the tmux server instead. They are loaded into the claude process
+# only, not this shell, and ANTHROPIC_API_KEY and ANTHROPIC_AUTH_TOKEN are unset after
+# loading, since with either set Claude Code bills the API instead of the subscription
+# (Will, 11 Nov 2026). Only interactive shells read this, so scripts' claude calls are
+# unchanged.
+if [[ -d /data/${USER%%@*} && $(uname) == Linux ]]; then
+  claude() {
+    (
+      set -a
+      for f in $HOME/.config/*/secrets.env(N); do . $f; done
+      set +a
+      unset ANTHROPIC_API_KEY ANTHROPIC_AUTH_TOKEN
+      command claude "$@"
+    )
+  }
+fi
 # Set up a fresh GPU box: runs remote/bootstrap.sh over ssh. The tokens go in
 # on stdin with the script, so they never appear in the remote process list.
 # All args pass through to ssh, e.g.  rboot -p 40022 root@1.2.3.4
