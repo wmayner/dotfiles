@@ -82,5 +82,8 @@
     "glance@wmayner": true,
     "iit-expert@wmayner": true,
     "better-figures@wmayner": true
+  },
+  "env": {
+    "CLAUDE_CODE_PLUGIN_PREFER_HTTPS": "1"
   }
 }
