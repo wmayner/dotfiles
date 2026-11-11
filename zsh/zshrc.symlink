@@ -323,15 +323,6 @@ mfcode() { code --remote ssh-remote+$MATS_HOST /home/USER/mats-fleet; }
 # Open the multi-root workspace (mats-research and the mats-fleet repos), so
 # Cmd+P and search cover all of them without indexing the whole home directory.
 mws() { code --file-uri vscode-remote://ssh-remote+$MATS_HOST/home/USER/mats.code-workspace; }
-# Open ~/mats-figures, a local copy of the cluster's ~/mats-research/figures, in
-# Finder, syncing it first. The launchd agent com.wmayner.mats-figures keeps it
-# up to date on every change. The copy mirrors the cluster (--delete), so don't
-# edit files in it.
-mfig() {
-  local dir=$HOME/mats-figures
-  rsync -a --delete $MATS_HOST:/home/USER/mats-research/figures/ $dir/ || return 1
-  open $dir
-}
 # Tononi Lab servers (from the Mac only: on Linux, `tc` is the network tool). From
 # 10 November 2026 the agent sessions move from the MATS cluster to tononi-1 (see
 # the will-infra skill). Both need UW's VPN (GlobalProtect) and share one home
@@ -358,6 +349,15 @@ if [[ $(uname) == Darwin ]]; then
   tc4() { tc 4; }
   # Open the tononi-1 clone of mats-research in VS Code over Remote-SSH.
   tcode() { code --remote ssh-remote+$TONONI_HOST /data/USER/mats-research; }
+  # Open ~/mats-figures, a local copy of tononi-1's /data/USER/mats-research/figures
+  # (the cluster's until 11 November 2026), in Finder, syncing it first. The launchd
+  # agent com.wmayner.mats-figures keeps it up to date on every change. The copy
+  # mirrors tononi-1 (--delete), so don't edit files in it.
+  mfig() {
+    local dir=$HOME/mats-figures
+    rsync -a --delete $TONONI_HOST:/data/USER/mats-research/figures/ $dir/ || return 1
+    open $dir
+  }
 fi
 
 # On the MATS cluster, Claude Code's scratchpads go on the local /ephemeral disk: /tmp shares the machine's small

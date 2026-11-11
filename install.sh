@@ -41,7 +41,7 @@ done
 [ "$(uname)" = Darwin ] && ln -sv "$(pwd)/git/gitconfig.mac" "$HOME/.gitconfig.local"
 # LaunchAgents: the nightly claude-history index rebuild, the daily bin/update, and
 # the clipboard server that lets remote Claude Code paste images (bin/clip-serve),
-# and the mirror of the cluster's figures folder (macos/mats-figures-sync.sh).
+# and the mirror of tononi-1's figures folder (macos/mats-figures-sync.sh).
 if [ "$(uname)" = Darwin ]; then
   for PLIST in "$(pwd)"/macos/*.plist; do
     ln -sfn "$PLIST" "$HOME/Library/LaunchAgents/"

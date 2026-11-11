@@ -7,8 +7,8 @@ Usage: watch-dir DIR
 Prints "ready" once the watches are in place, and "ping" every 30 seconds so
 that the script exits soon after the SSH connection closes (the next write then
 fails). It sleeps in the kernel between events, using no CPU. Uses inotify
-through ctypes, because inotify-tools is not installed on the MATS cluster.
-The Mac's macos/mats-figures-sync.sh runs it over SSH.
+through ctypes, because inotify-tools is not installed on the MATS cluster or
+tononi-1. The Mac's macos/mats-figures-sync.sh runs it on tononi-1 over SSH.
 """
 import ctypes
 import os
