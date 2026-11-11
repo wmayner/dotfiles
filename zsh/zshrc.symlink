@@ -332,6 +332,33 @@ mfig() {
   rsync -a --delete $MATS_HOST:/home/USER/mats-research/figures/ $dir/ || return 1
   open $dir
 }
+# Tononi Lab servers (from the Mac only: on Linux, `tc` is the network tool). From
+# 10 November 2026 the agent sessions move from the MATS cluster to tononi-1 (see
+# the will-infra skill). Both need UW's VPN (GlobalProtect) and share one home
+# folder; tononi-1 hosts the sessions, with the work under /data/USER.
+if [[ $(uname) == Darwin ]]; then
+  TONONI_HOST=tononi-1
+  alias tononi-1="ssh tononi-1"
+  alias tononi-2="ssh tononi-2"
+  # Like mc: attach to the tmux session "claude" (created in /data/USER/mats-research
+  # if it does not exist); `tc 2` attaches to "claude-2", whose windows run as account 2.
+  tc() {
+    local dir=/data/USER/mats-research
+    if [[ -z $1 ]]; then
+      ssh -t $TONONI_HOST "~/.pixi/bin/tmux new -A -s claude -c $dir"
+    elif [[ $1 != <-> ]]; then
+      echo "tc: account must be a number, got '$1'" >&2; return 1
+    else
+      ssh -t $TONONI_HOST "test -d ~/.claude-$1 || { echo 'tc: no ~/.claude-$1 on $TONONI_HOST' >&2; exit 1; }
+        ~/.pixi/bin/tmux new -A -s claude-$1 -c $dir -e CLAUDE_CONFIG_DIR=\$HOME/.claude-$1"
+    fi
+  }
+  tc2() { tc 2; }
+  tc3() { tc 3; }
+  tc4() { tc 4; }
+  # Open the tononi-1 clone of mats-research in VS Code over Remote-SSH.
+  tcode() { code --remote ssh-remote+$TONONI_HOST /data/USER/mats-research; }
+fi
 
 # On the MATS cluster, Claude Code's scratchpads go on the local /ephemeral disk: /tmp shares the machine's small
 # root disk with every user (the compute admin found it at 97% on 20 October 2026, mostly torch environments).
