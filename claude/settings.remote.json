@@ -39,13 +39,6 @@
       },
       "autoUpdate": true
     },
-    "precis": {
-      "source": {
-        "source": "github",
-        "repo": "Crazytieguy/precis"
-      },
-      "autoUpdate": true
-    },
     "wmayner": {
       "source": {
         "source": "github",
@@ -74,7 +67,6 @@
     "marketing@synced": false,
     "figma@synced": false,
     "cowork-plugin-management@synced": false,
-    "precis-x86_64-unknown-linux-gnu@precis": true,
     "git-workflow@wmayner": true,
     "vastai@wmayner": true,
     "paper-reader@wmayner": true,
