@@ -71,6 +71,7 @@ These apply whenever Claude Code compacts the conversation, including automatic 
 - Where we are: the task and its state, what is committed or pushed and what is only local, any running processes or background jobs and how each reports back, and the next step as agreed with Will.
 - Decisions and why: each decision with its reason and who made it, and the options turned down and why. Quote Will's own short words where they matter.
 - Open threads: promises made, questions waiting on Will, things to check, and work left half done.
+- What we know, and how well, when the work has findings: each result as measured (with its file and how much data is behind it), suspected, or ruled out, so that a guess doesn't come back as a finding; any output that must not be used, with the reason; and each departure from the agreed plan that the final report must state.
 - How Will works: preferences and corrections he gave in this session.
 - Where to look: details worth looking up in the full transcript instead of copying, such as exact quotes, numbers or long lists, each with a few words to search for. The transcript stays on disk under `~/.claude/projects/`.
 

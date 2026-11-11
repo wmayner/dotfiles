@@ -9,7 +9,7 @@ An author with context cannot read without it, and telling an agent to "pretend 
 
 **Figures are the exception.** To review a figure, use the critic prompt of the `better-figures:figures` skill (`critic.md` in that skill's directory), one round only. The template below asks whether every term is defined, and fixes that answer that question make figure labels longer.
 
-## Before the first round, write down (the reviewer never sees the third item)
+## Before the first round, write down (the reviewer never sees the third and fourth items)
 
 1. **Reader:**
    - who they are
@@ -19,21 +19,23 @@ An author with context cannot read without it, and telling an agent to "pretend 
    - what they don't know
    - how they will read: once, in a few minutes, in a meeting, on a phone
 2. **Background files:** only what that reader actually has, such as a paper they wrote. Nothing else. If it is unclear which version of an earlier message the reader saw, ask the user.
-3. **Intended message:** two to four sentences the reader should come away with.
+3. **Intended message:** two to four sentences the reader should come away with, each with how strong its evidence is (three seeds; one run; a conjecture).
+4. **Qualifications that carry weight:** the draft's caveats that change how a claim reads. Reviewers see only the draft, so they can't tell these from clutter.
 
 ## Each round
 
 1. Start new reviewers with the Agent tool: `subagent_type: general-purpose`, `model: opus` unless the user named another. Never `fork` (it inherits this conversation) and never SendMessage a previous reviewer (it remembers the old draft). Round 1: two reviewers in parallel, since each catches different things. Later rounds: one.
 2. The prompt is the template below, filled in. It says nothing about the project, the author's intentions or earlier rounds.
 3. Triage the report:
-   - Compare the restatement with the intended message. A mismatch is the most important problem. After that, findings raised by both reviewers come first.
+   - Compare the restatement with the intended message. A mismatch is the most important problem, and a restatement more confident than the evidence is a mismatch. So is a well-supported claim that came across as tentative. After that, findings raised by both reviewers come first.
    - Before acting on any factual claim a reviewer makes (for example, "the paper has no such matrix"), check it yourself against the background files and against the author's own sources. Reviewers report confident absences that are false.
    - If a fix needs a fact you don't have (a number only the author knows), put a marked placeholder such as `[AUTHOR: weight overlap for X?]` in the draft and list it for the user. Don't drop the claim and don't supply a value yourself.
+   - Before cutting a qualification because a reviewer called it clutter, check it against item 4. Cut the ones not listed. Shorten a listed one to a clause beside its claim; don't remove it or move it to a closing section.
    - Fix places where the reader got lost, terms used before they are defined, overstated claims, and the reader's likely first questions, which the draft should answer.
    - If a flag concerns something the real reader knows, don't change the draft; add it to the reader description for the next round.
 4. Revise. For prose, apply `writing-naturally` if it is available.
 
-**Stop** when a fresh reviewer's restatement matches the intended message and it reports nowhere it got lost that the real reader would also hit. Stop after four rounds regardless, and report what is still unresolved.
+**Stop** when a fresh reviewer's restatement matches the intended message and it reports nowhere it got lost that the real reader would also hit. Stop after four rounds regardless, and report what is still unresolved. Then check item 4: each listed qualification is still beside its claim, or was removed on purpose.
 
 ## Reviewer prompt template
 
@@ -63,3 +65,4 @@ REPLY WITH THESE PARTS, IN ORDER:
 | Leaving out what the reader already knows | False flags (for example, an internal tool name the reader uses every day) |
 | Acting on a reviewer's factual claim without checking it | You edit out a correct statement |
 | Only asking "is it clear?" | Generic praise; nothing anticipates the reader's actual questions |
+| Cutting every hedge a reviewer flags | Each round removes a caveat that changed a claim, and the draft ends up saying more than the evidence |
