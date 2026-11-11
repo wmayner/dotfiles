@@ -10,3 +10,4 @@ npm-debug.log
 .in
 
 **/.claude/settings.local.json
+**/CLAUDE.local.md
