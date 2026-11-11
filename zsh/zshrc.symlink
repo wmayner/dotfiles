@@ -347,6 +347,10 @@ if [[ $(uname) == Darwin ]]; then
   tc2() { tc 2; }
   tc3() { tc 3; }
   tc4() { tc 4; }
+  # Like ma: bring back tononi-1's tmux windows and Claude sessions from the latest
+  # snapshot (what cron does by itself in the first 30 minutes after a reboot).
+  # It skips every window and session that is already running.
+  ta() { ssh -t $TONONI_HOST 'PATH=$HOME/.pixi/bin:/usr/bin:/bin python3 -I ~/fleet-private/bin/restore-tmux-after-reboot.py --force'; }
   # Open the tononi-1 clone of mats-research in VS Code over Remote-SSH.
   tcode() { code --remote ssh-remote+$TONONI_HOST /data/USER/mats-research; }
   # Open ~/mats-figures, a local copy of tononi-1's /data/USER/mats-research/figures
