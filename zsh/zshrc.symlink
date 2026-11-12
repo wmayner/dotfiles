@@ -293,104 +293,15 @@ alias forward="ssh -NL"
 # reboot / app quit). All args pass through to mosh, so ~/.ssh/config aliases and
 # flags work, e.g.  mosht myhost   or   mosht --ssh="ssh -p 2222" user@host
 mosht() { mosh "$@" -- tmux new -A -s main; }
-# MATS cluster: mats-dev is the dev node, mats the controller. MATS_HOST is
-# the one that runs the agents and interactive sessions (mc, ma); switch it when
-# the other machine is less loaded. Both share the same home directory.
-MATS_HOST=mats
-alias mats-dev="ssh mats-dev"
-alias mats="ssh mats"
-# MATS cluster: attach to the tmux session "claude" (created in ~/mats-research
-# if it does not exist). The agents-up servers run in a separate session, "agents".
-# With an account number, `mc 2` attaches to "claude-2" instead, whose windows
-# all have CLAUDE_CONFIG_DIR=~/.claude-2, so plain `claude` runs as account 2.
-mc() {
-  if [[ -z $1 ]]; then
-    ssh -t $MATS_HOST '~/.pixi/bin/tmux new -A -s claude -c ~/mats-research'
-  elif [[ $1 != <-> ]]; then
-    echo "mc: account must be a number, got '$1'" >&2; return 1
-  else
-    ssh -t $MATS_HOST "test -d ~/.claude-$1 || { echo 'mc: no ~/.claude-$1 on $MATS_HOST' >&2; exit 1; }
-      ~/.pixi/bin/tmux new -A -s claude-$1 -c ~/mats-research -e CLAUDE_CONFIG_DIR=\$HOME/.claude-$1"
-  fi
-}
-mc2() { mc 2; }
-mc3() { mc 3; }
-mc4() { mc 4; }
-# Attach to the tmux session "fleet" (attach only, so a missing session errors).
-mf() { ssh -t $MATS_HOST '~/.pixi/bin/tmux attach -t fleet'; }
-# Attach to the "agents" session, starting the Remote Control servers first if
-# they are not running (after a reboot, for example).
-ma() { ssh -t $MATS_HOST 'PATH=$HOME/.pixi/bin:$HOME/.local/bin:$PATH ~/dotfiles/bin/agents-up'; }
-# Open ~/mats-research in VS Code over Remote-SSH (the path must be absolute).
-mcode() { code --remote ssh-remote+$MATS_HOST /home/USER/mats-research; }
-mfcode() { code --remote ssh-remote+$MATS_HOST /home/USER/mats-fleet; }
-# Open the multi-root workspace (mats-research and the mats-fleet repos), so
-# Cmd+P and search cover all of them without indexing the whole home directory.
-mws() { code --file-uri vscode-remote://ssh-remote+$MATS_HOST/home/USER/mats.code-workspace; }
-# Tononi Lab servers (from the Mac only: on Linux, `tc` is the network tool). From
-# 10 November 2026 the agent sessions move from the MATS cluster to tononi-1 (see
-# the will-infra skill). Both need UW's VPN (GlobalProtect) and share one home
-# folder; tononi-1 hosts the sessions, with the work under /data/USER.
-if [[ $(uname) == Darwin ]]; then
-  TONONI_HOST=tononi-1
-  alias tononi-1="ssh tononi-1"
-  alias tononi-2="ssh tononi-2"
-  # Like mc: attach to the tmux session "claude" (created in /data/USER/mats-research
-  # if it does not exist); `tc 2` attaches to "claude-2", whose windows run as account 2.
-  tc() {
-    local dir=/data/USER/mats-research
-    if [[ -z $1 ]]; then
-      ssh -t $TONONI_HOST "~/.pixi/bin/tmux new -A -s claude -c $dir"
-    elif [[ $1 != <-> ]]; then
-      echo "tc: account must be a number, got '$1'" >&2; return 1
-    else
-      ssh -t $TONONI_HOST "test -d ~/.claude-$1 || { echo 'tc: no ~/.claude-$1 on $TONONI_HOST' >&2; exit 1; }
-        ~/.pixi/bin/tmux new -A -s claude-$1 -c $dir -e CLAUDE_CONFIG_DIR=\$HOME/.claude-$1"
-    fi
-  }
-  tc2() { tc 2; }
-  tc3() { tc 3; }
-  tc4() { tc 4; }
-  # Like ma: bring back tononi-1's tmux windows and Claude sessions from the latest
-  # snapshot (what cron does by itself in the first 30 minutes after a reboot).
-  # It skips every window and session that is already running.
-  ta() { ssh -t $TONONI_HOST 'PATH=$HOME/.pixi/bin:/usr/bin:/bin python3 -I ~/fleet-private/bin/restore-tmux-after-reboot.py --force'; }
-  # Open the tononi-1 clone of mats-research in VS Code over Remote-SSH.
-  tcode() { code --remote ssh-remote+$TONONI_HOST /data/USER/mats-research; }
-  # Open ~/mats-figures, a local copy of tononi-1's /data/USER/mats-research/figures
-  # (the cluster's until 11 November 2026), in Finder, syncing it first. The launchd
-  # agent com.wmayner.mats-figures keeps it up to date on every change. The copy
-  # mirrors tononi-1 (--delete), so don't edit files in it.
-  mfig() {
-    local dir=$HOME/mats-figures
-    rsync -a --delete $TONONI_HOST:/data/USER/mats-research/figures/ $dir/ || return 1
-    open $dir
-  }
-fi
+# Shortcuts for my servers, and settings that name them, are in the private
+# dotfiles (wmayner/dotfiles-private), loaded when that clone is present.
+[[ -r $HOME/dotfiles-private/zsh/private.zsh ]] && source $HOME/dotfiles-private/zsh/private.zsh
 
-# On the MATS cluster, Claude Code's scratchpads go on the local /ephemeral disk: /tmp shares the machine's small
-# root disk with every user (the compute admin found it at 97% on 20 October 2026, mostly torch environments).
+# On a machine with a local scratch disk (/ephemeral/$USER, or /data/<user> where $USER is
+# user@domain), Claude Code's scratchpads go there: /tmp on shared servers is a small root disk
+# that every user fills.
 if [[ -d /ephemeral ]]; then export CLAUDE_CODE_TMPDIR=/ephemeral/$USER/claude-tmp; mkdir -p $CLAUDE_CODE_TMPDIR
-# On the Tononi Lab server, local scratch is /data/<user> ($USER there is USER@DOMAIN).
 elif [[ -d /data/${USER%%@*} ]]; then export CLAUDE_CODE_TMPDIR=/data/${USER%%@*}/claude-tmp; mkdir -p $CLAUDE_CODE_TMPDIR; fi
-# On tononi-1, a claude started by hand (also through cn, c2-c4) gets the API keys in
-# ~/.config/*/secrets.env, as the sessions launch-on-account.sh starts do; on the cluster
-# agents-up puts them in the tmux server instead. They are loaded into the claude process
-# only, not this shell, and ANTHROPIC_API_KEY and ANTHROPIC_AUTH_TOKEN are unset after
-# loading, since with either set Claude Code bills the API instead of the subscription
-# (Will, 11 Nov 2026). Only interactive shells read this, so scripts' claude calls are
-# unchanged.
-if [[ -d /data/${USER%%@*} && $(uname) == Linux ]]; then
-  claude() {
-    (
-      set -a
-      for f in $HOME/.config/*/secrets.env(N); do . $f; done
-      set +a
-      unset ANTHROPIC_API_KEY ANTHROPIC_AUTH_TOKEN
-      command claude "$@"
-    )
-  }
-fi
 # Set up a fresh GPU box: runs remote/bootstrap.sh over ssh. The tokens go in
 # on stdin with the script, so they never appear in the remote process list.
 # All args pass through to ssh, e.g.  rboot -p 40022 root@1.2.3.4
@@ -503,6 +414,7 @@ path=(
   ${VIRTUAL_ENV:+$VIRTUAL_ENV/bin}
   $HOME/bin
   $HOME/dotfiles/bin
+  $HOME/dotfiles-private/bin
   $HOME/.local/bin
   $HOME/.pixi/bin
   /opt/homebrew/bin
@@ -521,6 +433,9 @@ hash -r
 export MACHINE_NAME=$($DOTFILES/bin/machine-name)
 # Remote Control session names start with this instead of the raw hostname.
 export CLAUDE_REMOTE_CONTROL_SESSION_NAME_PREFIX=$MACHINE_NAME
+# Over SSH the prompt shows this name (starship's env_var.PROMPT_HOST), not the
+# raw hostname.
+[[ -n $SSH_CONNECTION ]] && export PROMPT_HOST=$MACHINE_NAME
 
 # -----------------------------------------------------------------------------
 # Remote boxes have no VS Code.

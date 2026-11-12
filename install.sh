@@ -40,8 +40,7 @@ done
 # Mac-only git settings (1Password signing, SSH for GitHub), included by gitconfig.
 [ "$(uname)" = Darwin ] && ln -sv "$(pwd)/git/gitconfig.mac" "$HOME/.gitconfig.local"
 # LaunchAgents: the nightly claude-history index rebuild, the daily bin/update, and
-# the clipboard server that lets remote Claude Code paste images (bin/clip-serve),
-# and the mirror of tononi-1's figures folder (macos/mats-figures-sync.sh).
+# the clipboard server that lets remote Claude Code paste images (bin/clip-serve).
 if [ "$(uname)" = Darwin ]; then
   for PLIST in "$(pwd)"/macos/*.plist; do
     ln -sfn "$PLIST" "$HOME/Library/LaunchAgents/"
@@ -86,5 +85,9 @@ printf "\nSetting up Claude Code...\n"
 sh "$DOTFILES/claude/link.sh"
 # Global instructions: the public CLAUDE.md, plus private Mac rules from 1Password
 sh "$DOTFILES/claude/link-instructions.sh"
+# The private dotfiles, on machines that can read them (see that repository's README)
+if [ -d "$HOME/dotfiles-private/.git" ] || git clone -q git@github.com:wmayner/dotfiles-private.git "$HOME/dotfiles-private" 2>/dev/null; then
+  sh "$HOME/dotfiles-private/install.sh"
+fi
 
 printf "\nDone!"

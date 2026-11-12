@@ -1,10 +1,12 @@
 #!/bin/sh
 # Short name for this machine, used by zshrc ($MACHINE_NAME, the tmux status
-# bar) and the Claude status line. The starship prompt has the same names under
-# [hostname] aliases.
+# bar and the starship prompt) and the Claude status line. Opaque hostnames get
+# readable names from the private dotfiles' machine-names file, one
+# "hostname name" per line, when that clone is present.
 h=$(hostname -s)
-case $h in
-  cluster-host-1) echo mats ;;
-  cluster-host-2) echo mats-dev ;;
-  *) echo "$h" ;;
-esac
+map=$HOME/dotfiles-private/machine-names
+if [ -r "$map" ]; then
+  n=$(awk -v h="$h" '$1 == h { print $2; exit }' "$map")
+  [ -n "$n" ] && h=$n
+fi
+echo "$h"

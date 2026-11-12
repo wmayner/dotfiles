@@ -55,6 +55,7 @@ Do NOT invent your own terms when existing terms are already in use. For example
 ## Environment
 - `cat` is aliased to `bat` in Will's shell. Use `/bin/cat` when you need plain output or flags such as `-v`.
 - This file is public: it lives in Will's dotfiles repository on GitHub. Rules that apply to only one machine, and anything private such as paths, accounts or email locations, go in that machine's `~/.claude/rules/` file instead. On the Mac, that file is written from the 1Password note "Claude rules (Mac)", so update the note when you change it.
+- The rest of the dotfiles repository is public too. Shell functions, scripts, config and rules that name Will's machines, server paths, accounts or collaborators go in the private repository `wmayner/dotfiles-private` (cloned at `~/dotfiles-private`), which the public dotfiles load when it is present.
 
 ## Will's plugins and skills
 - Will's plugins come from the marketplace at github.com/wmayner/claude-plugins, cloned on the Mac at `~/projects/claude-plugins`. claude.ai syncs them to every machine signed in to his account, where they load as `<name>@synced`. The source of `git-workflow`, `vastai`, `paper-reader` and `todos` is in that repo; `prepare-compact`, `glance`, `iit-expert` and `better-figures` have their own repos (`wmayner/claude-prepare-compact`, `wmayner/claude-glance`, `wmayner/iit-expert-plugin`, `wmayner/better-figures`), which the marketplace points to. better-figures's repo also holds its own marketplace, for other people.

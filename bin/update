@@ -21,6 +21,18 @@ GIT_CONFIG_GLOBAL=/dev/null git -C "$DOTFILES" fetch https://github.com/wmayner/
   && GIT_CONFIG_GLOBAL=/dev/null git -C "$DOTFILES" submodule update --init \
   || fail dotfiles
 
+# The private dotfiles (wmayner/dotfiles-private), when cloned: over https too,
+# with gh's credentials, which need no 1Password approval. Then its install and
+# update steps.
+PRIVATE="$HOME/dotfiles-private"
+if [ -d "$PRIVATE/.git" ]; then
+  GIT_CONFIG_GLOBAL=/dev/null git -C "$PRIVATE" -c credential.helper= -c 'credential.helper=!gh auth git-credential' \
+      fetch -q https://github.com/wmayner/dotfiles-private.git main:refs/remotes/origin/main \
+    && git -C "$PRIVATE" merge -q --ff-only origin/main \
+    || fail 'private dotfiles'
+  sh "$PRIVATE/install.sh" || fail 'private install'
+fi
+
 # System package manager
 if [ "$(uname -s)" = "Darwin" ]; then
   # Install anything added to the Brewfile since this machine last ran it.
@@ -73,10 +85,9 @@ if command -v claude >/dev/null 2>&1; then
   done
 fi
 
-# Clones and notes from the MATS cluster. Only the Mac has this command, and it
-# needs no 1Password approval, so it cannot block the daily run.
-if [ -x "$HOME/bin/mats-sync" ]; then
-  "$HOME/bin/mats-sync" -q || fail mats-sync
+# The private dotfiles' own daily steps
+if [ -f "$PRIVATE/update.sh" ]; then
+  sh "$PRIVATE/update.sh" || fail 'private update'
 fi
 
 # vim-plug and plugins. These live under ~/.vim/plugged, which is a symlink

@@ -54,11 +54,15 @@ link "$DOTFILES/remote/code" "$HOME/.local/bin/code"
 link "$DOTFILES/remote/xclip" "$HOME/.local/bin/xclip"
 # Claude Code: mods, status line and settings (with the remote overlay)
 sh "$DOTFILES/claude/link.sh" || say "could not link the Claude config"
-# Global instructions: the public CLAUDE.md, plus the cluster's rules file
+# Global instructions: the public CLAUDE.md
 sh "$DOTFILES/claude/link-instructions.sh"
-# MATS ships a skill for its Slurm cluster.
-[ -d /shared/skills/mats-cluster ] &&
-  link /shared/skills/mats-cluster "$HOME/.claude/skills/mats-cluster"
+# The private dotfiles (this machine's Claude Code rules and shortcuts), where
+# gh can read them; elsewhere the clone fails quietly and nothing else changes.
+PRIVATE=$HOME/dotfiles-private
+if [ -d "$PRIVATE/.git" ] || git -c credential.helper= -c 'credential.helper=!gh auth git-credential' \
+    clone -q https://github.com/wmayner/dotfiles-private.git "$PRIVATE" 2>/dev/null; then
+  sh "$PRIVATE/install.sh" || say "could not install the private dotfiles"
+fi
 
 # Same gitconfig as the Mac. Its Mac-only part (1Password signing, SSH for
 # GitHub) lives in git/gitconfig.mac, which is not linked here.
