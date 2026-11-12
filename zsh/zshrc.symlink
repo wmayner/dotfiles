@@ -78,6 +78,10 @@ fpath=(~/.zsh/completions /opt/homebrew/share/zsh/site-functions ~/.docker/compl
 # extendedglob has to be on before the `(#q...)` test below. Without it that
 # test is a plain non-empty string, so the full compinit ran on every startup.
 setopt extendedglob
+# In Claude Code's shells (it sets CLAUDECODE=1), pass a glob that matches nothing through unchanged, as bash does,
+# instead of refusing the whole command with "no matches found". A wait loop whose test zsh refused on every pass
+# kept an agent's background wait running for 28 hours (11 November 2026). Interactive shells keep the default.
+[[ -n ${CLAUDECODE:-} ]] && setopt NO_NOMATCH
 zmodload zsh/complist
 autoload -Uz compinit
 
