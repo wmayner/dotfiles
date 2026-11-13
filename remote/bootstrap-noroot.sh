@@ -26,6 +26,12 @@ command -v pixi >/dev/null || curl -fsSL https://pixi.sh/install.sh | PIXI_NO_PA
 for pkg in zsh starship fzf ripgrep fd-find bat eza atuin zoxide direnv jq nvim colordiff tmux nodejs git-delta git; do
   pixi global install -q "$pkg" >/dev/null || say "could not install $pkg"
 done
+# pixi creates directories with the shell's umask. Where the umask is 002 and
+# the primary group includes many other accounts, zsh's function directories
+# come out group-writable, and compinit's security check then stops the shell
+# at startup to ask whether to ignore them. bin/update repeats this after each
+# `pixi global update`, since a new zsh version brings new directories.
+chmod -R go-w "$HOME/.pixi/envs/zsh/share/zsh" 2>/dev/null
 
 # Not on conda-forge.
 HSS=$HOME/.local/share/zsh-history-substring-search

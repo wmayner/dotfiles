@@ -45,6 +45,10 @@ elif command -v pixi >/dev/null 2>&1; then
   # No-root machines (the MATS nodes; see remote/bootstrap-noroot.sh): there is
   # no sudo, and the command-line tools come from conda-forge through pixi.
   pixi global update || fail pixi
+  # Keep zsh's function directories from being group-writable (see remote/bootstrap-noroot.sh).
+  if [ -d "$HOME/.pixi/envs/zsh/share/zsh" ]; then
+    chmod -R go-w "$HOME/.pixi/envs/zsh/share/zsh" || fail 'zsh permissions'
+  fi
   if command -v claude-history >/dev/null 2>&1; then
     claude-history update || fail claude-history
   fi
