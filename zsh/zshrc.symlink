@@ -90,7 +90,12 @@ autoload -Uz compinit
 _zcompdump="$XDG_CACHE_HOME/zsh/zcompdump-$ZSH_VERSION"
 [[ -d ${_zcompdump:h} ]] || mkdir -p ${_zcompdump:h}
 if [[ -n $_zcompdump(#qN.mh+24) ]]; then
-  compinit -d $_zcompdump
+  # compinit rewrites the dump only when the set of completion files has
+  # changed, so its date has to be reset here. Without the touch, the dump
+  # stayed old and this full check ran at every startup, about 15ms slower
+  # than `compinit -C` (the Mac's dump was four weeks old on 12 November 2026).
+  # No touch when compinit is aborted, so the security question comes back.
+  compinit -d $_zcompdump && touch $_zcompdump
 else
   compinit -C -d $_zcompdump
 fi
