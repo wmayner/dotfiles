@@ -407,6 +407,15 @@ c2r() { cn 2 --resume "$@"; }
 c3r() { cn 3 --resume "$@"; }
 c4r() { cn 4 --resume "$@"; }
 c5r() { cn 5 --resume "$@"; }
+# Run codex as another account, whose config lives in ~/.codex-N (CODEX_HOME), like cn
+# does for claude. Extra args pass through, e.g.  x2 login --device-auth  or  x2 exec "...".
+xn() {
+  local dir=$HOME/.codex-$1
+  [[ -d $dir ]] || { echo "xn: no $dir on this machine" >&2; return 1; }
+  shift
+  CODEX_HOME=$dir codex "$@"
+}
+x2() { xn 2 "$@"; }
 dlrecent() { eza --sort=modified --reverse ~/Downloads/ | head -1 | xargs -I {} echo ~/Downloads/"{}"; }
 
 # -----------------------------------------------------------------------------
