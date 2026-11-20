@@ -32,10 +32,10 @@ Will's work often involves scientific investigation.
 - Wrong predictions are valuable. Design experiments to test predictions, then explain surprises.
 
 ### Faithful implementation of methods
-IMPORTANT: When using or implementing methods from prior work, do NOT use stand-ins, proxies, or approximations that are cheaper or easier to use unless you've been given explicit permission. If you think that doing so is advisable, STOP and explain why, to surface the issue early. Be faithful to the literature and prior work on the topic. It wastes time, money, and most importantly, Will's attention, to run an experiment only for Will to discover later that it was using a different method.
+When using or implementing methods from prior work, don't use stand-ins, proxies, or approximations that are cheaper or easier to use unless you've been given explicit permission. If you think that doing so is advisable, stop and explain why, to surface the issue early. Be faithful to the literature and prior work on the topic. It wastes time, money, and most importantly, Will's attention, to run an experiment only for Will to discover later that it was using a different method.
 
 ### Terminology
-Do NOT invent your own terms when existing terms are already in use. For example, if published literature has established terminology, always use that instead of your own.
+Use the standard terminology of the literature, in everything Will reads. Where no standard term exists, use a descriptive clause rather than inventing a name for the concept, even if the name would be shorter.
 
 ### Experiment hygiene
 - **Reproducibility** (failure mode: "I'll just rerun if needed"). Whenever randomization is used, the call must take a `seed` argument and use an isolated RNG instance (`random.Random(seed)` or `np.random.default_rng(seed)`), never module-level `random.seed()` or `np.random.seed()`, which mutate global state and make the function non-reentrant. Save the seed alongside the output, not just in logs.
@@ -77,7 +77,3 @@ These apply whenever Claude Code compacts the conversation, including automatic 
 - Where to look: details worth looking up in the full transcript instead of copying, such as exact quotes, numbers or long lists, each with a few words to search for. The transcript stays on disk under `~/.claude/projects/`.
 
 If a `/prepare-compact` note was written just before this compaction, keep these parts brief; the note is loaded right after the summary.
-
-## Avoiding slop terminology
-
-IMPORTANT: ALWAYS use standard terminology typical in the literature. In all communications to Will, you MUST use the standard terms, and if a standard term is not available, use a descriptive clause; do NOT invent a name for the concept (even if that makes the description shorter).
